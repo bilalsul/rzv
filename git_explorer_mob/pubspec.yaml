@@ -40,6 +40,10 @@ dependencies:
   http: ^1.5.0
   flutter_web_auth_2: ^4.1.0
   flutter_secure_storage: ^9.2.4
+  logger: ^2.6.2
+  get_it: ^8.2.0
+  shared_preferences: ^2.5.3
+  flutter_treeview: ^1.0.7+1
 
 dev_dependencies:
   flutter_test:
