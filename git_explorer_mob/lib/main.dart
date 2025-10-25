@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:logger/logger.dart';
+import 'package:git_explorer_mob/views/onboarding_page/onboarding_page.dart';
 import 'l10n/app_localizations.dart';
 import 'home_screen.dart';
 
-void main() {
+int initScreen = 0;
+final logger = Logger();
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initScreen = prefs.getInt("initScreen") ?? 0;
+  await prefs.setInt("initScreen", 1);
+  logger.i('initScreen $initScreen');
   runApp(const MyApp());
 }
 
@@ -36,7 +47,12 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         
-        home: const HomeScreen(),
+        
+        initialRoute: initScreen == 0 ? "onboard" : "/" ,
+        routes: {
+        '/': (context) => HomeScreen(),
+        "onboard": (context) => OnboardingPage(),
+      },
     );
   }
 }
