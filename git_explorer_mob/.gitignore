@@ -40,7 +40,7 @@ app.*.symbols
 app.*.map.json
 
 # generated
-lib/l10n/*.dart
+lib/l10n/generated/*.dart
 
 # Android Studio will place build artifacts here
 /android/app/debug

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'l10n/app_localizations.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,12 +7,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawer: Container(),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(AppLocalizations.of(context)!.helloWorld),
+        title: Text(L10n.of(context).helloWorld),
+        
       ),
       body: Center(
-        child: Text(AppLocalizations.of(context)!.hello('Bilal')),
+        child: Text(L10n.of(context).hello('Bilal')),
       ),
     );
   }

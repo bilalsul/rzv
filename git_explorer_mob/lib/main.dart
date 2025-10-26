@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
 import 'package:git_explorer_mob/views/onboarding_page/onboarding_page.dart';
-import 'l10n/app_localizations.dart';
 import 'home_screen.dart';
 
 int initScreen = 0;
@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
 
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: L10n.localizationsDelegates,
+        supportedLocales: L10n.supportedLocales,
         
         
         initialRoute: initScreen == 0 ? "onboard" : "/" ,
