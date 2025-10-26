@@ -1,0 +1,78 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+
+String documentPath = '';
+
+Future<String> getGitExpDocumentsPath() async {
+  final directory = await getApplicationDocumentsDirectory();
+  switch (defaultTargetPlatform) {
+    case TargetPlatform.android:
+      return directory.path;
+    case TargetPlatform.windows:
+      // return '${directory.path}\\AnxReader';
+      return (await getApplicationSupportDirectory()).path;
+    case TargetPlatform.linux:
+      final path = '${directory.path}/GitExplorer';
+      return path;
+    case TargetPlatform.macOS:
+      return directory.path;
+    case TargetPlatform.iOS:
+      return (await getApplicationSupportDirectory()).path;
+    default:
+      throw Exception('Unsupported platform');
+  }
+}
+
+Future<Directory> getGitExpDocumentDir() async {
+  return Directory(await getGitExpDocumentsPath());
+}
+
+void initBasePath() async {
+  Directory appDocDir = await getGitExpDocumentDir();
+  documentPath = appDocDir.path;
+  debugPrint('documentPath: $documentPath');
+  final fileDir = getFileDir();
+  final coverDir = getCoverDir();
+  final fontDir = getFontDir();
+  final bgimgDir = getBgimgDir();
+  if (!fileDir.existsSync()) {
+    fileDir.createSync(recursive: true);
+  }
+  if (!coverDir.existsSync()) {
+    coverDir.createSync(recursive: true);
+  }
+  if (!fontDir.existsSync()) {
+    fontDir.createSync(recursive: true);
+  }
+  if (!bgimgDir.existsSync()) {
+    bgimgDir.createSync(recursive: true);
+  }
+}
+
+String getBasePath(String path) {
+  // the path that in database using "/"
+  path.replaceAll("/", Platform.pathSeparator);
+  return '$documentPath${Platform.pathSeparator}$path';
+}
+
+Directory getFontDir({String? path}) {
+  path ??= documentPath;
+  return Directory('$path${Platform.pathSeparator}font');
+}
+
+Directory getCoverDir({String? path}) {
+  path ??= documentPath;
+  return Directory('$path${Platform.pathSeparator}cover');
+}
+
+Directory getFileDir({String? path}) {
+  path ??= documentPath;
+  return Directory('$path${Platform.pathSeparator}file');
+}
+
+Directory getBgimgDir({String? path}) {
+  path ??= documentPath;
+  return Directory('$path${Platform.pathSeparator}bgimg');
+}
