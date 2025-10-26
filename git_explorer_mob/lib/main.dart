@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
+import 'package:git_explorer_mob/utils/error/common.dart';
 import 'package:git_explorer_mob/utils/log/common.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
-import 'package:git_explorer_mob/views/onboarding_page/onboarding_page.dart';
+// import 'package:git_explorer_mob/views/onboarding_page/onboarding_page.dart';
 import 'home_screen.dart';
 
 int initScreen = 0;
@@ -12,6 +13,7 @@ void main() async {
   
   initBasePath();
   GitExpLog.init();
+  GitExpError.init();
   
   runApp(const MyApp());
 }
