@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:logger/logger.dart';
+import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
+import 'package:git_explorer_mob/utils/log/common.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:git_explorer_mob/views/onboarding_page/onboarding_page.dart';
 import 'home_screen.dart';
 
 int initScreen = 0;
-final logger = Logger();
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  initScreen = prefs.getInt("initScreen") ?? 0;
-  await prefs.setInt("initScreen", 1);
-  logger.i('initScreen $initScreen');
+void main() async {
+  
+  initBasePath();
+  GitExpLog.init();
+  
   runApp(const MyApp());
 }
 
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Git Explorer',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -47,12 +46,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: L10n.localizationsDelegates,
         supportedLocales: L10n.supportedLocales,
         
-        
-        initialRoute: initScreen == 0 ? "onboard" : "/" ,
-        routes: {
-        '/': (context) => HomeScreen(),
-        "onboard": (context) => OnboardingPage(),
-      },
+        home: HomeScreen(),
     );
   }
 }
