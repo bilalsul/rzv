@@ -87,7 +87,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 6),
           
           // Current Project Info
           Consumer(
@@ -102,7 +102,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                       color: theme.colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Text(
                     appState.lastOpenedProject.isNotEmpty
                         ? appState.lastOpenedProject.split('/').last
@@ -114,7 +114,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (appState.lastOpenedProject.isNotEmpty) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       'Last opened: ${_formatDate(appState.sessionStartTime)}',
                       style: theme.textTheme.labelSmall?.copyWith(
@@ -137,7 +137,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   Widget _buildNavigationSection(Screen currentScreen, ThemeData theme) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 1),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
