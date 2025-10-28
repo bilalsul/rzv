@@ -79,7 +79,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Flutter Code Editor',
+                'Unnamed Code Editor',
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
