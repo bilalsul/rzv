@@ -98,42 +98,11 @@ class _AppShellState extends ConsumerState<AppShell> {
         setState(() {
           currentIndex = index;
           print(currentIndex);
-          print(Prefs().getValue('theme_mode'));
+          print(Prefs().themeMode);
         });
       },
       type: BottomNavigationBarType.fixed,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.folder_shared),
-          activeIcon: Icon(Icons.folder_shared),
-          label: 'Projects',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.edit_outlined),
-          activeIcon: Icon(Icons.edit),
-          label: 'Editor',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.chat_rounded),
-          activeIcon: Icon(Icons.chat_rounded),
-          label: 'AI',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.history_outlined),
-          activeIcon: Icon(Icons.history),
-          label: 'Git History',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.terminal_outlined),
-          activeIcon: Icon(Icons.terminal),
-          label: 'Terminal',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings_rounded),
-          activeIcon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
-      ],
+      items: getVisibleNavigationItems(),
     );
   }
 
@@ -166,4 +135,56 @@ class FeatureDisabledScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+List<BottomNavigationBarItem> getVisibleNavigationItems() {
+  // Define the full list of navigation items
+  const allItems = [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.folder_shared),
+      activeIcon: Icon(Icons.folder_shared),
+      label: 'Projects',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.edit_outlined),
+      activeIcon: Icon(Icons.edit),
+      label: 'Editor',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.chat_rounded),
+      activeIcon: Icon(Icons.chat_rounded),
+      label: 'AI',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.history_outlined),
+      activeIcon: Icon(Icons.history),
+      label: 'Git History',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.terminal_outlined),
+      activeIcon: Icon(Icons.terminal),
+      label: 'Terminal',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.settings_rounded),
+      activeIcon: Icon(Icons.settings),
+      label: 'Settings',
+    ),
+  ];
+  final flagMap = {
+    'AI': 'plugin_ai_assist',
+    'Git History': 'plugin_git_history',
+    'Terminal': 'plugin_terminal',
+  };
+
+  // Filter items based on their flag status
+  return allItems.where((item) {
+    final flagKey = flagMap[item.label];
+    if (flagKey == null) {
+      // No flag associated (e.g., Projects, Editor, Settings), always visible
+      return true;
+    }
+    // Check if the plugin flag is enabled (defaults from previous plugin getters)
+    return Prefs().getFlag(flagKey);
+  }).toList();
 }
