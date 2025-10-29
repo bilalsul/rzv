@@ -4,7 +4,6 @@ import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/providers/navigation_provider.dart';
 import 'package:git_explorer_mob/providers/plugin_provider.dart';
 import 'package:git_explorer_mob/providers/theme_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Providers
 import '../providers/shared_preferences_provider.dart';
@@ -65,7 +64,8 @@ class _AppShellState extends ConsumerState<AppShell> {
         ),
         drawer: const AppDrawer(),
         body: _buildBody(currentScreen, plugins),
-      ),
+       bottomNavigationBar: _buildBottomNavigationBar(),
+     ) 
     );
   }
 
@@ -87,6 +87,56 @@ class _AppShellState extends ConsumerState<AppShell> {
         return const HomeScreen();
     }
   }
+
+   Widget _buildBottomNavigationBar() {
+    // initial value
+    int currentIndex = 0;
+
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: (index) {
+        setState(() {
+          currentIndex = index;
+          print(currentIndex);
+          print(Prefs().getValue('theme_mode'));
+        });
+      },
+      type: BottomNavigationBarType.fixed,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.folder_shared),
+          activeIcon: Icon(Icons.folder_shared),
+          label: 'Projects',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.edit_outlined),
+          activeIcon: Icon(Icons.edit),
+          label: 'Editor',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.chat_rounded),
+          activeIcon: Icon(Icons.chat_rounded),
+          label: 'AI',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.history_outlined),
+          activeIcon: Icon(Icons.history),
+          label: 'Git History',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.terminal_outlined),
+          activeIcon: Icon(Icons.terminal),
+          label: 'Terminal',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings_rounded),
+          activeIcon: Icon(Icons.settings),
+          label: 'Settings',
+        ),
+      ],
+    );
+  }
+
 }
 
 class FeatureDisabledScreen extends StatelessWidget {
