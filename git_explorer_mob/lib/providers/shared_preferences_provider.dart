@@ -455,6 +455,147 @@ Future<void> saveEditorRenderControlCharacters(bool renderControl) async {
   await prefs.setBool('editor_render_control_characters', renderControl);
   notifyListeners();
 }
+
+// Plugins pref
+// Getter and setter for Read-Only Mode plugin (editor)
+bool get readonlyModeEnabled {
+  return prefs.getBool('plugin_readonly_mode_enabled') ?? false;
+}
+
+Future<void> saveReadonlyModeEnabled(bool enabled) async {
+  await prefs.setBool('plugin_readonly_mode_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Syntax Highlighting plugin (editor)
+bool get syntaxHighlightingEnabled {
+  return prefs.getBool('plugin_syntax_highlighting_enabled') ?? false;
+}
+
+Future<void> saveSyntaxHighlightingEnabled(bool enabled) async {
+  await prefs.setBool('plugin_syntax_highlighting_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Code Folding plugin (editor)
+bool get codeFoldingEnabled {
+  return prefs.getBool('plugin_code_folding_enabled') ?? false;
+}
+
+Future<void> saveCodeFoldingEnabled(bool enabled) async {
+  await prefs.setBool('plugin_code_folding_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Bracket Matching plugin (editor)
+bool get bracketMatchingEnabled {
+  return prefs.getBool('plugin_bracket_matching_enabled') ?? false;
+}
+
+Future<void> saveBracketMatchingEnabled(bool enabled) async {
+  await prefs.setBool('plugin_bracket_matching_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Git History plugin (git)
+bool get gitHistoryEnabled {
+  return prefs.getBool('plugin_git_history_enabled') ?? false;
+}
+
+Future<void> saveGitHistoryEnabled(bool enabled) async {
+  await prefs.setBool('plugin_git_history_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for GitLens plugin (git)
+bool get gitLensEnabled {
+  return prefs.getBool('plugin_git_lens_enabled') ?? false;
+}
+
+Future<void> saveGitLensEnabled(bool enabled) async {
+  await prefs.setBool('plugin_git_lens_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Branch Manager plugin (git)
+bool get branchManagerEnabled {
+  return prefs.getBool('plugin_branch_manager_enabled') ?? false;
+}
+
+Future<void> saveBranchManagerEnabled(bool enabled) async {
+  await prefs.setBool('plugin_branch_manager_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for File Explorer plugin (utility)
+bool get fileExplorerEnabled {
+  return prefs.getBool('plugin_file_explorer_enabled') ?? false;
+}
+
+Future<void> saveFileExplorerEnabled(bool enabled) async {
+  await prefs.setBool('plugin_file_explorer_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Search & Replace plugin (utility)
+bool get searchReplaceEnabled {
+  return prefs.getBool('plugin_search_replace_enabled') ?? false;
+}
+
+Future<void> saveSearchReplaceEnabled(bool enabled) async {
+  await prefs.setBool('plugin_search_replace_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Integrated Terminal plugin (utility)
+bool get terminalEnabled {
+  return prefs.getBool('plugin_terminal_enabled') ?? false;
+}
+
+Future<void> saveTerminalEnabled(bool enabled) async {
+  await prefs.setBool('plugin_terminal_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Theme Customizer plugin (utility)
+bool get themeCustomizerEnabled {
+  return prefs.getBool('plugin_theme_customizer_enabled') ?? false;
+}
+
+Future<void> saveThemeCustomizerEnabled(bool enabled) async {
+  await prefs.setBool('plugin_theme_customizer_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for AI Code Assistant plugin (experimental)
+bool get aiAssistEnabled {
+  return prefs.getBool('plugin_ai_assist_enabled') ?? false;
+}
+
+Future<void> saveAiAssistEnabled(bool enabled) async {
+  await prefs.setBool('plugin_ai_assist_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Real-time Collaboration plugin (experimental)
+bool get realTimeCollabEnabled {
+  return prefs.getBool('plugin_real_time_collab_enabled') ?? false;
+}
+
+Future<void> saveRealTimeCollabEnabled(bool enabled) async {
+  await prefs.setBool('plugin_real_time_collab_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for Performance Monitor plugin (experimental)
+bool get performanceMonitorEnabled {
+  return prefs.getBool('plugin_performance_monitor_enabled') ?? false;
+}
+
+Future<void> savePerformanceMonitorEnabled(bool enabled) async {
+  await prefs.setBool('plugin_performance_monitor_enabled', enabled);
+  notifyListeners();
+}
 }
 
 
