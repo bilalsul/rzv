@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/providers/editor_provider.dart';
 import 'package:git_explorer_mob/providers/navigation_provider.dart';
@@ -13,6 +14,75 @@ import 'package:shared_preferences/shared_preferences.dart';
 final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) async {
   return await SharedPreferences.getInstance();
 });
+
+class Prefs extends ChangeNotifier {
+  late SharedPreferences prefs;
+  static final Prefs _instance = Prefs._internal();
+
+  factory Prefs() {
+    return _instance;
+  }
+
+  Prefs._internal() {
+    initPrefs();
+  }
+
+
+  Future<void> initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  String getValue(String value){
+    return prefs.getString(value) ?? "";
+  }
+
+  Color get themeColor {
+    int colorValue = prefs.getInt('themeColor') ?? Colors.blue.value;
+    return Color(colorValue);
+  }
+
+  Future<void> saveThemeToPrefs(int colorValue) async {
+    await prefs.setInt('themeColor', colorValue);
+    notifyListeners();
+  }
+
+  Locale? get locale {
+    String? localeCode = prefs.getString('locale');
+    if (localeCode == null || localeCode == 'System') return null;
+    if (localeCode.contains('-')) {
+      List<String> codes = localeCode.split('-');
+      return Locale(codes[0], codes[1]);
+    }
+    return Locale(localeCode);
+  }
+
+  Future<void> saveLocaleToPrefs(String localeCode) async {
+    await prefs.setString('locale', localeCode);
+    notifyListeners();
+  }
+
+  ThemeMode get themeMode {
+    String themeMode = prefs.getString('themeMode') ?? 'system';
+    switch (themeMode) {
+      case 'dark':
+        return ThemeMode.dark;
+      case 'light':
+        return ThemeMode.light;
+      default:
+        return ThemeMode.system;
+    }
+  }
+
+  void saveClearLogWhenStart(bool status) {
+    prefs.setBool('clearLogWhenStart', status);
+    notifyListeners();
+  }
+
+  bool get clearLogWhenStart {
+    return prefs.getBool('clearLogWhenStart') ?? true;
+  }
+}
+
 
 class AppState {
   final String lastOpenedProject;
@@ -83,7 +153,9 @@ class AppStateNotifier extends StateNotifier<AppState> {
   }
 
   Future<void> _loadState() async {
-    final prefs = await ref.read(sharedPreferencesProvider.future);
+     await ref.read(sharedPreferencesProvider.future);
+
+    // final prefs = await ref.read(sharedPreferencesProvider.future);
     // state = AppState.fromPreferences(prefs);
   }
 
