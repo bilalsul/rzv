@@ -14,7 +14,7 @@ class NavigationSettings {
   final bool rememberPanelSizes;
 
   const NavigationSettings({
-    this.defaultHomeScreen = 'projects',
+    this.defaultHomeScreen = 'home',
     this.navigationStyle = 'drawer',
     this.multiPaneEnabled = false,
     this.visibleScreens = const ['editor', 'file_explorer', 'git_history'],
@@ -58,7 +58,7 @@ final navigationSettingsProvider = StateNotifierProvider<NavigationSettingsNotif
 final currentScreenProvider = Provider<Screen>((ref) {
   final settings = ref.watch(navigationSettingsProvider);
   switch (settings.defaultHomeScreen) {
-    case 'projects':
+    case 'home':
       return Screen.home;
     case 'editor':
       return Screen.editor;
