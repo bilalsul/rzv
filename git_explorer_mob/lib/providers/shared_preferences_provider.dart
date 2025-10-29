@@ -37,6 +37,10 @@ class Prefs extends ChangeNotifier {
     return prefs.getString(value) ?? "whatt?";
   }
 
+  bool getFlag(String flagKey){
+    return prefs.getBool(flagKey) ?? false;
+  }
+
   // App State
   // Getter and setter for last opened project
 String get lastOpenedProject {
