@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:git_explorer_mob/config/shared_preference_provider.dart';
+import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/utils/log/string_to_level.dart';
 import 'package:git_explorer_mob/utils/get_path/log_file.dart';
 import 'package:flutter/foundation.dart';
