@@ -1,0 +1,17 @@
+const List<Map<String, String>> supportedLanguages = [
+  {'system': 'System'},
+  {'English': 'en'},
+  {'简体中文': 'zh-CN'},
+  {'繁體中文': 'zh-TW'},
+  {'文言文': 'zh-LZH'},
+  {'Türkçe': 'tr'},
+  {'Deutsch': 'de'},
+  {'العربية': 'ar'},
+  {'Русский': 'ru'},
+  {'Français': 'fr'},
+  {'Español': 'es'},
+  {'Italiano': 'it'},
+  {'Português': 'pt'},
+  {'日本語': 'ja'},
+  {'한국어': 'ko'},
+];
