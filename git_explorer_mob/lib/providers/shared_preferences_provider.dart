@@ -32,18 +32,9 @@ class Prefs extends ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
   }
 
+  // for testing purposes
   String getValue(String value){
-    return prefs.getString(value) ?? "";
-  }
-
-  Color get themeColor {
-    int colorValue = prefs.getInt('themeColor') ?? Colors.blue.value;
-    return Color(colorValue);
-  }
-
-  Future<void> saveThemeToPrefs(int colorValue) async {
-    await prefs.setInt('themeColor', colorValue);
-    notifyListeners();
+    return prefs.getString(value) ?? "whatt?";
   }
 
   Locale? get locale {
@@ -61,18 +52,7 @@ class Prefs extends ChangeNotifier {
     notifyListeners();
   }
 
-  ThemeMode get themeMode {
-    String themeMode = prefs.getString('themeMode') ?? 'system';
-    switch (themeMode) {
-      case 'dark':
-        return ThemeMode.dark;
-      case 'light':
-        return ThemeMode.light;
-      default:
-        return ThemeMode.system;
-    }
-  }
-
+  // Log file
   void saveClearLogWhenStart(bool status) {
     prefs.setBool('clearLogWhenStart', status);
     notifyListeners();
@@ -81,6 +61,199 @@ class Prefs extends ChangeNotifier {
   bool get clearLogWhenStart {
     return prefs.getBool('clearLogWhenStart') ?? true;
   }
+
+  // Theme Related Prefs
+ThemeMode get themeMode {
+  String themeMode = prefs.getString('theme_mode') ?? 'system';
+  switch (themeMode) {
+    case 'dark':
+      return ThemeMode.dark;
+    case 'light':
+      return ThemeMode.light;
+    default:
+      return ThemeMode.system;
+  }
+}
+
+Future<void> saveThemeMode(String themeMode) async {
+  await prefs.setString('theme_mode', themeMode);
+  notifyListeners();
+}
+
+// Getter and setter for custom theme name
+String get customThemeName {
+  return prefs.getString('theme_custom_name') ?? 'default_custom';
+}
+
+Future<void> saveCustomThemeName(String name) async {
+  await prefs.setString('theme_custom_name', name);
+  notifyListeners();
+}
+
+// Getter and setter for primary color
+Color get primaryColor {
+  int colorValue = prefs.getInt('theme_primary_color') ?? 0xFF2196F3;
+  return Color(colorValue);
+}
+
+Future<void> savePrimaryColor(int colorValue) async {
+  await prefs.setInt('theme_primary_color', colorValue);
+  notifyListeners();
+}
+
+// Getter and setter for secondary color
+Color get secondaryColor {
+  int colorValue = prefs.getInt('theme_secondary_color') ?? 0xFFFF9800;
+  return Color(colorValue);
+}
+
+Future<void> saveSecondaryColor(int colorValue) async {
+  await prefs.setInt('theme_secondary_color', colorValue);
+  notifyListeners();
+}
+
+// Getter and setter for background color
+Color get backgroundColor {
+  int colorValue = prefs.getInt('theme_background_color') ?? 0xFF121212;
+  return Color(colorValue);
+}
+
+Future<void> saveBackgroundColor(int colorValue) async {
+  await prefs.setInt('theme_background_color', colorValue);
+  notifyListeners();
+}
+
+// Getter and setter for surface color
+Color get surfaceColor {
+  int colorValue = prefs.getInt('theme_surface_color') ?? 0xFF1E1E1E;
+  return Color(colorValue);
+}
+
+Future<void> saveSurfaceColor(int colorValue) async {
+  await prefs.setInt('theme_surface_color', colorValue);
+  notifyListeners();
+}
+
+// Getter and setter for error color
+Color get errorColor {
+  int colorValue = prefs.getInt('theme_error_color') ?? 0xFFCF6679;
+  return Color(colorValue);
+}
+
+Future<void> saveErrorColor(int colorValue) async {
+  await prefs.setInt('theme_error_color', colorValue);
+  notifyListeners();
+}
+
+// Getter and setter for UI density
+String get uiDensity {
+  return prefs.getString('theme_ui_density') ?? 'comfortable';
+}
+
+Future<void> saveUiDensity(String density) async {
+  await prefs.setString('theme_ui_density', density);
+  notifyListeners();
+}
+
+// Getter and setter for button style
+String get buttonStyle {
+  return prefs.getString('theme_button_style') ?? 'elevated';
+}
+
+Future<void> saveButtonStyle(String style) async {
+  await prefs.setString('theme_button_style', style);
+  notifyListeners();
+}
+
+// Getter and setter for border radius
+double get borderRadius {
+  return prefs.getDouble('theme_border_radius') ?? 8.0;
+}
+
+Future<void> saveBorderRadius(double radius) async {
+  await prefs.setDouble('theme_border_radius', radius);
+  notifyListeners();
+}
+
+// Getter and setter for elevation level
+double get elevationLevel {
+  return prefs.getDouble('theme_elevation_level') ?? 2.0;
+}
+
+Future<void> saveElevationLevel(double elevation) async {
+  await prefs.setDouble('theme_elevation_level', elevation);
+  notifyListeners();
+}
+
+// Getter and setter for app font family
+String get appFontFamily {
+  return prefs.getString('theme_app_font_family') ?? 'Roboto';
+}
+
+Future<void> saveAppFontFamily(String fontFamily) async {
+  await prefs.setString('theme_app_font_family', fontFamily);
+  notifyListeners();
+}
+
+// Getter and setter for app font size
+double get appFontSize {
+  return prefs.getDouble('theme_app_font_size') ?? 14.0;
+}
+
+Future<void> saveAppFontSize(double fontSize) async {
+  await prefs.setDouble('theme_app_font_size', fontSize);
+  notifyListeners();
+}
+
+// Getter and setter for heading font scale
+double get headingFontScale {
+  return prefs.getDouble('theme_heading_font_scale') ?? 1.5;
+}
+
+Future<void> saveHeadingFontScale(double scale) async {
+  await prefs.setDouble('theme_heading_font_scale', scale);
+  notifyListeners();
+}
+
+// Getter and setter for code font scale
+double get codeFontScale {
+  return prefs.getDouble('theme_code_font_scale') ?? 1.0;
+}
+
+Future<void> saveCodeFontScale(double scale) async {
+  await prefs.setDouble('theme_code_font_scale', scale);
+  notifyListeners();
+}
+
+// Getter and setter for animation speed
+double get animationSpeed {
+  return prefs.getDouble('theme_animation_speed') ?? 1.0;
+}
+
+Future<void> saveAnimationSpeed(double speed) async {
+  await prefs.setDouble('theme_animation_speed', speed);
+  notifyListeners();
+}
+
+// Getter and setter for reduce animations setting
+bool get reduceAnimations {
+  return prefs.getBool('theme_reduce_animations') ?? false;
+}
+
+Future<void> saveReduceAnimations(bool reduce) async {
+  await prefs.setBool('theme_reduce_animations', reduce);
+  notifyListeners();
+}
+
+// Getter and setter for ripple effect setting
+bool get rippleEffect {
+  return prefs.getBool('theme_ripple_effect') ?? true;
+}
+
+Future<void> saveRippleEffect(bool enable) async {
+  await prefs.setBool('theme_ripple_effect', enable);
+  notifyListeners();
+}
 }
 
 
