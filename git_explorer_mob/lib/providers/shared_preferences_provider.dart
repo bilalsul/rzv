@@ -37,6 +37,109 @@ class Prefs extends ChangeNotifier {
     return prefs.getString(value) ?? "whatt?";
   }
 
+  // App State
+  // Getter and setter for last opened project
+String get lastOpenedProject {
+  return prefs.getString('app_last_opened_project') ?? '';
+}
+
+Future<void> saveLastOpenedProject(String projectPath) async {
+  await prefs.setString('app_last_opened_project', projectPath);
+  notifyListeners();
+}
+
+// Getter and setter for last known route
+String get lastKnownRoute {
+  return prefs.getString('app_last_known_route') ?? '/';
+}
+
+Future<void> saveLastKnownRoute(String route) async {
+  await prefs.setString('app_last_known_route', route);
+  notifyListeners();
+}
+
+// Getter and setter for session start time
+DateTime get sessionStartTime {
+  String? timestamp = prefs.getString('app_session_start_time');
+  return timestamp != null ? DateTime.parse(timestamp) : DateTime.now();
+}
+
+Future<void> saveSessionStartTime(DateTime startTime) async {
+  await prefs.setString('app_session_start_time', startTime.toIso8601String());
+  notifyListeners();
+}
+
+// Getter and setter for onboarding completion status
+bool get isOnboardingCompleted {
+  return prefs.getBool('app_onboarding_completed') ?? false;
+}
+
+Future<void> saveOnboardingCompleted(bool completed) async {
+  await prefs.setBool('app_onboarding_completed', completed);
+  notifyListeners();
+}
+
+// Getter and setter for terms acceptance status
+bool get isTermsAccepted {
+  return prefs.getBool('app_terms_accepted') ?? false;
+}
+
+Future<void> saveTermsAccepted(bool accepted) async {
+  await prefs.setBool('app_terms_accepted', accepted);
+  notifyListeners();
+}
+
+// Getter and setter for analytics opt-in status
+bool get isAnalyticsOptedIn {
+  return prefs.getBool('app_analytics_opted_in') ?? false;
+}
+
+Future<void> saveAnalyticsOptedIn(bool optedIn) async {
+  await prefs.setBool('app_analytics_opted_in', optedIn);
+  notifyListeners();
+}
+
+// Getter and setter for crash reporting enabled status
+bool get isCrashReportingEnabled {
+  return prefs.getBool('app_crash_reporting_enabled') ?? true;
+}
+
+Future<void> saveCrashReportingEnabled(bool enabled) async {
+  await prefs.setBool('app_crash_reporting_enabled', enabled);
+  notifyListeners();
+}
+
+// Getter and setter for app version
+String get appVersion {
+  return prefs.getString('app_version') ?? '1.0.0';
+}
+
+// Future<void> saveAppVersion(String version) async {
+//   await prefs.setString('app_version', version);
+//   notifyListeners();
+// }
+
+// Getter and setter for build number
+String get buildNumber {
+  return prefs.getString('app_build_number') ?? '1';
+}
+
+Future<void> saveBuildNumber(String build) async {
+  await prefs.setString('app_build_number', build);
+  notifyListeners();
+}
+
+// Getter and setter for first install date
+DateTime get firstInstallDate {
+  String? timestamp = prefs.getString('app_first_install_date');
+  return timestamp != null ? DateTime.parse(timestamp) : DateTime.now();
+}
+
+Future<void> saveFirstInstallDate(DateTime installDate) async {
+  await prefs.setString('app_first_install_date', installDate.toIso8601String());
+  notifyListeners();
+}
+
   Locale? get locale {
     String? localeCode = prefs.getString('locale');
     if (localeCode == null || localeCode == 'System') return null;
