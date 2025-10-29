@@ -98,7 +98,16 @@ class _AppShellState extends ConsumerState<AppShell> {
         setState(() {
           currentIndex = index;
           print(currentIndex);
-          print(Prefs().themeMode);
+          // print(Prefs().getFlag('plugin_readonly_mode'));
+          // print(Prefs().setFlag('plugin_readonly_mode_enabled',true));
+
+          // print(Prefs().readonlyModeEnabled);
+          // print(Prefs().getValueList('plugins_enabled'));
+          // print(Prefs().getValueExistInList('plugins_enabled','readonly_mode'));
+          // print(Prefs().getValueExistInList('plugins_enabled','readonly_mode'));
+          // Prefs().clearPrefs();
+          
+
         });
       },
       type: BottomNavigationBarType.fixed,
@@ -172,9 +181,9 @@ List<BottomNavigationBarItem> getVisibleNavigationItems() {
     ),
   ];
   final flagMap = {
-    'AI': 'plugin_ai_assist',
-    'Git History': 'plugin_git_history',
-    'Terminal': 'plugin_terminal',
+    'AI': 'ai_assist',
+    'Git History': 'git_history',
+    'Terminal': 'terminal',
   };
 
   // Filter items based on their flag status
@@ -185,6 +194,6 @@ List<BottomNavigationBarItem> getVisibleNavigationItems() {
       return true;
     }
     // Check if the plugin flag is enabled (defaults from previous plugin getters)
-    return Prefs().getFlag(flagKey);
+    return Prefs().getValueExistInList('plugins_enabled',flagKey);
   }).toList();
 }
