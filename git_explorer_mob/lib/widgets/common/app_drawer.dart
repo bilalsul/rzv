@@ -27,18 +27,18 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final plugins = ref.watch(pluginSettingsProvider);
-    final currentScreen = ref.watch(currentScreenProvider);
+    // final currentScreen = ref.watch(currentScreenProvider);
 
     return Drawer(
       width: 320,
-      child: Column(
-        children: [
+      child: Column( 
+          children: [
           // Header Section
           _buildDrawerHeader(theme),
           
           // Navigation Section
-          _buildNavigationSection(currentScreen, theme),
-          
+          // _buildNavigationSection(currentScreen, theme),
+                    
           // Plugin Toggles Section
           Expanded(
             child: _buildPluginTogglesSection(plugins, theme),
@@ -47,7 +47,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           // Footer Section
           _buildDrawerFooter(theme),
         ],
-      ),
+    ),
     );
   }
 
