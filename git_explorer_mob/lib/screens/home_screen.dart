@@ -8,14 +8,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // drawer: Container(),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(L10n.of(context).helloWorld),
-        
-      ),
-      body: Center(
-        child: Text(L10n.of(context).hello('Bilal')),
-      ),
+      body: Text(L10n.of(context).hello('Bilal')),
     );
   }
 }
