@@ -7,7 +7,8 @@ class PluginSettings {
   final Map<String, dynamic> pluginConfigs;
 
   const PluginSettings({
-    this.enabledPlugins = const ['file_explorer', 'git_history'],
+    // initially no plugins are enabled
+    this.enabledPlugins = const [],
     this.pluginConfigs = const {},
   });
 
@@ -23,7 +24,7 @@ class PluginSettings {
 
   static PluginSettings fromPreferences(SharedPreferences prefs) {
     return PluginSettings(
-      enabledPlugins: prefs.getStringList('plugins_enabled') ?? ['file_explorer', 'git_history'],
+      enabledPlugins: prefs.getStringList('plugins_enabled') ?? [],
       pluginConfigs: _parsePluginConfigs(prefs),
     );
   }
