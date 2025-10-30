@@ -69,11 +69,13 @@ AppDrawer
 
 ## HomeScreen
 
-```txt
+```py
 HomeScreen
+""" there is an already existing DynamicAppBar
 ├── HomeAppBar
 │   ├── AppTitle
 │   └── QuickSettingsMenu
+"""
 ├── ProjectGrid/List
 │   ├── ProjectCard
 │   │   ├── ProjectThumbnail
@@ -85,17 +87,19 @@ HomeScreen
 │   │   └── ProjectActions
 │   │       ├── OpenProjectButton
 │   │       └── ProjectMenu
-│   └── EmptyState (when no projects)
+│   └── EmptyState # when no projects
 │       ├── EmptyIllustration
 │       ├── EmptyMessage
 │       └── CallToAction
 ├── FloatingActionArea
 │   ├── ImportProjectButton
-│   └── CreateProjectButton (if needed)
-└── BottomNavigation (optional)
+│   └── CreateProjectButton # if needed
+"""
+└── BottomNavigation # optional
     ├── GridViewToggle
     ├── SortOptions
     └── FilterOptions
+"""
 ```
 
 ## EditorScreen
