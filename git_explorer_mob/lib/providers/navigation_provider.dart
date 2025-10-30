@@ -55,19 +55,29 @@ final navigationSettingsProvider = StateNotifierProvider<NavigationSettingsNotif
 );
 
 // Convenience provider for current screen
-final currentScreenProvider = Provider<Screen>((ref) {
+// final currentScreenProvider = Provider<Screen>((ref) {
+//   final settings = ref.watch(navigationSettingsProvider);
+//   switch (settings.defaultHomeScreen) {
+//     case 'home':
+//       return Screen.home;
+//     case 'editor':
+//       return Screen.editor;
+//     case 'file_explorer':
+//       return Screen.fileExplorer;
+//     case 'git_history':
+//       return Screen.gitHistory;
+//     case 'settings':
+//       return Screen.settings;
+//   }
+//       return Screen.home;
+//   });
+final currentScreenProvider = StateProvider<Screen>((ref) {
+  final prefs = ref.watch(sharedPreferencesProvider);
   final settings = ref.watch(navigationSettingsProvider);
-  switch (settings.defaultHomeScreen) {
-    case 'home':
-      return Screen.home;
-    case 'editor':
-      return Screen.editor;
-    case 'file_explorer':
-      return Screen.fileExplorer;
-    case 'git_history':
-      return Screen.gitHistory;
-    case 'settings':
-      return Screen.settings;
-  }
-      return Screen.home;
-  });
+  // Use lastKnownScreen from Prefs if available, else fall back to defaultHomeScreen
+  final lastKnownScreen = Prefs().lastKnownScreen; // Assumes Prefs().lastKnownScreen returns a Screen
+  // if (lastKnownScreen != null) {
+    return lastKnownScreen;
+  // }
+  // return stringToScreen(settings.defaultHomeScreen);
+});
