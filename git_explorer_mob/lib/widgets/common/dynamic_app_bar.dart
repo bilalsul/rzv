@@ -43,6 +43,8 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
         return const Text('Settings');
       case Screen.terminal:
         return const Text('Terminal');
+      case Screen.AI:
+        return const Text('AI');
     }
   }
 
