@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/providers/editor_provider.dart';
 import 'package:git_explorer_mob/providers/navigation_provider.dart';
 import 'package:git_explorer_mob/providers/plugin_provider.dart';
@@ -68,13 +69,33 @@ Future<void> saveLastOpenedProject(String projectPath) async {
   notifyListeners();
 }
 
+Screen get lastKnownScreen {
+  switch(lastKnownRoute){
+    case '/' || 'home':
+      return Screen.home;
+    case 'editor':
+      return Screen.editor;
+    case 'settings':
+      return Screen.settings;
+    case 'terminal':
+      return Screen.terminal;
+    case 'ai':
+      return Screen.AI;
+    case 'git_history':
+      return Screen.gitHistory;
+     case 'file_explorer':
+      return Screen.fileExplorer;
+  }
+  return Screen.home;
+}
+
 // Getter and setter for last known route
 String get lastKnownRoute {
   return prefs.getString('app_last_known_route') ?? '/';
 }
 
 Future<void> saveLastKnownRoute(String route) async {
-  await prefs.setString('app_last_known_route', route);
+  await prefs.setString('app_last_known_route', '/$route');
   notifyListeners();
 }
 
