@@ -12,18 +12,18 @@
 
 ## Main
 
-```txt
+```py
 AppShell
-├── AppDrawer (Plugin Toggles)
-├── DynamicAppBar (Dynamic based on Screen)
-│   └── Body (based on whats the currentScreen flag, if all plugins/features ON, one is currentScreen)
-│       ├── HomeScreen(Projects)
-│       ├── EditorScreen(Editor)
-│       ├── AIScreen(AI)
-│       ├── GitHistoryScreen(Git History)
-│       ├── TerminalScreen(Terminal)
-│       └── SettingsScreen(Settings)
-├── BottomNavigationBar(if all plugins enabled, default are Projects, Editor and Settings)
+├── AppDrawer # Plugin Toggles
+├── DynamicAppBar # Dynamic based on Screen
+│   └── Body # based on whats the currentScreen flag, if all plugins/features ON, one is currentScreen
+│       ├── HomeScreen # Projects
+│       ├── EditorScreenEditor
+│       ├── AIScreen # AI
+│       ├── GitHistoryScreen # Git History
+│       ├── TerminalScreen # Terminal
+│       └── SettingsScreen # Settings
+├── BottomNavigationBar # if all plugins enabled, default are Projects, Editor and Settings
 │   ├── Projects
 │   ├── Editor
 │   ├── AI
