@@ -3,8 +3,8 @@
 - [Application Widget Hierarchy](#application-widget-hierarchy)
   - [Main](#main)
   - [AppDrawer](#appdrawer)
-  - [EditorScreen](#editorscreen)
   - [HomeScreen](#homescreen)
+  - [EditorScreen](#editorscreen)
   - [FileExplorerScreen](#fileexplorerscreen)
   - [GitHistoryScreen](#githistoryscreen)
   - [SettingsScreen](#settingsscreen)
@@ -15,13 +15,22 @@
 ```txt
 AppShell
 ├── AppDrawer (Plugin Toggles)
-├── AppBar (Dynamic based on context)
-└── Body (Router-based)
-    ├── HomeScreen
-    ├── EditorScreen
-    ├── FileExplorerScreen
-    ├── GitHistoryScreen
-    └── SettingsScreen
+├── DynamicAppBar (Dynamic based on Screen)
+│   └── Body (based on whats the currentScreen flag, if all plugins/features ON, one is currentScreen)
+│       ├── HomeScreen(Projects)
+│       ├── EditorScreen(Editor)
+│       ├── AIScreen(AI)
+│       ├── GitHistoryScreen(Git History)
+│       ├── TerminalScreen(Terminal)
+│       └── SettingsScreen(Settings)
+├── BottomNavigationBar(if all plugins enabled, default are Projects, Editor and Settings)
+│   ├── Projects
+│   ├── Editor
+│   ├── AI
+│   ├── Git History
+│   ├── Terminal
+│   └── Settings
+
 ```
 
 ## AppDrawer
@@ -62,18 +71,6 @@ AppDrawer
     └── FeedbackButton
 ```
 
-## EditorScreen
-
-```txt
-EditorScreen
-├── EditorToolbar
-│   ├── FileActions
-│   ├── EditorSettings
-│   └── PluginQuickActions
-└── MonacoEditor
-    └── EditorOverlay (plugins can inject here)
-```
-
 ## HomeScreen
 
 ```txt
@@ -103,6 +100,18 @@ HomeScreen
     ├── GridViewToggle
     ├── SortOptions
     └── FilterOptions
+```
+
+## EditorScreen
+
+```txt
+EditorScreen
+├── EditorToolbar
+│   ├── FileActions
+│   ├── EditorSettings
+│   └── PluginQuickActions
+└── MonacoEditor
+    └── EditorOverlay (plugins can inject here)
 ```
 
 ## FileExplorerScreen
