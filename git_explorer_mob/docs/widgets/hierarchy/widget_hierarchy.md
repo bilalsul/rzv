@@ -35,40 +35,36 @@ AppShell
 
 ## AppDrawer
 
-```txt
+```py
 AppDrawer
 ├── DrawerHeader
 │   ├── AppLogo
 │   ├── CurrentProject
 │   └── ProjectQuickInfo
-├── NavigationSection
-│   ├── NavItem
-│   │   ├── NavIcon
-│   │   ├── NavLabel
-│   │   └── Badge/Indicator
-│   └── SectionDivider
-├── PluginTogglesSection
-│   ├── PluginToggleItem
+├── PluginTogglesSection # for each plugin category
+│   ├── PluginToggleItem # for each member of a plugin category
 │   │   ├── PluginIcon
 │   │   ├── PluginName
 │   │   ├── PluginDescription
 │   │   ├── ToggleSwitch
-│   │   └── PluginSettings (expandable)
+│   │   └── PluginSettings # expandable
 │   └── PluginCategories
 │       ├── EditorPlugins
 │       ├── GitPlugins
 │       ├── UtilityPlugins
 │       └── ExperimentalPlugins
+"""
 ├── QuickActionsSection
 │   ├── QuickAction
 │   │   ├── ActionIcon
 │   │   ├── ActionLabel
 │   │   └── ShortcutHint
 │   └── ActionGroups
+"""
 └── DrawerFooter
-    ├── UserProfile
-    ├── AppVersion
-    └── FeedbackButton
+    ├── FeedbackButton
+    ├── AboutButton
+    └── AppVersion
 ```
 
 ## HomeScreen
