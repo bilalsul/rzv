@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // drawer: Container(),
-      body: Text(L10n.of(context).hello('Bilal')),
+      body: Text('Home'),
     );
   }
 }
