@@ -64,7 +64,7 @@ class _AppShellState extends ConsumerState<AppShell> {
         ),
         drawer: const AppDrawer(),
         body: _buildBody(currentScreen, plugins),
-       bottomNavigationBar: _buildBottomNavigationBar(),
+        bottomNavigationBar: _buildBottomNavigationBar(),
      ) 
     );
   }
@@ -83,6 +83,10 @@ class _AppShellState extends ConsumerState<AppShell> {
         return plugins.contains('git_history')
             ? const HomeScreen()
             : const FeatureDisabledScreen(feature: 'Git History');
+      case Screen.terminal:
+        return plugins.contains('terminal')
+            ? const HomeScreen()
+            : const FeatureDisabledScreen(feature: 'Integrated Terminal');
       case Screen.settings:
         return const HomeScreen();
     }

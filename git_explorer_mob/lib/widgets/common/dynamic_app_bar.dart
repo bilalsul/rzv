@@ -41,6 +41,8 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
         return const Text('Git History');
       case Screen.settings:
         return const Text('Settings');
+      case Screen.terminal:
+        return const Text('Terminal');
     }
   }
 
