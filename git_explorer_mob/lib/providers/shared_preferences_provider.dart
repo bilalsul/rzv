@@ -404,6 +404,70 @@ Future<void> saveCodeFontScale(double scale) async {
 }
 
 // -------------------------------
+// Editor convenience helpers
+// -------------------------------
+
+/// Return a map of editor-related settings (used to configure Monaco)
+Map<String, dynamic> getEditorSettings() {
+  return {
+    'monacoTheme': editorMonacoTheme,
+    'fontFamily': editorFontFamily,
+    'fontSize': editorFontSize,
+    'tabSize': editorTabSize,
+    'lineNumbers': editorLineNumbers,
+    'minimap': editorMinimapEnabled,
+    'autoSave': editorAutoSave,
+    'autoSaveDelay': editorAutoSaveDelay,
+    'formatOnSave': editorFormatOnSave,
+    'wordWrap': editorWordWrap,
+    'insertSpaces': editorInsertSpaces,
+  };
+}
+
+/// Update a single editor setting by key. Accepts both typed keys used above
+Future<void> saveEditorSetting(String key, dynamic value) async {
+  switch (key) {
+    case 'monacoTheme':
+      await saveEditorMonacoTheme(value as String);
+      break;
+    case 'fontFamily':
+      await saveEditorFontFamily(value as String);
+      break;
+    case 'fontSize':
+      await saveEditorFontSize((value as num).toDouble());
+      break;
+    case 'tabSize':
+      await saveEditorTabSize((value as num).toInt());
+      break;
+    case 'lineNumbers':
+      await saveEditorLineNumbers(value as String);
+      break;
+    case 'minimap':
+      await saveEditorMinimapEnabled(value as bool);
+      break;
+    case 'autoSave':
+      await saveEditorAutoSave(value as bool);
+      break;
+    case 'autoSaveDelay':
+      await saveEditorAutoSaveDelay((value as num).toInt());
+      break;
+    case 'formatOnSave':
+      await saveEditorFormatOnSave(value as bool);
+      break;
+    case 'wordWrap':
+      await saveEditorWordWrap(value as String);
+      break;
+    case 'insertSpaces':
+      await saveEditorInsertSpaces(value as bool);
+      break;
+    default:
+      // fallback to storing as plugin config
+      await setPluginConfig('editor', key, value);
+  }
+  notifyListeners();
+}
+
+// -------------------------------
 // Current open file / editor session helpers
 // -------------------------------
 
