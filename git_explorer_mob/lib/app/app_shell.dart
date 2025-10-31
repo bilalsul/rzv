@@ -261,7 +261,7 @@ Widget _buildBottomNavigationBar(List<String> plugins) {
   List<NavItem> getVisibleNavItems(List<String> enabledPlugins) {
     final allNavItems = [
       NavItem(
-        screen: Screen.fileExplorer,
+        screen: Screen.home,
         label: 'Projects',
         icon: const Icon(Icons.folder_shared),
         activeIcon: const Icon(Icons.folder_shared_outlined),
