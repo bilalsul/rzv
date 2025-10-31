@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
-import 'package:git_explorer_mob/providers/navigation_provider.dart';
-import 'package:git_explorer_mob/providers/plugin_provider.dart';
-import 'package:git_explorer_mob/providers/theme_provider.dart';
+import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/screens/settings_screen.dart';
 import 'package:git_explorer_mob/screens/template.dart';
 
 // Providers
-import '../providers/shared_preferences_provider.dart';
 // import 'package:git_explorer_mob/providers/plugin_provider.dart';
 // import 'package:git_explorer_mob/providers/theme_provider.dart';
 // import '../providers/navigation_provider.dart';
@@ -49,6 +46,7 @@ class AppShell extends ConsumerStatefulWidget {
 
 class _AppShellState extends ConsumerState<AppShell> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // Navigation is driven by Prefs via prefsProvider
 
   @override
   void initState() {
@@ -65,11 +63,10 @@ class _AppShellState extends ConsumerState<AppShell> {
 
   @override
   Widget build(BuildContext context) {
-    final currentScreen = ref.watch(currentScreenProvider);
-    final currentScreen2 = Prefs().lastKnownScreen;
-
-    final themeMode = ref.watch(themeModeProvider);
-    final plugins = ref.watch(enabledPluginsProvider);
+    final prefs = ref.watch(prefsProvider);
+    final currentScreen = prefs.lastKnownScreen;
+    final themeMode = prefs.themeMode;
+    final plugins = prefs.enabledPlugins;
 
     return MaterialApp(
       title: 'Unnamed Code Editor',
@@ -226,10 +223,9 @@ class _AppShellState extends ConsumerState<AppShell> {
 
 Widget _buildBottomNavigationBar(List<String> plugins) {
     final visibleNavItems = getVisibleNavItems(plugins);
-    final currentScreen = ref.watch(currentScreenProvider);
 
     // Compute current index based on currentScreen
-    int currentIndex = visibleNavItems.indexWhere((item) => item.screen == currentScreen);
+    int currentIndex = visibleNavItems.indexWhere((item) => item.screen == Prefs().lastKnownScreen);
     if (currentIndex == -1) {
       currentIndex = 0;  // Fallback to first item
     }
@@ -237,10 +233,12 @@ Widget _buildBottomNavigationBar(List<String> plugins) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: (index) {
-        final selectedItem = visibleNavItems[index];
-        final selectedScreen = selectedItem.screen;
-        ref.read(currentScreenProvider.notifier).state = selectedScreen;
-        Prefs().saveLastKnownRoute(screenToString(selectedScreen));
+  final selectedItem = visibleNavItems[index];
+  final selectedScreen = selectedItem.screen;
+  // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
+  Prefs().saveLastKnownRoute(screenToString(selectedScreen));
+  // Also trigger a local rebuild for immediate feedback
+  // setState(() {});
 
         // For debugging: Get/print the value of the current selected item
         print('Selected index: $index');
