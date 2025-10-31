@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 // Other providers removed; Prefs is now the central settings source.
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // =============================================
 // SharedPreferences Provider
@@ -19,10 +20,42 @@ final prefsProvider = ChangeNotifierProvider<Prefs>((ref) => Prefs());
 
 class Prefs extends ChangeNotifier {
   late SharedPreferences prefs;
+  // Secure storage for sensitive values such as API keys
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
   static final Prefs _instance = Prefs._internal();
 
   factory Prefs() {
     return _instance;
+  }
+
+  // -------------------------------
+  // Secure plugin API key helpers
+  // -------------------------------
+  /// Store a plugin API key securely and set a flag in SharedPreferences
+  Future<void> setPluginApiKey(String pluginId, String apiKey) async {
+    final key = 'plugin_${pluginId}_api_key';
+    await _secureStorage.write(key: key, value: apiKey);
+    await prefs.setBool('plugin_${pluginId}_has_api_key', true);
+    notifyListeners();
+  }
+
+  /// Read a plugin API key from secure storage (may be null if not set)
+  Future<String?> getPluginApiKey(String pluginId) async {
+    final key = 'plugin_${pluginId}_api_key';
+    return await _secureStorage.read(key: key);
+  }
+
+  /// Returns whether an API key is present for the plugin (fast, synchronous)
+  bool hasPluginApiKey(String pluginId) {
+    return prefs.getBool('plugin_${pluginId}_has_api_key') ?? false;
+  }
+
+  /// Remove the plugin API key and clear the flag
+  Future<void> removePluginApiKey(String pluginId) async {
+    final key = 'plugin_${pluginId}_api_key';
+    await _secureStorage.delete(key: key);
+    await prefs.remove('plugin_${pluginId}_has_api_key');
+    notifyListeners();
   }
 
   Prefs._internal() {

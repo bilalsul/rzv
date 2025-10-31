@@ -8,11 +8,16 @@ import 'package:git_explorer_mob/enums/options/supported_language.dart';
 /// SettingsScreen no longer contains plugin toggles (they live in AppDrawer).
 /// This screen exposes plugin-specific settings panels and connects them
 /// to plugin configuration stored through `pluginSettingsProvider`.
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  @override
+  Widget build(BuildContext context) {
     // single source: watch Prefs
     final prefs = ref.watch(prefsProvider);
     // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
@@ -178,16 +183,33 @@ class SettingsScreen extends ConsumerWidget {
             title: 'AI Settings',
             visible: aiEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Default model'),
+              const Text('Model provider'),
               const SizedBox(height: 8),
-              DropdownButton<String>(
-                value: (aiCfg['model'] ?? 'gpt') as String,
-                items: const [DropdownMenuItem(value: 'gpt', child: Text('GPT'))],
-                onChanged: (v) async { if (v != null) await prefs.setPluginConfig('ai', 'model', v); },
-              ),
-              const SizedBox(height: 8),
+              Wrap(spacing: 8, children: [
+                _modelChip(prefs, 'gpt', label: 'OpenAI', color: Colors.blue, icon: Icons.cloud),
+                _modelChip(prefs, 'claude', label: 'Anthropic', color: Colors.orange, icon: Icons.bolt),
+                _modelChip(prefs, 'local', label: 'Local', color: Colors.green, icon: Icons.computer),
+              ]),
+              const SizedBox(height: 12),
               const Text('Max tokens'),
-              Slider(value: (aiCfg['maxTokens'] ?? 512).toDouble(), min: 64, max: 2048, divisions: 32, onChanged: (v) async => await prefs.setPluginConfig('ai', 'maxTokens', v.toInt())),
+              Slider(value: (aiCfg['maxTokens'] ?? 512).toDouble(), min: 64, max: 2048, divisions: 32, onChanged: (v) async { await prefs.setPluginConfig('ai', 'maxTokens', v.toInt()); setState(() {}); }),
+
+              const SizedBox(height: 12),
+              // API key storage (secure)
+              ListTile(
+                title: const Text('API Key (secure)'),
+                subtitle: Text(prefs.hasPluginApiKey('ai') ? 'Key is set' : 'No key set'),
+                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () => _showApiKeyDialog(context, 'ai'),
+                  ),
+                  if (prefs.hasPluginApiKey('ai')) IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () async { await Prefs().removePluginApiKey('ai'); setState(() {}); },
+                  ),
+                ]),
+              ),
             ]),
           ),
 
@@ -257,6 +279,63 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ]),
       ),
+    );
+  }
+
+  Widget _modelChip(Prefs prefs, String id, {required String label, required Color color, required IconData icon}) {
+    final selected = (prefs.getPluginConfig('ai', 'model') ?? 'gpt') == id;
+    return GestureDetector(
+      onTap: () async {
+        await prefs.setPluginConfig('ai', 'model', id);
+        setState(() {});
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircleAvatar(
+            backgroundColor: color,
+            child: Icon(icon, color: Colors.white, size: 18),
+          ),
+          const SizedBox(height: 4),
+          Text(label, style: TextStyle(fontSize: 12, fontWeight: selected ? FontWeight.w700 : FontWeight.normal)),
+        ],
+      ),
+    );
+  }
+
+  void _showApiKeyDialog(BuildContext context, String pluginId) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return FutureBuilder<String?>(
+          future: Prefs().getPluginApiKey(pluginId),
+          builder: (context, snapshot) {
+            final controller = TextEditingController(text: snapshot.data ?? '');
+            return AlertDialog(
+              title: const Text('Set API Key'),
+              content: TextField(
+                controller: controller,
+                obscureText: true,
+                decoration: const InputDecoration(hintText: 'Enter API Key'),
+              ),
+              actions: [
+                TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+                FilledButton(
+                  onPressed: () async {
+                    final value = controller.text.trim();
+                    if (value.isNotEmpty) {
+                      await Prefs().setPluginApiKey(pluginId, value);
+                    }
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
