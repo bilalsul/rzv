@@ -8,6 +8,7 @@ import 'package:git_explorer_mob/providers/editor_settings_provider.dart';
 import 'package:git_explorer_mob/providers/git_settings_provider.dart';
 import 'package:git_explorer_mob/providers/ai_settings_provider.dart';
 import 'package:git_explorer_mob/providers/file_explorer_settings_provider.dart';
+import 'package:git_explorer_mob/enums/options/supported_language.dart';
 
 /// SettingsScreen no longer contains plugin toggles (they live in AppDrawer).
 /// This screen exposes plugin-specific settings panels and connects them
@@ -32,6 +33,12 @@ class SettingsScreen extends ConsumerWidget {
     final gitCtrl = ref.read(gitSettingsProvider.notifier);
     final aiCtrl = ref.read(aiSettingsProvider.notifier);
     final feCtrl = ref.read(fileExplorerSettingsProvider.notifier);
+    final terminalEnabled = ref.watch(isPluginEnabledProvider('terminal'));
+    final themeCustomizerEnabled = ref.watch(isPluginEnabledProvider('theme_customizer'));
+    // watch Prefs so the UI reacts to changes made elsewhere
+    final prefs = ref.watch(prefsProvider);
+  final pluginConfigs = ref.watch(pluginSettingsProvider).pluginConfigs;
+  final terminalCfg = pluginConfigs['terminal'] ?? {};
 
     return Scaffold(
       body: SafeArea(
@@ -43,7 +50,7 @@ class SettingsScreen extends ConsumerWidget {
           const Text('Appearance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           Builder(builder: (context) {
-            final currentTheme = Prefs().themeMode;
+            final currentTheme = prefs.themeMode;
             return Column(children: [
               RadioListTile<ThemeMode>(
                 title: const Text('System Default'),
@@ -83,10 +90,54 @@ class SettingsScreen extends ConsumerWidget {
             ]);
           }),
 
+          // Language selection
+          const SizedBox(height: 8),
+          const Text('Language', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 8),
+          DropdownButtonFormField<String>(
+            value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
+            items: supportedLanguages.expand((m) => m.entries).map((entry) {
+              final label = entry.key;
+              final code = entry.value;
+              return DropdownMenuItem(value: code == 'System' ? 'System' : code, child: Text(label));
+            }).toList(),
+            onChanged: (v) async {
+              if (v == null) return;
+              await Prefs().saveLocaleToPrefs(v);
+            },
+          ),
+          const SizedBox(height: 12),
+
+          // Theme Customizer (plugin)
+          PluginSettingsPanel(
+            title: 'Theme Customizer',
+            visible: themeCustomizerEnabled,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('Primary color'),
+              const SizedBox(height: 8),
+              Row(children: [
+                Expanded(child: Wrap(spacing: 8, children: [
+                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF2196F3); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(primaryColor: 0xFF2196F3)); }, child: const Text('Blue')),
+                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFFE91E63); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(primaryColor: 0xFFE91E63)); }, child: const Text('Pink')),
+                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF4CAF50); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(primaryColor: 0xFF4CAF50)); }, child: const Text('Green')),
+                ])),
+              ]),
+              const SizedBox(height: 12),
+              Row(children: [
+                const Expanded(child: Text('Border radius')),
+                Slider(value: prefs.borderRadius, min: 0, max: 32, divisions: 16, label: prefs.borderRadius.toStringAsFixed(0), onChanged: (v) async { await Prefs().saveBorderRadius(v); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(borderRadius: v)); }),
+              ]),
+              Row(children: [
+                const Expanded(child: Text('Reduce animations')),
+                Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(reduceAnimations: v)); }),
+              ]),
+            ]),
+          ),
+
           // Editor settings panel (visible only when editor plugin enabled)
           PluginSettingsPanel(
             title: 'Editor Settings',
-            visible: true,
+            visible: editorEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('Tab size'),
               Slider(
@@ -144,6 +195,30 @@ class SettingsScreen extends ConsumerWidget {
               const SizedBox(height: 8),
               const Text('Max tokens'),
               Slider(value: (aiCfg['maxTokens'] ?? 512).toDouble(), min: 64, max: 2048, divisions: 32, onChanged: (v) => aiCtrl.setMaxTokens(v.toInt())),
+            ]),
+          ),
+
+          // Terminal settings
+          PluginSettingsPanel(
+            title: 'Terminal Settings',
+            visible: terminalEnabled,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('Shell executable'),
+              const SizedBox(height: 8),
+              TextField(
+                controller: TextEditingController(text: (terminalCfg['shellPath'] ?? '/bin/bash') as String),
+                decoration: const InputDecoration(hintText: '/bin/bash'),
+                onSubmitted: (v) => ref.read(pluginSettingsProvider.notifier).updatePluginConfig('terminal', 'shellPath', v.trim()),
+              ),
+              const SizedBox(height: 8),
+              Row(children: [
+                const Expanded(child: Text('Font size')),
+                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) => ref.read(pluginSettingsProvider.notifier).updatePluginConfig('terminal', 'fontSize', v.toInt())),
+              ]),
+              Row(children: [
+                const Expanded(child: Text('Audible bell')),
+                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) => ref.read(pluginSettingsProvider.notifier).updatePluginConfig('terminal', 'bell', v)),
+              ]),
             ]),
           ),
 
