@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:git_explorer_mob/enums/options/screen.dart';
-import 'package:git_explorer_mob/providers/navigation_provider.dart';
-import 'package:git_explorer_mob/providers/plugin_provider.dart';
+// Navigation moved to AppShell
+// Navigation and plugin state now come from Prefs
 
 // Providers
 import '../../providers/shared_preferences_provider.dart';
@@ -26,7 +25,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final plugins = ref.watch(pluginSettingsProvider);
+  final prefs = ref.watch(prefsProvider);
     // final currentScreen = ref.watch(currentScreenProvider);
 
     return Drawer(
@@ -41,7 +40,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                     
           // Plugin Toggles Section
           Expanded(
-            child: _buildPluginTogglesSection(plugins, theme),
+            child: _buildPluginTogglesSection(prefs, theme),
           ),
           
           // Footer Section
@@ -131,130 +130,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  // =============================================
-  // Navigation Section
-  // =============================================
+  // Navigation UI has been migrated to use Prefs; AppShell builds the primary navigation.
 
-  Widget _buildNavigationSection(Screen currentScreen, ThemeData theme) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 1),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: theme.dividerColor.withOpacity(0.1),
-            width: 1,
-          ),
-        ),
-      ),
-      child: Column(
-        children: [
-          _buildNavItem(
-            icon: Icons.home_outlined,
-            activeIcon: Icons.home,
-            label: 'Home',
-            screen: Screen.home,
-            isActive: currentScreen == Screen.home,
-            theme: theme,
-          ),
-          _buildNavItem(
-            icon: Icons.edit_outlined,
-            activeIcon: Icons.edit,
-            label: 'Editor',
-            screen: Screen.editor,
-            isActive: currentScreen == Screen.editor,
-            theme: theme,
-          ),
-          _buildNavItem(
-            icon: Icons.folder_outlined,
-            activeIcon: Icons.folder,
-            label: 'File Explorer',
-            screen: Screen.fileExplorer,
-            isActive: currentScreen == Screen.fileExplorer,
-            theme: theme,
-            badge: ref.watch(isPluginEnabledProvider('file_explorer'))
-                ? null
-                : 'Off',
-          ),
-          _buildNavItem(
-            icon: Icons.history_outlined,
-            activeIcon: Icons.history,
-            label: 'Git History',
-            screen: Screen.gitHistory,
-            isActive: currentScreen == Screen.gitHistory,
-            theme: theme,
-            badge: ref.watch(isPluginEnabledProvider('git_history'))
-                ? null
-                : 'Off',
-          ),
-          _buildNavItem(
-            icon: Icons.settings_outlined,
-            activeIcon: Icons.settings,
-            label: 'Settings',
-            screen: Screen.settings,
-            isActive: currentScreen == Screen.settings,
-            theme: theme,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem({
-    required IconData icon,
-    required IconData activeIcon,
-    required String label,
-    required Screen screen,
-    required bool isActive,
-    required ThemeData theme,
-    String? badge,
-  }) {
-    return ListTile(
-      leading: Icon(
-        isActive ? activeIcon : icon,
-        color: isActive
-            ? theme.colorScheme.primary
-            : theme.colorScheme.onSurface.withOpacity(0.7),
-        size: 20,
-      ),
-      title: Text(
-        label,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: isActive
-              ? theme.colorScheme.primary
-              : theme.colorScheme.onSurface,
-          fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
-        ),
-      ),
-      trailing: badge != null
-          ? Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.errorContainer,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                badge,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onErrorContainer,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            )
-          : null,
-      onTap: () {
-        ref.read(navigationSettingsProvider).navigateTo(context, screen);
-        Navigator.of(context).pop();
-      },
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      visualDensity: const VisualDensity(vertical: -2),
-    );
-  }
+  // Navigation items removed from the drawer; main navigation is handled by AppShell.
 
   // =============================================
   // Plugin Toggles Section
   // =============================================
 
-  Widget _buildPluginTogglesSection(PluginSettings plugins, ThemeData theme) {
+  Widget _buildPluginTogglesSection(Prefs prefs, ThemeData theme) {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -382,7 +266,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   }
 
   Widget _buildPluginToggleItem(PluginDefinition plugin, ThemeData theme) {
-    final isEnabled = ref.watch(isPluginEnabledProvider(plugin.id));
+    final isEnabled = Prefs().isPluginEnabled(plugin.id);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -423,8 +307,10 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             : null,
         trailing: Switch.adaptive(
           value: isEnabled,
-          onChanged: (enabled) {
-            ref.read(pluginSettingsProvider.notifier).togglePlugin(plugin.id, enabled);
+          onChanged: (enabled) async {
+            await Prefs().setPluginEnabled(plugin.id, enabled);
+            // Trigger a rebuild so changes are visible immediately
+            setState(() {});
           },
           activeColor: theme.colorScheme.primary,
           inactiveTrackColor: theme.colorScheme.surfaceVariant,
