@@ -55,4 +55,41 @@ class AiChatService {
       throw Exception('AI request failed (${resp.statusCode}): $messageBody');
     }
   }
+
+  /// Streaming variant: yields incremental chunks of assistant text.
+  /// For now we simulate streaming when the input is exactly 'gen'.
+  /// Otherwise, if an API key is present, we yield the full reply once.
+  Stream<String> streamMessage(String message) async* {
+    // Fake streaming generator when user types 'gen'
+    if (message.trim() == 'gen') {
+      const parts = [
+        'Generating',
+        ' a',
+        ' beautiful',
+        ' response',
+        ' —',
+        ' this',
+        ' is',
+        ' streamed',
+        ' chunk',
+        ' by',
+        ' chunk.'
+      ];
+      for (final p in parts) {
+        await Future.delayed(const Duration(milliseconds: 220));
+        yield p;
+      }
+      return;
+    }
+
+    // For real messages, ensure API key exists
+    final apiKey = await prefs.getPluginApiKey('openai');
+    if (apiKey == null || apiKey.isEmpty) {
+      throw Exception('No API key configured for OpenAI');
+    }
+
+    // Fallback: call non-streaming endpoint and yield once
+    final reply = await sendMessage(message);
+    yield reply;
+  }
 }
