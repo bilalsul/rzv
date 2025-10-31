@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:git_explorer_mob/providers/plugin_provider.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/providers/theme_provider.dart';
+// Theme provider removed; theme is driven from Prefs
 import 'package:git_explorer_mob/widgets/settings/plugin_settings_panel.dart';
-import 'package:git_explorer_mob/providers/editor_settings_provider.dart';
-import 'package:git_explorer_mob/providers/git_settings_provider.dart';
-import 'package:git_explorer_mob/providers/ai_settings_provider.dart';
-import 'package:git_explorer_mob/providers/file_explorer_settings_provider.dart';
 import 'package:git_explorer_mob/enums/options/supported_language.dart';
 
 /// SettingsScreen no longer contains plugin toggles (they live in AppDrawer).
@@ -18,27 +13,39 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // convenience flags: whether plugin is enabled (AppDrawer toggles these)
-    final editorEnabled = ref.watch(isPluginEnabledProvider('editor'));
-    final gitEnabled = ref.watch(isPluginEnabledProvider('git_history'));
-    final aiEnabled = ref.watch(isPluginEnabledProvider('ai_assist'));
-    final fileExplorerEnabled = ref.watch(isPluginEnabledProvider('file_explorer'));
-
-    final editorCfg = ref.watch(editorSettingsProvider);
-    final gitCfg = ref.watch(gitSettingsProvider);
-    final aiCfg = ref.watch(aiSettingsProvider);
-    final feCfg = ref.watch(fileExplorerSettingsProvider);
-
-    final editorCtrl = ref.read(editorSettingsProvider.notifier);
-    final gitCtrl = ref.read(gitSettingsProvider.notifier);
-    final aiCtrl = ref.read(aiSettingsProvider.notifier);
-    final feCtrl = ref.read(fileExplorerSettingsProvider.notifier);
-    final terminalEnabled = ref.watch(isPluginEnabledProvider('terminal'));
-    final themeCustomizerEnabled = ref.watch(isPluginEnabledProvider('theme_customizer'));
-    // watch Prefs so the UI reacts to changes made elsewhere
+    // single source: watch Prefs
     final prefs = ref.watch(prefsProvider);
-  final pluginConfigs = ref.watch(pluginSettingsProvider).pluginConfigs;
-  final terminalCfg = pluginConfigs['terminal'] ?? {};
+    // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
+    final editorEnabled = prefs.isPluginEnabled('editor');
+    final gitEnabled = prefs.isPluginEnabled('git_history');
+    final aiEnabled = prefs.isPluginEnabled('ai_assist');
+    final fileExplorerEnabled = prefs.isPluginEnabled('file_explorer');
+    final terminalEnabled = prefs.isPluginEnabled('terminal');
+    final themeCustomizerEnabled = prefs.isPluginEnabled('theme_customizer');
+    
+    // plugin configs read via Prefs.getPluginConfig(pluginName, key)
+    final editorCfg = {
+      'tabSize': prefs.getPluginConfig('editor', 'tabSize') ?? 2,
+      'showLineNumbers': prefs.getPluginConfig('editor', 'showLineNumbers') ?? true,
+    };
+    final gitCfg = {
+      'autoFetch': prefs.getPluginConfig('git', 'autoFetch') ?? true,
+      'defaultBranch': prefs.getPluginConfig('git', 'defaultBranch') ?? 'main',
+    };
+    final aiCfg = {
+      'model': prefs.getPluginConfig('ai', 'model') ?? 'gpt',
+      'maxTokens': prefs.getPluginConfig('ai', 'maxTokens') ?? 512,
+    };
+    final feCfg = {
+      'showHidden': prefs.getPluginConfig('file_explorer', 'showHidden') ?? false,
+      'previewMarkdown': prefs.getPluginConfig('file_explorer', 'previewMarkdown') ?? true,
+    };
+    final terminalCfg = {
+      'shellPath': prefs.getPluginConfig('terminal', 'shellPath') ?? '/bin/bash',
+      'fontSize': prefs.getPluginConfig('terminal', 'fontSize') ?? 14,
+      'bell': prefs.getPluginConfig('terminal', 'bell') ?? true,
+    };
+  
 
     return Scaffold(
       body: SafeArea(
@@ -52,39 +59,25 @@ class SettingsScreen extends ConsumerWidget {
           Builder(builder: (context) {
             final currentTheme = prefs.themeMode;
             return Column(children: [
-              RadioListTile<ThemeMode>(
+                  RadioListTile<ThemeMode>(
                 title: const Text('System Default'),
                 value: ThemeMode.system,
                 groupValue: currentTheme,
                 onChanged: (v) async {
-                  await Prefs().saveThemeMode('system');
-                  // also update theme provider so app reacts immediately
-                  final settingsNotifier = ref.read(themeSettingsProvider.notifier);
-                  final settings = ref.read(themeSettingsProvider);
-                  await settingsNotifier.updateSettings(settings.copyWith(themeMode: 'system'));
+                      await Prefs().saveThemeMode('system');
                 },
               ),
               RadioListTile<ThemeMode>(
                 title: const Text('Light'),
                 value: ThemeMode.light,
                 groupValue: currentTheme,
-                onChanged: (v) async {
-                  await Prefs().saveThemeMode('light');
-                  final settingsNotifier = ref.read(themeSettingsProvider.notifier);
-                  final settings = ref.read(themeSettingsProvider);
-                  await settingsNotifier.updateSettings(settings.copyWith(themeMode: 'light'));
-                },
+                onChanged: (v) async { await Prefs().saveThemeMode('light'); },
               ),
               RadioListTile<ThemeMode>(
                 title: const Text('Dark'),
                 value: ThemeMode.dark,
                 groupValue: currentTheme,
-                onChanged: (v) async {
-                  await Prefs().saveThemeMode('dark');
-                  final settingsNotifier = ref.read(themeSettingsProvider.notifier);
-                  final settings = ref.read(themeSettingsProvider);
-                  await settingsNotifier.updateSettings(settings.copyWith(themeMode: 'dark'));
-                },
+                onChanged: (v) async { await Prefs().saveThemeMode('dark'); },
               ),
               const SizedBox(height: 12),
             ]);
@@ -117,19 +110,19 @@ class SettingsScreen extends ConsumerWidget {
               const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Wrap(spacing: 8, children: [
-                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF2196F3); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(primaryColor: 0xFF2196F3)); }, child: const Text('Blue')),
-                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFFE91E63); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(primaryColor: 0xFFE91E63)); }, child: const Text('Pink')),
-                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF4CAF50); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(primaryColor: 0xFF4CAF50)); }, child: const Text('Green')),
+                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF2196F3); }, child: const Text('Blue')),
+                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFFE91E63); }, child: const Text('Pink')),
+                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF4CAF50); }, child: const Text('Green')),
                 ])),
               ]),
               const SizedBox(height: 12),
               Row(children: [
                 const Expanded(child: Text('Border radius')),
-                Slider(value: prefs.borderRadius, min: 0, max: 32, divisions: 16, label: prefs.borderRadius.toStringAsFixed(0), onChanged: (v) async { await Prefs().saveBorderRadius(v); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(borderRadius: v)); }),
+                Slider(value: prefs.borderRadius, min: 0, max: 32, divisions: 16, label: prefs.borderRadius.toStringAsFixed(0), onChanged: (v) async { await Prefs().saveBorderRadius(v); }),
               ]),
               Row(children: [
                 const Expanded(child: Text('Reduce animations')),
-                Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); ref.read(themeSettingsProvider.notifier).updateSettings(ref.read(themeSettingsProvider).copyWith(reduceAnimations: v)); }),
+                Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); }),
               ]),
             ]),
           ),
@@ -146,7 +139,7 @@ class SettingsScreen extends ConsumerWidget {
                 max: 8,
                 divisions: 6,
                 label: '${editorCfg['tabSize'] ?? 2}',
-                onChanged: (v) => editorCtrl.setTabSize(v.toInt()),
+                onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
               ),
               const SizedBox(height: 8),
               Row(children: [
@@ -154,7 +147,7 @@ class SettingsScreen extends ConsumerWidget {
                 const Spacer(),
                 Checkbox(
                   value: (editorCfg['showLineNumbers'] ?? true) as bool,
-                  onChanged: (v) => editorCtrl.setShowLineNumbers(v ?? true),
+                  onChanged: (v) async => await prefs.setPluginConfig('editor', 'showLineNumbers', v ?? true),
                 ),
               ]),
             ]),
@@ -167,7 +160,7 @@ class SettingsScreen extends ConsumerWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 const Expanded(child: Text('Auto-fetch')),
-                Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) => gitCtrl.setAutoFetch(v)),
+                Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v)),
               ]),
               const SizedBox(height: 8),
               const Text('Default branch'),
@@ -175,7 +168,7 @@ class SettingsScreen extends ConsumerWidget {
               TextField(
                 controller: TextEditingController(text: (gitCfg['defaultBranch'] ?? 'main') as String),
                 decoration: const InputDecoration(hintText: 'main'),
-                onSubmitted: (v) => gitCtrl.setDefaultBranch(v.trim()),
+                onSubmitted: (v) async => await prefs.setPluginConfig('git', 'defaultBranch', v.trim()),
               ),
             ]),
           ),
@@ -190,11 +183,11 @@ class SettingsScreen extends ConsumerWidget {
               DropdownButton<String>(
                 value: (aiCfg['model'] ?? 'gpt') as String,
                 items: const [DropdownMenuItem(value: 'gpt', child: Text('GPT'))],
-                onChanged: (v) { if (v != null) aiCtrl.setModel(v); },
+                onChanged: (v) async { if (v != null) await prefs.setPluginConfig('ai', 'model', v); },
               ),
               const SizedBox(height: 8),
               const Text('Max tokens'),
-              Slider(value: (aiCfg['maxTokens'] ?? 512).toDouble(), min: 64, max: 2048, divisions: 32, onChanged: (v) => aiCtrl.setMaxTokens(v.toInt())),
+              Slider(value: (aiCfg['maxTokens'] ?? 512).toDouble(), min: 64, max: 2048, divisions: 32, onChanged: (v) async => await prefs.setPluginConfig('ai', 'maxTokens', v.toInt())),
             ]),
           ),
 
@@ -208,16 +201,16 @@ class SettingsScreen extends ConsumerWidget {
               TextField(
                 controller: TextEditingController(text: (terminalCfg['shellPath'] ?? '/bin/bash') as String),
                 decoration: const InputDecoration(hintText: '/bin/bash'),
-                onSubmitted: (v) => ref.read(pluginSettingsProvider.notifier).updatePluginConfig('terminal', 'shellPath', v.trim()),
+                onSubmitted: (v) async => await prefs.setPluginConfig('terminal', 'shellPath', v.trim()),
               ),
               const SizedBox(height: 8),
               Row(children: [
                 const Expanded(child: Text('Font size')),
-                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) => ref.read(pluginSettingsProvider.notifier).updatePluginConfig('terminal', 'fontSize', v.toInt())),
+                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt())),
               ]),
               Row(children: [
                 const Expanded(child: Text('Audible bell')),
-                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) => ref.read(pluginSettingsProvider.notifier).updatePluginConfig('terminal', 'bell', v)),
+                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v)),
               ]),
             ]),
           ),
@@ -229,18 +222,39 @@ class SettingsScreen extends ConsumerWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 const Expanded(child: Text('Show hidden files')),
-                Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) => feCtrl.setShowHidden(v)),
+                Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'showHidden', v)),
               ]),
               const SizedBox(height: 8),
               Row(children: [
                 const Expanded(child: Text('Preview markdown files')),
-                Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) => feCtrl.setPreviewMarkdown(v)),
+                Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v)),
               ]),
             ]),
           ),
 
           const SizedBox(height: 24),
-          ElevatedButton.icon(onPressed: () => ref.read(pluginSettingsProvider.notifier).resetToDefaults(), icon: const Icon(Icons.restore), label: const Text('Reset plugin settings to defaults')),
+          ElevatedButton.icon(
+            onPressed: () async {
+              // Reset selected plugin flags and a few common configs to defaults via Prefs.
+              await prefs.setPluginEnabled('editor', false);
+              await prefs.setPluginEnabled('git_history', false);
+              await prefs.setPluginEnabled('file_explorer', false);
+              await prefs.setPluginEnabled('terminal', false);
+              await prefs.setPluginEnabled('theme_customizer', false);
+              await prefs.setPluginEnabled('ai_assist', false);
+              // remove a few plugin config keys
+              await prefs.setPluginConfig('editor', 'tabSize', null);
+              await prefs.setPluginConfig('editor', 'showLineNumbers', null);
+              await prefs.setPluginConfig('git', 'autoFetch', null);
+              await prefs.setPluginConfig('git', 'defaultBranch', null);
+              await prefs.setPluginConfig('file_explorer', 'showHidden', null);
+              await prefs.setPluginConfig('file_explorer', 'previewMarkdown', null);
+              await prefs.setPluginConfig('ai', 'model', null);
+              await prefs.setPluginConfig('ai', 'maxTokens', null);
+            },
+            icon: const Icon(Icons.restore),
+            label: const Text('Reset plugin settings to defaults'),
+          ),
         ]),
       ),
     );
