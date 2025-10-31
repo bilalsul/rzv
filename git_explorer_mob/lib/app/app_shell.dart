@@ -97,7 +97,7 @@ class _AppShellState extends ConsumerState<AppShell> {
         return const TemplateScreen(screen: 'Editor',);
       case Screen.fileExplorer:
         return plugins.contains('file_explorer')
-            ? const TemplateScreen(screen: 'File Explorer',)
+            ? const HomeScreen()
             : const FeatureDisabledScreen(feature: 'File Explorer');
       case Screen.gitHistory:
         return plugins.contains('git_history')
