@@ -16,6 +16,10 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) async 
   return await SharedPreferences.getInstance();
 });
 
+/// Expose the Prefs singleton as a ChangeNotifierProvider so widgets can
+/// watch preference changes with `ref.watch(prefsProvider)`.
+final prefsProvider = ChangeNotifierProvider<Prefs>((ref) => Prefs());
+
 class Prefs extends ChangeNotifier {
   late SharedPreferences prefs;
   static final Prefs _instance = Prefs._internal();
@@ -740,6 +744,65 @@ Future<void> savePerformanceMonitorEnabled(bool enabled) async {
   await prefs.setBool('plugin_performance_monitor', enabled);
   notifyListeners();
 }
+
+  // Generic plugin helpers -------------------------------------------------
+  /// Returns the list of enabled plugins stored under 'plugins_enabled'.
+  List<String> get enabledPlugins {
+    return prefs.getStringList('plugins_enabled') ?? [];
+  }
+
+  /// Check whether a plugin (by id) is enabled.
+  bool isPluginEnabled(String pluginId) {
+    return prefs.getStringList('plugins_enabled')?.contains(pluginId) ?? false;
+  }
+
+  /// Enable or disable a plugin by id. Updates the 'plugins_enabled' list.
+  Future<void> setPluginEnabled(String pluginId, bool enabled) async {
+    final List<String> current = prefs.getStringList('plugins_enabled') ?? [];
+    final updated = List<String>.from(current);
+    if (enabled) {
+      if (!updated.contains(pluginId)) updated.add(pluginId);
+    } else {
+      updated.remove(pluginId);
+    }
+    await prefs.setStringList('plugins_enabled', updated);
+    notifyListeners();
+  }
+
+  /// Read a plugin-specific config value stored as 'plugin_<pluginId>_<configKey>'.
+  /// Returns null if not present.
+  dynamic getPluginConfig(String pluginId, String configKey) {
+    final key = 'plugin_${pluginId}_$configKey';
+    // SharedPreferences supports a few primitive types; try them in order.
+    if (prefs.containsKey(key)) {
+      final value = prefs.get(key);
+      return value;
+    }
+    return null;
+  }
+
+  /// Write a plugin-specific config value using the key 'plugin_<pluginId>_<configKey>'.
+  /// Accepts String, int, double, bool, List<String>.
+  Future<void> setPluginConfig(String pluginId, String configKey, dynamic value) async {
+    final key = 'plugin_${pluginId}_$configKey';
+    if (value is String) {
+      await prefs.setString(key, value);
+    } else if (value is int) {
+      await prefs.setInt(key, value);
+    } else if (value is double) {
+      await prefs.setDouble(key, value);
+    } else if (value is bool) {
+      await prefs.setBool(key, value);
+    } else if (value is List<String>) {
+      await prefs.setStringList(key, value);
+    } else if (value == null) {
+      await prefs.remove(key);
+    } else {
+      // Fallback: store JSON-encoded string representation
+      await prefs.setString(key, value.toString());
+    }
+    notifyListeners();
+  }
 }
 
 
