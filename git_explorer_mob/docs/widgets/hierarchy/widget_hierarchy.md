@@ -91,6 +91,14 @@ HomeScreen
 │       ├── EmptyIllustration
 │       ├── EmptyMessage
 │       └── CallToAction
+├── ProjectBrowser (when a project is opened inside HomeScreen)
+│   ├── Breadcrumb/PathStack (implicit via back button)
+│   ├── README/MarkdownView # renders README.md when present in the current directory
+│   ├── DirectoryListing
+│   │   ├── DirectoryNode (tap to dive deeper)
+│   │   └── FileNode (markdown files open in README view; other files will open in the editor later)
+│   └── NavigationControls
+│       ├── Back (pop directory / close project)
 ├── FloatingActionArea
 │   ├── ImportProjectButton
 │   └── CreateProjectButton # if needed
