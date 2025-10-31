@@ -4,6 +4,7 @@ import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/providers/navigation_provider.dart';
 import 'package:git_explorer_mob/providers/plugin_provider.dart';
 import 'package:git_explorer_mob/providers/theme_provider.dart';
+import 'package:git_explorer_mob/screens/settings_screen.dart';
 import 'package:git_explorer_mob/screens/template.dart';
 
 // Providers
@@ -107,7 +108,7 @@ class _AppShellState extends ConsumerState<AppShell> {
             ? const TemplateScreen(screen: 'Terminal',)
             : const FeatureDisabledScreen(feature: 'Integrated Terminal');
       case Screen.settings:
-        return const TemplateScreen(screen: 'Settings',);
+        return const SettingsScreen();
       case Screen.AI:
         return const TemplateScreen(screen: 'AI',);
     }
