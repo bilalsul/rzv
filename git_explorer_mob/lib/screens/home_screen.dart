@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +13,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<_Project> _projects = [];
   final Random _random = Random();
+  _Project? _openedProject;
+  List<String> _pathStack = <String>[];
+  String? _selectedFileContent;
 
   @override
   void initState() {
@@ -21,12 +25,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _Project _makeSampleProject(int i) {
+    // create a small in-memory file system for demo purposes
+    final hasReadme = i % 2 == 1;
+    final fs = <String, dynamic>{
+      'src': {
+        'main.dart': "void main() { print('Hello from project $i'); }",
+        'lib': {
+          'widget.dart': '// widget file',
+        },
+      },
+      'assets': {
+        'icon.png': 'binary-placeholder',
+      },
+      'LICENSE': 'MIT License',
+    };
+    if (hasReadme) {
+      fs['README.md'] = '# Sample Project $i\n\nThis is a temporary README for Sample Project $i.\n\n- Example file\n- Demo project';
+    } else {
+      // create README in a nested folder for variety
+      fs['docs'] = {
+        'README.md': '# Docs for Project $i\n\nDocumentation lives here.'
+      };
+    }
+
     return _Project(
       id: 'proj_${i}_${DateTime.now().millisecondsSinceEpoch}',
       name: 'Sample Project $i',
       fileCount: _random.nextInt(200),
       lastModified: DateTime.now().subtract(Duration(days: _random.nextInt(30))),
       type: i % 2 == 0 ? 'Flutter' : 'Dart',
+      fs: fs,
     );
   }
 
@@ -48,34 +76,74 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openProject(_Project p) {
-    // For now we just show a bottom sheet with details. This avoids needing the editor screen.
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(p.name ?? 'Unnamed project', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          Text('Type: ${p.type ?? 'Unknown'}'),
-          Text('Files: ${p.fileCount ?? 0}'),
-          Text('Modified: ${p.lastModified?.toLocal().toString() ?? '—'}'),
-          const SizedBox(height: 12),
-          ElevatedButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Close')),
-        ]),
-      ),
-    );
+    // Open project inside HomeScreen: set as opened project and reset navigation stack
+    setState(() {
+      _openedProject = p;
+      _pathStack = <String>[];
+      _selectedFileContent = null;
+      // Try load README at root
+      final node = _getNodeAtPath(p, _pathStack);
+      final readme = _findReadmeInNode(node);
+      if (readme != null) _selectedFileContent = readme;
+    });
+  }
+
+  void _closeProject() {
+    setState(() {
+      _openedProject = null;
+      _pathStack = <String>[];
+      _selectedFileContent = null;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Projects')),
+      appBar: _openedProject == null
+          ? AppBar(title: const Text('Projects'))
+          : AppBar(
+              title: Text(_openedProject?.name ?? 'Project'),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  // navigate up one level or close project if at root
+                  if (_pathStack.isNotEmpty) {
+                    setState(() {
+                      _pathStack.removeLast();
+                      _selectedFileContent = _findReadmeInNode(_getNodeAtPath(_openedProject!, _pathStack));
+                    });
+                  } else {
+                    _closeProject();
+                  }
+                },
+              ),
+            ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Builder(builder: (context) {
             try {
               if (_projects.isEmpty) return _EmptyState(onCreate: _addProject, onImport: _importProject);
+
+              // If a project is opened, show ProjectBrowser inside HomeScreen
+              if (_openedProject != null) {
+                return _ProjectBrowser(
+                  project: _openedProject!,
+                  pathStack: _pathStack,
+                  selectedFileContent: _selectedFileContent,
+                  onEnterDirectory: (name) {
+                    setState(() {
+                      _pathStack.add(name);
+                      _selectedFileContent = _findReadmeInNode(_getNodeAtPath(_openedProject!, _pathStack));
+                    });
+                  },
+                  onOpenFile: (content) {
+                    setState(() {
+                      _selectedFileContent = content;
+                    });
+                  },
+                );
+              }
 
               // Responsive: show Grid on wide screens, List on narrow screens
               return LayoutBuilder(builder: (context, constraints) {
@@ -175,8 +243,8 @@ class _Project {
   final int? fileCount;
   final DateTime? lastModified;
   final String? type;
-
-  _Project({required this.id, this.name, this.fileCount, this.lastModified, this.type});
+  final Map<String, dynamic> fs;
+  _Project({required this.id, this.name, this.fileCount, this.lastModified, this.type, Map<String, dynamic>? fs}) : fs = fs ?? {};
 }
 
 class _ProjectCard extends StatelessWidget {
@@ -273,4 +341,113 @@ class _EmptyState extends StatelessWidget {
       ]),
     );
   }
+}
+
+// ---------------- Project Browser ----------------
+
+class _ProjectBrowser extends StatelessWidget {
+  final _Project project;
+  final List<String> pathStack;
+  final String? selectedFileContent;
+  final void Function(String name) onEnterDirectory;
+  final void Function(String content) onOpenFile;
+
+  _ProjectBrowser({required this.project, required this.pathStack, required this.onEnterDirectory, required this.onOpenFile, this.selectedFileContent});
+
+  dynamic _nodeAtPath() {
+    dynamic node = project.fs;
+    for (final seg in pathStack) {
+      if (node is Map<String, dynamic> && node.containsKey(seg)) {
+        node = node[seg];
+      } else {
+        return null;
+      }
+    }
+    return node;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final node = _nodeAtPath();
+    // If a markdown file is selected, render it
+    if (selectedFileContent != null) {
+      return Column(children: [
+        Expanded(
+          child: Markdown(
+            data: selectedFileContent!,
+            selectable: true,
+          ),
+        ),
+      ]);
+    }
+
+    // If node is a file (string) but not selected (non-md), show placeholder
+    if (node is String) {
+      return Center(child: Text('File preview not available. Open in editor later.'));
+    }
+
+    // Expecting a directory map here
+    final Map<String, dynamic> dir = (node is Map<String, dynamic>) ? node : <String, dynamic>{};
+    final dirs = dir.entries.where((e) => e.value is Map<String, dynamic>).map((e) => e.key).toList()..sort();
+    final files = dir.entries.where((e) => e.value is String).map((e) => e.key).toList()..sort();
+
+    if (dirs.isEmpty && files.isEmpty) {
+      return Center(child: Text('Empty directory'));
+    }
+
+    return ListView.builder(
+      itemCount: dirs.length + files.length,
+      itemBuilder: (context, index) {
+        if (index < dirs.length) {
+          final name = dirs[index];
+          return ListTile(
+            leading: const Icon(Icons.folder),
+            title: Text(name),
+            onTap: () => onEnterDirectory(name),
+          );
+        }
+        final fileName = files[index - dirs.length];
+        final content = dir[fileName] as String?;
+        final isMarkdown = fileName.toLowerCase().endsWith('.md') || fileName.toLowerCase().endsWith('.markdown');
+        return ListTile(
+          leading: const Icon(Icons.insert_drive_file),
+          title: Text(fileName),
+          subtitle: isMarkdown ? const Text('Markdown file') : null,
+          onTap: () {
+            if (content == null) return;
+            if (isMarkdown) {
+              onOpenFile(content);
+            } else {
+              // Non-markdown files will be opened in editor later
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This file will open in editor later')));
+            }
+          },
+        );
+      },
+    );
+  }
+}
+
+// ---------------- Helpers ----------------
+
+dynamic _getNodeAtPath(_Project p, List<String> path) {
+  dynamic node = p.fs;
+  for (final seg in path) {
+    if (node is Map<String, dynamic> && node.containsKey(seg)) {
+      node = node[seg];
+    } else {
+      return null;
+    }
+  }
+  return node;
+}
+
+String? _findReadmeInNode(dynamic node) {
+  if (node is! Map<String, dynamic>) return null;
+  const candidates = ['README.md', 'Readme.md', 'readme.md', 'README.MD', 'README'];
+  for (final k in candidates) {
+    final v = node[k];
+    if (v is String) return v;
+  }
+  return null;
 }
