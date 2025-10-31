@@ -623,4 +623,17 @@
   "mindmapDefaultTitle": "Mindmap",
   "mindmapDefaultNodeId": "node",
   "mindmapDefaultNodeLabel": "Node"
+  ,
+  "homeProjectsTitle": "Projects",
+  "homeNoProjects": "No projects yet",
+  "homeCreateProject": "Create",
+  "homeImportProject": "Import",
+  "homeDeleteProjectConfirm": "Delete project?",
+  "homeDelete": "Delete",
+  "homeCancel": "Cancel",
+  "homeFiles": "Files",
+  "homeFolders": "Folders",
+  "homeReadmeNotFound": "No README found",
+  "homeOpenFileEditorNotice": "This file will open in editor later",
+  "homeBack": "Back"
 }

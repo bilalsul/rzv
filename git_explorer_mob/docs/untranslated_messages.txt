@@ -608,6 +608,18 @@
     "mindmapStats",
     "mindmapDefaultTitle",
     "mindmapDefaultNodeId",
-    "mindmapDefaultNodeLabel"
+    "mindmapDefaultNodeLabel",
+    "homeProjectsTitle",
+    "homeNoProjects",
+    "homeCreateProject",
+    "homeImportProject",
+    "homeDeleteProjectConfirm",
+    "homeDelete",
+    "homeCancel",
+    "homeFiles",
+    "homeFolders",
+    "homeReadmeNotFound",
+    "homeOpenFileEditorNotice",
+    "homeBack"
   ]
 }
