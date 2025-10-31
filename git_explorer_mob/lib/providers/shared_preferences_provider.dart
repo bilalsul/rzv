@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
-import 'package:git_explorer_mob/providers/editor_provider.dart';
-import 'package:git_explorer_mob/providers/navigation_provider.dart';
-import 'package:git_explorer_mob/providers/plugin_provider.dart';
-import 'package:git_explorer_mob/providers/theme_provider.dart';
+// Other providers removed; Prefs is now the central settings source.
 import 'package:shared_preferences/shared_preferences.dart';
 
 // =============================================
@@ -75,19 +72,19 @@ Future<void> saveLastOpenedProject(String projectPath) async {
 
 Screen get lastKnownScreen {
   switch(lastKnownRoute){
-    case '/' || 'home':
+    case '/' || '/home':
       return Screen.home;
-    case 'editor':
+    case '/editor':
       return Screen.editor;
-    case 'settings':
+    case '/settings':
       return Screen.settings;
-    case 'terminal':
+    case '/terminal':
       return Screen.terminal;
-    case 'ai':
+    case '/ai':
       return Screen.AI;
-    case 'git_history':
+    case '/git_history':
       return Screen.gitHistory;
-     case 'file_explorer':
+     case '/file_explorer':
       return Screen.fileExplorer;
   }
   return Screen.home;
@@ -907,21 +904,15 @@ final settingsInitializerProvider = FutureProvider<void>((ref) async {
   // Wait for SharedPreferences to be ready
   await ref.read(sharedPreferencesProvider.future);
   
-  // Initialize all settings providers
-  ref.read(editorSettingsProvider);
-  ref.read(themeSettingsProvider);
-  ref.read(pluginSettingsProvider);
-  ref.read(navigationSettingsProvider);
+  // Ensure Prefs singleton is initialized and available to the app
+  ref.read(prefsProvider);
+  // Initialize app state provider as before
   ref.read(appStateProvider);
 });
 
 /// Provider that gives a quick way to check if all settings are loaded
 final areSettingsLoadedProvider = Provider<bool>((ref) {
-  final editorSettings = ref.watch(editorSettingsProvider);
-  final themeSettings = ref.watch(themeSettingsProvider);
-  final pluginSettings = ref.watch(pluginSettingsProvider);
-  
-  return editorSettings != const EditorSettings() &&
-         themeSettings != const ThemeSettings() &&
-         pluginSettings != const PluginSettings();
+  // Consider settings loaded once SharedPreferences is available
+  final shared = ref.watch(sharedPreferencesProvider);
+  return shared.maybeWhen(data: (_) => true, orElse: () => false);
 });
