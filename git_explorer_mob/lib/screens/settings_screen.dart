@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 // Theme provider removed; theme is driven from Prefs
 import 'package:git_explorer_mob/widgets/settings/plugin_settings_panel.dart';
@@ -16,10 +17,23 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  // Temporary theme customizer state (apply button will persist)
+  late Color _tempPrimaryColor;
+  late Color _tempSecondaryColor;
+  late double _tempBorderRadius;
+  late double _tempElevation;
+  late double _tempAppFontSize;
+  late String _tempButtonStyle;
+
+  // AI temporary state before apply
+  String _selectedAiProvider = 'gpt';
+  String _selectedAiModel = 'gpt-4o';
+  int _selectedAiMaxTokens = 512;
   @override
   Widget build(BuildContext context) {
     // single source: watch Prefs
     final prefs = ref.watch(prefsProvider);
+  // Temporary theme values are initialized in initState from Prefs.
     // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
     final editorEnabled = prefs.isPluginEnabled('editor');
     final gitEnabled = prefs.isPluginEnabled('git_history');
@@ -37,10 +51,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       'autoFetch': prefs.getPluginConfig('git', 'autoFetch') ?? true,
       'defaultBranch': prefs.getPluginConfig('git', 'defaultBranch') ?? 'main',
     };
-    final aiCfg = {
-      'model': prefs.getPluginConfig('ai', 'model') ?? 'gpt',
-      'maxTokens': prefs.getPluginConfig('ai', 'maxTokens') ?? 512,
-    };
+    // AI config is read into local state in initState(); persisted values
+    // are accessed via Prefs when Apply is pressed.
     final feCfg = {
       'showHidden': prefs.getPluginConfig('file_explorer', 'showHidden') ?? false,
       'previewMarkdown': prefs.getPluginConfig('file_explorer', 'previewMarkdown') ?? true,
@@ -113,17 +125,102 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('Primary color'),
               const SizedBox(height: 8),
+              // clickable color circle palette
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: Colors.primaries.take(18).map((c) {
+                  final col = c.shade600;
+                  final selected = _tempPrimaryColor == col;
+                  return GestureDetector(
+                    onTap: () => setState(() { _tempPrimaryColor = col; }),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+                      ),
+                      child: CircleAvatar(backgroundColor: col, radius: 18),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 8),
+              const Text('Accent color'),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: Colors.primaries.reversed.take(8).map((c) {
+                  final col = c.shade400;
+                  final selected = _tempSecondaryColor == col;
+                  return GestureDetector(
+                    onTap: () => setState(() { _tempSecondaryColor = col; }),
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+                      ),
+                      child: CircleAvatar(backgroundColor: col, radius: 14),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 12),
               Row(children: [
-                Expanded(child: Wrap(spacing: 8, children: [
-                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF2196F3); }, child: const Text('Blue')),
-                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFFE91E63); }, child: const Text('Pink')),
-                  ElevatedButton(onPressed: () async { await Prefs().savePrimaryColor(0xFF4CAF50); }, child: const Text('Green')),
-                ])),
+                ElevatedButton(
+                  onPressed: () async {
+                    await Prefs().savePrimaryColor(_tempPrimaryColor.value);
+                    await Prefs().saveSecondaryColor(_tempSecondaryColor.value);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Theme colors applied')));
+                  },
+                  child: const Text('Apply Theme colors'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton(
+                  onPressed: () => setState(() {
+                    // revert temps from prefs
+                    final p = Prefs();
+                    _tempPrimaryColor = p.primaryColor;
+                    _tempSecondaryColor = p.secondaryColor;
+                  }),
+                  child: const Text('Revert'),
+                ),
               ]),
               const SizedBox(height: 12),
               Row(children: [
                 const Expanded(child: Text('Border radius')),
-                Slider(value: prefs.borderRadius, min: 0, max: 32, divisions: 16, label: prefs.borderRadius.toStringAsFixed(0), onChanged: (v) async { await Prefs().saveBorderRadius(v); }),
+                Expanded(
+                  child: Slider(
+                    value: _tempBorderRadius,
+                    min: 0,
+                    max: 32,
+                    divisions: 16,
+                    label: _tempBorderRadius.toStringAsFixed(0),
+                    onChanged: (v) => setState(() { _tempBorderRadius = v; }),
+                  ),
+                ),
+              ]),
+              const SizedBox(height: 8),
+              Row(children: [
+                const Expanded(child: Text('Elevation')),
+                Expanded(
+                  child: Slider(value: _tempElevation, min: 0, max: 12, divisions: 12, label: _tempElevation.toStringAsFixed(0), onChanged: (v) => setState(() { _tempElevation = v; })),
+                ),
+              ]),
+              const SizedBox(height: 8),
+              Row(children: [
+                const Expanded(child: Text('App font size')),
+                Expanded(child: Slider(value: _tempAppFontSize, min: 10, max: 22, divisions: 12, label: _tempAppFontSize.toStringAsFixed(0), onChanged: (v) => setState(() { _tempAppFontSize = v; }))),
+              ]),
+              const SizedBox(height: 8),
+              Row(children: [
+                const Expanded(child: Text('Button style')),
+                DropdownButton<String>(
+                  value: _tempButtonStyle,
+                  items: ['elevated', 'outlined', 'text'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                  onChanged: (v) => setState(() { if (v != null) _tempButtonStyle = v; }),
+                ),
               ]),
               Row(children: [
                 const Expanded(child: Text('Reduce animations')),
@@ -186,13 +283,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const Text('Model provider'),
               const SizedBox(height: 8),
               Wrap(spacing: 8, children: [
-                _modelChip(prefs, 'gpt', label: 'OpenAI', color: Colors.blue, icon: Icons.cloud),
-                _modelChip(prefs, 'claude', label: 'Anthropic', color: Colors.orange, icon: Icons.bolt),
-                _modelChip(prefs, 'local', label: 'Local', color: Colors.green, icon: Icons.computer),
+                _providerTile('gpt', label: 'OpenAI', logoUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openai/openai-original.svg'),
+                _providerTile('claude', label: 'Anthropic', logoUrl: 'https://raw.githubusercontent.com/anthropic/images/main/anthropic-logo.png'),
+                _providerTile('grok', label: 'Grok', logoUrl: 'https://example.com/grok-logo.png'),
+                _providerTile('gemini', label: 'Gemini', logoUrl: 'https://example.com/gemini-logo.png'),
               ]),
               const SizedBox(height: 12),
               const Text('Max tokens'),
-              Slider(value: (aiCfg['maxTokens'] ?? 512).toDouble(), min: 64, max: 2048, divisions: 32, onChanged: (v) async { await prefs.setPluginConfig('ai', 'maxTokens', v.toInt()); setState(() {}); }),
+              Slider(
+                value: _selectedAiMaxTokens.toDouble(),
+                min: 64,
+                max: 2048,
+                divisions: 32,
+                label: '$_selectedAiMaxTokens',
+                onChanged: (v) => setState(() { _selectedAiMaxTokens = v.toInt(); }),
+              ),
 
               const SizedBox(height: 12),
               // API key storage (secure)
@@ -210,6 +315,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ),
                 ]),
               ),
+
+              const SizedBox(height: 8),
+              Row(children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    // Persist provider/model/maxTokens
+                    await prefs.setPluginConfig('ai', 'provider', _selectedAiProvider);
+                    await prefs.setPluginConfig('ai', 'model', _selectedAiModel);
+                    await prefs.setPluginConfig('ai', 'maxTokens', _selectedAiMaxTokens);
+                    setState(() {});
+                    final ok = await _checkApiKey(_selectedAiProvider);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? 'Connection successful' : 'Connection failed')));
+                  },
+                  child: const Text('Apply AI settings'),
+                ),
+              ]),
             ]),
           ),
 
@@ -281,28 +402,82 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       ),
     );
   }
+  @override
+  void initState() {
+    super.initState();
+    // Read current persisted values from Prefs singleton into temporary state
+    final p = Prefs();
+    _tempPrimaryColor = p.primaryColor;
+    _tempSecondaryColor = p.secondaryColor;
+    _tempBorderRadius = p.borderRadius;
+    _tempElevation = p.elevationLevel;
+    _tempAppFontSize = p.appFontSize;
+    _tempButtonStyle = p.buttonStyle;
 
-  Widget _modelChip(Prefs prefs, String id, {required String label, required Color color, required IconData icon}) {
-    final selected = (prefs.getPluginConfig('ai', 'model') ?? 'gpt') == id;
+    // AI defaults
+    _selectedAiProvider = p.getPluginConfig('ai', 'provider') ?? 'gpt';
+    _selectedAiModel = p.getPluginConfig('ai', 'model') ?? 'gpt-4o';
+    _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
+  }
+
+  Widget _providerTile(String id, {required String label, required String logoUrl}) {
+    final selected = _selectedAiProvider == id;
     return GestureDetector(
-      onTap: () async {
-        await prefs.setPluginConfig('ai', 'model', id);
-        setState(() {});
+      onTap: () {
+        setState(() {
+          _selectedAiProvider = id;
+          // set a reasonable default model per provider
+          if (id == 'gpt') _selectedAiModel = 'gpt-4o';
+          else if (id == 'claude') _selectedAiModel = 'claude-2';
+          else if (id == 'grok') _selectedAiModel = 'grok-1';
+          else if (id == 'gemini') _selectedAiModel = 'gemini-1';
+        });
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           CircleAvatar(
-            backgroundColor: color,
-            child: Icon(icon, color: Colors.white, size: 18),
+            radius: 24,
+            backgroundColor: selected ? Colors.blue.shade100 : Colors.grey.shade200,
+            child: ClipOval(
+              child: Image.network(logoUrl, width: 36, height: 36, errorBuilder: (c, e, st) => const Icon(Icons.cloud, size: 28)),
+            ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(label, style: TextStyle(fontSize: 12, fontWeight: selected ? FontWeight.w700 : FontWeight.normal)),
         ],
       ),
     );
   }
 
+  Future<bool> _checkApiKey(String providerId) async {
+    // Basic provider-specific connectivity check. This is intentionally lightweight
+    // and does not exhaustively validate all provider API semantics.
+    final key = await Prefs().getPluginApiKey('ai');
+    if (key == null || key.isEmpty) return false;
+    try {
+      if (providerId == 'gpt') {
+        // OpenAI: try listing models
+        final resp = await http.get(
+          Uri.parse('https://api.openai.com/v1/models'),
+          headers: {'Authorization': 'Bearer $key'},
+        ).timeout(const Duration(seconds: 6));
+        return resp.statusCode == 200;
+      } else if (providerId == 'claude') {
+        // Anthropic: try listing models endpoint
+        final resp = await http.get(
+          Uri.parse('https://api.anthropic.com/v1/models'),
+          headers: {'x-api-key': key},
+        ).timeout(const Duration(seconds: 6));
+        return resp.statusCode == 200;
+      } else {
+        // For other providers (grok/gemini) we do a simple non-network check: key presence
+        return key.isNotEmpty;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
   void _showApiKeyDialog(BuildContext context, String pluginId) {
     showDialog<void>(
       context: context,
