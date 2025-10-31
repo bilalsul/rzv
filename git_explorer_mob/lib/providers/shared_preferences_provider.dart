@@ -403,6 +403,73 @@ Future<void> saveCodeFontScale(double scale) async {
   notifyListeners();
 }
 
+// -------------------------------
+// Current open file / editor session helpers
+// -------------------------------
+
+/// Save the currently opened project and file path and its latest content.
+Future<void> saveCurrentOpenFile(String projectId, String filePath, String content) async {
+  await prefs.setString('editor_current_project', projectId);
+  await prefs.setString('editor_current_file', filePath);
+  await prefs.setString('editor_current_content', content);
+  notifyListeners();
+}
+
+String get currentOpenProject {
+  return prefs.getString('editor_current_project') ?? '';
+}
+
+String get currentOpenFile {
+  return prefs.getString('editor_current_file') ?? '';
+}
+
+String get currentOpenFileContent {
+  return prefs.getString('editor_current_content') ?? '';
+}
+
+Future<void> saveCurrentOpenFileContent(String content) async {
+  await prefs.setString('editor_current_content', content);
+  notifyListeners();
+}
+
+Future<void> saveCurrentOpenFileLanguage(String language) async {
+  await prefs.setString('editor_current_language', language);
+  notifyListeners();
+}
+
+String get currentOpenFileLanguage {
+  return prefs.getString('editor_current_language') ?? '';
+}
+
+/// Detect a monaco / language id from a filename extension
+String detectLanguageFromFilename(String filename) {
+  final lower = filename.toLowerCase();
+  if (lower.endsWith('.dart')) return 'dart';
+  if (lower.endsWith('.js')) return 'javascript';
+  if (lower.endsWith('.ts')) return 'typescript';
+  if (lower.endsWith('.jsx')) return 'javascript';
+  if (lower.endsWith('.tsx')) return 'typescript';
+  if (lower.endsWith('.py')) return 'python';
+  if (lower.endsWith('.java')) return 'java';
+  if (lower.endsWith('.kt') || lower.endsWith('.kts')) return 'kotlin';
+  if (lower.endsWith('.swift')) return 'swift';
+  if (lower.endsWith('.c') || lower.endsWith('.h')) return 'c';
+  if (lower.endsWith('.cpp') || lower.endsWith('.cc') || lower.endsWith('.cxx')) return 'cpp';
+  if (lower.endsWith('.cs')) return 'csharp';
+  if (lower.endsWith('.rb')) return 'ruby';
+  if (lower.endsWith('.go')) return 'go';
+  if (lower.endsWith('.rs')) return 'rust';
+  if (lower.endsWith('.php')) return 'php';
+  if (lower.endsWith('.json')) return 'json';
+  if (lower.endsWith('.yaml') || lower.endsWith('.yml')) return 'yaml';
+  if (lower.endsWith('.html') || lower.endsWith('.htm')) return 'html';
+  if (lower.endsWith('.css') || lower.endsWith('.scss') || lower.endsWith('.sass')) return 'css';
+  if (lower.endsWith('.sh') || lower.endsWith('.bash')) return 'shell';
+  if (lower.endsWith('.md') || lower.endsWith('.markdown')) return 'markdown';
+  // fallback
+  return 'plaintext';
+}
+
 // Getter and setter for animation speed
 double get animationSpeed {
   return prefs.getDouble('theme_animation_speed') ?? 1.0;

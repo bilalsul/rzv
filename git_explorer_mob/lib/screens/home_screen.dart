@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -287,22 +288,8 @@ class _ProjectCard extends StatelessWidget {
             ),
             PopupMenuButton<String>(
               onSelected: (v) {
-                if (v == 'delete') {
-                  // confirm quick delete
-                  showDialog<void>(context: context, builder: (ctx) => AlertDialog(
-                        title: const Text('Delete project?'),
-                        content: Text('Delete "${project.name ?? 'Untitled'}"? This action is temporary (in-memory).'),
-                        actions: [
-                          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
-                          TextButton(onPressed: () {
-                            Navigator.of(ctx).pop();
-                            onDelete?.call();
-                          }, child: const Text('Delete'))
-                        ],
-                      ));
-                } else if (v == 'open') {
-                  onOpen?.call();
-                }
+                if (v == 'open') onOpen?.call();
+                else if (v == 'delete') onDelete?.call();
               },
               itemBuilder: (_) => const [
                 PopupMenuItem(value: 'open', child: Text('Open')),
@@ -412,13 +399,18 @@ class _ProjectBrowser extends StatelessWidget {
           leading: const Icon(Icons.insert_drive_file),
           title: Text(fileName),
           subtitle: isMarkdown ? const Text('Markdown file') : null,
-          onTap: () {
+          onTap: () async {
             if (content == null) return;
             if (isMarkdown) {
               onOpenFile(content);
             } else {
-              // Non-markdown files will be opened in editor later
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This file will open in editor later')));
+              // Persist current file to Prefs and navigate to Editor screen
+              final fullPathSegments = List<String>.from(pathStack)..add(fileName);
+              final path = fullPathSegments.join('/');
+              await Prefs().saveCurrentOpenFile(project.id, path, content);
+              final lang = Prefs().detectLanguageFromFilename(fileName);
+              await Prefs().saveCurrentOpenFileLanguage(lang);
+              await Prefs().saveLastKnownRoute('editor');
             }
           },
         );

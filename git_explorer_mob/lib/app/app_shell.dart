@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+import 'package:git_explorer_mob/screens/editor_screen.dart';
 import 'package:git_explorer_mob/screens/settings_screen.dart';
 import 'package:git_explorer_mob/screens/template.dart';
 
@@ -91,7 +92,7 @@ class _AppShellState extends ConsumerState<AppShell> {
       case Screen.home:
         return const HomeScreen();
       case Screen.editor:
-        return const TemplateScreen(screen: 'Editor',);
+        return const EditorScreen();
       case Screen.fileExplorer:
         return plugins.contains('file_explorer')
             ? const HomeScreen()
