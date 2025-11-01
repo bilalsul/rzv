@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 
 class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -22,29 +23,29 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.menu),
         onPressed: () => scaffoldKey.currentState?.openDrawer(),
       ),
-      title: _buildTitle(currentScreen),
+      title: _buildTitle(currentScreen, context),
       actions: _buildActions(currentScreen, context, ref),
       backgroundColor: _getAppBarColor(currentScreen, context),
       elevation: _getAppBarElevation(currentScreen),
     );
   }
 
-  Widget _buildTitle(Screen screen) {
+  Widget _buildTitle(Screen screen, BuildContext context) {
     switch (screen) {
       case Screen.home:
-        return const Text('Projects');
+        return Text(L10n.of(context).navBarHome);
       case Screen.editor:
-        return const Text('Code Editor');
+        return Text(L10n.of(context).navBarAI);
       case Screen.fileExplorer:
-        return const Text('File Explorer');
+        return Text(L10n.of(context).navBarFileExplorer);
       case Screen.gitHistory:
-        return const Text('Git History');
+        return Text(L10n.of(context).navBarGitHistory);
       case Screen.settings:
-        return const Text('Settings');
+        return Text(L10n.of(context).navBarSettings);
       case Screen.terminal:
-        return const Text('Terminal');
+        return Text(L10n.of(context).navBarTerminal);
       case Screen.AI:
-        return const Text('AI');
+        return Text(L10n.of(context).navBarAI);
     }
   }
 
