@@ -71,6 +71,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     final plugins = prefs.enabledPlugins;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Git Explorer',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
