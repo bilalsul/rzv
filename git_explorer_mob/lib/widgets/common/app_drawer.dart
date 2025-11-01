@@ -25,7 +25,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-  final prefs = ref.watch(prefsProvider);
+    final prefs = ref.watch(prefsProvider);
     // final currentScreen = ref.watch(currentScreenProvider);
 
     return Drawer(
@@ -33,7 +33,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
       child: Column( 
           children: [
           // Header Section
-          _buildDrawerHeader(theme),
+          _buildDrawerHeader(theme, prefs),
           
           // Navigation Section
           // _buildNavigationSection(currentScreen, theme),
@@ -42,9 +42,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           Expanded(
             child: _buildPluginTogglesSection(prefs, theme),
           ),
-          
-          // Footer Section
-          _buildDrawerFooter(theme),
+          // Footer is rendered as the last sliver inside the scrollable plugin section
         ],
     ),
     );
@@ -54,7 +52,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   // Drawer Header
   // =============================================
 
-  Widget _buildDrawerHeader(ThemeData theme) {
+  Widget _buildDrawerHeader(ThemeData theme, Prefs prefs) {
     return DrawerHeader(
       decoration: BoxDecoration(
         color: theme.colorScheme.primaryContainer.withOpacity(0.1),
@@ -88,42 +86,37 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           ),
           const SizedBox(height: 6),
           
-          // Current Project Info
-          Consumer(
-            builder: (context, ref, child) {
-              final appState = ref.watch(appStateProvider);
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Current Project',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
-                    ),
+          // Current Project Info (sourced from Prefs)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Current Project',
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+                ),
+              ),
+              const SizedBox(height: 1),
+              Text(
+                prefs.lastOpenedProject.isNotEmpty
+                    ? prefs.lastOpenedProject.split('/').last
+                    : 'No project open',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              if (prefs.lastOpenedProject.isNotEmpty) ...[
+                const SizedBox(height: 2),
+                Text(
+                  'Last opened: ${_formatDate(prefs.sessionStartTime)}',
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withOpacity(0.5),
                   ),
-                  const SizedBox(height: 1),
-                  Text(
-                    appState.lastOpenedProject.isNotEmpty
-                        ? appState.lastOpenedProject.split('/').last
-                        : 'No project open',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (appState.lastOpenedProject.isNotEmpty) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      'Last opened: ${_formatDate(appState.sessionStartTime)}',
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onSurface.withOpacity(0.5),
-                      ),
-                    ),
-                  ],
-                ],
-              );
-            },
+                ),
+              ],
+            ],
           ),
         ],
       ),
@@ -203,6 +196,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ),
 
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        // Footer placed as a sliver so it only becomes visible when the user scrolls to the end
+        SliverToBoxAdapter(child: _buildDrawerFooter(theme)),
       ],
     );
   }
@@ -384,7 +379,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Flutter Code Editor',
+                    'Git Explorer',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onSurface.withOpacity(0.4),
                     ),
