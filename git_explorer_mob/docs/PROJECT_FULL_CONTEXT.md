@@ -85,6 +85,7 @@ This document is a single, self-contained, large context file intended to captur
 
 - `lib/screens/editor_screen.dart` (EditorScreen)
   - Purpose: Host the MonacoWrapper and provide Save/format/other editor actions. Save currently triggers a snackbar and persists content to Prefs (via editor session helpers). Files opened from Home populate the editor with content and detected language via `detectLanguageFromFilename()` helper.
+  - Behavior update: when the `EditorScreen` mounts it now synchronizes the Prefs state to ensure `currentOpenFile`, `currentOpenFileContent`, and `currentOpenProject` (derived from the file path) are saved via `saveCurrentOpenFile(...)`. This makes the AppDrawer header show the currently opened file and project.
 
 - `lib/screens/settings_screen.dart` (Settings)
   - Purpose: Centralized settings UI that reads/writes to `Prefs`.
@@ -92,6 +93,10 @@ This document is a single, self-contained, large context file intended to captur
 
 - `lib/app/app_shell.dart` (AppShell)
   - Purpose: The main scaffold with bottom navigation, AppDrawer, and wiring to `Prefs` for plugin toggles and theme.
+
+- `lib/widgets/common/app_drawer.dart` (AppDrawer)
+  - Purpose: Drawer UI with plugin toggles and a compact header.
+  - Behavior update: the header now displays the currently opened file (from `Prefs.currentOpenFile`) if present; otherwise it falls back to the last opened project. The editor writes to Prefs when files are opened so this header reflects live editor state.
 
 ---
 

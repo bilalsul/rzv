@@ -97,25 +97,30 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 ),
               ),
               const SizedBox(height: 1),
-              Text(
-                prefs.lastOpenedProject.isNotEmpty
-                    ? prefs.lastOpenedProject.split('/').last
-                    : 'No project open',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              if (prefs.lastOpenedProject.isNotEmpty) ...[
-                const SizedBox(height: 2),
-                Text(
-                  'Last opened: ${_formatDate(prefs.sessionStartTime)}',
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: theme.colorScheme.onSurface.withOpacity(0.5),
-                  ),
-                ),
-              ],
+                  // Show currently opened file if present, otherwise current project
+                  Builder(builder: (ctx) {
+                    final filePath = prefs.currentOpenFile;
+                    final fileName = filePath.isNotEmpty ? filePath.split('/').last : '';
+                    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text(
+                        fileName.isNotEmpty ? fileName : (prefs.lastOpenedProject.isNotEmpty ? prefs.lastOpenedProject.split('/').last : 'No project open'),
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (prefs.lastOpenedProject.isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          'Last opened: ${_formatDate(prefs.sessionStartTime)}',
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: theme.colorScheme.onSurface.withOpacity(0.5),
+                          ),
+                        ),
+                      ],
+                    ]);
+                  }),
             ],
           ),
         ],

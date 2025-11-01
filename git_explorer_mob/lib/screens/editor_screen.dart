@@ -12,6 +12,31 @@ class EditorScreen extends ConsumerStatefulWidget {
 
 class _EditorScreenState extends ConsumerState<EditorScreen> {
   @override
+  void initState() {
+    super.initState();
+    // Ensure Prefs reflects the current opened file and project when the editor mounts.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _syncPrefsWithCurrentFile();
+    });
+  }
+
+  Future<void> _syncPrefsWithCurrentFile() async {
+    try {
+      final prefs = Prefs();
+      final filePath = prefs.currentOpenFile;
+      if (filePath.isEmpty) return;
+      final content = prefs.currentOpenFileContent;
+      // Derive project path as the parent directory of the file when possible
+      String projectPath = prefs.currentOpenProject;
+      if (projectPath.isEmpty) {
+        final idx = filePath.lastIndexOf('/');
+        projectPath = idx > 0 ? filePath.substring(0, idx) : '';
+      }
+      await prefs.saveCurrentOpenFile(projectPath, filePath, content);
+      if (projectPath.isNotEmpty) await prefs.saveLastOpenedProject(projectPath);
+    } catch (_) {}
+  }
+  @override
   Widget build(BuildContext context) {
     final prefs = ref.watch(prefsProvider);
     final filePath = prefs.currentOpenFile;
@@ -26,6 +51,27 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             onPressed: () async {
               // MonacoWrapper persists on change; keep parity with UI
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Saved (in-memory)')));
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.upload_file_outlined),
+            tooltip: 'Mark current file/project as opened',
+            onPressed: () async {
+              final prefs = Prefs();
+              final filePath = prefs.currentOpenFile;
+              if (filePath.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No file open')));
+                return;
+              }
+              final content = prefs.currentOpenFileContent;
+              String projectPath = prefs.currentOpenProject;
+              if (projectPath.isEmpty) {
+                final idx = filePath.lastIndexOf('/');
+                projectPath = idx > 0 ? filePath.substring(0, idx) : '';
+              }
+              await prefs.saveCurrentOpenFile(projectPath, filePath, content);
+              if (projectPath.isNotEmpty) await prefs.saveLastOpenedProject(projectPath);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Marked as current open file/project')));
             },
           ),
         ],
