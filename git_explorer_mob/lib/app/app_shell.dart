@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/screens/ai_screen.dart';
 import 'package:git_explorer_mob/screens/editor_screen.dart';
@@ -72,6 +73,9 @@ class _AppShellState extends ConsumerState<AppShell> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      locale: Prefs().locale,
+      localizationsDelegates: L10n.localizationsDelegates,
+      supportedLocales: L10n.supportedLocales,
       title: 'Git Explorer',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),

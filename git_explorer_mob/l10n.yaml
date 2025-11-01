@@ -15,4 +15,4 @@ key-prefix: L10n.of(context).
 # "ask" : prompt with pre-filled text | true : infer from text | false : prompt  
 auto-name-key: ask
 key-name-language: en
-import-line: "import 'package:git-explorer-mob/l10n/generated/L10n.dart';"
+import-line: "import 'package:git_explorer_mob/l10n/generated/L10n.dart';"

@@ -126,9 +126,6 @@ Future<void> _updateWindowInfo() async {
             navigatorObservers: [FlutterSmartDialog.observer],
             builder: FlutterSmartDialog.init(),
             navigatorKey: navigatorKey,
-            locale: prefsNotifier.locale,
-            localizationsDelegates: L10n.localizationsDelegates,
-            supportedLocales: L10n.supportedLocales,
             title: 'Git Explorer',
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
