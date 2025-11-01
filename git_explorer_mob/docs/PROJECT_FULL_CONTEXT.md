@@ -28,6 +28,7 @@ This document is a single, self-contained, large context file intended to captur
     - `providers/shared_preferences_provider.dart` — `Prefs` ChangeNotifier centralizing app settings and secure API helpers.
     - `screens/`
       - `home_screen.dart` — Home/project browser, README inline viewer, file listing; navigates to editor for non-markdown files.
+        - New: supports creating projects with user-provided details, importing projects from .zip archives (decoded via the `archive` package), and a helper that programmatically generates a demo .zip and imports it. Imported zips are decoded into the in-memory `fs` map used by `_Project`.
       - `editor_screen.dart` — Editor screen; uses `MonacoWrapper` widget or fallback.
       - `settings_screen.dart` — Settings with AI model selection, terminal options, theme customizer.
       - `ai_screen.dart` — Entry point for AI features; currently returns `ChatScreen`.
@@ -85,6 +86,7 @@ This document is a single, self-contained, large context file intended to captur
 
 - `lib/screens/editor_screen.dart` (EditorScreen)
   - Purpose: Host the MonacoWrapper and provide Save/format/other editor actions. Save currently triggers a snackbar and persists content to Prefs (via editor session helpers). Files opened from Home populate the editor with content and detected language via `detectLanguageFromFilename()` helper.
+  - Behavior update: when the `EditorScreen` mounts it now synchronizes the Prefs state to ensure `currentOpenFile`, `currentOpenFileContent`, and `currentOpenProject` (derived from the file path) are saved via `saveCurrentOpenFile(...)`. This makes the AppDrawer header show the currently opened file and project.
 
 - `lib/screens/settings_screen.dart` (Settings)
   - Purpose: Centralized settings UI that reads/writes to `Prefs`.
@@ -92,6 +94,10 @@ This document is a single, self-contained, large context file intended to captur
 
 - `lib/app/app_shell.dart` (AppShell)
   - Purpose: The main scaffold with bottom navigation, AppDrawer, and wiring to `Prefs` for plugin toggles and theme.
+
+- `lib/widgets/common/app_drawer.dart` (AppDrawer)
+  - Purpose: Drawer UI with plugin toggles and a compact header.
+  - Behavior update: the header now displays the currently opened file (from `Prefs.currentOpenFile`) if present; otherwise it falls back to the last opened project. The editor writes to Prefs when files are opened so this header reflects live editor state.
 
 ---
 
@@ -119,7 +125,7 @@ These are the canonical preference keys and message shapes used throughout the a
   - text: String
   - time: ISO8601 timestamp string
   - streaming: (optional) bool — true when assistant message is being incrementally filled
-  - attachments: (optional) List<String> — file basenames attached to the user message
+  - attachments: (optional) `List<String>` — file basenames attached to the user message
 
 - Editor session object (in Prefs) — example fields stored by helper methods:
   - `current_open_project` (String)

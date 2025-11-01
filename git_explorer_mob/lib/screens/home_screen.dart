@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+import 'package:archive/archive.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -75,6 +78,117 @@ class _HomeScreenState extends State<HomeScreen> {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Project imported (temp)')));
   }
 
+  Future<void> _createProjectWithDetails() async {
+    final nameTc = TextEditingController();
+    final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
+      title: const Text('Create Project'),
+      content: TextField(controller: nameTc, decoration: const InputDecoration(hintText: 'Project name')),
+      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Create'))],
+    ));
+    if (confirmed != true) return;
+    final name = nameTc.text.trim();
+    if (name.isEmpty) return;
+    setState(() {
+      final p = _Project(id: 'proj_${_projects.length + 1}_${DateTime.now().millisecondsSinceEpoch}', name: name, fileCount: 0, lastModified: DateTime.now(), type: 'Custom', fs: {});
+      _projects.insert(0, p);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Project created')));
+  }
+
+  Future<void> _importZipProject() async {
+    final tc = TextEditingController();
+    final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
+      title: const Text('Import project (zip)'),
+      content: TextField(controller: tc, decoration: const InputDecoration(hintText: '/absolute/path/to/project.zip')),
+      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Import'))],
+    ));
+    if (confirmed != true) return;
+    final path = tc.text.trim();
+    if (path.isEmpty) return;
+    final f = File(path);
+    if (!await f.exists()) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Zip file not found')));
+      return;
+    }
+    try {
+      final bytes = await f.readAsBytes();
+      final archive = ZipDecoder().decodeBytes(bytes);
+      final fs = <String, dynamic>{};
+      for (final file in archive) {
+        final name = file.name;
+        if (file.isFile) {
+          String content = '';
+          try {
+            content = utf8.decode(file.content as List<int>);
+          } catch (_) {
+            content = '(binary content)';
+          }
+          _insertIntoFsMap(fs, name.split('/'), content);
+        } else {
+          _insertIntoFsMap(fs, name.split('/'), <String, dynamic>{});
+        }
+      }
+      final proj = _Project(id: 'import_${DateTime.now().millisecondsSinceEpoch}', name: 'Imported ${f.uri.pathSegments.last}', fileCount: archive.length, lastModified: DateTime.now(), type: 'Imported', fs: fs);
+      setState(() {
+        _projects.insert(0, proj);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Imported zip as project')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Import failed: $e')));
+    }
+  }
+
+  void _insertIntoFsMap(Map<String, dynamic> root, List<String> parts, dynamic value) {
+    if (parts.isEmpty) return;
+    final head = parts.first;
+    if (parts.length == 1) {
+      root[head] = value;
+      return;
+    }
+    root[head] ??= <String, dynamic>{};
+    final child = root[head];
+    if (child is Map<String, dynamic>) {
+      _insertIntoFsMap(child, parts.sublist(1), value);
+    }
+  }
+
+  Future<void> _createSampleZipAndImport() async {
+    try {
+      final archive = Archive();
+      final readmeBytes = utf8.encode('# Sample Imported Project\n\nThis project was created from a generated zip.');
+      archive.addFile(ArchiveFile('README.md', readmeBytes.length, readmeBytes));
+      final mainBytes = utf8.encode("void main() { print('Hello from imported sample'); }");
+      archive.addFile(ArchiveFile('src/main.dart', mainBytes.length, mainBytes));
+      final bytes = ZipEncoder().encode(archive)!;
+      final tmp = Directory.systemTemp.createTempSync('git_explorer_sample_');
+      final zipFile = File('${tmp.path}/sample_project.zip');
+      await zipFile.writeAsBytes(bytes);
+      final archiveDecoded = ZipDecoder().decodeBytes(await zipFile.readAsBytes());
+      final fs = <String, dynamic>{};
+      for (final file in archiveDecoded) {
+        final name = file.name;
+        if (file.isFile) {
+          String content = '';
+          try {
+            content = utf8.decode(file.content as List<int>);
+          } catch (_) {
+            content = '(binary)';
+          }
+          _insertIntoFsMap(fs, name.split('/'), content);
+        } else {
+          _insertIntoFsMap(fs, name.split('/'), <String, dynamic>{});
+        }
+      }
+      final proj = _Project(id: 'sample_${DateTime.now().millisecondsSinceEpoch}', name: 'Imported Sample', fileCount: archiveDecoded.length, lastModified: DateTime.now(), type: 'Imported', fs: fs);
+      setState(() {
+        _projects.insert(0, proj);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sample zip created and imported')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sample import failed: $e')));
+    }
+  }
+
   void _openProject(_Project p) {
     // Open project inside HomeScreen: set as opened project and reset navigation stack
     setState(() {
@@ -86,6 +200,11 @@ class _HomeScreenState extends State<HomeScreen> {
       final readme = _findReadmeInNode(node);
       if (readme != null) _selectedFileContent = readme;
     });
+    // Persist current project to Prefs so AppDrawer shows it
+    try {
+      final prefs = Prefs();
+      prefs.saveCurrentProject(id: p.id, name: p.name ?? p.id, path: p.id);
+    } catch (_) {}
   }
 
   void _closeProject() {
@@ -194,16 +313,23 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           FloatingActionButton.small(
             heroTag: 'import',
-            onPressed: _importProject,
+            onPressed: _importZipProject,
             tooltip: 'Import project (temp)',
             child: const Icon(Icons.file_upload),
           ),
           const SizedBox(height: 8),
-          FloatingActionButton(
-            heroTag: 'create',
-            onPressed: _addProject,
-            tooltip: 'Create project (temp)',
+          FloatingActionButton.small(
+            heroTag: 'create_details',
+            onPressed: _createProjectWithDetails,
+            tooltip: 'Create project (details)',
             child: const Icon(Icons.add),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            heroTag: 'sample_zip',
+            onPressed: _createSampleZipAndImport,
+            tooltip: 'Create & import sample zip',
+            child: const Icon(Icons.archive),
           ),
         ],
       ),

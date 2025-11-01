@@ -5,17 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/app/app_shell.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-// import 'package:git_explorer_mob/models/window_info.dart';
-// import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-// import 'package:git_explorer_mob/providers/theme_provider.dart';
 import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
 import 'package:git_explorer_mob/utils/error/common.dart';
 import 'package:git_explorer_mob/utils/log/common.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart' as provider;
-// import 'screens/home_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 

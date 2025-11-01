@@ -100,8 +100,37 @@ String get lastOpenedProject {
 
 Future<void> saveLastOpenedProject(String projectPath) async {
   await prefs.setString('app_last_opened_project', projectPath);
+  // store a timestamp (ISO8601) so UIs can show relative last-opened time
+  await prefs.setString('app_last_opened_project_time', DateTime.now().toIso8601String());
   notifyListeners();
 }
+
+  // -------------------------------
+  // Current project explicit helpers
+  // -------------------------------
+  /// Save current project id, name and path.
+  Future<void> saveCurrentProject({required String id, required String name, required String path}) async {
+    await prefs.setString('current_project_id', id);
+    await prefs.setString('current_project_name', name);
+    await prefs.setString('current_project_path', path);
+    // Keep backward compatibility with lastOpenedProject
+    await prefs.setString('app_last_opened_project', path);
+    // also record when this project was last opened
+    await prefs.setString('app_last_opened_project_time', DateTime.now().toIso8601String());
+    notifyListeners();
+  }
+
+  String get currentProjectId {
+    return prefs.getString('current_project_id') ?? '';
+  }
+
+  String get currentProjectName {
+    return prefs.getString('current_project_name') ?? '';
+  }
+
+  String get currentProjectPath {
+    return prefs.getString('current_project_path') ?? prefs.getString('app_last_opened_project') ?? '';
+  }
 
 Screen get lastKnownScreen {
   switch(lastKnownRoute){
@@ -503,6 +532,17 @@ Future<void> saveCurrentOpenFileLanguage(String language) async {
 
 String get currentOpenFileLanguage {
   return prefs.getString('editor_current_language') ?? '';
+}
+
+/// Return the timestamp when the last project was opened (or epoch if unknown)
+DateTime get lastOpenedProjectTime {
+  final s = prefs.getString('app_last_opened_project_time');
+  if (s == null || s.isEmpty) return DateTime.fromMillisecondsSinceEpoch(0);
+  try {
+    return DateTime.parse(s);
+  } catch (_) {
+    return DateTime.fromMillisecondsSinceEpoch(0);
+  }
 }
 
 /// Detect a monaco / language id from a filename extension
