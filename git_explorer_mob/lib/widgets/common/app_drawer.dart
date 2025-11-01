@@ -87,41 +87,39 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           const SizedBox(height: 6),
           
           // Current Project Info (sourced from Prefs)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Current Project',
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Current Project',
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 1),
-                  // Show currently opened file if present, otherwise current project
-                  Builder(builder: (ctx) {
-                    final filePath = prefs.currentOpenFile;
-                    final fileName = filePath.isNotEmpty ? filePath.split('/').last : '';
-                    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(
-                        fileName.isNotEmpty ? fileName : (prefs.lastOpenedProject.isNotEmpty ? prefs.lastOpenedProject.split('/').last : 'No project open'),
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (prefs.lastOpenedProject.isNotEmpty) ...[
-                        const SizedBox(height: 2),
-                        Text(
-                          'Last opened: ${_formatDate(prefs.sessionStartTime)}',
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(0.5),
-                          ),
-                        ),
-                      ],
-                    ]);
-                  }),
-            ],
+                const SizedBox(height: 6),
+                // Prefer explicit currentProjectName, otherwise fall back to lastOpenedProject basename
+                Text(
+                  prefs.currentProjectName.isNotEmpty
+                      ? prefs.currentProjectName
+                      : (prefs.lastOpenedProject.isNotEmpty ? prefs.lastOpenedProject.split('/').last : 'No project open'),
+                  style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 6),
+                if (prefs.currentProjectPath.isNotEmpty)
+                  Text(
+                    prefs.currentProjectPath,
+                    style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.65)),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                // const SizedBox(height: 6),
+                Text('Last opened: ${_formatDate(prefs.sessionStartTime)}', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
+              ],
+            ),
           ),
         ],
       ),

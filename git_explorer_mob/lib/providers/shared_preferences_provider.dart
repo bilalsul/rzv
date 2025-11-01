@@ -103,6 +103,31 @@ Future<void> saveLastOpenedProject(String projectPath) async {
   notifyListeners();
 }
 
+  // -------------------------------
+  // Current project explicit helpers
+  // -------------------------------
+  /// Save current project id, name and path.
+  Future<void> saveCurrentProject({required String id, required String name, required String path}) async {
+    await prefs.setString('current_project_id', id);
+    await prefs.setString('current_project_name', name);
+    await prefs.setString('current_project_path', path);
+    // Keep backward compatibility with lastOpenedProject
+    await prefs.setString('app_last_opened_project', path);
+    notifyListeners();
+  }
+
+  String get currentProjectId {
+    return prefs.getString('current_project_id') ?? '';
+  }
+
+  String get currentProjectName {
+    return prefs.getString('current_project_name') ?? '';
+  }
+
+  String get currentProjectPath {
+    return prefs.getString('current_project_path') ?? prefs.getString('app_last_opened_project') ?? '';
+  }
+
 Screen get lastKnownScreen {
   switch(lastKnownRoute){
     case '/' || '/home':
