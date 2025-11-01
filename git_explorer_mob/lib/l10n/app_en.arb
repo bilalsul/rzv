@@ -68,6 +68,7 @@
   "settingsApiKeyNotSet": "No key set",
   "settingsSetApiKey": "Set API Key",
   "connectionFailed": "Connection failed",
+  
   "statisticToPresent": "To Present",
   "contextMenuAddNoteTips": "Add your note",
   "contextMenuCopy": "Copy",
@@ -87,12 +88,7 @@
   "slide": "Slide",
   "scroll": "Scroll",
   "importSupportTypes": "Support types: {types}",
-  "readingPageReadingInfo": "Reading Info",
-  "readingPageReadingInfoChapterTitle": "Chapter Title",
-  "readingPageReadingInfoBattery": "Battery",
-  "readingPageReadingInfoTime": "Time",
-  "readingPageReadingInfoBatteryAndTime": "Battery and Time",
-  "readingPageReadingInfoChapterProgress": "Chapter Progress",
+  
   "commonDelete": "Delete",
   "commonHoursFull": "{count, plural, =1{1 hour} other{{count} hours} }",
   "commonHours": "{count, plural, other{{count} h} }",
@@ -132,6 +128,7 @@
   "commonRetry": "Retry",
   "commonAscending": "Ascending",
   "commonDescending": "Descending",
+  
   "storage": "Storage",
   "storageInfo": "Storage Info",
   "storageTotalSize": "Total Size",
@@ -144,14 +141,6 @@
   "storageDataFileDetails": "Data File Details",
   "storageClearCache": "Clear Cache",
   "serviceImportSuccess": "Import success",
-  "settingsSync": "Sync",
-  "settingsSyncWebdav": "WebDAV",
-  "settingsSyncEnableWebdav": "Enable WebDAV",
-  "settingsSyncWebdavUrl": "WebDAV URL",
-  "settingsSyncWebdavUsername": "Username",
-  "settingsSyncWebdavPassword": "Password",
-  "settingsSyncWebdavTestConnection": "Test Connection",
-  "settingsSyncWebdavSyncNow": "Sync Now",
   "exportAndImport": "Export/Import",
   "exportAndImportExport": "Export",
   "exportAndImportImport": "Import",
@@ -290,6 +279,7 @@
   "replacementFailed": "Replacement Failed",
   "replacementFailedContent": "Database validation failed after replacement, automatically recovered to previous version. Your data is safe.",
   "syncUnknownError": "Sync Error",
+  
   "onboardingWelcomeTitle": "Welcome to Anx Reader",
   "onboardingWelcomeBody": "A powerful e-book reader with AI integration and cross-platform sync capabilities.",
   "onboardingAppearanceTitle": "Customize Your Experience",
@@ -306,6 +296,7 @@
   "onboardingBack": "Back",
   "onboardingDone": "Get Started",
   "onboardingSkip": "Skip",
+  
   "customizeYourExperience": "Customize your experience",
   "moreDisplayOptionsTip": "More display options available in Settings → Appearance",
   "optimizedForEInkDisplays": "Optimized for e-ink displays",
@@ -411,10 +402,11 @@
   "mindmapDefaultTitle": "Mindmap",
   "mindmapDefaultNodeId": "node",
   "mindmapDefaultNodeLabel": "Node",
+
   "homeProjectsTitle": "Projects",
-  "@homeProjectsTitle": {},
+  "homeDefaultProjectName":"Project",
   "homeNoProjects": "No projects yet",
-  "@homeNoProjects": {},
+  "homeGetStarted": "Create or import a project to get started",
   "homeCreateProject": "Create",
   "homeImportProject": "Import",
   "homeDeleteProjectConfirm": "Delete project?",
@@ -424,5 +416,11 @@
   "homeFolders": "Folders",
   "homeReadmeNotFound": "No README found",
   "homeOpenFileEditorNotice": "This file will open in editor later",
-  "homeBack": "Back"
+  "homeBack": "Back",
+  "homeAddProjectName" : "Project Name",
+  "homeCreatedNewProject" : "Project Created",
+  "homeImportZipProject": "Import project (zip)",
+  "homeImportedZipNotFound": "Imported Zip file not found",
+  "homeImportZipAsProject": "Imported zip as Project",
+  "homeImportFailed": "Import failed:"
 }

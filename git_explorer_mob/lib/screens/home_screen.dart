@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
 
@@ -81,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _createProjectWithDetails() async {
     final nameTc = TextEditingController();
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
-      title: const Text('Create Project'),
-      content: TextField(controller: nameTc, decoration: const InputDecoration(hintText: 'Project name')),
-      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Create'))],
+      title: Text(L10n.of(context).homeCreateProject),
+      content: TextField(controller: nameTc, decoration: InputDecoration(hintText: L10n.of(context).homeAddProjectName)),
+      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).homeCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).homeCreateProject))],
     ));
     if (confirmed != true) return;
     final name = nameTc.text.trim();
@@ -92,22 +93,22 @@ class _HomeScreenState extends State<HomeScreen> {
       final p = _Project(id: 'proj_${_projects.length + 1}_${DateTime.now().millisecondsSinceEpoch}', name: name, fileCount: 0, lastModified: DateTime.now(), type: 'Custom', fs: {});
       _projects.insert(0, p);
     });
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Project created')));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)));
   }
 
   Future<void> _importZipProject() async {
     final tc = TextEditingController();
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
-      title: const Text('Import project (zip)'),
+      title: Text(L10n.of(context).homeImportZipProject),
       content: TextField(controller: tc, decoration: const InputDecoration(hintText: '/absolute/path/to/project.zip')),
-      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Import'))],
+      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).homeCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).homeImportProject))],
     ));
     if (confirmed != true) return;
     final path = tc.text.trim();
     if (path.isEmpty) return;
     final f = File(path);
     if (!await f.exists()) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Zip file not found')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportedZipNotFound)));
       return;
     }
     try {
@@ -219,9 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _openedProject == null
-          ? AppBar(title: const Text('Projects'))
+          ? AppBar(title: Text(L10n.of(context).homeProjectsTitle))
           : AppBar(
-              title: Text(_openedProject?.name ?? 'Project'),
+              title: Text(_openedProject?.name ?? L10n.of(context).homeDefaultProjectName),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
@@ -441,14 +442,14 @@ class _EmptyState extends StatelessWidget {
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Icon(Icons.folder_open, size: 72, color: Colors.grey.shade400),
         const SizedBox(height: 12),
-        const Text('No projects yet', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+        Text(L10n.of(context).homeNoProjects, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         const SizedBox(height: 8),
-        const Text('Create or import a project to get started', style: TextStyle(color: Colors.black54)),
+        Text(L10n.of(context).homeGetStarted, style: TextStyle(color: Colors.black54)),
         const SizedBox(height: 16),
         Row(mainAxisSize: MainAxisSize.min, children: [
-          ElevatedButton.icon(onPressed: onCreate, icon: const Icon(Icons.add), label: const Text('Create')),
+          ElevatedButton.icon(onPressed: onCreate, icon: const Icon(Icons.add), label: Text(L10n.of(context).homeCreateProject)),
           const SizedBox(width: 8),
-          OutlinedButton.icon(onPressed: onImport, icon: const Icon(Icons.file_upload), label: const Text('Import')),
+          OutlinedButton.icon(onPressed: onImport, icon: const Icon(Icons.file_upload), label: Text(L10n.of(context).homeImportProject)),
         ])
       ]),
     );
