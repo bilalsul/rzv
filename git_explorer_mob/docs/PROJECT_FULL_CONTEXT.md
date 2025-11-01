@@ -28,6 +28,7 @@ This document is a single, self-contained, large context file intended to captur
     - `providers/shared_preferences_provider.dart` — `Prefs` ChangeNotifier centralizing app settings and secure API helpers.
     - `screens/`
       - `home_screen.dart` — Home/project browser, README inline viewer, file listing; navigates to editor for non-markdown files.
+        - New: supports creating projects with user-provided details, importing projects from .zip archives (decoded via the `archive` package), and a helper that programmatically generates a demo .zip and imports it. Imported zips are decoded into the in-memory `fs` map used by `_Project`.
       - `editor_screen.dart` — Editor screen; uses `MonacoWrapper` widget or fallback.
       - `settings_screen.dart` — Settings with AI model selection, terminal options, theme customizer.
       - `ai_screen.dart` — Entry point for AI features; currently returns `ChatScreen`.
@@ -124,7 +125,7 @@ These are the canonical preference keys and message shapes used throughout the a
   - text: String
   - time: ISO8601 timestamp string
   - streaming: (optional) bool — true when assistant message is being incrementally filled
-  - attachments: (optional) List<String> — file basenames attached to the user message
+  - attachments: (optional) `List<String>` — file basenames attached to the user message
 
 - Editor session object (in Prefs) — example fields stored by helper methods:
   - `current_open_project` (String)
