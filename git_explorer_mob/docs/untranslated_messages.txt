@@ -306,26 +306,6 @@
     "mindmapStats",
     "mindmapDefaultTitle",
     "mindmapDefaultNodeId",
-    "mindmapDefaultNodeLabel",
-    "homeProjectsTitle",
-    "homeDefaultProjectName",
-    "homeNoProjects",
-    "homeGetStarted",
-    "homeCreateProject",
-    "homeImportProject",
-    "homeDeleteProjectConfirm",
-    "homeDelete",
-    "homeCancel",
-    "homeFiles",
-    "homeFolders",
-    "homeReadmeNotFound",
-    "homeOpenFileEditorNotice",
-    "homeBack",
-    "homeAddProjectName",
-    "homeCreatedNewProject",
-    "homeImportZipProject",
-    "homeImportedZipNotFound",
-    "homeImportZipAsProject",
-    "homeImportFailed"
+    "mindmapDefaultNodeLabel"
   ]
 }

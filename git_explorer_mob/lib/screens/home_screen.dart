@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final next = _makeSampleProject(_projects.length + 1);
       _projects.insert(0, next);
     });
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Project created (temp)')));
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeProjectCreatedTemp)));
   }
 
   void _importProject() {
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // simulate an import by adding at the end
       _projects.add(imported);
     });
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Project imported (temp)')));
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeProjectImportedTemp)));
   }
 
   Future<void> _createProjectWithDetails() async {
@@ -133,9 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _projects.insert(0, proj);
       });
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Imported zip as project')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportZipAsProject)));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Import failed: $e')));
+  final msg = L10n.of(context).importFailed(e.toString());
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     }
   }
 
@@ -184,9 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _projects.insert(0, proj);
       });
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sample zip created and imported')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeSampleZipCreatedAndImported)));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sample import failed: $e')));
+  final msg = L10n.of(context).homeSampleImportFailed(e.toString());
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     }
   }
 
@@ -300,9 +302,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   const Icon(Icons.error_outline, size: 48, color: Colors.redAccent),
                   const SizedBox(height: 8),
-                  const Text('Something went wrong while rendering the Home screen.'),
+                  Text(L10n.of(context).commonFailed),
                   const SizedBox(height: 8),
-                  ElevatedButton(onPressed: () => setState(() {}), child: const Text('Retry')),
+                  ElevatedButton(onPressed: () => setState(() {}), child: Text(L10n.of(context).commonRetry)),
                 ]),
               );
             }
@@ -315,21 +317,21 @@ class _HomeScreenState extends State<HomeScreen> {
           FloatingActionButton.small(
             heroTag: 'import',
             onPressed: _importZipProject,
-            tooltip: 'Import project (temp)',
+            tooltip: L10n.of(context).homeTooltipImportTemp,
             child: const Icon(Icons.file_upload),
           ),
           const SizedBox(height: 8),
           FloatingActionButton.small(
             heroTag: 'create_details',
             onPressed: _createProjectWithDetails,
-            tooltip: 'Create project (details)',
+            tooltip: L10n.of(context).homeTooltipCreateDetails,
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
             heroTag: 'sample_zip',
             onPressed: _createSampleZipAndImport,
-            tooltip: 'Create & import sample zip',
+            tooltip: L10n.of(context).homeTooltipCreateSampleZip,
             child: const Icon(Icons.archive),
           ),
         ],
@@ -342,11 +344,11 @@ class _HomeScreenState extends State<HomeScreen> {
       return _ProjectCard(
         project: p,
         onOpen: () => _openProject(p),
-        onDelete: () {
+          onDelete: () {
           setState(() {
             _projects.removeWhere((x) => x.id == p.id);
           });
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Project removed')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeProjectRemoved)));
         },
       );
     } catch (_) {
@@ -355,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListTile(
           leading: const Icon(Icons.folder),
           title: Text(p.name ?? 'Unnamed'),
-          subtitle: const Text('Unable to display details'),
+          subtitle: Text(L10n.of(context).homeUnableToDisplayDetails),
           onTap: () => _openProject(p),
         ),
       );
@@ -410,7 +412,7 @@ class _ProjectCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text('${project.fileCount ?? 0} files · ${project.type ?? 'Unknown'}', style: const TextStyle(color: Colors.black54, fontSize: 12)),
                 const SizedBox(height: 6),
-                Text(project.lastModified != null ? 'Modified ${project.lastModified!.toLocal().toString().split('.').first}' : 'No modification info', style: const TextStyle(fontSize: 11, color: Colors.black45)),
+                Text(project.lastModified != null ? 'Modified ${project.lastModified!.toLocal().toString().split('.').first}' : L10n.of(context).homeNoModificationInfo, style: const TextStyle(fontSize: 11, color: Colors.black45)),
               ]),
             ),
             PopupMenuButton<String>(
@@ -418,9 +420,9 @@ class _ProjectCard extends StatelessWidget {
                 if (v == 'open') onOpen?.call();
                 else if (v == 'delete') onDelete?.call();
               },
-              itemBuilder: (_) => const [
-                PopupMenuItem(value: 'open', child: Text('Open')),
-                PopupMenuItem(value: 'delete', child: Text('Delete')),
+              itemBuilder: (ctx) => [
+                PopupMenuItem(value: 'open', child: Text(L10n.of(ctx).homeOpenMenu)),
+                PopupMenuItem(value: 'delete', child: Text(L10n.of(ctx).homeDeleteMenu)),
               ],
             ),
           ]),
@@ -496,7 +498,7 @@ class _ProjectBrowser extends StatelessWidget {
 
     // If node is a file (string) but not selected (non-md), show placeholder
     if (node is String) {
-      return Center(child: Text('File preview not available. Open in editor later.'));
+      return Center(child: Text(L10n.of(context).homeFilePreviewUnavailable));
     }
 
     // Expecting a directory map here
@@ -505,7 +507,7 @@ class _ProjectBrowser extends StatelessWidget {
     final files = dir.entries.where((e) => e.value is String).map((e) => e.key).toList()..sort();
 
     if (dirs.isEmpty && files.isEmpty) {
-      return Center(child: Text('Empty directory'));
+      return Center(child: Text(L10n.of(context).homeEmptyDirectory));
     }
 
     return ListView.builder(
@@ -525,7 +527,7 @@ class _ProjectBrowser extends StatelessWidget {
         return ListTile(
           leading: const Icon(Icons.insert_drive_file),
           title: Text(fileName),
-          subtitle: isMarkdown ? const Text('Markdown file') : null,
+          subtitle: isMarkdown ? Text(L10n.of(context).homeMarkdownFile) : null,
           onTap: () async {
             if (content == null) return;
             if (isMarkdown) {

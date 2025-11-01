@@ -403,7 +403,8 @@
   "mindmapDefaultNodeId": "node",
   "mindmapDefaultNodeLabel": "Node",
 
-  "homeProjectsTitle": "Projects",
+  "homeAppBar":"Projects",
+  "homeProjectsTitle": "Imported/Created Projects",
   "homeDefaultProjectName":"Project",
   "homeNoProjects": "No projects yet",
   "homeGetStarted": "Create or import a project to get started",
@@ -422,5 +423,21 @@
   "homeImportZipProject": "Import project (zip)",
   "homeImportedZipNotFound": "Imported Zip file not found",
   "homeImportZipAsProject": "Imported zip as Project",
-  "homeImportFailed": "Import failed:"
+  "homeImportFailed": "Import failed:",
+  "homeProjectCreatedTemp": "Project created (temp)",
+  "homeProjectImportedTemp": "Project imported (temp)",
+  "homeProjectRemoved": "Project removed",
+  "homeSampleZipCreatedAndImported": "Sample zip created and imported",
+  "homeTooltipImportTemp": "Import project (temp)",
+  "homeTooltipCreateDetails": "Create project (details)",
+  "homeTooltipCreateSampleZip": "Create & import sample zip",
+  "homeOpenMenu": "Open",
+  "homeDeleteMenu": "Delete",
+  "homeMarkdownFile": "Markdown file",
+  "homeFilePreviewUnavailable": "File preview not available. Open in editor later.",
+  "homeEmptyDirectory": "Empty directory",
+  "homeUnableToDisplayDetails": "Unable to display details",
+  "homeNoModificationInfo": "No modification info",
+  "homeSampleImportFailed": "Sample import failed: {error}",
+  "homeRetry": "Retry"
 }
