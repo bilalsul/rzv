@@ -106,15 +106,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           Text(L10n.of(context).settingsAppearanceLanguage, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
+            // current stored locale code or 'System'
             value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
-            items: supportedLanguages.expand((m) => m.entries).map((entry) {
+            items: supportedLanguages.map((m) {
+              final entry = m.entries.first;
               final label = entry.key;
               final code = entry.value;
-              return DropdownMenuItem(value: code == 'System' ? 'System' : code, child: Text(label));
+              final displayLabel = label[0].toUpperCase() + label.substring(1);
+              return DropdownMenuItem<String>(value: code == 'System' ? 'System' : code, child: Text(displayLabel));
             }).toList(),
-            onChanged: (v) async {
-              if (v == null) return;
-              await Prefs().saveLocaleToPrefs(v);
+            onChanged: (selectedCode) async {
+              if (selectedCode == null) return;
+              // Persist the language code (e.g., 'en', 'zh-CN' or 'System') to prefs
+              await Prefs().saveLocaleToPrefs(selectedCode);
             },
           ),
           const SizedBox(height: 12),
@@ -173,7 +177,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   onPressed: () async {
                     await Prefs().savePrimaryColor(_tempPrimaryColor.value);
                     await Prefs().saveSecondaryColor(_tempSecondaryColor.value);
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Theme colors applied')));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsThemeApplied)));
                   },
                   child: Text(L10n.of(context).settingsApplyThemeColors),
                 ),
@@ -488,14 +492,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           builder: (context, snapshot) {
             final controller = TextEditingController(text: snapshot.data ?? '');
             return AlertDialog(
-              title: const Text('Set API Key'),
+              title: Text(L10n.of(context).settingsSetApiKey),
               content: TextField(
                 controller: controller,
                 obscureText: true,
-                decoration: const InputDecoration(hintText: 'Enter API Key'),
+                decoration: InputDecoration(hintText: L10n.of(context).commonCancel),
               ),
               actions: [
-                TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+                TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
                 FilledButton(
                   onPressed: () async {
                     final value = controller.text.trim();
@@ -505,7 +509,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     Navigator.of(context).pop();
                     setState(() {});
                   },
-                  child: const Text('Save'),
+                  child: Text(L10n.of(context).commonSave),
                 ),
               ],
             );
