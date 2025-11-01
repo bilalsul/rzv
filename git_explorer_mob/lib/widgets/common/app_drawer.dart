@@ -78,7 +78,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Unnamed Code Editor',
+                'Git Explorer',
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
@@ -101,7 +101,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                       color: theme.colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 1),
                   Text(
                     appState.lastOpenedProject.isNotEmpty
                         ? appState.lastOpenedProject.split('/').last
@@ -143,7 +143,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
       slivers: [
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 4),
             child: Row(
               children: [
                 Icon(
