@@ -5,6 +5,7 @@ import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 // Theme provider removed; theme is driven from Prefs
 import 'package:git_explorer_mob/widgets/settings/plugin_settings_panel.dart';
 import 'package:git_explorer_mob/enums/options/supported_language.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 
 /// SettingsScreen no longer contains plugin toggles (they live in AppDrawer).
 /// This screen exposes plugin-specific settings panels and connects them
@@ -71,13 +72,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const SizedBox(height: 12),
 
           // Appearance / Theme
-          const Text('Appearance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          Text(L10n.of(context).settingsAppearance, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           Builder(builder: (context) {
             final currentTheme = prefs.themeMode;
             return Column(children: [
                   RadioListTile<ThemeMode>(
-                title: const Text('System Default'),
+                title: Text(L10n.of(context).settingsSystemMode),
                 value: ThemeMode.system,
                 groupValue: currentTheme,
                 onChanged: (v) async {
@@ -85,13 +86,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 },
               ),
               RadioListTile<ThemeMode>(
-                title: const Text('Light'),
+                title: Text(L10n.of(context).settingsLightMode),
                 value: ThemeMode.light,
                 groupValue: currentTheme,
                 onChanged: (v) async { await Prefs().saveThemeMode('light'); },
               ),
               RadioListTile<ThemeMode>(
-                title: const Text('Dark'),
+                title: Text(L10n.of(context).settingsDarkMode),
                 value: ThemeMode.dark,
                 groupValue: currentTheme,
                 onChanged: (v) async { await Prefs().saveThemeMode('dark'); },
@@ -102,7 +103,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
           // Language selection
           const SizedBox(height: 8),
-          const Text('Language', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          Text(L10n.of(context).settingsAppearanceLanguage, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
             value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
@@ -120,10 +121,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
           // Theme Customizer (plugin)
           PluginSettingsPanel(
-            title: 'Theme Customizer',
+            title: L10n.of(context).settingsAppearanceTheme,
             visible: themeCustomizerEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Primary color'),
+              Text(L10n.of(context).settingsAppearancePrimaryColor),
               const SizedBox(height: 8),
               // clickable color circle palette
               Wrap(
@@ -146,7 +147,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 }).toList(),
               ),
               const SizedBox(height: 8),
-              const Text('Accent color'),
+              Text(L10n.of(context).settingsAppearanceAccentColor),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
@@ -174,7 +175,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     await Prefs().saveSecondaryColor(_tempSecondaryColor.value);
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Theme colors applied')));
                   },
-                  child: const Text('Apply Theme colors'),
+                  child: Text(L10n.of(context).settingsApplyThemeColors),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
@@ -184,12 +185,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     _tempPrimaryColor = p.primaryColor;
                     _tempSecondaryColor = p.secondaryColor;
                   }),
-                  child: const Text('Revert'),
+                  child: Text(L10n.of(context).settingsRevertThemeColors),
                 ),
               ]),
               const SizedBox(height: 12),
               Row(children: [
-                const Expanded(child: Text('Border radius')),
+                Expanded(child: Text(L10n.of(context).settingsBorderRadius)),
                 Expanded(
                   child: Slider(
                     value: _tempBorderRadius,
@@ -203,19 +204,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ]),
               const SizedBox(height: 8),
               Row(children: [
-                const Expanded(child: Text('Elevation')),
+                Expanded(child: Text(L10n.of(context).settingsElevation)),
                 Expanded(
                   child: Slider(value: _tempElevation, min: 0, max: 12, divisions: 12, label: _tempElevation.toStringAsFixed(0), onChanged: (v) => setState(() { _tempElevation = v; })),
                 ),
               ]),
               const SizedBox(height: 8),
               Row(children: [
-                const Expanded(child: Text('App font size')),
+                Expanded(child: Text(L10n.of(context).settingsAppFontSize)),
                 Expanded(child: Slider(value: _tempAppFontSize, min: 10, max: 22, divisions: 12, label: _tempAppFontSize.toStringAsFixed(0), onChanged: (v) => setState(() { _tempAppFontSize = v; }))),
               ]),
               const SizedBox(height: 8),
               Row(children: [
-                const Expanded(child: Text('Button style')),
+                Expanded(child: Text(L10n.of(context).settingsButtonStyle)),
                 DropdownButton<String>(
                   value: _tempButtonStyle,
                   items: ['elevated', 'outlined', 'text'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
@@ -223,7 +224,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
               ]),
               Row(children: [
-                const Expanded(child: Text('Reduce animations')),
+                Expanded(child: Text(L10n.of(context).settingsReduceAnimations)),
                 Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); }),
               ]),
             ]),
@@ -231,10 +232,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
           // Editor settings panel (visible only when editor plugin enabled)
           PluginSettingsPanel(
-            title: 'Editor Settings',
+            title: L10n.of(context).settingsEditorSettings,
             visible: editorEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Tab size'),
+              Text(L10n.of(context).settingsEditorTabSize),
               Slider(
                 value: (editorCfg['tabSize'] ?? 2).toDouble(),
                 min: 2,
@@ -245,7 +246,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               const SizedBox(height: 8),
               Row(children: [
-                const Text('Show line numbers'),
+                Text(L10n.of(context).settingsEditorShowLineNumbers),
                 const Spacer(),
                 Checkbox(
                   value: (editorCfg['showLineNumbers'] ?? true) as bool,
@@ -257,15 +258,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
           // Git settings
           PluginSettingsPanel(
-            title: 'Git Settings',
+            title: L10n.of(context).settingsGitSettings,
             visible: gitEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                const Expanded(child: Text('Auto-fetch')),
+                Expanded(child: Text(L10n.of(context).settingsGitAutoFetch)),
                 Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v)),
               ]),
               const SizedBox(height: 8),
-              const Text('Default branch'),
+              Text(L10n.of(context).settingsGitDefaultBranch),
               const SizedBox(height: 4),
               TextField(
                 controller: TextEditingController(text: (gitCfg['defaultBranch'] ?? 'main') as String),
@@ -277,10 +278,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
           // AI settings
           PluginSettingsPanel(
-            title: 'AI Settings',
+            title: L10n.of(context).settingsAiSettings,
             visible: aiEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Model provider'),
+              Text(L10n.of(context).settingsAiModelProvider),
               const SizedBox(height: 8),
               Wrap(spacing: 8, children: [
                 _providerTile('gpt', label: 'OpenAI', logoUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openai/openai-original.svg'),
@@ -289,7 +290,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 _providerTile('gemini', label: 'Gemini', logoUrl: 'https://example.com/gemini-logo.png'),
               ]),
               const SizedBox(height: 12),
-              const Text('Max tokens'),
+              Text(L10n.of(context).settingsAiMaxTokens),
               Slider(
                 value: _selectedAiMaxTokens.toDouble(),
                 min: 64,
@@ -302,8 +303,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const SizedBox(height: 12),
               // API key storage (secure)
               ListTile(
-                title: const Text('API Key (secure)'),
-                subtitle: Text(prefs.hasPluginApiKey('ai') ? 'Key is set' : 'No key set'),
+                title: Text(L10n.of(context).settingsApiKeySecure),
+                subtitle: Text(prefs.hasPluginApiKey('ai') ? L10n.of(context).settingsApiKeySet : L10n.of(context).settingsApiKeyNotSet),
                 trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                   IconButton(
                     icon: const Icon(Icons.edit),
@@ -326,9 +327,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     await prefs.setPluginConfig('ai', 'maxTokens', _selectedAiMaxTokens);
                     setState(() {});
                     final ok = await _checkApiKey(_selectedAiProvider);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? 'Connection successful' : 'Connection failed')));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? L10n.of(context).connectionSuccessful : L10n.of(context).connectionFailed)));
                   },
-                  child: const Text('Apply AI settings'),
+                  child: Text(L10n.of(context).settingsApplyAiSettings),
                 ),
               ]),
             ]),
@@ -336,10 +337,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
           // Terminal settings
           PluginSettingsPanel(
-            title: 'Terminal Settings',
+            title: L10n.of(context).settingsTerminalSettings,
             visible: terminalEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('Shell executable'),
+              Text(L10n.of(context).settingsTerminalShellExecutable),
               const SizedBox(height: 8),
               TextField(
                 controller: TextEditingController(text: (terminalCfg['shellPath'] ?? '/bin/bash') as String),
@@ -348,11 +349,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               const SizedBox(height: 8),
               Row(children: [
-                const Expanded(child: Text('Font size')),
+                Expanded(child: Text(L10n.of(context).settingsTerminalFontSize)),
                 Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt())),
               ]),
               Row(children: [
-                const Expanded(child: Text('Audible bell')),
+                Expanded(child: Text(L10n.of(context).settingsTerminalAudibleBell)),
                 Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v)),
               ]),
             ]),
@@ -360,16 +361,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
           // File Explorer settings
           PluginSettingsPanel(
-            title: 'File Explorer Settings',
+            title: L10n.of(context).settingsFileExplorerSettings,
             visible: fileExplorerEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                const Expanded(child: Text('Show hidden files')),
+                Expanded(child: Text(L10n.of(context).settingsFileExplorerShowHidden)),
                 Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'showHidden', v)),
               ]),
               const SizedBox(height: 8),
               Row(children: [
-                const Expanded(child: Text('Preview markdown files')),
+                Expanded(child: Text(L10n.of(context).settingsFileExplorerPreviewMarkdown)),
                 Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v)),
               ]),
             ]),
@@ -396,7 +397,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               await prefs.setPluginConfig('ai', 'maxTokens', null);
             },
             icon: const Icon(Icons.restore),
-            label: const Text('Reset plugin settings to defaults'),
+            label: Text(L10n.of(context).settingsResetPluginDefaults),
           ),
         ]),
       ),
