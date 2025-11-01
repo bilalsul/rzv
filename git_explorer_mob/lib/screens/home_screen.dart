@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
       title: Text(L10n.of(context).homeCreateProject),
       content: TextField(controller: nameTc, decoration: InputDecoration(hintText: L10n.of(context).homeAddProjectName)),
-      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).homeCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).homeCreateProject))],
+      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).commonCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).homeCreateProject))],
     ));
     if (confirmed != true) return;
     final name = nameTc.text.trim();
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
       title: Text(L10n.of(context).homeImportZipProject),
       content: TextField(controller: tc, decoration: const InputDecoration(hintText: '/absolute/path/to/project.zip')),
-      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).homeCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).homeImportProject))],
+      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).commonCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).homeImportProject))],
     ));
     if (confirmed != true) return;
     final path = tc.text.trim();
@@ -422,7 +422,7 @@ class _ProjectCard extends StatelessWidget {
               },
               itemBuilder: (ctx) => [
                 PopupMenuItem(value: 'open', child: Text(L10n.of(ctx).homeOpenMenu)),
-                PopupMenuItem(value: 'delete', child: Text(L10n.of(ctx).homeDeleteMenu)),
+                PopupMenuItem(value: 'delete', child: Text(L10n.of(ctx).commonDelete)),
               ],
             ),
           ]),
