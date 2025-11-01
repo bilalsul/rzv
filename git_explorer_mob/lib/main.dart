@@ -16,7 +16,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Prefs().initPrefs();
+  await Prefs().initPrefs();
   // if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
   //   await windowManager.ensureInitialized();
   //   final size = Size(
@@ -126,8 +126,6 @@ Future<void> _updateWindowInfo() async {
             navigatorObservers: [FlutterSmartDialog.observer],
             builder: FlutterSmartDialog.init(),
             navigatorKey: navigatorKey,
-            localizationsDelegates: L10n.localizationsDelegates,
-            supportedLocales: L10n.supportedLocales,
             title: 'Git Explorer',
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
