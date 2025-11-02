@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Providers
 import '../../providers/shared_preferences_provider.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 
 // Models
 import 'package:git_explorer_mob/models/plugin.dart';
@@ -76,7 +77,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Git Explorer',
+                L10n.of(context).appName,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
@@ -93,7 +94,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Current Project',
+                  L10n.of(context).drawerCurrentProject,
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: theme.colorScheme.onSurface.withOpacity(0.6),
                   ),
@@ -103,7 +104,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 Text(
                   prefs.currentProjectName.isNotEmpty
                       ? prefs.currentProjectName
-                      : (prefs.lastOpenedProject.isNotEmpty ? prefs.lastOpenedProject.split('/').last : 'No project open'),
+                      : (prefs.lastOpenedProject.isNotEmpty ? prefs.lastOpenedProject.split('/').last : L10n.of(context).drawerNoProjectOpen),
                   style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -125,10 +126,10 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 // Last opened time for the project (relative, no seconds)
                 Builder(builder: (_) {
                   final lastOpened = prefs.lastOpenedProjectTime;
-                  final lastText = lastOpened.millisecondsSinceEpoch > 0 ? _formatDate(lastOpened) : 'Never';
+                  final lastText = lastOpened.millisecondsSinceEpoch > 0 ? _formatDate(lastOpened, context) : L10n.of(context).drawerNever;
                   return Padding(
                     padding: const EdgeInsets.only(top: 6.0),
-                    child: Text('Last opened: $lastText', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
+                    child: Text(L10n.of(context).drawerLastOpened(lastText), style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
                   );
                 }),
               ],
@@ -162,7 +163,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'PLUGINS & FEATURES',
+                  L10n.of(context).drawerPluginsAndFeatures.toUpperCase(),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: theme.colorScheme.onSurface.withOpacity(0.6),
                     fontWeight: FontWeight.w600,
@@ -176,7 +177,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
         // Editor Plugins
         _buildPluginCategory(
-          title: 'Editor Plugins',
+          title: L10n.of(context).drawerEditorPlugins,
           plugins: _editorPlugins,
           isExpanded: _expandedEditorPlugins,
           onToggle: () => setState(() => _expandedEditorPlugins = !_expandedEditorPlugins),
@@ -185,7 +186,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
         // Git Plugins
         _buildPluginCategory(
-          title: 'Git Integration',
+          title: L10n.of(context).drawerGitIntegration,
           plugins: _gitPlugins,
           isExpanded: _expandedGitPlugins,
           onToggle: () => setState(() => _expandedGitPlugins = !_expandedGitPlugins),
@@ -194,7 +195,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
         // Utility Plugins
         _buildPluginCategory(
-          title: 'Utility Plugins',
+          title: L10n.of(context).drawerUtilityPlugins,
           plugins: _utilityPlugins,
           isExpanded: _expandedUtilityPlugins,
           onToggle: () => setState(() => _expandedUtilityPlugins = !_expandedUtilityPlugins),
@@ -203,7 +204,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
         // Experimental Plugins
         _buildPluginCategory(
-          title: 'Experimental',
+          title: L10n.of(context).drawerExperimental,
           plugins: _experimentalPlugins,
           isExpanded: _expandedExperimentalPlugins,
           onToggle: () => setState(() => _expandedExperimentalPlugins = !_expandedExperimentalPlugins),
@@ -253,7 +254,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    'BETA',
+                    L10n.of(context).drawerBeta,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onTertiaryContainer,
                       fontWeight: FontWeight.w700,
@@ -360,7 +361,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 child: OutlinedButton.icon(
                   onPressed: _showFeedbackDialog,
                   icon: const Icon(Icons.feedback_outlined, size: 16),
-                  label: const Text('Feedback'),
+                  label: Text(L10n.of(context).drawerFeedback),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
@@ -371,7 +372,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 child: OutlinedButton.icon(
                   onPressed: _showAboutDialog,
                   icon: const Icon(Icons.info_outlined, size: 16),
-                  label: const Text('About'),
+                  label: Text(L10n.of(context).drawerAbout),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
@@ -395,7 +396,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Git Explorer',
+                    L10n.of(context).appName,
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onSurface.withOpacity(0.4),
                     ),
@@ -527,15 +528,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   // Helper Methods
   // =============================================
 
-  String _formatDate(DateTime date) {
+  String _formatDate(DateTime date, BuildContext context) {
     final now = DateTime.now();
     final difference = now.difference(date);
 
-    if (difference.inMinutes < 1) return 'Just now';
-    if (difference.inHours < 1) return '${difference.inMinutes}m ago';
-    if (difference.inDays < 1) return '${difference.inHours}h ago';
-    if (difference.inDays == 1) return 'Yesterday';
-    if (difference.inDays < 7) return '${difference.inDays}d ago';
+    if (difference.inMinutes < 1) return L10n.of(context).commonJustNow;
+    if (difference.inHours < 1) return L10n.of(context).commonMinutes(difference.inMinutes);
+    if (difference.inDays < 1) return L10n.of(context).commonHours(difference.inHours);
+    if (difference.inDays == 1) return L10n.of(context).commonYesterday;
+    if (difference.inDays < 7) return L10n.of(context).commonDays(difference.inDays);
 
     return '${date.day}/${date.month}/${date.year}';
   }
@@ -560,11 +561,11 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               const SizedBox(height: 16),
             ],
             Text(
-              'Plugin ID: ${plugin.id}',
+              L10n.of(context).drawerPluginId(plugin.id),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
-              'Category: ${plugin.category.name.toUpperCase()}',
+              L10n.of(context).drawerPluginCategory(plugin.category.name.toUpperCase()),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -572,7 +573,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text(L10n.of(context).commonClose),
           ),
         ],
       ),
@@ -583,24 +584,22 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Send Feedback'),
-        content: const Text(
-          'We\'d love to hear your feedback about the Flutter Code Editor!',
-        ),
+        title: Text(L10n.of(context).drawerSendFeedback),
+        content: Text(L10n.of(context).drawerFeedbackBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(L10n.of(context).commonCancel),
           ),
           FilledButton(
             onPressed: () {
               // TODO: Implement feedback submission
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Feedback feature coming soon!')),
+                SnackBar(content: Text(L10n.of(context).drawerFeedbackComingSoon)),
               );
             },
-            child: const Text('Send Feedback'),
+            child: Text(L10n.of(context).drawerSendFeedback),
           ),
         ],
       ),
@@ -612,18 +611,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     
     showAboutDialog(
       context: context,
-      applicationName: 'Flutter Code Editor',
+      applicationName: L10n.of(context).appName,
       applicationVersion: 'v${appState.appVersion} (${appState.buildNumber})',
       applicationIcon: const Icon(Icons.code, size: 48),
       children: [
         const SizedBox(height: 16),
-        const Text(
-          'A powerful code editor built with Flutter and Monaco, '
-          'designed for mobile development workflows.',
-        ),
+        Text(L10n.of(context).drawerAboutDescription),
         const SizedBox(height: 16),
         Text(
-          'First installed: ${_formatDate(appState.firstInstallDate)}',
+          L10n.of(context).drawerFirstInstalled(_formatDate(appState.firstInstallDate, context)),
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
