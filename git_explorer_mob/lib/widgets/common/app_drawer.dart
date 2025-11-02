@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Providers
 import '../../providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:git_explorer_mob/data/plugin_definitions.dart' as plugin_defs;
 
 // Models
 import 'package:git_explorer_mob/models/plugin.dart';
@@ -178,7 +179,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         // Editor Plugins
         _buildPluginCategory(
           title: L10n.of(context).drawerEditorPlugins,
-          plugins: _editorPlugins,
+          plugins: plugin_defs.editorPlugins,
           isExpanded: _expandedEditorPlugins,
           onToggle: () => setState(() => _expandedEditorPlugins = !_expandedEditorPlugins),
           theme: theme,
@@ -187,7 +188,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         // Git Plugins
         _buildPluginCategory(
           title: L10n.of(context).drawerGitIntegration,
-          plugins: _gitPlugins,
+          plugins: plugin_defs.gitPlugins,
           isExpanded: _expandedGitPlugins,
           onToggle: () => setState(() => _expandedGitPlugins = !_expandedGitPlugins),
           theme: theme,
@@ -196,7 +197,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         // Utility Plugins
         _buildPluginCategory(
           title: L10n.of(context).drawerUtilityPlugins,
-          plugins: _utilityPlugins,
+          plugins: plugin_defs.utilityPlugins,
           isExpanded: _expandedUtilityPlugins,
           onToggle: () => setState(() => _expandedUtilityPlugins = !_expandedUtilityPlugins),
           theme: theme,
@@ -205,7 +206,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         // Experimental Plugins
         _buildPluginCategory(
           title: L10n.of(context).drawerExperimental,
-          plugins: _experimentalPlugins,
+          plugins: plugin_defs.experimentalPlugins,
           isExpanded: _expandedExperimentalPlugins,
           onToggle: () => setState(() => _expandedExperimentalPlugins = !_expandedExperimentalPlugins),
           theme: theme,
@@ -297,7 +298,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               : theme.colorScheme.onSurface.withOpacity(0.4),
         ),
         title: Text(
-          plugin.name,
+          _localizedPluginName(plugin.id, context),
           style: theme.textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.w500,
             color: isEnabled
@@ -305,9 +306,9 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 : theme.colorScheme.onSurface.withOpacity(0.6),
           ),
         ),
-        subtitle: plugin.description != null
+        subtitle: (_localizedPluginDescription(plugin.id, context)).isNotEmpty
             ? Text(
-                plugin.description!,
+                _localizedPluginDescription(plugin.id, context),
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: isEnabled
                       ? theme.colorScheme.onSurface.withOpacity(0.7)
@@ -410,119 +411,9 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  // =============================================
-  // Plugin Definitions
-  // =============================================
-
-  static final List<PluginDefinition> _editorPlugins = [
-    PluginDefinition(
-      id: 'readonly_mode',
-      name: 'Read-Only Mode',
-      description: 'Prevent accidental edits to files',
-      icon: Icons.lock_outline,
-      category: PluginCategory.editor,
-    ),
-    PluginDefinition(
-      id: 'syntax_highlighting',
-      name: 'Syntax Highlighting',
-      description: 'Colorful code syntax for better readability',
-      icon: Icons.color_lens_outlined,
-      category: PluginCategory.editor,
-    ),
-    PluginDefinition(
-      id: 'code_folding',
-      name: 'Code Folding',
-      description: 'Collapse and expand code blocks',
-      icon: Icons.unfold_less_outlined,
-      category: PluginCategory.editor,
-    ),
-    PluginDefinition(
-      id: 'bracket_matching',
-      name: 'Bracket Matching',
-      description: 'Highlight matching brackets and parentheses',
-      icon: Icons.code_outlined,
-      category: PluginCategory.editor,
-    ),
-  ];
-
-  static final List<PluginDefinition> _gitPlugins = [
-    PluginDefinition(
-      id: 'git_history',
-      name: 'Git History',
-      description: 'View commit history and differences',
-      icon: Icons.history_outlined,
-      category: PluginCategory.git,
-    ),
-    PluginDefinition(
-      id: 'git_lens',
-      name: 'GitLens',
-      description: 'Enhanced git blame annotations',
-      icon: Icons.remove_red_eye_outlined,
-      category: PluginCategory.git,
-    ),
-    PluginDefinition(
-      id: 'branch_manager',
-      name: 'Branch Manager',
-      description: 'Easy branch creation and switching',
-      icon: Icons.account_tree_outlined,
-      category: PluginCategory.git,
-    ),
-  ];
-
-  static final List<PluginDefinition> _utilityPlugins = [
-    PluginDefinition(
-      id: 'file_explorer',
-      name: 'File Explorer',
-      description: 'Browse and manage project files',
-      icon: Icons.folder_outlined,
-      category: PluginCategory.utility,
-    ),
-    PluginDefinition(
-      id: 'search_replace',
-      name: 'Search & Replace',
-      description: 'Advanced find and replace across files',
-      icon: Icons.search_outlined,
-      category: PluginCategory.utility,
-    ),
-    PluginDefinition(
-      id: 'terminal',
-      name: 'Integrated Terminal',
-      description: 'Run commands without leaving the editor',
-      icon: Icons.terminal_outlined,
-      category: PluginCategory.utility,
-    ),
-    PluginDefinition(
-      id: 'theme_customizer',
-      name: 'Theme Customizer',
-      description: 'Customize editor and app appearance',
-      icon: Icons.palette_outlined,
-      category: PluginCategory.utility,
-    ),
-  ];
-
-  static final List<PluginDefinition> _experimentalPlugins = [
-    PluginDefinition(
-      id: 'ai_assist',
-      name: 'AI Code Assistant',
-      description: 'Get AI-powered code suggestions',
-      icon: Icons.auto_awesome_outlined,
-      category: PluginCategory.experimental,
-    ),
-    PluginDefinition(
-      id: 'real_time_collab',
-      name: 'Real-time Collaboration',
-      description: 'Edit code with others in real-time',
-      icon: Icons.people_outlined,
-      category: PluginCategory.experimental,
-    ),
-    PluginDefinition(
-      id: 'performance_monitor',
-      name: 'Performance Monitor',
-      description: 'Monitor app performance metrics',
-      icon: Icons.monitor_heart_outlined,
-      category: PluginCategory.experimental,
-    ),
-  ];
+  // Plugin lists are now imported from `lib/data/plugin_definitions.dart`.
+  // Leaving these definitions removed to avoid duplication. Names and descriptions
+  // are rendered via `L10n` at runtime so they can be localized.
 
   // =============================================
   // Helper Methods
@@ -624,5 +515,79 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ),
       ],
     );
+  }
+
+  // Localized plugin name lookup. Keep a switch on plugin id so the id stays
+  // canonical for pref lookups, while the displayed string comes from L10n.
+  String _localizedPluginName(String id, BuildContext context) {
+    final l = L10n.of(context);
+    switch (id) {
+      case 'readonly_mode':
+        return l.readonlyModeName;
+      case 'syntax_highlighting':
+        return l.syntaxHighlightingName;
+      case 'code_folding':
+        return l.codeFoldingName;
+      case 'bracket_matching':
+        return l.bracketMatchingName;
+      case 'git_history':
+        return l.gitHistoryName;
+      case 'git_lens':
+        return l.gitLensName;
+      case 'branch_manager':
+        return l.branchManagerName;
+      case 'file_explorer':
+        return l.fileExplorerName;
+      case 'search_replace':
+        return l.searchReplaceName;
+      case 'terminal':
+        return l.terminalName;
+      case 'theme_customizer':
+        return l.themeCustomizerName;
+      case 'ai_assist':
+        return l.aiAssistName;
+      case 'real_time_collab':
+        return l.realtimeCollabName;
+      case 'performance_monitor':
+        return l.performanceMonitorName;
+      default:
+        return id;
+    }
+  }
+
+  String _localizedPluginDescription(String id, BuildContext context) {
+    final l = L10n.of(context);
+    switch (id) {
+      case 'readonly_mode':
+        return l.readonlyModeDescription;
+      case 'syntax_highlighting':
+        return l.syntaxHighlightingDescription;
+      case 'code_folding':
+        return l.codeFoldingDescription;
+      case 'bracket_matching':
+        return l.bracketMatchingDescription;
+      case 'git_history':
+        return l.gitHistoryDescription;
+      case 'git_lens':
+        return l.gitLensDescription;
+      case 'branch_manager':
+        return l.branchManagerDescription;
+      case 'file_explorer':
+        return l.fileExplorerDescription;
+      case 'search_replace':
+        return l.searchReplaceDescription;
+      case 'terminal':
+        return l.terminalDescription;
+      case 'theme_customizer':
+        return l.themeCustomizerDescription;
+      case 'ai_assist':
+        return l.aiAssistDescription;
+      case 'real_time_collab':
+        return l.realtimeCollabDescription;
+      case 'performance_monitor':
+        return l.performanceMonitorDescription;
+      default:
+        return '';
+    }
   }
 }
