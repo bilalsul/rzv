@@ -6,6 +6,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,8 +26,68 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Add some temporary sample data so the screen isn't empty on first run.
-    _projects.addAll(List.generate(3, (i) => _makeSampleProject(i + 1)));
+    // Load persisted projects from the app data directory (if file explorer is enabled),
+    // otherwise keep the in-memory sample projects for demo.
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _prepareProjectsDir();
+      final fileExplorerEnabled = Prefs().isPluginEnabled('file_explorer');
+      // add a flag, if first time, enable tutorialProjectflag then add it to dir
+      if (fileExplorerEnabled) {
+        // add an if (tutorialProjectflag) then ensure it exists, saving it to file.
+        await _ensureTutorialProjectExists();
+        await _loadProjectsFromDisk();
+      } else {
+        // Add some temporary sample data so the screen isn't empty on first run.
+        _projects.addAll(List.generate(3, (i) => _makeSampleProject(i + 1)));
+      }
+      setState(() {});
+    });
+  }
+
+  Future<Directory> _projectsRoot() async {
+    final base = await getApplicationDocumentsDirectory();
+    final projects = Directory('${base.path}/projects');
+    if (!await projects.exists()) await projects.create(recursive: true);
+    return projects;
+  }
+
+  Future<void> _prepareProjectsDir() async {
+    await _projectsRoot();
+  }
+
+  Future<void> _ensureTutorialProjectExists() async {
+    final projRoot = await _projectsRoot();
+    final id = 'tutorial_project';
+    final dir = Directory('${projRoot.path}/$id');
+    if (!await dir.exists()) {
+      await dir.create(recursive: true);
+      final readme = File('${dir.path}/README.md');
+      final title = L10n.of(context).tutorialProjectReadmeTitle;
+      final body = L10n.of(context).tutorialProjectReadmeBody;
+      final content = '$title\n\n$body';
+      await readme.writeAsString(content);
+    }
+  }
+
+  Future<void> _loadProjectsFromDisk() async {
+    final projRoot = await _projectsRoot();
+    final entries = projRoot.listSync().whereType<Directory>();
+    _projects.clear();
+    for (final d in entries) {
+      final id = d.path.split('/').last;
+  // We don't load README contents here; editor will read files when opened.
+      final files = d.listSync(recursive: true).whereType<File>().toList();
+      final stat = await d.stat();
+      _projects.add(_Project(
+        id: id,
+    name: id == 'tutorial_project'
+      ? L10n.of(context).tutorialProjectName
+      : id,
+        fileCount: files.length,
+        lastModified: stat.modified,
+        fs: {},
+      ));
+    }
   }
 
   _Project _makeSampleProject(int i) {
@@ -97,15 +159,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _importZipProject() async {
-    final tc = TextEditingController();
-    final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
-      title: Text(L10n.of(context).homeImportZipProject),
-      content: TextField(controller: tc, decoration: const InputDecoration(hintText: '/absolute/path/to/project.zip')),
-      actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).commonCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).homeImportProject))],
-    ));
-    if (confirmed != true) return;
-    final path = tc.text.trim();
-    if (path.isEmpty) return;
+    // Let user pick a zip file using the native picker, then extract into projects dir
+    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['zip']);
+    if (result == null || result.files.isEmpty) return;
+    final path = result.files.single.path;
+    if (path == null) return;
     final f = File(path);
     if (!await f.exists()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportedZipNotFound)));
@@ -114,29 +172,37 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final bytes = await f.readAsBytes();
       final archive = ZipDecoder().decodeBytes(bytes);
-      final fs = <String, dynamic>{};
+      final projRoot = await _projectsRoot();
+      final id = 'import_${DateTime.now().millisecondsSinceEpoch}';
+      final dir = Directory('${projRoot.path}/$id');
+      await dir.create(recursive: true);
+      int fileCount = 0;
       for (final file in archive) {
         final name = file.name;
+        final outPath = '${dir.path}/$name';
         if (file.isFile) {
-          String content = '';
-          try {
-            content = utf8.decode(file.content as List<int>);
-          } catch (_) {
-            content = '(binary content)';
+          final outFile = File(outPath);
+          await outFile.create(recursive: true);
+          if (file.content is List<int>) {
+            await outFile.writeAsBytes(file.content as List<int>);
+          } else {
+            // Fallback to text
+            await outFile.writeAsString(utf8.decode(file.content as List<int>));
           }
-          _insertIntoFsMap(fs, name.split('/'), content);
+          fileCount++;
         } else {
-          _insertIntoFsMap(fs, name.split('/'), <String, dynamic>{});
+          final d = Directory(outPath);
+          if (!await d.exists()) await d.create(recursive: true);
         }
       }
-      final proj = _Project(id: 'import_${DateTime.now().millisecondsSinceEpoch}', name: 'Imported ${f.uri.pathSegments.last}', fileCount: archive.length, lastModified: DateTime.now(), type: 'Imported', fs: fs);
+      final proj = _Project(id: id, name: 'Imported ${f.uri.pathSegments.last}', fileCount: fileCount, lastModified: DateTime.now(), type: 'Imported', fs: {});
       setState(() {
         _projects.insert(0, proj);
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportZipAsProject)));
     } catch (e) {
-  final msg = L10n.of(context).importFailed(e.toString());
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      final msg = L10n.of(context).importFailed(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     }
   }
 
@@ -348,6 +414,13 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _projects.removeWhere((x) => x.id == p.id);
           });
+          // Also delete from disk if present
+          try {
+            _projectsRoot().then((root) async {
+              final dir = Directory('${root.path}/${p.id}');
+              if (await dir.exists()) await dir.delete(recursive: true);
+            });
+          } catch (_) {}
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeProjectRemoved)));
         },
       );
