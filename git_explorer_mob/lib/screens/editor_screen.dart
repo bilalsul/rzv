@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+import 'dart:io';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
 
 class EditorScreen extends ConsumerStatefulWidget {
@@ -44,13 +46,28 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(fileName.isNotEmpty ? fileName : 'Editor'),
+        // replace '' with unnamed file, add l10n
+        title: Text(fileName.isNotEmpty ? fileName : ''),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () async {
-              // MonacoWrapper persists on change; keep parity with UI
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Saved (in-memory)')));
+              // Try to persist the current open file content to disk if available
+              final prefs = Prefs();
+              final filePath = prefs.currentOpenFile;
+              if (filePath.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No file open')));
+                return;
+              }
+              try {
+                final content = prefs.currentOpenFileContent;
+                final f = File(filePath);
+                await f.create(recursive: true);
+                await f.writeAsString(content);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).commonSaved)));
+              } catch (_) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).commonFailed)));
+              }
             },
           ),
           IconButton(
