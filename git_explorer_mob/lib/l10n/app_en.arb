@@ -131,6 +131,12 @@
   "homeUnableToDisplayDetails": "Unable to display details",
   "homeNoModificationInfo": "No modification info",
   "homeSampleImportFailed": "Sample import failed: {error}",
+  "@homeSampleImportFailed": {
+  "description": "Error message when sample project import fails",
+  "placeholders": {
+    "error": {}
+  }
+  },
   "importFailed": "Import failed: {error}",
   "@importFailed": {
     "description": "Error message when import fails, with the error detail",
@@ -139,6 +145,9 @@
     }
   },
   "homeRetry": "Retry",
+  "tutorialProjectName": "Tutorial Project",
+  "tutorialProjectReadmeTitle": "# Welcome to the Git Explorer Tutorial",
+  "tutorialProjectReadmeBody": "This README walks you through the Home screen features and how to open, edit, save and delete files.\n\n- Tap a project to open it\n- Tap a file to preview or open it in the editor\n- Use the drawer to toggle features like File Explorer\n- Create, import (.zip) or remove projects from here\n\nEnjoy exploring the app!",
   
   "drawerCurrentProject": "Current Project",
   "drawerNoProjectOpen": "No project open",

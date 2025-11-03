@@ -131,6 +131,12 @@
     "homeUnableToDisplayDetails": "No se pueden mostrar los detalles",
     "homeNoModificationInfo": "Sin información de modificación",
     "homeSampleImportFailed": "Fallo al importar ejemplo: {error}",
+    "@homeSampleImportFailed": {
+    "description": "Mensaje de error cuando falla la importación del proyecto de muestra",
+    "placeholders": {
+        "error": {}
+    }
+    },
     "importFailed": "Importación fallida: {error}",
     "@importFailed": {
     "description": "Mensaje de error cuando falla la importación, con el detalle del error",
@@ -139,6 +145,9 @@
     }
     },
     "homeRetry": "Reintentar",
+    "tutorialProjectName": "Proyecto Tutorial",
+    "tutorialProjectReadmeTitle": "# Bienvenido al tutorial de Git Explorer",
+    "tutorialProjectReadmeBody": "Este README te guía por las funciones de la pantalla Inicio y cómo abrir, editar, guardar y eliminar archivos.\n\n- Toca un proyecto para abrirlo\n- Toca un archivo para previsualizarlo o abrirlo en el editor\n- Usa el cajón para activar funciones como el Explorador de archivos\n- Crea, importa (.zip) o elimina proyectos desde aquí\n\n¡Disfruta explorando la app!",
 
     "drawerCurrentProject": "Proyecto actual",
     "drawerNoProjectOpen": "Ningún proyecto abierto",
