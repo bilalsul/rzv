@@ -6,7 +6,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,53 +26,53 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // Load persisted projects from the app data directory (if file explorer is enabled),
     // otherwise keep the in-memory sample projects for demo.
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _prepareProjectsDir();
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
       final fileExplorerEnabled = Prefs().isPluginEnabled('file_explorer');
       // add a flag, if first time, enable tutorialProjectflag then add it to dir
       if (fileExplorerEnabled) {
         // add an if (tutorialProjectflag) then ensure it exists, saving it to file.
-        await _ensureTutorialProjectExists();
-        await _loadProjectsFromDisk();
+        if(Prefs().tutorialProject){
+           _prepareProjectsDir();
+           _ensureTutorialProjectExists();
+           return;
+
+        }
+           _loadProjectsFromDisk();
+
       } else {
         // Add some temporary sample data so the screen isn't empty on first run.
         // _projects.addAll(List.generate(3, (i) => _makeSampleProject(i + 1)));
       }
-      // setState(() {});
-    });
+      setState(() {
+         _loadProjectsFromDisk();
+       });
+    // });
   }
 
-  Future<Directory> _projectsRoot() async {
-    final base = await getApplicationDocumentsDirectory();
-    final projects = Directory('${base.path}/projects');
-    if (!await projects.exists()) await projects.create(recursive: true);
-    return projects;
-  }
+  
 
   Future<void> _prepareProjectsDir() async {
-    await _projectsRoot();
+    await Prefs().projectsRoot();
   }
 
   Future<void> _ensureTutorialProjectExists() async {
-    final projRoot = await _projectsRoot();
+    final projRoot = await Prefs().projectsRoot();
     final id = 'tutorial_project';
     final dir = Directory('${projRoot.path}/$id');
     if (!await dir.exists()) {
       await dir.create(recursive: true);
       final readme = File('${dir.path}/README.md');
-      // Use immediate locale-based strings to avoid depending on generated L10n getters here.
-      final locale = Localizations.localeOf(context).languageCode;
-      final title = locale == 'es' ? '# Bienvenido al tutorial de Git Explorer' : '# Welcome to the Git Explorer Tutorial';
-      final body = locale == 'es'
-          ? 'Este README te guía por las funciones de la pantalla Inicio y cómo abrir, editar, guardar y eliminar archivos.\n\n- Toca un proyecto para abrirlo\n- Toca un archivo para previsualizarlo o abrirlo en el editor\n- Usa el cajón para activar funciones como el Explorador de archivos\n- Crea, importa (.zip) o elimina proyectos desde aquí\n\n¡Disfruta explorando la app!'
-          : 'This README walks you through the Home screen features and how to open, edit, save and delete files.\n\n- Tap a project to open it\n- Tap a file to preview or open it in the editor\n- Use the drawer to toggle features like File Explorer\n- Create, import (.zip) or remove projects from here\n\nEnjoy exploring the app!';
+      final title = L10n.of(context).tutorialProjectReadmeTitle;
+      final body = L10n.of(context).tutorialProjectReadmeBody;
       final content = '$title\n\n$body';
       await readme.writeAsString(content);
+      Prefs().setTutorialProject(false);
     }
   }
 
   Future<void> _loadProjectsFromDisk() async {
-    final projRoot = await _projectsRoot();
+    final projRoot = await Prefs().projectsRoot();
     final entries = projRoot.listSync().whereType<Directory>();
     _projects.clear();
     for (final d in entries) {
@@ -132,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // If file explorer (disk-based projects) is enabled, create a real folder under projects root.
     if (Prefs().isPluginEnabled('file_explorer')) {
       try {
-        final base = await _projectsRoot();
+        final base = await Prefs().projectsRoot();
         final slug = name.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_');
         final id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
         final dir = Directory('${base.path}/$id');
@@ -170,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final bytes = await f.readAsBytes();
       final archive = ZipDecoder().decodeBytes(bytes);
-      final projRoot = await _projectsRoot();
+      final projRoot = await Prefs().projectsRoot();
       final id = 'import_${DateTime.now().millisecondsSinceEpoch}';
       final dir = Directory('${projRoot.path}/$id');
       await dir.create(recursive: true);
@@ -193,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (!await d.exists()) await d.create(recursive: true);
         }
       }
-      final proj = _Project(id: id, name: 'Imported ${f.uri.pathSegments.last}', fileCount: fileCount, lastModified: DateTime.now(), type: 'Imported', fs: {});
+      final proj = _Project(id: id, name: f.uri.pathSegments.last, fileCount: fileCount, lastModified: DateTime.now(), type: 'Imported', fs: {});
       setState(() {
         _projects.insert(0, proj);
       });
@@ -218,43 +217,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _createSampleZipAndImport() async {
-    try {
-      final archive = Archive();
-      final readmeBytes = utf8.encode('# Sample Imported Project\n\nThis project was created from a generated zip.');
-      archive.addFile(ArchiveFile('README.md', readmeBytes.length, readmeBytes));
-      final mainBytes = utf8.encode("void main() { print('Hello from imported sample'); }");
-      archive.addFile(ArchiveFile('src/main.dart', mainBytes.length, mainBytes));
-      final bytes = ZipEncoder().encode(archive)!;
-      final tmp = Directory.systemTemp.createTempSync('git_explorer_sample_');
-      final zipFile = File('${tmp.path}/sample_project.zip');
-      await zipFile.writeAsBytes(bytes);
-      final archiveDecoded = ZipDecoder().decodeBytes(await zipFile.readAsBytes());
-      final fs = <String, dynamic>{};
-      for (final file in archiveDecoded) {
-        final name = file.name;
-        if (file.isFile) {
-          String content = '';
-          try {
-            content = utf8.decode(file.content as List<int>);
-          } catch (_) {
-            content = '(binary)';
-          }
-          _insertIntoFsMap(fs, name.split('/'), content);
-        } else {
-          _insertIntoFsMap(fs, name.split('/'), <String, dynamic>{});
-        }
-      }
-      final proj = _Project(id: 'sample_${DateTime.now().millisecondsSinceEpoch}', name: 'Imported Sample', fileCount: archiveDecoded.length, lastModified: DateTime.now(), type: 'Imported', fs: fs);
-      setState(() {
-        _projects.insert(0, proj);
-      });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeSampleZipCreatedAndImported)));
-    } catch (e) {
-  final msg = L10n.of(context).homeSampleImportFailed(e.toString());
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
-    }
-  }
 
   Future<void> _openProject(_Project p) async {
     // Open project inside HomeScreen: set as opened project and reset navigation stack
@@ -273,11 +235,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     // Persist current project to Prefs so AppDrawer shows it
     try {
-      final prefs = Prefs();
       // If this is a disk-backed project, compute absolute path and store it
-      final projRoot = await _projectsRoot();
+      final projRoot = await Prefs().projectsRoot();
       final absPath = Directory('${projRoot.path}/${p.id}').path;
-      await prefs.saveCurrentProject(id: p.id, name: p.name ?? p.id, path: absPath);
+      await Prefs().saveCurrentProject(id: p.id, name: p.name ?? p.id, path: absPath);
     } catch (_) {}
   }
 
@@ -319,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(12.0),
           child: Builder(builder: (context) {
             try {
-              if (_projects.isEmpty) return _EmptyState(onCreate: ()=>{}, onImport: ()=>{});
+              if (_projects.isEmpty) return _EmptyState(onCreate: _createProjectWithDetails, onImport: _importZipProject);
 
               // If a project is opened, show ProjectBrowser inside HomeScreen
               if (_openedProject != null) {
@@ -397,12 +358,6 @@ class _HomeScreenState extends State<HomeScreen> {
           : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                FloatingActionButton.small(
-                  heroTag: 'import',
-                  onPressed: _importZipProject,
-                  tooltip: L10n.of(context).homeTooltipImportTemp,
-                  child: const Icon(Icons.file_upload),
-                ),
                 const SizedBox(height: 8),
                 FloatingActionButton.small(
                   heroTag: 'create_details',
@@ -413,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 8),
                 FloatingActionButton(
                   heroTag: 'sample_zip',
-                  onPressed: _createSampleZipAndImport,
+                  onPressed: _importZipProject,
                   tooltip: L10n.of(context).homeTooltipCreateSampleZip,
                   child: const Icon(Icons.archive),
                 ),
@@ -434,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final filename = nameTc.text.trim();
     if (filename.isEmpty) return;
     try {
-      final base = await _projectsRoot();
+      final base = await Prefs().projectsRoot();
       final folderPath = (_pathStack.isEmpty) ? '${base.path}/${_openedProject!.id}' : '${base.path}/${_openedProject!.id}/${_pathStack.join('/')}';
       final f = File('$folderPath/$filename');
       await f.create(recursive: true);
@@ -460,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
           // Also delete from disk if present
           try {
-            _projectsRoot().then((root) async {
+            Prefs().projectsRoot().then((root) async {
               final dir = Directory('${root.path}/${p.id}');
               if (await dir.exists()) await dir.delete(recursive: true);
             });
@@ -583,7 +538,7 @@ class _EmptyState extends StatelessWidget {
         Row(mainAxisSize: MainAxisSize.min, children: [
           ElevatedButton.icon(onPressed: onCreate, icon: const Icon(Icons.add), label: Text(L10n.of(context).homeCreateProject)),
           const SizedBox(width: 8),
-          OutlinedButton.icon(onPressed: onImport, icon: const Icon(Icons.file_upload), label: Text(L10n.of(context).homeImportProject)),
+          ElevatedButton.icon(onPressed: onImport, icon: const Icon(Icons.archive), label: Text(L10n.of(context).homeImportProject)),
         ])
       ]),
     );
@@ -662,7 +617,7 @@ class _ProjectBrowser extends StatelessWidget {
                 onTap: () async {
                   // Compute absolute path and save as current open file, then open editor
                   try {
-                    final base = await getApplicationDocumentsDirectory();
+                    final base = await Prefs().projectsRoot();
                     final projRoot = Directory('${base.path}/projects');
                     final relPath = (pathStack.isEmpty ? fileName : '${pathStack.join('/')}/$fileName');
                     final abs = '${projRoot.path}/${project.id}/$relPath';
