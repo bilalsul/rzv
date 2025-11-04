@@ -3,51 +3,54 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as p;
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   final List<_Project> _projects = [];
   _Project? _openedProject;
   List<String> _pathStack = <String>[];
   String? _selectedFileContent;
+  bool _diskLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    // Load persisted projects from the app data directory (if file explorer is enabled),
-    // otherwise keep the in-memory sample projects for demo.
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final fileExplorerEnabled = Prefs().isPluginEnabled('file_explorer');
-      // add a flag, if first time, enable tutorialProjectflag then add it to dir
-      if (fileExplorerEnabled) {
-        // add an if (tutorialProjectflag) then ensure it exists, saving it to file.
-        if(Prefs().tutorialProject){
-           _prepareProjectsDir();
-           _ensureTutorialProjectExists();
-           return;
+    // Wait for SharedPreferences to be ready and react to plugin toggles.
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // await ref.read(sharedPreferencesProvider.future);
 
-        }
-           _loadProjectsFromDisk();
-
+      // If file explorer is enabled at startup, ensure projects root and load projects.
+      if (Prefs().isPluginEnabled('file_explorer')) {
+        await _prepareProjectsDir();
+        if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
+        await _loadProjectsFromDisk();
+        setState(() {
+          _diskLoaded = true;
+        });
       } else {
-        // Add some temporary sample data so the screen isn't empty on first run.
-        // _projects.addAll(List.generate(3, (i) => _makeSampleProject(i + 1)));
+        // Not enabled: show in-memory samples so the UI is not empty.
+        _projects.clear();
+        setState(() {});
       }
-      setState(() {
-         _loadProjectsFromDisk();
-       });
-    // });
+    });
+
+    // Listen for changes to prefs so we can react to toggles (e.g., enabling File Explorer)
+    // NOTE: Do not provide an `async` callback to `ref.listen` because it must be
+    // synchronous; schedule any async work via Future.microtask instead.
+    
   }
 
   
@@ -74,14 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadProjectsFromDisk() async {
     final projRoot = await Prefs().projectsRoot();
     final entries = projRoot.listSync().whereType<Directory>();
-    _projects.clear();
+    final List<_Project> found = [];
     for (final d in entries) {
-      final id = d.path.split('/').last;
+      final id = p.basename(d.path);
       // Build an in-memory tree map of the directory so the UI can render it.
       final fsMap = await _buildFsMapFromDir(d);
       final files = d.listSync(recursive: true).whereType<File>().toList();
       final stat = await d.stat();
-      _projects.add(_Project(
+      found.add(_Project(
         id: id,
         name: id == 'tutorial_project' ? L10n.of(context).tutorialProjectName : id,
         fileCount: files.length,
@@ -90,6 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
         fs: fsMap,
       ));
     }
+    // Replace the current list atomically to avoid duplicates and keep order
+    _projects.clear();
+    found.sort((a, b) => (b.lastModified ?? DateTime(0)).compareTo(a.lastModified ?? DateTime(0)));
+    _projects.addAll(found);
   }
 
   /// Recursively build a Map<String,dynamic> representation of [dir].
@@ -132,8 +139,13 @@ class _HomeScreenState extends State<HomeScreen> {
     if (Prefs().isPluginEnabled('file_explorer')) {
       try {
         final base = await Prefs().projectsRoot();
-        final slug = name.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_');
-        final id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
+        final baseName = name;
+        var slug = baseName.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_');
+        var id = slug;
+        final candidate = Directory('${base.path}/$id');
+        if (await candidate.exists()) {
+          id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
+        }
         final dir = Directory('${base.path}/$id');
         if (!await dir.exists()) await dir.create(recursive: true);
         final readme = File('${dir.path}/README.md');
@@ -141,6 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
         final body = L10n.of(context).tutorialProjectReadmeBody;
         await readme.writeAsString('$title\n\n$body');
         await _loadProjectsFromDisk();
+        if (!mounted) return;
+        setState(() {});
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)));
         return;
       } catch (_) {
@@ -149,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     setState(() {
-      final p = _Project(id: 'proj_${_projects.length + 1}_${DateTime.now().millisecondsSinceEpoch}', name: name, fileCount: 0, lastModified: DateTime.now(), type: 'Custom', fs: {});
+      final p = _Project(id: name, name: name, fileCount: 0, lastModified: DateTime.now(), type: 'Custom', fs: {});
       _projects.insert(0, p);
     });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)));
@@ -170,10 +184,18 @@ class _HomeScreenState extends State<HomeScreen> {
       final bytes = await f.readAsBytes();
       final archive = ZipDecoder().decodeBytes(bytes);
       final projRoot = await Prefs().projectsRoot();
-      final id = 'import_${DateTime.now().millisecondsSinceEpoch}';
+      final pickedPath = path;
+      final baseName = p.basenameWithoutExtension(pickedPath);
+      // Create a safe slug for the project directory
+      var slug = baseName.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_');
+      var id = slug;
+      final candidate = Directory('${projRoot.path}/$id');
+      if (await candidate.exists()) {
+        id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
+      }
       final dir = Directory('${projRoot.path}/$id');
       await dir.create(recursive: true);
-      int fileCount = 0;
+  // fileCount was intentionally omitted (not used) but kept for future use
       for (final file in archive) {
         final name = file.name;
         final outPath = '${dir.path}/$name';
@@ -186,16 +208,15 @@ class _HomeScreenState extends State<HomeScreen> {
             // Fallback to text
             await outFile.writeAsString(utf8.decode(file.content as List<int>));
           }
-          fileCount++;
         } else {
           final d = Directory(outPath);
           if (!await d.exists()) await d.create(recursive: true);
         }
       }
-      final proj = _Project(id: id, name: f.uri.pathSegments.last, fileCount: fileCount, lastModified: DateTime.now(), type: 'Imported', fs: {});
-      setState(() {
-        _projects.insert(0, proj);
-      });
+      // Reload disk projects and refresh UI so the imported project appears immediately
+      await _loadProjectsFromDisk();
+      if (!mounted) return;
+      setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportZipAsProject)));
     } catch (e) {
       final msg = L10n.of(context).importFailed(e.toString());
@@ -203,19 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _insertIntoFsMap(Map<String, dynamic> root, List<String> parts, dynamic value) {
-    if (parts.isEmpty) return;
-    final head = parts.first;
-    if (parts.length == 1) {
-      root[head] = value;
-      return;
-    }
-    root[head] ??= <String, dynamic>{};
-    final child = root[head];
-    if (child is Map<String, dynamic>) {
-      _insertIntoFsMap(child, parts.sublist(1), value);
-    }
-  }
+  // _insertIntoFsMap was removed because the function wasn't referenced anywhere.
 
 
   Future<void> _openProject(_Project p) async {
@@ -225,13 +234,11 @@ class _HomeScreenState extends State<HomeScreen> {
       _pathStack = <String>[];
       _selectedFileContent = null;
       
-      // if only one file exists in the directory
-      if(p.fileCount == 1){
-      // Try load README at root
       final node = _getNodeAtPath(p, _pathStack);
+      // Try load README at root
       final readme = _findReadmeInNode(node);
-      if (readme != null) _selectedFileContent = readme;
-      }
+      // if only one file exists in the directory and is readme
+      if (p.fileCount == 1 && readme != null) _selectedFileContent = readme;
     });
     // Persist current project to Prefs so AppDrawer shows it
     try {
@@ -252,6 +259,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<Prefs>(prefsProvider, (previous, next) {
+      final prevEnabled = previous?.isPluginEnabled('file_explorer') ?? false;
+      final nowEnabled = next.isPluginEnabled('file_explorer');
+      if (!prevEnabled && nowEnabled) {
+        // Just enabled: schedule async work to prepare and load projects
+        Future.microtask(() async {
+          await _prepareProjectsDir();
+          if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
+          await _loadProjectsFromDisk();
+          if (!mounted) return;
+          setState(() {
+            _diskLoaded = true;
+          });
+        });
+      } else if (prevEnabled && !nowEnabled) {
+        // Disabled: fall back to samples (synchronous)
+        if (!mounted) return;
+        setState(() {
+          _diskLoaded = false;
+        });
+      }
+    });
     return Scaffold(
       appBar: _openedProject == null
           ? AppBar(title: Text(L10n.of(context).homeProjectsTitle))
@@ -265,8 +294,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       _pathStack.removeLast();
                       // if len==1
-                      if(_getNodeAtPath(_openedProject!, _pathStack).length == 1){
-                      _selectedFileContent = _findReadmeInNode(_getNodeAtPath(_openedProject!, _pathStack));
+                      final node = _getNodeAtPath(_openedProject!, _pathStack);
+                      if (node is Map<String, dynamic> && node.length == 1) {
+                        _selectedFileContent = _findReadmeInNode(node);
                       }
                     });
                   } else {
@@ -291,8 +321,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   onEnterDirectory: (name) {
                     setState(() {
                       _pathStack.add(name);
-                      if(_getNodeAtPath(_openedProject!, _pathStack).length == 1){
-                      _selectedFileContent = _findReadmeInNode(_getNodeAtPath(_openedProject!, _pathStack));
+                      final node = _getNodeAtPath(_openedProject!, _pathStack);
+                      if (node is Map<String, dynamic> && node.length == 1) {
+                        _selectedFileContent = _findReadmeInNode(node);
                       }
                     });
                   },
@@ -409,17 +440,34 @@ class _HomeScreenState extends State<HomeScreen> {
       return _ProjectCard(
         project: p,
         onOpen: () => _openProject(p),
-          onDelete: () {
+          onDelete: () async {
+          final confirm = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
+            title: Text(L10n.of(context).commonDelete),
+            content: const Text('Delete project and all files permanently? This cannot be undone.'),
+            actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).commonCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).commonDelete))],
+          ));
+          if (confirm != true) return;
+
           setState(() {
             _projects.removeWhere((x) => x.id == p.id);
+            if (_openedProject?.id == p.id) {
+              _openedProject = null;
+              _pathStack = <String>[];
+              _selectedFileContent = null;
+            }
           });
-          // Also delete from disk if present
           try {
-            Prefs().projectsRoot().then((root) async {
-              final dir = Directory('${root.path}/${p.id}');
-              if (await dir.exists()) await dir.delete(recursive: true);
-            });
+            final root = await Prefs().projectsRoot();
+            final dir = Directory('${root.path}/${p.id}');
+            if (await dir.exists()) await dir.delete(recursive: true);
+            if (Prefs().currentProjectId == p.id) {
+              await Prefs().saveCurrentProject(id: '', name: '', path: '');
+            }
+            if (Prefs().currentOpenProject == p.id) {
+              await Prefs().saveCurrentOpenFile('', '', '');
+            }
           } catch (_) {}
+          if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeProjectRemoved)));
         },
       );
@@ -618,7 +666,7 @@ class _ProjectBrowser extends StatelessWidget {
                   // Compute absolute path and save as current open file, then open editor
                   try {
                     final base = await Prefs().projectsRoot();
-                    final projRoot = Directory('${base.path}/projects');
+                    final projRoot = base;
                     final relPath = (pathStack.isEmpty ? fileName : '${pathStack.join('/')}/$fileName');
                     final abs = '${projRoot.path}/${project.id}/$relPath';
                     String content = '';
