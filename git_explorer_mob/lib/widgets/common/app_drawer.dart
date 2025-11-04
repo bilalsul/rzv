@@ -323,21 +323,25 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           value: isEnabled,
           onChanged: (enabled) async {
             // If enabling the file explorer, request storage permission first
-            if (plugin.id == 'file_explorer' && enabled) {
-              final status = await Permission.storage.request();
-              if (!status.isGranted) {
-                // Ask user to open app settings so they can grant permission
-                // user have to grant permissions, No permissions requested
-                // so the file explorer is enabled after sending the user to settings
-                final opened = await openAppSettings();
-                if (!opened) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(L10n.of(context).connectionFailed)),
-                  );
-                  return;
-                }
-              }
-            }
+            // if (plugin.id == 'file_explorer' && enabled) {
+            //   final status = await Permission.storage.request();
+            //     // Ask user to open app settings so they can grant permission
+            //     // user have to grant permissions, No permissions requested
+            //     // so the file explorer is enabled after sending the user to settings
+            //     if (!status.isGranted) {
+            //         final opened = await openAppSettings();
+            //         if (!opened) {
+            //           ScaffoldMessenger.of(context).showSnackBar(
+            //             SnackBar(content: Text(L10n.of(context).connectionFailed)),
+            //           );
+            //           return;
+            //     }
+            //   }
+            //     if (!status.isGranted && enabled) {
+            //       Prefs().enabledPlugins.remove("file_explorer");
+            //       return;
+            //     }
+            // }
 
             await Prefs().setPluginEnabled(plugin.id, enabled);
             // Trigger a rebuild so changes are visible immediately
