@@ -11,7 +11,7 @@ Future<String> getGitExpDocumentsPath() async {
     case TargetPlatform.android:
       return directory.path;
     case TargetPlatform.windows:
-      // return '${directory.path}\\AnxReader';
+      // return '${directory.path}\\GitExplorer';
       return (await getApplicationSupportDirectory()).path;
     case TargetPlatform.linux:
       final path = '${directory.path}/GitExplorer';

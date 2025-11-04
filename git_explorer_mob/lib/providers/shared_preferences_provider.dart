@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
+import 'package:path_provider/path_provider.dart';
 // Other providers removed; Prefs is now the central settings source.
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -950,6 +953,30 @@ Future<void> savePerformanceMonitorEnabled(bool enabled) async {
   /// Returns the list of enabled plugins stored under 'plugins_enabled'.
   List<String> get enabledPlugins {
     return prefs.getStringList('plugins_enabled') ?? [];
+  }
+
+  bool get tutorialProject {
+    return prefs.getBool("tutorialProject")?? true;
+  }
+
+  setTutorialProject(bool flag){
+    prefs.setBool("tutorialProject", flag);
+  }
+
+  // Project Root
+  Future<Directory> projectsRoot() async {
+    // check if it's an android app, persist into /projects/
+    // if(Platform.isAndroid && await Permission.storage.isGranted){
+    // final base = await getExternalStorageDirectory();
+    // final projects = Directory('$base/projects');
+    // if (!await projects.exists()) await projects.create(recursive: true);
+    //   return projects;
+    // } 
+    // this is run on IOS, we can't have access to files outside the app sandbox
+    final base = await getApplicationDocumentsDirectory();
+    final projects = Directory('${base.path}/projects');
+    if (!await projects.exists()) await projects.create(recursive: true);
+      return projects;
   }
 
   /// Check whether a plugin (by id) is enabled.

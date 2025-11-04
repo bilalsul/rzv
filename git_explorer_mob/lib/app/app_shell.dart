@@ -97,7 +97,9 @@ class _AppShellState extends ConsumerState<AppShell> {
   Widget _buildBody(Screen currentScreen, List<String> plugins) {
     switch (currentScreen) {
       case Screen.home:
-        return const HomeScreen();
+        return plugins.contains('file_explorer')
+            ? const HomeScreen()
+            : const FeatureDisabledScreen(feature: 'File Explorer');
       case Screen.editor:
         return const EditorScreen();
       case Screen.fileExplorer:

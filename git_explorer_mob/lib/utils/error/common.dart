@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class GitExpError {
   static Future<void> init() async {
-    GitExpLog.info('AnxError init');
+    GitExpLog.info('GitExp init');
     FlutterError.onError = (details) {
       FlutterError.presentError(details);
       GitExpLog.severe(details.exceptionAsString(), details.stack);

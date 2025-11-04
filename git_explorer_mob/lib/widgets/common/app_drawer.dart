@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Providers
 import '../../providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:git_explorer_mob/data/plugin_definitions.dart' as plugin_defs;
 
 // Models
@@ -321,6 +322,27 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         trailing: Switch.adaptive(
           value: isEnabled,
           onChanged: (enabled) async {
+            // If enabling the file explorer, request storage permission first
+            // if (plugin.id == 'file_explorer' && enabled) {
+            //   final status = await Permission.storage.request();
+            //     // Ask user to open app settings so they can grant permission
+            //     // user have to grant permissions, No permissions requested
+            //     // so the file explorer is enabled after sending the user to settings
+            //     if (!status.isGranted) {
+            //         final opened = await openAppSettings();
+            //         if (!opened) {
+            //           ScaffoldMessenger.of(context).showSnackBar(
+            //             SnackBar(content: Text(L10n.of(context).connectionFailed)),
+            //           );
+            //           return;
+            //     }
+            //   }
+            //     if (!status.isGranted && enabled) {
+            //       Prefs().enabledPlugins.remove("file_explorer");
+            //       return;
+            //     }
+            // }
+
             await Prefs().setPluginEnabled(plugin.id, enabled);
             // Trigger a rebuild so changes are visible immediately
             setState(() {});
