@@ -442,66 +442,19 @@ Future<void> saveCodeFontScale(double scale) async {
 /// Return a map of editor-related settings (used to configure Monaco)
 Map<String, dynamic> getEditorSettings() {
   return {
-    'monacoTheme': editorMonacoTheme,
+    // 'monacoTheme': editorMonacoTheme,
     'fontFamily': editorFontFamily,
     'fontSize': editorFontSize,
-    'tabSize': editorTabSize,
+    // 'tabSize': editorTabSize,
     'lineNumbers': editorLineNumbers,
     'minimap': editorMinimapEnabled,
     'autoSave': editorAutoSave,
-    'autoSaveDelay': editorAutoSaveDelay,
+    // 'autoSaveDelay': editorAutoSaveDelay,
     'formatOnSave': editorFormatOnSave,
-    'wordWrap': editorWordWrap,
-    'insertSpaces': editorInsertSpaces,
+    // 'wordWrap': editorWordWrap,
+    // 'insertSpaces': editorInsertSpaces,
   };
 }
-
-/// Update a single editor setting by key. Accepts both typed keys used above
-Future<void> saveEditorSetting(String key, dynamic value) async {
-  switch (key) {
-    case 'monacoTheme':
-      await saveEditorMonacoTheme(value as String);
-      break;
-    case 'fontFamily':
-      await saveEditorFontFamily(value as String);
-      break;
-    case 'fontSize':
-      await saveEditorFontSize((value as num).toDouble());
-      break;
-    case 'tabSize':
-      await saveEditorTabSize((value as num).toInt());
-      break;
-    case 'lineNumbers':
-      await saveEditorLineNumbers(value as String);
-      break;
-    case 'minimap':
-      await saveEditorMinimapEnabled(value as bool);
-      break;
-    case 'autoSave':
-      await saveEditorAutoSave(value as bool);
-      break;
-    case 'autoSaveDelay':
-      await saveEditorAutoSaveDelay((value as num).toInt());
-      break;
-    case 'formatOnSave':
-      await saveEditorFormatOnSave(value as bool);
-      break;
-    case 'wordWrap':
-      await saveEditorWordWrap(value as String);
-      break;
-    case 'insertSpaces':
-      await saveEditorInsertSpaces(value as bool);
-      break;
-    default:
-      // fallback to storing as plugin config
-      await setPluginConfig('editor', key, value);
-  }
-  notifyListeners();
-}
-
-// -------------------------------
-// Current open file / editor session helpers
-// -------------------------------
 
 /// Save the currently opened project and file path and its latest content.
 Future<void> saveCurrentOpenFile(String projectId, String filePath, String content) async {
@@ -520,21 +473,12 @@ String get currentOpenFile {
 }
 
 String get currentOpenFileContent {
-  return prefs.getString('editor_current_content') ?? '';
+  return prefs.getString('editor_current_content') ?? '# Create New File';
 }
 
 Future<void> saveCurrentOpenFileContent(String content) async {
   await prefs.setString('editor_current_content', content);
   notifyListeners();
-}
-
-Future<void> saveCurrentOpenFileLanguage(String language) async {
-  await prefs.setString('editor_current_language', language);
-  notifyListeners();
-}
-
-String get currentOpenFileLanguage {
-  return prefs.getString('editor_current_language') ?? '';
 }
 
 /// Return the timestamp when the last project was opened (or epoch if unknown)
@@ -546,35 +490,6 @@ DateTime get lastOpenedProjectTime {
   } catch (_) {
     return DateTime.fromMillisecondsSinceEpoch(0);
   }
-}
-
-/// Detect a monaco / language id from a filename extension
-String detectLanguageFromFilename(String filename) {
-  final lower = filename.toLowerCase();
-  if (lower.endsWith('.dart')) return 'dart';
-  if (lower.endsWith('.js')) return 'javascript';
-  if (lower.endsWith('.ts')) return 'typescript';
-  if (lower.endsWith('.jsx')) return 'javascript';
-  if (lower.endsWith('.tsx')) return 'typescript';
-  if (lower.endsWith('.py')) return 'python';
-  if (lower.endsWith('.java')) return 'java';
-  if (lower.endsWith('.kt') || lower.endsWith('.kts')) return 'kotlin';
-  if (lower.endsWith('.swift')) return 'swift';
-  if (lower.endsWith('.c') || lower.endsWith('.h')) return 'c';
-  if (lower.endsWith('.cpp') || lower.endsWith('.cc') || lower.endsWith('.cxx')) return 'cpp';
-  if (lower.endsWith('.cs')) return 'csharp';
-  if (lower.endsWith('.rb')) return 'ruby';
-  if (lower.endsWith('.go')) return 'go';
-  if (lower.endsWith('.rs')) return 'rust';
-  if (lower.endsWith('.php')) return 'php';
-  if (lower.endsWith('.json')) return 'json';
-  if (lower.endsWith('.yaml') || lower.endsWith('.yml')) return 'yaml';
-  if (lower.endsWith('.html') || lower.endsWith('.htm')) return 'html';
-  if (lower.endsWith('.css') || lower.endsWith('.scss') || lower.endsWith('.sass')) return 'css';
-  if (lower.endsWith('.sh') || lower.endsWith('.bash')) return 'shell';
-  if (lower.endsWith('.md') || lower.endsWith('.markdown')) return 'markdown';
-  // fallback
-  return 'plaintext';
 }
 
 // Getter and setter for animation speed
@@ -608,16 +523,6 @@ Future<void> saveRippleEffect(bool enable) async {
 }
 
 // Editor Prefs
-// Getter and setter for Monaco editor theme
-String get editorMonacoTheme {
-  return prefs.getString('editor_monaco_theme') ?? 'vs-dark';
-}
-
-Future<void> saveEditorMonacoTheme(String theme) async {
-  await prefs.setString('editor_monaco_theme', theme);
-  notifyListeners();
-}
-
 // Getter and setter for editor font size
 double get editorFontSize {
   return prefs.getDouble('editor_font_size') ?? 14.0;
@@ -639,14 +544,14 @@ Future<void> saveEditorFontFamily(String fontFamily) async {
 }
 
 // Getter and setter for editor tab size
-int get editorTabSize {
-  return prefs.getInt('editor_tab_size') ?? 2;
-}
+// int get editorTabSize {
+//   return prefs.getInt('editor_tab_size') ?? 2;
+// }
 
-Future<void> saveEditorTabSize(int size) async {
-  await prefs.setInt('editor_tab_size', size);
-  notifyListeners();
-}
+// Future<void> saveEditorTabSize(int size) async {
+//   await prefs.setInt('editor_tab_size', size);
+//   notifyListeners();
+// }
 
 // Getter and setter for insert spaces setting
 bool get editorInsertSpaces {
@@ -659,28 +564,28 @@ Future<void> saveEditorInsertSpaces(bool insertSpaces) async {
 }
 
 // Getter and setter for word wrap setting
-String get editorWordWrap {
-  return prefs.getString('editor_word_wrap') ?? 'on';
+bool get editorWordWrap {
+  return prefs.getBool('editor_word_wrap') ?? false;
 }
 
-Future<void> saveEditorWordWrap(String wordWrap) async {
-  await prefs.setString('editor_word_wrap', wordWrap);
+Future<void> saveEditorWordWrap(bool wordWrap) async {
+  await prefs.setBool('editor_word_wrap', wordWrap);
   notifyListeners();
 }
 
 // Getter and setter for line numbers setting
-String get editorLineNumbers {
-  return prefs.getString('editor_line_numbers') ?? 'on';
+bool get editorLineNumbers {
+  return prefs.getBool('editor_line_numbers') ?? false;
 }
 
-Future<void> saveEditorLineNumbers(String lineNumbers) async {
-  await prefs.setString('editor_line_numbers', lineNumbers);
+Future<void> saveEditorLineNumbers(bool lineNumbers) async {
+  await prefs.setBool('editor_line_numbers', lineNumbers);
   notifyListeners();
 }
 
 // Getter and setter for minimap enabled setting
 bool get editorMinimapEnabled {
-  return prefs.getBool('editor_minimap_enabled') ?? true;
+  return prefs.getBool('editor_minimap_enabled') ?? false;
 }
 
 Future<void> saveEditorMinimapEnabled(bool enabled) async {
@@ -693,31 +598,6 @@ bool get editorAutoIndent {
   return prefs.getBool('editor_auto_indent') ?? true;
 }
 
-Future<void> saveEditorAutoIndent(bool autoIndent) async {
-  await prefs.setBool('editor_auto_indent', autoIndent);
-  notifyListeners();
-}
-
-// Getter and setter for match brackets setting
-bool get editorMatchBrackets {
-  return prefs.getBool('editor_match_brackets') ?? true;
-}
-
-Future<void> saveEditorMatchBrackets(bool matchBrackets) async {
-  await prefs.setBool('editor_match_brackets', matchBrackets);
-  notifyListeners();
-}
-
-// Getter and setter for code lens setting
-bool get editorCodeLens {
-  return prefs.getBool('editor_code_lens') ?? false;
-}
-
-Future<void> saveEditorCodeLens(bool codeLens) async {
-  await prefs.setBool('editor_code_lens', codeLens);
-  notifyListeners();
-}
-
 // Getter and setter for auto-save setting
 bool get editorAutoSave {
   return prefs.getBool('editor_auto_save') ?? true;
@@ -725,16 +605,6 @@ bool get editorAutoSave {
 
 Future<void> saveEditorAutoSave(bool autoSave) async {
   await prefs.setBool('editor_auto_save', autoSave);
-  notifyListeners();
-}
-
-// Getter and setter for auto-save delay
-int get editorAutoSaveDelay {
-  return prefs.getInt('editor_auto_save_delay') ?? 1000;
-}
-
-Future<void> saveEditorAutoSaveDelay(int delay) async {
-  await prefs.setInt('editor_auto_save_delay', delay);
   notifyListeners();
 }
 
@@ -748,205 +618,87 @@ Future<void> saveEditorFormatOnSave(bool formatOnSave) async {
   notifyListeners();
 }
 
-// Getter and setter for trim trailing whitespace setting
-bool get editorTrimTrailingWhitespace {
-  return prefs.getBool('editor_trim_trailing_whitespace') ?? false;
-}
-
-Future<void> saveEditorTrimTrailingWhitespace(bool trim) async {
-  await prefs.setBool('editor_trim_trailing_whitespace', trim);
-  notifyListeners();
-}
-
-// Getter and setter for insert final newline setting
-bool get editorInsertFinalNewline {
-  return prefs.getBool('editor_insert_final_newline') ?? true;
-}
-
-Future<void> saveEditorInsertFinalNewline(bool insertNewline) async {
-  await prefs.setBool('editor_insert_final_newline', insertNewline);
-  notifyListeners();
-}
-
-// Getter and setter for cursor style
-String get editorCursorStyle {
-  return prefs.getString('editor_cursor_style') ?? 'line';
-}
-
-Future<void> saveEditorCursorStyle(String cursorStyle) async {
-  await prefs.setString('editor_cursor_style', cursorStyle);
-  notifyListeners();
-}
-
-// Getter and setter for cursor blinking
-String get editorCursorBlinking {
-  return prefs.getString('editor_cursor_blinking') ?? 'blink';
-}
-
-Future<void> saveEditorCursorBlinking(String cursorBlinking) async {
-  await prefs.setString('editor_cursor_blinking', cursorBlinking);
-  notifyListeners();
-}
-
-// Getter and setter for render whitespace setting
-String get editorRenderWhitespace {
-  return prefs.getString('editor_render_whitespace') ?? 'none';
-}
-
-Future<void> saveEditorRenderWhitespace(String renderWhitespace) async {
-  await prefs.setString('editor_render_whitespace', renderWhitespace);
-  notifyListeners();
-}
-
-// Getter and setter for render control characters setting
-bool get editorRenderControlCharacters {
-  return prefs.getBool('editor_render_control_characters') ?? false;
-}
-
-Future<void> saveEditorRenderControlCharacters(bool renderControl) async {
-  await prefs.setBool('editor_render_control_characters', renderControl);
-  notifyListeners();
-}
-
 // Plugins pref
 // Getter and setter for Read-Only Mode plugin (editor)
 bool get readonlyModeEnabled {
-  return prefs.getBool('plugin_readonly_mode') ?? false;
+  return isPluginEnabled('readonly_mode');
 }
 
-Future<void> saveReadonlyModeEnabled(bool enabled) async {
-  await prefs.setBool('plugin_readonly_mode', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Syntax Highlighting plugin (editor)
 bool get syntaxHighlightingEnabled {
-  return prefs.getBool('plugin_syntax_highlighting') ?? false;
+  return isPluginEnabled('syntax_highlighting');
 }
 
-Future<void> saveSyntaxHighlightingEnabled(bool enabled) async {
-  await prefs.setBool('plugin_syntax_highlighting', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Code Folding plugin (editor)
 bool get codeFoldingEnabled {
-  return prefs.getBool('plugin_code_folding') ?? false;
+  return isPluginEnabled('code_folding');
 }
 
-Future<void> saveCodeFoldingEnabled(bool enabled) async {
-  await prefs.setBool('plugin_code_folding', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Bracket Matching plugin (editor)
 bool get bracketMatchingEnabled {
-  return prefs.getBool('plugin_bracket_matching') ?? false;
-}
-
-Future<void> saveBracketMatchingEnabled(bool enabled) async {
-  await prefs.setBool('plugin_bracket_matching', enabled);
-  notifyListeners();
+  return isPluginEnabled('bracket_matching');
 }
 
 // Getter and setter for Git History plugin (git)
 bool get gitHistoryEnabled {
-  return prefs.getBool('plugin_git_history') ?? false;
+  return isPluginEnabled('git_history');
 }
 
-Future<void> saveGitHistoryEnabled(bool enabled) async {
-  await prefs.setBool('plugin_git_history', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for GitLens plugin (git)
 bool get gitLensEnabled {
-  return prefs.getBool('plugin_git_lens') ?? false;
+  return isPluginEnabled('git_lens');
 }
 
-Future<void> saveGitLensEnabled(bool enabled) async {
-  await prefs.setBool('plugin_git_lens', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Branch Manager plugin (git)
 bool get branchManagerEnabled {
-  return prefs.getBool('plugin_branch_manager') ?? false;
+  return isPluginEnabled('branch_manager');
 }
 
-Future<void> saveBranchManagerEnabled(bool enabled) async {
-  await prefs.setBool('plugin_branch_manager', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for File Explorer plugin (utility)
 bool get fileExplorerEnabled {
-  return prefs.getBool('plugin_file_explorer') ?? false;
+  return isPluginEnabled('file_explorer');
 }
 
-Future<void> saveFileExplorerEnabled(bool enabled) async {
-  await prefs.setBool('plugin_file_explorer', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Search & Replace plugin (utility)
 bool get searchReplaceEnabled {
-  return prefs.getBool('plugin_search_replace') ?? false;
+  return isPluginEnabled('search_replace');
 }
 
-Future<void> saveSearchReplaceEnabled(bool enabled) async {
-  await prefs.setBool('plugin_search_replace', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Integrated Terminal plugin (utility)
 bool get terminalEnabled {
-  return prefs.getBool('plugin_terminal') ?? false;
+  return isPluginEnabled('terminal');
 }
 
-Future<void> saveTerminalEnabled(bool enabled) async {
-  await prefs.setBool('plugin_terminal', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Theme Customizer plugin (utility)
 bool get themeCustomizerEnabled {
-  return prefs.getBool('plugin_theme_customizer') ?? false;
+  return isPluginEnabled('theme_customizer');
 }
 
-Future<void> saveThemeCustomizerEnabled(bool enabled) async {
-  await prefs.setBool('plugin_theme_customizer', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for AI Code Assistant plugin (experimental)
 bool get aiAssistEnabled {
-  return prefs.getBool('plugin_ai_assist') ?? false;
+  return isPluginEnabled('ai_assist');
 }
 
-Future<void> saveAiAssistEnabled(bool enabled) async {
-  await prefs.setBool('plugin_ai_assist', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Real-time Collaboration plugin (experimental)
 bool get realTimeCollabEnabled {
-  return prefs.getBool('plugin_real_time_collab') ?? false;
+  return isPluginEnabled("real_time_collab");
 }
 
-Future<void> saveRealTimeCollabEnabled(bool enabled) async {
-  await prefs.setBool('plugin_real_time_collab', enabled);
-  notifyListeners();
-}
 
 // Getter and setter for Performance Monitor plugin (experimental)
 bool get performanceMonitorEnabled {
-  return prefs.getBool('plugin_performance_monitor') ?? false;
-}
-
-Future<void> savePerformanceMonitorEnabled(bool enabled) async {
-  await prefs.setBool('plugin_performance_monitor', enabled);
-  notifyListeners();
+  return isPluginEnabled('performance_monitor');
 }
 
   // Generic plugin helpers -------------------------------------------------
@@ -1035,61 +787,18 @@ Future<void> savePerformanceMonitorEnabled(bool enabled) async {
 
 
 class AppState {
-  final String lastOpenedProject;
-  final String lastKnownRoute;
   final DateTime sessionStartTime;
-  final bool onboardingCompleted;
-  final bool termsAccepted;
-  final bool analyticsOptedIn;
-  final bool crashReportingEnabled;
   final String appVersion;
   final String buildNumber;
   final DateTime firstInstallDate;
 
   const AppState({
-    this.lastOpenedProject = '',
-    this.lastKnownRoute = '/',
     required this.sessionStartTime,
-    this.onboardingCompleted = false,
-    this.termsAccepted = false,
-    this.analyticsOptedIn = false,
-    this.crashReportingEnabled = true,
     this.appVersion = '1.0.0',
     this.buildNumber = '1',
     required this.firstInstallDate,
   });
   
-  AppState setLastOpenedProject({required String lastOpenedProject}) {
-    return AppState(
-      lastOpenedProject: lastOpenedProject,
-      lastKnownRoute: lastKnownRoute,
-      sessionStartTime: sessionStartTime,
-      onboardingCompleted: onboardingCompleted,
-      termsAccepted: termsAccepted,
-      analyticsOptedIn: analyticsOptedIn,
-      crashReportingEnabled: crashReportingEnabled,
-      appVersion: appVersion,
-      buildNumber: buildNumber,
-      firstInstallDate: firstInstallDate,
-    );
-  }
-  
-  AppState markOnboardingCompleted({required bool onboardingCompleted}) {
-    return AppState(
-      lastOpenedProject: lastOpenedProject,
-      lastKnownRoute: lastKnownRoute,
-      sessionStartTime: sessionStartTime,
-      onboardingCompleted: onboardingCompleted,
-      termsAccepted: termsAccepted,
-      analyticsOptedIn: analyticsOptedIn,
-      crashReportingEnabled: crashReportingEnabled,
-      appVersion: appVersion,
-      buildNumber: buildNumber,
-      firstInstallDate: firstInstallDate,
-    );
-  }
-
-  // ... (similar implementation pattern)
 }
 
 class AppStateNotifier extends StateNotifier<AppState> {
@@ -1098,52 +807,9 @@ class AppStateNotifier extends StateNotifier<AppState> {
   AppStateNotifier(this.ref) : super(AppState(
     sessionStartTime: DateTime.now(),
     firstInstallDate: DateTime.now(),
-  )) {
-    _loadState();
-  }
-
-  Future<void> _loadState() async {
-     await ref.read(sharedPreferencesProvider.future);
-
-    // final prefs = await ref.read(sharedPreferencesProvider.future);
-    // state = AppState.fromPreferences(prefs);
-  }
-
-  Future<void> updateLastOpenedProject(String projectPath) async {
-    final prefs = await ref.read(sharedPreferencesProvider.future);
-    await prefs.setString('app_last_opened_project', projectPath);
-    state = state.setLastOpenedProject(lastOpenedProject: projectPath);
-  }
-
-  Future<void> markOnboardingCompleted() async {
-    final prefs = await ref.read(sharedPreferencesProvider.future);
-    await prefs.setBool('app_onboarding_completed', true);
-    state = state.markOnboardingCompleted(onboardingCompleted: true);
-  }
+  ));
 }
 
 final appStateProvider = StateNotifierProvider<AppStateNotifier, AppState>(
   (ref) => AppStateNotifier(ref),
 );
-
-// =============================================
-// Utility Providers
-// =============================================
-
-/// Provider that initializes all settings when app starts
-final settingsInitializerProvider = FutureProvider<void>((ref) async {
-  // Wait for SharedPreferences to be ready
-  await ref.read(sharedPreferencesProvider.future);
-  
-  // Ensure Prefs singleton is initialized and available to the app
-  ref.read(prefsProvider);
-  // Initialize app state provider as before
-  ref.read(appStateProvider);
-});
-
-/// Provider that gives a quick way to check if all settings are loaded
-final areSettingsLoadedProvider = Provider<bool>((ref) {
-  // Consider settings loaded once SharedPreferences is available
-  final shared = ref.watch(sharedPreferencesProvider);
-  return shared.maybeWhen(data: (_) => true, orElse: () => false);
-});

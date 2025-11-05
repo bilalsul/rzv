@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_monaco/flutter_monaco.dart';
+import 'package:git_explorer_mob/utils/extension/monaco_language_helper.dart';
 
 /// A small wrapper that exposes Monaco-like options driven from Prefs.
 ///
@@ -30,7 +34,7 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
     super.dispose();
   }
 
-  Widget _buildFallbackEditor(Prefs prefs) {
+  Widget _buildFallbackEditor(Prefs prefs ) {
     final editorSettings = prefs.getEditorSettings();
     final fontFamily = editorSettings['fontFamily'] as String? ?? prefs.editorFontFamily;
     final fontSize = (editorSettings['fontSize'] as double?) ?? prefs.editorFontSize;
@@ -54,37 +58,124 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
     return Column(children: [
       Container(
         color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.04),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-        child: Row(children: [
-          const SizedBox(width: 8),
-          const Icon(Icons.code, size: 18),
-          const SizedBox(width: 8),
-          Text('Editor', style: Theme.of(context).textTheme.titleMedium),
-          const Spacer(),
-          // line numbers
-          Row(children: [
-            const Text('Line numbers'),
-            const SizedBox(width: 6),
-            DropdownButton<String>(
-              value: prefs.editorLineNumbers,
-              items: const [
-                DropdownMenuItem(value: 'on', child: Text('On')),
-                DropdownMenuItem(value: 'off', child: Text('Off')),
-                DropdownMenuItem(value: 'relative', child: Text('Relative')),
-              ],
-              onChanged: (v) async { if (v != null) await prefs.saveEditorLineNumbers(v); setState(() {}); },
-            ),
-          ]),
-          const SizedBox(width: 12),
-          // minimap
-          Row(children: [
-            const Text('Minimap'),
-            Switch(value: prefs.editorMinimapEnabled, onChanged: (v) async { await prefs.saveEditorMinimapEnabled(v); setState(() {}); }),
-          ]),
-          const SizedBox(width: 8),
-        ]),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+        // child: Row(children: [
+        //   const SizedBox(width: 8),
+        //   const Icon(Icons.code, size: 18),
+        //   const SizedBox(width: 8),
+        //   Text('Editor', style: Theme.of(context).textTheme.titleMedium),
+        //   const Spacer(),
+        //   // line numbers
+        //   Row(children: [
+        //     const Text('Line numbers'),
+        //     const SizedBox(width: 6),
+        //     DropdownButton<String>(
+        //       value: prefs.editorLineNumbers,
+        //       items: const [
+        //         DropdownMenuItem(value: 'on', child: Text('On')),
+        //         DropdownMenuItem(value: 'off', child: Text('Off')),
+        //         DropdownMenuItem(value: 'relative', child: Text('Relative')),
+        //       ],
+        //       onChanged: (v) async { if (v != null) await prefs.saveEditorLineNumbers(v); setState(() {}); },
+        //     ),
+        //   ]),
+        //   const SizedBox(width: 12),
+        //   // minimap
+        //   Row(children: [
+        //     const Text('Minimap'),
+        //     Switch(value: prefs.editorMinimapEnabled, onChanged: (v) async { await prefs.saveEditorMinimapEnabled(v); setState(() {}); }),
+        //   ]),
+        //   const SizedBox(width: 8),
+        // ]),
       ),
-      Expanded(child: _buildFallbackEditor(prefs)),
+      Expanded(child: Platform.isAndroid || Platform.isAndroid ? 
+      MonacoEditor(
+        initialValue: prefs.currentOpenFileContent,
+        backgroundColor: prefs.backgroundColor,
+        onContentChanged: (value) => prefs.saveCurrentOpenFileContent(value),
+        options: EditorOptions(
+          language: prefs.currentOpenFile.toMonacoLanguage(),
+          lineNumbers: prefs.editorLineNumbers,
+          minimap: prefs.editorMinimapEnabled,
+          readOnly: prefs.readonlyModeEnabled,
+          fontFamily: prefs.editorFontFamily,
+          fontSize: prefs.editorFontSize,
+          wordWrap: prefs.editorWordWrap,
+        ),
+
+      ) : _buildFallbackEditor(prefs)),
     ]);
   }
 }
+
+/*
+ (new) MonacoEditor MonacoEditor({
+  Key? key,
+  MonacoController? controller,
+  String? initialValue,
+  EditorOptions options = const EditorOptions(),
+  Range? initialSelection,
+  bool autofocus = false,
+  String? customCss,
+  bool allowCdnFonts = false,
+  Duration? readyTimeout,
+  void Function(MonacoController)? onReady,
+  void Function(String)? onContentChanged,
+  void Function(bool)? onRawContentChanged,
+  bool fullTextOnFlushOnly = false,
+  Duration contentDebounce = const Duration(milliseconds: 120),
+  void Function(Range?)? onSelectionChanged,
+  void Function()? onFocus,
+  void Function()? onBlur,
+  void Function(LiveStats)? onLiveStats,
+  Widget Function(BuildContext)? loadingBuilder,
+  Widget Function(BuildContext, Object, StackTrace?)? errorBuilder,
+  bool showStatusBar = false,
+  Widget Function(BuildContext, LiveStats)? statusBarBuilder,
+  Color? backgroundColor,
+  EdgeInsetsGeometry? padding,
+  BoxConstraints? constraints,
+  });
+
+  ==========================================================
+
+  EditorOptions EditorOptions({
+  MonacoLanguage language,
+  MonacoTheme theme,
+  double fontSize,
+  String fontFamily,
+  double lineHeight,
+  bool wordWrap,
+  bool minimap,
+  bool lineNumbers,
+  List<int> rulers,
+  int tabSize,
+  bool insertSpaces,
+  bool readOnly,
+  bool automaticLayout,
+  Map<String, int>? padding,
+  bool scrollBeyondLastLine,
+  bool smoothScrolling,
+  CursorBlinking cursorBlinking,
+  CursorStyle cursorStyle,
+  RenderWhitespace renderWhitespace,
+  bool bracketPairColorization,
+  AutoClosingBehavior autoClosingBrackets,
+  AutoClosingBehavior autoClosingQuotes,
+  bool formatOnPaste,
+  bool formatOnType,
+  bool quickSuggestions,
+  bool fontLigatures,
+  bool parameterHints,
+  bool hover,
+  bool contextMenu,
+  bool mouseWheelZoom,
+  bool roundedSelection,
+  bool selectionHighlight,
+  bool overviewRulerBorder,
+  bool renderControlCharacters,
+  bool disableLayerHinting,
+  bool disableMonospaceOptimizations,
+});
+
+ */
