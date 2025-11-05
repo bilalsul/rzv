@@ -10,7 +10,6 @@ import 'package:git_explorer_mob/utils/error/common.dart';
 import 'package:git_explorer_mob/utils/log/common.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:provider/provider.dart' as provider;
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -106,16 +105,12 @@ Future<void> _updateWindowInfo() async {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return provider.MultiProvider(
-      providers: [
-        provider.ChangeNotifierProvider<Prefs>(
-          create: (_) => Prefs(),
-        ),
-      ],
-      child: provider.Consumer<Prefs>(
-        builder: (context, prefsNotifier, child) {
-          return MaterialApp(
+    final prefs = ref.watch(prefsProvider);
+    return MaterialApp(
             debugShowCheckedModeBanner: false,
+            locale: prefs.locale,
+            localizationsDelegates: L10n.localizationsDelegates,
+            supportedLocales: L10n.supportedLocales,
             // scrollBehavior: ScrollConfiguration.of(context).copyWith(
             //   physics: const BouncingScrollPhysics(),
             //   // dragDevices: {
@@ -133,9 +128,6 @@ Future<void> _updateWindowInfo() async {
             ),
             home: const AppShell()
           );
-        },
-      ),
-    );
   }
 }
 
