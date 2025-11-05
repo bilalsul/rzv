@@ -442,66 +442,19 @@ Future<void> saveCodeFontScale(double scale) async {
 /// Return a map of editor-related settings (used to configure Monaco)
 Map<String, dynamic> getEditorSettings() {
   return {
-    'monacoTheme': editorMonacoTheme,
+    // 'monacoTheme': editorMonacoTheme,
     'fontFamily': editorFontFamily,
     'fontSize': editorFontSize,
-    'tabSize': editorTabSize,
+    // 'tabSize': editorTabSize,
     'lineNumbers': editorLineNumbers,
     'minimap': editorMinimapEnabled,
     'autoSave': editorAutoSave,
-    'autoSaveDelay': editorAutoSaveDelay,
+    // 'autoSaveDelay': editorAutoSaveDelay,
     'formatOnSave': editorFormatOnSave,
-    'wordWrap': editorWordWrap,
-    'insertSpaces': editorInsertSpaces,
+    // 'wordWrap': editorWordWrap,
+    // 'insertSpaces': editorInsertSpaces,
   };
 }
-
-/// Update a single editor setting by key. Accepts both typed keys used above
-Future<void> saveEditorSetting(String key, dynamic value) async {
-  switch (key) {
-    case 'monacoTheme':
-      await saveEditorMonacoTheme(value as String);
-      break;
-    case 'fontFamily':
-      await saveEditorFontFamily(value as String);
-      break;
-    case 'fontSize':
-      await saveEditorFontSize((value as num).toDouble());
-      break;
-    case 'tabSize':
-      await saveEditorTabSize((value as num).toInt());
-      break;
-    case 'lineNumbers':
-      await saveEditorLineNumbers(value as String);
-      break;
-    case 'minimap':
-      await saveEditorMinimapEnabled(value as bool);
-      break;
-    case 'autoSave':
-      await saveEditorAutoSave(value as bool);
-      break;
-    case 'autoSaveDelay':
-      await saveEditorAutoSaveDelay((value as num).toInt());
-      break;
-    case 'formatOnSave':
-      await saveEditorFormatOnSave(value as bool);
-      break;
-    case 'wordWrap':
-      await saveEditorWordWrap(value as String);
-      break;
-    case 'insertSpaces':
-      await saveEditorInsertSpaces(value as bool);
-      break;
-    default:
-      // fallback to storing as plugin config
-      await setPluginConfig('editor', key, value);
-  }
-  notifyListeners();
-}
-
-// -------------------------------
-// Current open file / editor session helpers
-// -------------------------------
 
 /// Save the currently opened project and file path and its latest content.
 Future<void> saveCurrentOpenFile(String projectId, String filePath, String content) async {
@@ -525,11 +478,6 @@ String get currentOpenFileContent {
 
 Future<void> saveCurrentOpenFileContent(String content) async {
   await prefs.setString('editor_current_content', content);
-  notifyListeners();
-}
-
-Future<void> saveCurrentOpenFileLanguage(String language) async {
-  await prefs.setString('editor_current_language', language);
   notifyListeners();
 }
 
@@ -575,16 +523,6 @@ Future<void> saveRippleEffect(bool enable) async {
 }
 
 // Editor Prefs
-// Getter and setter for Monaco editor theme
-String get editorMonacoTheme {
-  return prefs.getString('editor_monaco_theme') ?? 'vs-dark';
-}
-
-Future<void> saveEditorMonacoTheme(String theme) async {
-  await prefs.setString('editor_monaco_theme', theme);
-  notifyListeners();
-}
-
 // Getter and setter for editor font size
 double get editorFontSize {
   return prefs.getDouble('editor_font_size') ?? 14.0;
@@ -606,14 +544,14 @@ Future<void> saveEditorFontFamily(String fontFamily) async {
 }
 
 // Getter and setter for editor tab size
-int get editorTabSize {
-  return prefs.getInt('editor_tab_size') ?? 2;
-}
+// int get editorTabSize {
+//   return prefs.getInt('editor_tab_size') ?? 2;
+// }
 
-Future<void> saveEditorTabSize(int size) async {
-  await prefs.setInt('editor_tab_size', size);
-  notifyListeners();
-}
+// Future<void> saveEditorTabSize(int size) async {
+//   await prefs.setInt('editor_tab_size', size);
+//   notifyListeners();
+// }
 
 // Getter and setter for insert spaces setting
 bool get editorInsertSpaces {
@@ -626,22 +564,22 @@ Future<void> saveEditorInsertSpaces(bool insertSpaces) async {
 }
 
 // Getter and setter for word wrap setting
-String get editorWordWrap {
-  return prefs.getString('editor_word_wrap') ?? 'on';
+bool get editorWordWrap {
+  return prefs.getBool('editor_word_wrap') ?? false;
 }
 
-Future<void> saveEditorWordWrap(String wordWrap) async {
-  await prefs.setString('editor_word_wrap', wordWrap);
+Future<void> saveEditorWordWrap(bool wordWrap) async {
+  await prefs.setBool('editor_word_wrap', wordWrap);
   notifyListeners();
 }
 
 // Getter and setter for line numbers setting
-String get editorLineNumbers {
-  return prefs.getString('editor_line_numbers') ?? 'on';
+bool get editorLineNumbers {
+  return prefs.getBool('editor_line_numbers') ?? false;
 }
 
-Future<void> saveEditorLineNumbers(String lineNumbers) async {
-  await prefs.setString('editor_line_numbers', lineNumbers);
+Future<void> saveEditorLineNumbers(bool lineNumbers) async {
+  await prefs.setBool('editor_line_numbers', lineNumbers);
   notifyListeners();
 }
 
@@ -660,31 +598,6 @@ bool get editorAutoIndent {
   return prefs.getBool('editor_auto_indent') ?? true;
 }
 
-Future<void> saveEditorAutoIndent(bool autoIndent) async {
-  await prefs.setBool('editor_auto_indent', autoIndent);
-  notifyListeners();
-}
-
-// Getter and setter for match brackets setting
-bool get editorMatchBrackets {
-  return prefs.getBool('editor_match_brackets') ?? true;
-}
-
-Future<void> saveEditorMatchBrackets(bool matchBrackets) async {
-  await prefs.setBool('editor_match_brackets', matchBrackets);
-  notifyListeners();
-}
-
-// Getter and setter for code lens setting
-bool get editorCodeLens {
-  return prefs.getBool('editor_code_lens') ?? false;
-}
-
-Future<void> saveEditorCodeLens(bool codeLens) async {
-  await prefs.setBool('editor_code_lens', codeLens);
-  notifyListeners();
-}
-
 // Getter and setter for auto-save setting
 bool get editorAutoSave {
   return prefs.getBool('editor_auto_save') ?? true;
@@ -692,16 +605,6 @@ bool get editorAutoSave {
 
 Future<void> saveEditorAutoSave(bool autoSave) async {
   await prefs.setBool('editor_auto_save', autoSave);
-  notifyListeners();
-}
-
-// Getter and setter for auto-save delay
-int get editorAutoSaveDelay {
-  return prefs.getInt('editor_auto_save_delay') ?? 1000;
-}
-
-Future<void> saveEditorAutoSaveDelay(int delay) async {
-  await prefs.setInt('editor_auto_save_delay', delay);
   notifyListeners();
 }
 
@@ -714,62 +617,6 @@ Future<void> saveEditorFormatOnSave(bool formatOnSave) async {
   await prefs.setBool('editor_format_on_save', formatOnSave);
   notifyListeners();
 }
-
-// Getter and setter for trim trailing whitespace setting
-bool get editorTrimTrailingWhitespace {
-  return prefs.getBool('editor_trim_trailing_whitespace') ?? false;
-}
-
-Future<void> saveEditorTrimTrailingWhitespace(bool trim) async {
-  await prefs.setBool('editor_trim_trailing_whitespace', trim);
-  notifyListeners();
-}
-
-// Getter and setter for insert final newline setting
-bool get editorInsertFinalNewline {
-  return prefs.getBool('editor_insert_final_newline') ?? true;
-}
-
-Future<void> saveEditorInsertFinalNewline(bool insertNewline) async {
-  await prefs.setBool('editor_insert_final_newline', insertNewline);
-  notifyListeners();
-}
-
-// Getter and setter for cursor style
-String get editorCursorStyle {
-  return prefs.getString('editor_cursor_style') ?? 'line';
-}
-
-Future<void> saveEditorCursorStyle(String cursorStyle) async {
-  await prefs.setString('editor_cursor_style', cursorStyle);
-  notifyListeners();
-}
-
-// Getter and setter for cursor blinking
-String get editorCursorBlinking {
-  return prefs.getString('editor_cursor_blinking') ?? 'blink';
-}
-
-Future<void> saveEditorCursorBlinking(String cursorBlinking) async {
-  await prefs.setString('editor_cursor_blinking', cursorBlinking);
-  notifyListeners();
-}
-
-// Getter and setter for render whitespace setting
-String get editorRenderWhitespace {
-  return prefs.getString('editor_render_whitespace') ?? 'none';
-}
-
-Future<void> saveEditorRenderWhitespace(String renderWhitespace) async {
-  await prefs.setString('editor_render_whitespace', renderWhitespace);
-  notifyListeners();
-}
-
-// Getter and setter for render control characters setting
-bool get editorRenderControlCharacters {
-  return prefs.getBool('editor_render_control_characters') ?? false;
-}
-
 
 // Plugins pref
 // Getter and setter for Read-Only Mode plugin (editor)
