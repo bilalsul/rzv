@@ -126,7 +126,7 @@ jobs:
       uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
       with:
         path: flutter
-        key: ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/pubspec.lock') }}
+        key: ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/git_explorer_mob/pubspec.lock') }}
         restore-keys: |
           ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-
           ${{ env.cache-name }}-${{ matrix.os }}-
@@ -172,8 +172,8 @@ jobs:
       if: matrix.file == 'apk'
       run: |
         flutter build apk --obfuscate --split-debug-info=$FLUTTER_DEBUG_INFO_PATH
-        mv build/app/outputs/flutter-apk/app-release.apk ../app.apk
-        mv build/app/outputs/mapping/release/mapping.txt ../apk-mapping.txt
+        mv build/app/outputs/flutter-apk/app-release.apk ../../app.apk
+        mv build/app/outputs/mapping/release/mapping.txt ../../apk-mapping.txt
       working-directory: code/git_explorer_mob
     
     # # aab
@@ -214,18 +214,18 @@ jobs:
 
     # all
     - name: Archive Flutter ${{ matrix.file }} symbols
-      run: zip --recurse-paths ${{ github.workspace }}/code/git_explorer_mob/flutter-${{ matrix.file }}-symbols.zip .
+      run: zip --recurse-paths ${{ github.workspace }}/code/flutter-${{ matrix.file }}-symbols.zip .
       working-directory: code/git_explorer_mob/${{ env.FLUTTER_DEBUG_INFO_PATH }}
     - name: Upload the artifacts — flutter-${{ matrix.file }}-symbols.zip file
       uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
       with:
         name: flutter-${{ matrix.file }}-symbols.zip
-        path: code/git_explorer_mob/flutter-${{ matrix.file }}-symbols.zip
+        path: code/flutter-${{ matrix.file }}-symbols.zip
     - name: Upload the release assets — flutter-${{ matrix.file }}-symbols.zip file
       uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: code/git_explorer_mob/flutter-${{ matrix.file }}-symbols.zip
+        asset_path: code/flutter-${{ matrix.file }}-symbols.zip
         asset_name: flutter-${{ matrix.file }}-symbols.zip
         asset_content_type: application/zip
       env:
