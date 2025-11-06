@@ -794,7 +794,7 @@ class AppState {
 
   const AppState({
     required this.sessionStartTime,
-    this.appVersion = '1.0.0',
+    this.appVersion = '0.0.1',
     this.buildNumber = '1',
     required this.firstInstallDate,
   });
