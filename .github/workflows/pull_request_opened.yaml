@@ -1,0 +1,33 @@
+name: Pull Request (Opened)
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  security_hardening:
+    name: Check security hardening
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone the repository
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: Ensure SHA pinned actions
+      uses: zgosalvez/github-actions-ensure-sha-pinned-actions@4830be28ce81da52ec70d65c552a7403821d98d4
+
+  assign_author:
+    name: Assign Author to the Pull Request
+    needs: security_hardening
+    runs-on: ubuntu-latest
+    steps:
+    - name: Assign Author to the Pull Request
+      uses: technote-space/assign-author@9558557c5c4816f38bd06176fbc324ba14bb3160
+
+  pr-labeler:
+    name: Label the PR based on the branch
+    needs: security_hardening
+    runs-on: ubuntu-latest
+    steps:
+    - name: Label the Pull Request
+      uses: TimonVS/pr-labeler-action@f9c084306ce8b3f488a8f3ee1ccedc6da131d1af
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
