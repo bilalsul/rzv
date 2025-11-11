@@ -172,7 +172,7 @@ jobs:
       if: matrix.file == 'apk'
       run: |
         flutter build apk --obfuscate --split-debug-info=$FLUTTER_DEBUG_INFO_PATH
-        mv build/app/outputs/flutter-apk/app-release.apk ../../Gitr-GitExplorer.apk
+        mv build/app/outputs/flutter-apk/app-release.apk ../../GitExplorer-${{ github.event.release.tag_name }}.apk
         mv build/app/outputs/mapping/release/mapping.txt ../../apk-mapping.txt
       working-directory: code/git_explorer_mob
     
