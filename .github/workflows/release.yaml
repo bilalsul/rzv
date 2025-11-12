@@ -172,7 +172,7 @@ jobs:
       if: matrix.file == 'apk'
       run: |
         flutter build apk --obfuscate --split-debug-info=$FLUTTER_DEBUG_INFO_PATH
-        mv build/app/outputs/flutter-apk/app-release.apk ../../GitExplorer-${GITHUB_REF#refs/tags/}.apk
+        mv build/app/outputs/flutter-apk/app-release.apk ../../GitExplorer-${{steps.parse-release-tag.outputs.version}}.apk
         mv build/app/outputs/mapping/release/mapping.txt ../../apk-mapping.txt
       working-directory: code/git_explorer_mob
     
@@ -233,15 +233,15 @@ jobs:
     - name: Upload the artifacts — ${{ matrix.file }} file
       uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
       with:
-        name: app.${{ matrix.file }}
-        path: app.${{ matrix.file }}
+        name: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
+        path: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
         if-no-files-found: error
     - name: Upload the release assets — ${{ matrix.file }} file
       uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: app.${{ matrix.file }}
-        asset_name: app.${{ matrix.file }}
+        asset_path: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
+        asset_name: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
         asset_content_type: ${{ matrix.asset-content-type }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
