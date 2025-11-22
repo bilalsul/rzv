@@ -24,6 +24,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // other temporary theme values (removed UI for now)
   // AI temporary state before apply
   int _selectedAiMaxTokens = 512;
+  // Temporary storage for provider configurations before Apply
+  final Map<String, String> _tempApiUrls = {}; // key: '<provider>_<model>' -> url
+  final Map<String, String> _tempApiKeys = {}; // key: 'ai_<provider>_<model>' -> apiKey (empty = remove)
+  final Map<String, String> _tempLastModel = {}; // provider -> model
+  String? _tempActiveProvider;
+  String? _tempActiveModel;
   @override
   Widget build(BuildContext context) {
     // single source: watch Prefs
@@ -281,12 +287,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(L10n.of(context).settingsAiModelProvider),
               const SizedBox(height: 8),
-              Wrap(spacing: 8, children: [
+              Wrap(spacing: 8, runSpacing: 4, children: [
                 _providerTile(context, 'gpt', label: 'OpenAI', assetName: 'openai.png'),
                 _providerTile(context, 'claude', label: 'Anthropic', assetName: 'claude.png'),
                 _providerTile(context, 'grok', label: 'Grok', assetName: 'deepseek.png'),
                 _providerTile(context, 'gemini', label: 'Gemini', assetName: 'gemini.png'),
-                _providerTile(context, 'commonai', label: 'Common', assetName: 'commonAi.png'),
+                // _providerTile(context, 'commonai', label: 'Common', assetName: 'commonAi.png'),
                 _providerTile(context, 'openrouter', label: 'OpenRouter', assetName: 'openrouter.png'),
                 _providerTile(context, 'xiaohongshu', label: 'Xiaohongshu', assetName: 'xiaohongshu.png'),
               ]),
@@ -308,13 +314,36 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Row(children: [
                 ElevatedButton(
                   onPressed: () async {
-                    // Persist active provider/model/maxTokens (these are set when user configures a provider)
-                    final activeProvider = prefs.getPluginConfig('ai', 'provider') ?? '';
-                    final activeModel = prefs.getPluginConfig('ai', 'model') ?? '';
-                    await prefs.setPluginConfig('ai', 'provider', activeProvider);
-                    await prefs.setPluginConfig('ai', 'model', activeModel);
+                    // Persist any temporary API URLs
+                    for (final entry in _tempApiUrls.entries) {
+                      final full = entry.key; // '<provider>_<model>'
+                      final idx = full.indexOf('_');
+                      if (idx <= 0) continue;
+                      final provider = full.substring(0, idx);
+                      final model = full.substring(idx + 1);
+                      final urlConfigKey = '${provider}_${model}_api_url';
+                      await prefs.setPluginConfig('ai', urlConfigKey, entry.value);
+                      await prefs.setPluginConfig('ai', '${provider}_last_model', model);
+                    }
+                    // Persist any temporary API keys (secure)
+                    for (final entry in _tempApiKeys.entries) {
+                      final pluginId = entry.key; // 'ai_<provider>_<model>'
+                      final key = entry.value;
+                      if (key.isNotEmpty) {
+                        await prefs.setPluginApiKey(pluginId, key);
+                      } else {
+                        await prefs.removePluginApiKey(pluginId);
+                      }
+                    }
+                    // Persist active provider/model if the user configured one
+                    if (_tempActiveProvider != null) {
+                      await prefs.setPluginConfig('ai', 'provider', _tempActiveProvider);
+                      if (_tempActiveModel != null) await prefs.setPluginConfig('ai', 'model', _tempActiveModel);
+                    }
+                    // Persist max tokens
                     await prefs.setPluginConfig('ai', 'maxTokens', _selectedAiMaxTokens);
                     setState(() {});
+                    final activeProvider = (prefs.getPluginConfig('ai', 'provider') as String?) ?? _tempActiveProvider ?? '';
                     final ok = activeProvider != '' ? await _checkApiKey(activeProvider) : false;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? L10n.of(context).connectionSuccessful : L10n.of(context).connectionFailed)));
                   },
@@ -452,10 +481,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         Text(label, style: const TextStyle(fontSize: 12)),
         const SizedBox(height: 6),
         SizedBox(
-          width: 84,
+          width: 90,
+          height: 20,
           child: OutlinedButton(
             onPressed: () => _showProviderConfigDialog(context, id, label),
-            child: Text(L10n.of(context).settingsConfigure, style: const TextStyle(fontSize: 8)),
+            child: Text(L10n.of(context).settingsConfigure, style: const TextStyle(fontSize: 9)),
           ),
         ),
       ],
@@ -463,86 +493,95 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _showProviderConfigDialog(BuildContext context, String providerId, String label) {
+    // Simple synchronous dialog: initialize fields synchronously from Prefs (no futures)
+    // Models per provider
+    final Map<String, List<String>> providerModels = {
+      'gpt': ['gpt-4o', 'gpt-4o-mini', 'gpt-4', 'gpt-3.5-turbo'],
+      'claude': ['claude-2', 'claude-instant'],
+      'grok': ['grok-1'],
+      'gemini': ['gemini-1'],
+      // 'commonai': ['common-v1'],
+      'openrouter': ['openrouter-default'],
+      'xiaohongshu': ['xiaohongshu-v1'],
+    };
+    final models = providerModels[providerId] ?? ['default'];
+    final lastModel = Prefs().getPluginConfig('ai', '${providerId}_last_model') as String?;
+    String selectedModel = lastModel ?? (Prefs().getPluginConfig('ai', 'model') as String?) ?? models.first;
+    // Load any previously entered temp values or persisted ones synchronously
+    final tempUrlKey = '${providerId}_$selectedModel';
+    final initialUrl = _tempApiUrls[tempUrlKey] ?? (Prefs().getPluginConfig('ai', '${providerId}_${selectedModel}_api_url') as String?) ?? '';
+    final hasExistingKey = Prefs().hasPluginApiKey('ai_${providerId}_$selectedModel');
+    final urlController = TextEditingController(text: initialUrl);
+    final keyController = TextEditingController(text: _tempApiKeys['ai_${providerId}_$selectedModel'] ?? '');
+
     showDialog<void>(
       context: context,
       builder: (context) {
-        return FutureBuilder<List<dynamic>>(
-          // fetch a default api url and a sample api key for the provider (may be null)
-          future: Future.wait([Prefs().getPluginConfig('ai', '${providerId}_api_url'), Prefs().getPluginApiKey('ai_${providerId}')]),
-          builder: (context, snapshot) {
-            final existingUrl = snapshot.hasData ? snapshot.data![0] as String? : null;
-            final existingKey = snapshot.hasData ? snapshot.data![1] as String? : null;
-            final urlController = TextEditingController(text: existingUrl ?? '');
-            final keyController = TextEditingController(text: existingKey ?? '');
-
-            // models per provider
-            final Map<String, List<String>> providerModels = {
-              'gpt': ['gpt-4o', 'gpt-4o-mini', 'gpt-4', 'gpt-3.5-turbo'],
-              'claude': ['claude-2', 'claude-instant'],
-              'grok': ['grok-1'],
-              'gemini': ['gemini-1'],
-              'commonai': ['common-v1'],
-              'openrouter': ['openrouter-default'],
-              'xiaohongshu': ['xiaohongshu-v1'],
-            };
-            final models = providerModels[providerId] ?? ['default'];
-            final lastModel = Prefs().getPluginConfig('ai', '${providerId}_last_model') as String?;
-            String selectedModel = lastModel ?? (Prefs().getPluginConfig('ai', 'model') as String?) ?? models.first;
-
-            return StatefulBuilder(builder: (context, setStateDialog) {
-              return AlertDialog(
-                title: Text(L10n.of(context).settingsConfigureProvider(label)),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DropdownButtonFormField<String>(
-                      value: selectedModel,
-                      items: models.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
-                      onChanged: (v) { if (v != null) setStateDialog(() { selectedModel = v; }); },
-                      decoration: InputDecoration(labelText: L10n.of(context).settingsModelLabel),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: urlController,
-                      decoration: InputDecoration(labelText: L10n.of(context).settingsApiUrlOptional),
-                      keyboardType: TextInputType.url,
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: keyController,
-                      decoration: InputDecoration(labelText: L10n.of(context).settingsApiKey),
-                      obscureText: true,
-                    ),
-                  ],
+        return StatefulBuilder(builder: (context, setStateDialog) {
+          return AlertDialog(
+            title: Text(L10n.of(context).settingsConfigureProvider(label)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField<String>(
+                  value: selectedModel,
+                  items: models.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
+                  onChanged: (v) {
+                    if (v == null) return;
+                    setStateDialog(() {
+                      selectedModel = v;
+                      // update url/key controllers for new model
+                      final key = '${providerId}_$selectedModel';
+                      urlController.text = _tempApiUrls[key] ?? (Prefs().getPluginConfig('ai', '${providerId}_${selectedModel}_api_url') as String?) ?? '';
+                      keyController.text = _tempApiKeys['ai_${providerId}_$selectedModel'] ?? '';
+                    });
+                  },
+                  decoration: InputDecoration(labelText: L10n.of(context).settingsModelLabel),
                 ),
-                actions: [
-                  TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
-                  FilledButton(
-                    onPressed: () async {
-                      final url = urlController.text.trim();
-                      final key = keyController.text.trim();
-                      // Save per-provider+model entries
-                      final urlConfigKey = '${providerId}_${selectedModel}_api_url';
-                      if (url.isNotEmpty) await Prefs().setPluginConfig('ai', urlConfigKey, url);
-                      else await Prefs().setPluginConfig('ai', urlConfigKey, null);
-                      final securePluginId = 'ai_${providerId}_$selectedModel';
-                      if (key.isNotEmpty) await Prefs().setPluginApiKey(securePluginId, key);
-                      else await Prefs().removePluginApiKey(securePluginId);
-                      // remember last selected model for this provider and set active provider/model
-                      await Prefs().setPluginConfig('ai', '${providerId}_last_model', selectedModel);
-                      await Prefs().setPluginConfig('ai', 'provider', providerId);
-                      await Prefs().setPluginConfig('ai', 'model', selectedModel);
-                      Navigator.of(context).pop();
-                      setState(() {});
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsProviderSaved(label))));
-                    },
-                    child: Text(L10n.of(context).commonSave),
-                  ),
-                ],
-              );
-            });
-          },
-        );
+                const SizedBox(height: 8),
+                TextField(
+                  controller: urlController,
+                  decoration: InputDecoration(labelText: L10n.of(context).settingsApiUrlOptional),
+                  keyboardType: TextInputType.url,
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: keyController,
+                  decoration: InputDecoration(labelText: L10n.of(context).settingsApiKey),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(hasExistingKey ? L10n.of(context).settingsApiKeySet : L10n.of(context).settingsApiKeyNotSet, style: Theme.of(context).textTheme.bodySmall),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
+              FilledButton(
+                onPressed: () async {
+                  final url = urlController.text.trim();
+                  final key = keyController.text.trim();
+                  // store temporarily; Apply will persist
+                  final urlKey = '${providerId}_$selectedModel';
+                  if (url.isNotEmpty) _tempApiUrls[urlKey] = url;
+                  else _tempApiUrls.remove(urlKey);
+                  final securePluginId = 'ai_${providerId}_$selectedModel';
+                  if (key.isNotEmpty) _tempApiKeys[securePluginId] = key;
+                  else _tempApiKeys[securePluginId] = '';
+                  _tempLastModel[providerId] = selectedModel;
+                  _tempActiveProvider = providerId;
+                  _tempActiveModel = selectedModel;
+                  Navigator.of(context).pop();
+                  setState(() {});
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsProviderSaved(label))));
+                },
+                child: Text(L10n.of(context).commonSave),
+              ),
+            ],
+          );
+        });
       },
     );
   }
@@ -550,13 +589,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Future<bool> _checkApiKey(String providerId) async {
     // Basic provider-specific connectivity check. This is intentionally lightweight
     // and does not exhaustively validate all provider API semantics.
-    final key = await Prefs().getPluginApiKey('ai_${providerId}');
+    // prefer the active model (persisted) for per-model keys and URLs
+    final model = (Prefs().getPluginConfig('ai', 'model') as String?) ?? (Prefs().getPluginConfig('ai', '${providerId}_last_model') as String?);
+    final pluginId = model != null ? 'ai_${providerId}_$model' : 'ai_${providerId}';
+    final key = await Prefs().getPluginApiKey(pluginId);
     if (key == null || key.isEmpty) return false;
-    final configuredUrl = Prefs().getPluginConfig('ai', '${providerId}_api_url') as String?;
+    final modelUrl = model != null ? (Prefs().getPluginConfig('ai', '${providerId}_' + model + '_api_url') as String?) : null;
+    final effectiveUrl = modelUrl ?? (Prefs().getPluginConfig('ai', '${providerId}_api_url') as String?);
     try {
       if (providerId == 'gpt') {
         // OpenAI: try listing models (allow custom URL if configured)
-        final url = configuredUrl?.isNotEmpty == true ? configuredUrl! : 'https://api.openai.com/v1/models';
+        final url = (effectiveUrl?.isNotEmpty == true ? effectiveUrl! : 'https://api.openai.com/v1/models');
         final resp = await http.get(
           Uri.parse(url),
           headers: {'Authorization': 'Bearer $key'},
@@ -564,7 +607,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         return resp.statusCode == 200;
       } else if (providerId == 'claude') {
         // Anthropic: try listing models endpoint (allow custom URL)
-        final url = configuredUrl?.isNotEmpty == true ? configuredUrl! : 'https://api.anthropic.com/v1/models';
+        final url = (effectiveUrl?.isNotEmpty == true ? effectiveUrl! : 'https://api.anthropic.com/v1/models');
         final resp = await http.get(
           Uri.parse(url),
           headers: {'x-api-key': key},
