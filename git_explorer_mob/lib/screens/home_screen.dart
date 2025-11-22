@@ -310,6 +310,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.all(12.0),
           child: Builder(builder: (context) {
             try {
+               // Only show empty state after we've finished loading projects from disk.
+              // This avoids a flash where the UI shows "no projects" before the background
+              // disk scan completes and populates `_projects`.
+              if (!_diskLoaded) {
+                return const Center(child: CircularProgressIndicator());
+              }
               if (_projects.isEmpty) return _EmptyState(onCreate: _createProjectWithDetails, onImport: _importZipProject);
 
               // If a project is opened, show ProjectBrowser inside HomeScreen
