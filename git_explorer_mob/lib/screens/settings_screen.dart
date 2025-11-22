@@ -193,44 +193,44 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
               ]),
               const SizedBox(height: 12),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsBorderRadius)),
-                Expanded(
-                  child: Slider(
-                    value: _tempBorderRadius,
-                    min: 0,
-                    max: 32,
-                    divisions: 16,
-                    label: _tempBorderRadius.toStringAsFixed(0),
-                    onChanged: (v) => setState(() { _tempBorderRadius = v; }),
-                  ),
-                ),
-              ]),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsElevation)),
-                Expanded(
-                  child: Slider(value: _tempElevation, min: 0, max: 12, divisions: 12, label: _tempElevation.toStringAsFixed(0), onChanged: (v) => setState(() { _tempElevation = v; })),
-                ),
-              ]),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsAppFontSize)),
-                Expanded(child: Slider(value: _tempAppFontSize, min: 10, max: 22, divisions: 12, label: _tempAppFontSize.toStringAsFixed(0), onChanged: (v) => setState(() { _tempAppFontSize = v; }))),
-              ]),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsButtonStyle)),
-                DropdownButton<String>(
-                  value: _tempButtonStyle,
-                  items: ['elevated', 'outlined', 'text'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
-                  onChanged: (v) => setState(() { if (v != null) _tempButtonStyle = v; }),
-                ),
-              ]),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsReduceAnimations)),
-                Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); }),
-              ]),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsBorderRadius)),
+              //   Expanded(
+              //     child: Slider(
+              //       value: _tempBorderRadius,
+              //       min: 0,
+              //       max: 32,
+              //       divisions: 16,
+              //       label: _tempBorderRadius.toStringAsFixed(0),
+              //       onChanged: (v) => setState(() { _tempBorderRadius = v; }),
+              //     ),
+              //   ),
+              // ]),
+              // const SizedBox(height: 8),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsElevation)),
+              //   Expanded(
+              //     child: Slider(value: _tempElevation, min: 0, max: 12, divisions: 12, label: _tempElevation.toStringAsFixed(0), onChanged: (v) => setState(() { _tempElevation = v; })),
+              //   ),
+              // ]),
+              // const SizedBox(height: 8),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsAppFontSize)),
+              //   Expanded(child: Slider(value: _tempAppFontSize, min: 10, max: 22, divisions: 12, label: _tempAppFontSize.toStringAsFixed(0), onChanged: (v) => setState(() { _tempAppFontSize = v; }))),
+              // ]),
+              // const SizedBox(height: 8),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsButtonStyle)),
+              //   DropdownButton<String>(
+              //     value: _tempButtonStyle,
+              //     items: ['elevated', 'outlined', 'text'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+              //     onChanged: (v) => setState(() { if (v != null) _tempButtonStyle = v; }),
+              //   ),
+              // ]),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsReduceAnimations)),
+              //   Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); }),
+              // ]),
             ]),
           ),
 
