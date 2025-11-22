@@ -53,6 +53,23 @@
   "settingsAiMaxTokens": "الحد الأقصى للرموز",
   "settingsApiKeySecure": "مفتاح API (آمن)",
   "settingsApplyAiSettings": "تطبيق إعدادات الذكاء الاصطناعي",
+  "settingsConfigure": "إعداد",
+  "settingsConfigureProvider": "إعداد {provider}",
+  "@settingsConfigureProvider": {
+    "description": "عنوان نافذة الإعداد عند تهيئة مزود",
+    "placeholders": { "provider": {} }
+  },
+  "settingsProviderSaved": "تم حفظ إعدادات {provider}",
+  "@settingsProviderSaved": {
+    "description": "رسالة الـ Snackbar بعد حفظ إعدادات المزود",
+    "placeholders": { "provider": {} }
+  },
+  "settingsResetAiSettings": "إعادة تعيين إعدادات الذكاء الاصطناعي",
+  "settingsResetAiConfirm": "هل أنت متأكد أنك تريد حذف روابط الذكاء الاصطناعي ومفاتيح API نهائياً؟",
+  "settingsAiSettingsReset": "تم إعادة تعيين إعدادات الذكاء الاصطناعي",
+  "settingsModelLabel": "النموذج",
+  "settingsApiUrlOptional": "رابط API (اختياري)",
+  "settingsApiKey": "مفتاح API",
   "settingsApiKeySet": "تم تعيين المفتاح",
   "settingsApiKeyNotSet": "لم يتم تعيين مفتاح",
   "settingsSetApiKey": "تعيين مفتاح API",

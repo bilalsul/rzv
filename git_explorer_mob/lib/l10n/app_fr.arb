@@ -53,6 +53,23 @@
   "settingsAiMaxTokens": "Tokens maximum",
   "settingsApiKeySecure": "Clé API (sécurisée)",
   "settingsApplyAiSettings": "Appliquer les paramètres IA",
+  "settingsConfigure": "Configurer",
+  "settingsConfigureProvider": "Configurer {provider}",
+  "@settingsConfigureProvider": {
+    "description": "Titre de la boîte de dialogue lors de la configuration d'un fournisseur",
+    "placeholders": { "provider": {} }
+  },
+  "settingsProviderSaved": "Paramètres de {provider} enregistrés",
+  "@settingsProviderSaved": {
+    "description": "Message Snackbar après l'enregistrement de la configuration du fournisseur",
+    "placeholders": { "provider": {} }
+  },
+  "settingsResetAiSettings": "Réinitialiser les paramètres IA",
+  "settingsResetAiConfirm": "Êtes-vous sûr de vouloir supprimer définitivement les URL d'IA et les clés API ?",
+  "settingsAiSettingsReset": "Paramètres IA réinitialisés",
+  "settingsModelLabel": "Modèle",
+  "settingsApiUrlOptional": "URL de l'API (optionnel)",
+  "settingsApiKey": "Clé API",
   "settingsApiKeySet": "Clé définie",
   "settingsApiKeyNotSet": "Aucune clé définie",
   "settingsSetApiKey": "Définir la clé API",
