@@ -21,14 +21,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // Temporary theme customizer state (apply button will persist)
   late Color _tempPrimaryColor;
   late Color _tempSecondaryColor;
-  late double _tempBorderRadius;
-  late double _tempElevation;
-  late double _tempAppFontSize;
-  late String _tempButtonStyle;
-
+  // other temporary theme values (removed UI for now)
   // AI temporary state before apply
-  String _selectedAiProvider = 'gpt';
-  String _selectedAiModel = 'gpt-4o';
   int _selectedAiMaxTokens = 512;
   @override
   Widget build(BuildContext context) {
@@ -288,13 +282,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Text(L10n.of(context).settingsAiModelProvider),
               const SizedBox(height: 8),
               Wrap(spacing: 8, children: [
-                _providerTile('gpt', label: 'OpenAI', assetName: 'openai.png'),
-                _providerTile('claude', label: 'Anthropic', assetName: 'claude.png'),
-                _providerTile('grok', label: 'Grok', assetName: 'deepseek.png'),
-                _providerTile('gemini', label: 'Gemini', assetName: 'gemini.png'),
-                _providerTile('commonai', label: 'Common', assetName: 'commonAi.png'),
-                _providerTile('openrouter', label: 'OpenRouter', assetName: 'openrouter.png'),
-                _providerTile('xiaohongshu', label: 'Xiaohongshu', assetName: 'xiaohongshu.png'),
+                _providerTile(context, 'gpt', label: 'OpenAI', assetName: 'openai.png'),
+                _providerTile(context, 'claude', label: 'Anthropic', assetName: 'claude.png'),
+                _providerTile(context, 'grok', label: 'Grok', assetName: 'deepseek.png'),
+                _providerTile(context, 'gemini', label: 'Gemini', assetName: 'gemini.png'),
+                _providerTile(context, 'commonai', label: 'Common', assetName: 'commonAi.png'),
+                _providerTile(context, 'openrouter', label: 'OpenRouter', assetName: 'openrouter.png'),
+                _providerTile(context, 'xiaohongshu', label: 'Xiaohongshu', assetName: 'xiaohongshu.png'),
               ]),
               const SizedBox(height: 12),
               Text(L10n.of(context).settingsAiMaxTokens),
@@ -314,15 +308,51 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Row(children: [
                 ElevatedButton(
                   onPressed: () async {
-                    // Persist provider/model/maxTokens
-                    await prefs.setPluginConfig('ai', 'provider', _selectedAiProvider);
-                    await prefs.setPluginConfig('ai', 'model', _selectedAiModel);
+                    // Persist active provider/model/maxTokens (these are set when user configures a provider)
+                    final activeProvider = prefs.getPluginConfig('ai', 'provider') ?? '';
+                    final activeModel = prefs.getPluginConfig('ai', 'model') ?? '';
+                    await prefs.setPluginConfig('ai', 'provider', activeProvider);
+                    await prefs.setPluginConfig('ai', 'model', activeModel);
                     await prefs.setPluginConfig('ai', 'maxTokens', _selectedAiMaxTokens);
                     setState(() {});
-                    final ok = await _checkApiKey(_selectedAiProvider);
+                    final ok = activeProvider != '' ? await _checkApiKey(activeProvider) : false;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? L10n.of(context).connectionSuccessful : L10n.of(context).connectionFailed)));
                   },
                   child: Text(L10n.of(context).settingsApplyAiSettings),
+                ),
+                const SizedBox(width: 12),
+                OutlinedButton(
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(L10n.of(context).settingsResetAiSettings),
+                        content: Text(L10n.of(context).settingsResetAiConfirm),
+                        actions: [
+                          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(L10n.of(context).commonCancel)),
+                          FilledButton(onPressed: () => Navigator.of(context).pop(true), child: Text(L10n.of(context).commonDelete)),
+                        ],
+                      ),
+                    );
+                    if (confirm != true) return;
+                    // Delete AI-related SharedPreferences keys and secure API keys
+                    final sp = prefs.prefs;
+                    // collect secure key flags first (plugin_<pluginId>_has_api_key)
+                    final hasFlags = sp.getKeys().where((k) => k.startsWith('plugin_') && k.contains('plugin_ai_') && k.endsWith('_has_api_key')).toList();
+                    for (final flag in hasFlags) {
+                      final pluginId = flag.substring('plugin_'.length, flag.length - '_has_api_key'.length);
+                      // this will remove secure storage key and the 'has' flag, and notify
+                      await prefs.removePluginApiKey(pluginId);
+                    }
+                    // remove any remaining plugin_ai_ keys via setPluginConfig so Prefs notifies
+                    final aiKeys = sp.getKeys().where((k) => k.startsWith('plugin_ai_')).toList();
+                    for (final k in aiKeys) {
+                      final configKey = k.substring('plugin_ai_'.length);
+                      await prefs.setPluginConfig('ai', configKey, null);
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsAiSettingsReset)));
+                  },
+                  child: Text(L10n.of(context).settingsResetAiSettings),
                 ),
               ]),
             ]),
@@ -403,50 +433,29 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final p = Prefs();
     _tempPrimaryColor = p.primaryColor;
     _tempSecondaryColor = p.secondaryColor;
-    _tempBorderRadius = p.borderRadius;
-    _tempElevation = p.elevationLevel;
-    _tempAppFontSize = p.appFontSize;
-    _tempButtonStyle = p.buttonStyle;
-
     // AI defaults
-    _selectedAiProvider = p.getPluginConfig('ai', 'provider') ?? 'gpt';
-    _selectedAiModel = p.getPluginConfig('ai', 'model') ?? 'gpt-4o';
     _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
   }
 
-  Widget _providerTile(String id, {required String label, required String assetName}) {
-    final selected = _selectedAiProvider == id;
+  Widget _providerTile(BuildContext context, String id, {required String label, required String assetName}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _selectedAiProvider = id;
-              // set a reasonable default model per provider
-              if (id == 'gpt') _selectedAiModel = 'gpt-4o';
-              else if (id == 'claude') _selectedAiModel = 'claude-2';
-              else if (id == 'grok') _selectedAiModel = 'grok-1';
-              else if (id == 'gemini') _selectedAiModel = 'gemini-1';
-              else _selectedAiModel = 'gpt-4o';
-            });
-          },
-          child: CircleAvatar(
-            radius: 24,
-            backgroundColor: selected ? Colors.blue.shade100 : Colors.grey.shade200,
-            child: ClipOval(
-              child: Image.asset('assets/images/ai/$assetName', width: 36, height: 36, errorBuilder: (c, e, st) => const Icon(Icons.cloud, size: 28)),
-            ),
+        CircleAvatar(
+          radius: 24,
+          backgroundColor: Colors.white,
+          child: ClipOval(
+            child: Image.asset('assets/images/ai/$assetName', width: 36, height: 36, errorBuilder: (c, e, st) => const Icon(Icons.cloud, size: 28)),
           ),
         ),
         const SizedBox(height: 6),
-        Text(label, style: TextStyle(fontSize: 12, fontWeight: selected ? FontWeight.w700 : FontWeight.normal)),
+        Text(label, style: const TextStyle(fontSize: 12)),
         const SizedBox(height: 6),
         SizedBox(
           width: 84,
           child: OutlinedButton(
             onPressed: () => _showProviderConfigDialog(context, id, label),
-            child: const Text('Configure', style: TextStyle(fontSize: 11)),
+            child: Text(L10n.of(context).settingsConfigure, style: const TextStyle(fontSize: 8)),
           ),
         ),
       ],
@@ -458,50 +467,80 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       context: context,
       builder: (context) {
         return FutureBuilder<List<dynamic>>(
-          // fetch api url (shared prefs) and api key (secure storage) concurrently
+          // fetch a default api url and a sample api key for the provider (may be null)
           future: Future.wait([Prefs().getPluginConfig('ai', '${providerId}_api_url'), Prefs().getPluginApiKey('ai_${providerId}')]),
           builder: (context, snapshot) {
             final existingUrl = snapshot.hasData ? snapshot.data![0] as String? : null;
             final existingKey = snapshot.hasData ? snapshot.data![1] as String? : null;
             final urlController = TextEditingController(text: existingUrl ?? '');
             final keyController = TextEditingController(text: existingKey ?? '');
-            return AlertDialog(
-              title: Text('Configure $label'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: urlController,
-                    decoration: const InputDecoration(labelText: 'API URL (optional)'),
-                    keyboardType: TextInputType.url,
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: keyController,
-                    decoration: const InputDecoration(labelText: 'API Key'),
-                    obscureText: true,
+
+            // models per provider
+            final Map<String, List<String>> providerModels = {
+              'gpt': ['gpt-4o', 'gpt-4o-mini', 'gpt-4', 'gpt-3.5-turbo'],
+              'claude': ['claude-2', 'claude-instant'],
+              'grok': ['grok-1'],
+              'gemini': ['gemini-1'],
+              'commonai': ['common-v1'],
+              'openrouter': ['openrouter-default'],
+              'xiaohongshu': ['xiaohongshu-v1'],
+            };
+            final models = providerModels[providerId] ?? ['default'];
+            final lastModel = Prefs().getPluginConfig('ai', '${providerId}_last_model') as String?;
+            String selectedModel = lastModel ?? (Prefs().getPluginConfig('ai', 'model') as String?) ?? models.first;
+
+            return StatefulBuilder(builder: (context, setStateDialog) {
+              return AlertDialog(
+                title: Text(L10n.of(context).settingsConfigureProvider(label)),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DropdownButtonFormField<String>(
+                      value: selectedModel,
+                      items: models.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
+                      onChanged: (v) { if (v != null) setStateDialog(() { selectedModel = v; }); },
+                      decoration: InputDecoration(labelText: L10n.of(context).settingsModelLabel),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: urlController,
+                      decoration: InputDecoration(labelText: L10n.of(context).settingsApiUrlOptional),
+                      keyboardType: TextInputType.url,
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: keyController,
+                      decoration: InputDecoration(labelText: L10n.of(context).settingsApiKey),
+                      obscureText: true,
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
+                  FilledButton(
+                    onPressed: () async {
+                      final url = urlController.text.trim();
+                      final key = keyController.text.trim();
+                      // Save per-provider+model entries
+                      final urlConfigKey = '${providerId}_${selectedModel}_api_url';
+                      if (url.isNotEmpty) await Prefs().setPluginConfig('ai', urlConfigKey, url);
+                      else await Prefs().setPluginConfig('ai', urlConfigKey, null);
+                      final securePluginId = 'ai_${providerId}_$selectedModel';
+                      if (key.isNotEmpty) await Prefs().setPluginApiKey(securePluginId, key);
+                      else await Prefs().removePluginApiKey(securePluginId);
+                      // remember last selected model for this provider and set active provider/model
+                      await Prefs().setPluginConfig('ai', '${providerId}_last_model', selectedModel);
+                      await Prefs().setPluginConfig('ai', 'provider', providerId);
+                      await Prefs().setPluginConfig('ai', 'model', selectedModel);
+                      Navigator.of(context).pop();
+                      setState(() {});
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsProviderSaved(label))));
+                    },
+                    child: Text(L10n.of(context).commonSave),
                   ),
                 ],
-              ),
-              actions: [
-                TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
-                FilledButton(
-                  onPressed: () async {
-                    final url = urlController.text.trim();
-                    final key = keyController.text.trim();
-                    // save url in plugin config (non-sensitive) and key in secure storage per-provider
-                    if (url.isNotEmpty) await Prefs().setPluginConfig('ai', '${providerId}_api_url', url);
-                    else await Prefs().setPluginConfig('ai', '${providerId}_api_url', null);
-                    if (key.isNotEmpty) await Prefs().setPluginApiKey('ai_${providerId}', key);
-                    else await Prefs().removePluginApiKey('ai_${providerId}');
-                    Navigator.of(context).pop();
-                    setState(() {});
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$label settings saved')));
-                  },
-                  child: Text(L10n.of(context).commonSave),
-                ),
-              ],
-            );
+              );
+            });
           },
         );
       },
