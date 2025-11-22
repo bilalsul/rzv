@@ -155,7 +155,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: Colors.primaries.reversed.take(8).map((c) {
+                children: Colors.primaries.reversed.take(18).map((c) {
                   final col = c.shade400;
                   final selected = _tempSecondaryColor == col;
                   return GestureDetector(
@@ -175,8 +175,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Row(children: [
                 ElevatedButton(
                   onPressed: () async {
-                    await Prefs().savePrimaryColor(_tempPrimaryColor.value);
-                    await Prefs().saveSecondaryColor(_tempSecondaryColor.value);
+                    await Prefs().savePrimaryColor(_tempPrimaryColor);
+                    await Prefs().saveSecondaryColor(_tempSecondaryColor);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsThemeApplied)));
                   },
                   child: Text(L10n.of(context).settingsApplyThemeColors),
