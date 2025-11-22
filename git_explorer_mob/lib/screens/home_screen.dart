@@ -259,6 +259,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final prefs = ref.watch(prefsProvider);
     ref.listen<Prefs>(prefsProvider, (previous, next) {
       final prevEnabled = previous?.isPluginEnabled('file_explorer') ?? false;
       final nowEnabled = next.isPluginEnabled('file_explorer');
@@ -400,6 +401,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   heroTag: 'create_details',
                   onPressed: _createProjectWithDetails,
                   tooltip: L10n.of(context).homeTooltipCreateDetails,
+                  backgroundColor: prefs.secondaryColor,
                   child: const Icon(Icons.add),
                 ),
                 const SizedBox(height: 8),
@@ -407,6 +409,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   heroTag: 'sample_zip',
                   onPressed: _importZipProject,
                   tooltip: L10n.of(context).homeTooltipCreateSampleZip,
+                  backgroundColor: prefs.secondaryColor,
                   child: const Icon(Icons.archive),
                 ),
               ],
