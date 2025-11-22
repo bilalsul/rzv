@@ -288,10 +288,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Text(L10n.of(context).settingsAiModelProvider),
               const SizedBox(height: 8),
               Wrap(spacing: 8, children: [
-                _providerTile('gpt', label: 'OpenAI', logoUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openai/openai-original.svg'),
-                _providerTile('claude', label: 'Anthropic', logoUrl: 'https://raw.githubusercontent.com/anthropic/images/main/anthropic-logo.png'),
-                _providerTile('grok', label: 'Grok', logoUrl: 'https://example.com/grok-logo.png'),
-                _providerTile('gemini', label: 'Gemini', logoUrl: 'https://example.com/gemini-logo.png'),
+                _providerTile('gpt', label: 'OpenAI', assetName: 'openai.png'),
+                _providerTile('claude', label: 'Anthropic', assetName: 'claude.png'),
+                _providerTile('grok', label: 'Grok', assetName: 'deepseek.png'),
+                _providerTile('gemini', label: 'Gemini', assetName: 'gemini.png'),
+                _providerTile('commonai', label: 'Common', assetName: 'commonAi.png'),
+                _providerTile('openrouter', label: 'OpenRouter', assetName: 'openrouter.png'),
+                _providerTile('xiaohongshu', label: 'Xiaohongshu', assetName: 'xiaohongshu.png'),
               ]),
               const SizedBox(height: 12),
               Text(L10n.of(context).settingsAiMaxTokens),
@@ -305,21 +308,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
 
               const SizedBox(height: 12),
-              // API key storage (secure)
-              ListTile(
-                title: Text(L10n.of(context).settingsApiKeySecure),
-                subtitle: Text(prefs.hasPluginApiKey('ai') ? L10n.of(context).settingsApiKeySet : L10n.of(context).settingsApiKeyNotSet),
-                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => _showApiKeyDialog(context, 'ai'),
-                  ),
-                  if (prefs.hasPluginApiKey('ai')) IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () async { await Prefs().removePluginApiKey('ai'); setState(() {}); },
-                  ),
-                ]),
-              ),
+              // Per-provider configuration: Configure API URL and secure API key per provider using the "Configure" button on each provider tile.
 
               const SizedBox(height: 8),
               Row(children: [
@@ -425,53 +414,120 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
   }
 
-  Widget _providerTile(String id, {required String label, required String logoUrl}) {
+  Widget _providerTile(String id, {required String label, required String assetName}) {
     final selected = _selectedAiProvider == id;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedAiProvider = id;
-          // set a reasonable default model per provider
-          if (id == 'gpt') _selectedAiModel = 'gpt-4o';
-          else if (id == 'claude') _selectedAiModel = 'claude-2';
-          else if (id == 'grok') _selectedAiModel = 'grok-1';
-          else if (id == 'gemini') _selectedAiModel = 'gemini-1';
-        });
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CircleAvatar(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _selectedAiProvider = id;
+              // set a reasonable default model per provider
+              if (id == 'gpt') _selectedAiModel = 'gpt-4o';
+              else if (id == 'claude') _selectedAiModel = 'claude-2';
+              else if (id == 'grok') _selectedAiModel = 'grok-1';
+              else if (id == 'gemini') _selectedAiModel = 'gemini-1';
+              else _selectedAiModel = 'gpt-4o';
+            });
+          },
+          child: CircleAvatar(
             radius: 24,
             backgroundColor: selected ? Colors.blue.shade100 : Colors.grey.shade200,
             child: ClipOval(
-              child: Image.network(logoUrl, width: 36, height: 36, errorBuilder: (c, e, st) => const Icon(Icons.cloud, size: 28)),
+              child: Image.asset('assets/images/ai/$assetName', width: 36, height: 36, errorBuilder: (c, e, st) => const Icon(Icons.cloud, size: 28)),
             ),
           ),
-          const SizedBox(height: 6),
-          Text(label, style: TextStyle(fontSize: 12, fontWeight: selected ? FontWeight.w700 : FontWeight.normal)),
-        ],
-      ),
+        ),
+        const SizedBox(height: 6),
+        Text(label, style: TextStyle(fontSize: 12, fontWeight: selected ? FontWeight.w700 : FontWeight.normal)),
+        const SizedBox(height: 6),
+        SizedBox(
+          width: 84,
+          child: OutlinedButton(
+            onPressed: () => _showProviderConfigDialog(context, id, label),
+            child: const Text('Configure', style: TextStyle(fontSize: 11)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showProviderConfigDialog(BuildContext context, String providerId, String label) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return FutureBuilder<List<dynamic>>(
+          // fetch api url (shared prefs) and api key (secure storage) concurrently
+          future: Future.wait([Prefs().getPluginConfig('ai', '${providerId}_api_url'), Prefs().getPluginApiKey('ai_${providerId}')]),
+          builder: (context, snapshot) {
+            final existingUrl = snapshot.hasData ? snapshot.data![0] as String? : null;
+            final existingKey = snapshot.hasData ? snapshot.data![1] as String? : null;
+            final urlController = TextEditingController(text: existingUrl ?? '');
+            final keyController = TextEditingController(text: existingKey ?? '');
+            return AlertDialog(
+              title: Text('Configure $label'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: urlController,
+                    decoration: const InputDecoration(labelText: 'API URL (optional)'),
+                    keyboardType: TextInputType.url,
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: keyController,
+                    decoration: const InputDecoration(labelText: 'API Key'),
+                    obscureText: true,
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
+                FilledButton(
+                  onPressed: () async {
+                    final url = urlController.text.trim();
+                    final key = keyController.text.trim();
+                    // save url in plugin config (non-sensitive) and key in secure storage per-provider
+                    if (url.isNotEmpty) await Prefs().setPluginConfig('ai', '${providerId}_api_url', url);
+                    else await Prefs().setPluginConfig('ai', '${providerId}_api_url', null);
+                    if (key.isNotEmpty) await Prefs().setPluginApiKey('ai_${providerId}', key);
+                    else await Prefs().removePluginApiKey('ai_${providerId}');
+                    Navigator.of(context).pop();
+                    setState(() {});
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$label settings saved')));
+                  },
+                  child: Text(L10n.of(context).commonSave),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 
   Future<bool> _checkApiKey(String providerId) async {
     // Basic provider-specific connectivity check. This is intentionally lightweight
     // and does not exhaustively validate all provider API semantics.
-    final key = await Prefs().getPluginApiKey('ai');
+    final key = await Prefs().getPluginApiKey('ai_${providerId}');
     if (key == null || key.isEmpty) return false;
+    final configuredUrl = Prefs().getPluginConfig('ai', '${providerId}_api_url') as String?;
     try {
       if (providerId == 'gpt') {
-        // OpenAI: try listing models
+        // OpenAI: try listing models (allow custom URL if configured)
+        final url = configuredUrl?.isNotEmpty == true ? configuredUrl! : 'https://api.openai.com/v1/models';
         final resp = await http.get(
-          Uri.parse('https://api.openai.com/v1/models'),
+          Uri.parse(url),
           headers: {'Authorization': 'Bearer $key'},
         ).timeout(const Duration(seconds: 6));
         return resp.statusCode == 200;
       } else if (providerId == 'claude') {
-        // Anthropic: try listing models endpoint
+        // Anthropic: try listing models endpoint (allow custom URL)
+        final url = configuredUrl?.isNotEmpty == true ? configuredUrl! : 'https://api.anthropic.com/v1/models';
         final resp = await http.get(
-          Uri.parse('https://api.anthropic.com/v1/models'),
+          Uri.parse(url),
           headers: {'x-api-key': key},
         ).timeout(const Duration(seconds: 6));
         return resp.statusCode == 200;
@@ -483,39 +539,5 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       return false;
     }
   }
-  void _showApiKeyDialog(BuildContext context, String pluginId) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return FutureBuilder<String?>(
-          future: Prefs().getPluginApiKey(pluginId),
-          builder: (context, snapshot) {
-            final controller = TextEditingController(text: snapshot.data ?? '');
-            return AlertDialog(
-              title: Text(L10n.of(context).settingsSetApiKey),
-              content: TextField(
-                controller: controller,
-                obscureText: true,
-                decoration: InputDecoration(hintText: L10n.of(context).commonCancel),
-              ),
-              actions: [
-                TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
-                FilledButton(
-                  onPressed: () async {
-                    final value = controller.text.trim();
-                    if (value.isNotEmpty) {
-                      await Prefs().setPluginApiKey(pluginId, value);
-                    }
-                    Navigator.of(context).pop();
-                    setState(() {});
-                  },
-                  child: Text(L10n.of(context).commonSave),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
+  
 }
