@@ -301,26 +301,94 @@ Future<void> saveCustomThemeName(String name) async {
 }
 
 // Getter and setter for primary color
-Color get primaryColor {
-  int colorValue = prefs.getInt('theme_primary_color') ?? 0xFF2196F3;
-  return Color(colorValue);
-}
+  // Color name mapping helpers ------------------------------------------------
+  final Map<String, Color> _colorNameMap = (() {
+    const swatchNames = [
+      'red', 'pink', 'purple', 'deepPurple', 'indigo', 'blue', 'lightBlue', 'cyan',
+      'teal', 'green', 'lightGreen', 'lime', 'yellow', 'amber', 'orange', 'deepOrange',
+      'brown', 'blueGrey'
+    ];
+    final shades = [50,100,200,300,400,500,600,700,800,900];
+    final map = <String, Color>{};
+    for (var i = 0; i < swatchNames.length && i < Colors.primaries.length; i++) {
+      final name = swatchNames[i];
+      final swatch = Colors.primaries[i];
+      for (final shade in shades) {
+        final col = swatch[shade] ?? swatch as Color;
+        map['${name}$shade'] = col;
+      }
+      map[name] = swatch[500]!;
+    }
+    return map;
+  })();
 
-Future<void> savePrimaryColor(int colorValue) async {
-  await prefs.setInt('theme_primary_color', colorValue);
-  notifyListeners();
-}
+  String _nameFromColor(Color color) {
+    for (final entry in _colorNameMap.entries) {
+      if (entry.value.value == color.value) return entry.key;
+    }
+    // fallback to a stable string for custom colors
+    return 'custom#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}';
+  }
+
+  Color _colorFromName(String? name, {Color? fallback}) {
+    if (name == null) return fallback ?? const Color(0xFF2196F3);
+    if (name.startsWith('custom#')) {
+      final hex = name.substring('custom#'.length);
+      try {
+        return Color(int.parse(hex, radix: 16));
+      } catch (_) {
+        return fallback ?? const Color(0xFF2196F3);
+      }
+    }
+    return _colorNameMap[name] ?? fallback ?? const Color(0xFF2196F3);
+  }
+
+  // Getter and setter for primary color
+  Color get primaryColor {
+    // Support legacy int storage: if a string isn't found but an int exists, migrate it.
+    final stored = prefs.getString('theme_primary_color');
+    if (stored != null) return _colorFromName(stored, fallback: const Color(0xFF2196F3));
+    if (prefs.containsKey('theme_primary_color')) {
+      final intValue = prefs.getInt('theme_primary_color');
+      if (intValue != null) {
+        final col = Color(intValue);
+        // migrate to string name (fire-and-forget)
+        final name = _nameFromColor(col);
+        prefs.setString('theme_primary_color', name);
+        return col;
+      }
+    }
+    return const Color(0xFF2196F3);
+  }
+
+  Future<void> savePrimaryColor(Color color) async {
+    final name = _nameFromColor(color);
+    await prefs.setString('theme_primary_color', name);
+    notifyListeners();
+  }
 
 // Getter and setter for secondary color
-Color get secondaryColor {
-  int colorValue = prefs.getInt('theme_secondary_color') ?? 0xFFFF9800;
-  return Color(colorValue);
-}
+  // Getter and setter for secondary color
+  Color get secondaryColor {
+    final stored = prefs.getString('theme_secondary_color');
+    if (stored != null) return _colorFromName(stored, fallback: const Color(0xFFFF9800));
+    if (prefs.containsKey('theme_secondary_color')) {
+      final intValue = prefs.getInt('theme_secondary_color');
+      if (intValue != null) {
+        final col = Color(intValue);
+        final name = _nameFromColor(col);
+        prefs.setString('theme_secondary_color', name);
+        return col;
+      }
+    }
+    return const Color(0xFFFF9800);
+  }
 
-Future<void> saveSecondaryColor(int colorValue) async {
-  await prefs.setInt('theme_secondary_color', colorValue);
-  notifyListeners();
-}
+  Future<void> saveSecondaryColor(Color color) async {
+    final name = _nameFromColor(color);
+    await prefs.setString('theme_secondary_color', name);
+    notifyListeners();
+  }
 
 // Getter and setter for background color
 Color get backgroundColor {
