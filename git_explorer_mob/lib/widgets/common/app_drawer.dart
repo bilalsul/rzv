@@ -75,14 +75,16 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               Icon(
                 Icons.code,
                 size: 32,
-                color: theme.colorScheme.primary,
+                // color: theme.colorScheme.primary,
+                color: prefs.accentColor,
               ),
               const SizedBox(width: 12),
               Text(
                 L10n.of(context).appName,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary,
+                  // color: theme.colorScheme.primary,
+                  color: prefs.accentColor,
                 ),
               ),
             ],
@@ -281,13 +283,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   Widget _buildPluginToggleItem(PluginDefinition plugin, ThemeData theme) {
     final isEnabled = Prefs().isPluginEnabled(plugin.id);
+    final prefs = ref.watch(prefsProvider);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: isEnabled
-            ? theme.colorScheme.primaryContainer.withOpacity(0.1)
+            // ? theme.colorScheme.primaryContainer.withOpacity(0.1)
+            ? prefs.secondaryColor.withOpacity(0.1)
             : theme.colorScheme.surfaceVariant.withOpacity(0.3),
       ),
       child: ListTile(
@@ -295,7 +299,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           plugin.icon,
           size: 18,
           color: isEnabled
-              ? theme.colorScheme.primary
+              // ? theme.colorScheme.primary
+              ? prefs.accentColor.withOpacity(0.4)
               : theme.colorScheme.onSurface.withOpacity(0.4),
         ),
         title: Text(
@@ -347,7 +352,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             // Trigger a rebuild so changes are visible immediately
             setState(() {});
           },
-          activeColor: theme.colorScheme.primary,
+          activeColor: prefs.secondaryColor,
           inactiveTrackColor: theme.colorScheme.surfaceVariant,
         ),
         onTap: () {
@@ -365,6 +370,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   // =============================================
 
   Widget _buildDrawerFooter(ThemeData theme) {
+    final prefs = ref.watch(prefsProvider);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -383,8 +389,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: _showFeedbackDialog,
-                  icon: const Icon(Icons.feedback_outlined, size: 16),
-                  label: Text(L10n.of(context).drawerFeedback),
+                  icon: Icon(Icons.feedback_outlined, size: 16, color: prefs.accentColor),
+                  label: Text(L10n.of(context).drawerFeedback, style: TextStyle(color: prefs.accentColor),),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
@@ -394,8 +400,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: _showAboutDialog,
-                  icon: const Icon(Icons.info_outlined, size: 16),
-                  label: Text(L10n.of(context).drawerAbout),
+                  icon: Icon(Icons.info_outlined, size: 16, color: prefs.accentColor,),
+                  label: Text(L10n.of(context).drawerAbout, style: TextStyle(color: prefs.accentColor)),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
