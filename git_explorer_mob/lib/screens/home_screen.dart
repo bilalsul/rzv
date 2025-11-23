@@ -389,7 +389,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       floatingActionButton: _openedProject != null
           ? FloatingActionButton.extended(
               heroTag: 'create_file',
-              icon: const Icon(Icons.note_add),
+              icon: Icon(Icons.note_add, color: 
+              prefs.accentColor,
+              ),
+              backgroundColor: prefs.secondaryColor,
               label: Text(L10n.of(context).commonCreate),
               onPressed: _createFileInCurrentFolder,
             )
@@ -402,7 +405,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   onPressed: _createProjectWithDetails,
                   tooltip: L10n.of(context).homeTooltipCreateDetails,
                   backgroundColor: prefs.secondaryColor,
-                  child: const Icon(Icons.add),
+                  child: Icon(Icons.add, 
+                  color: prefs.accentColor
+                  ),
                 ),
                 const SizedBox(height: 8),
                 FloatingActionButton(
@@ -410,7 +415,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   onPressed: _importZipProject,
                   tooltip: L10n.of(context).homeTooltipCreateSampleZip,
                   backgroundColor: prefs.secondaryColor,
-                  child: const Icon(Icons.archive),
+                  child: Icon(Icons.archive, 
+                  color: prefs.accentColor
+                  ),
                 ),
               ],
             ),
@@ -445,6 +452,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _safeProjectCard(_Project p) {
+    final prefs = ref.watch(prefsProvider);
     try {
       return _ProjectCard(
         project: p,
@@ -453,7 +461,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           final confirm = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
             title: Text(L10n.of(context).commonDelete),
             content: const Text('Delete project and all files permanently? This cannot be undone.'),
-            actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).commonCancel)), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).commonDelete))],
+            actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.accentColor))), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).commonDelete, style: TextStyle(color: prefs.accentColor)))],
           ));
           if (confirm != true) return;
 
@@ -554,9 +562,9 @@ class _ProjectCard extends StatelessWidget {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(_shortName(project.name), style: const TextStyle(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 6),
-                Text('${project.fileCount ?? 0} files · ${project.type ?? 'Unknown'}', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+                Text('${project.fileCount ?? 0} files · ${project.type ?? 'Unknown'}', style: const TextStyle(fontSize: 12)),
                 const SizedBox(height: 6),
-                Text(project.lastModified != null ? 'Modified ${project.lastModified!.toLocal().toString().split('.').first}' : L10n.of(context).homeNoModificationInfo, style: const TextStyle(fontSize: 11, color: Colors.black45)),
+                Text(project.lastModified != null ? 'Modified ${project.lastModified!.toLocal().toString().split('.').first}' : L10n.of(context).homeNoModificationInfo, style: const TextStyle(fontSize: 11)),
               ]),
             ),
             PopupMenuButton<String>(
@@ -593,9 +601,9 @@ class _EmptyState extends StatelessWidget {
         Text(L10n.of(context).homeGetStarted, style: TextStyle(color: Colors.black54)),
         const SizedBox(height: 16),
         Row(mainAxisSize: MainAxisSize.min, children: [
-          ElevatedButton.icon(onPressed: onCreate, icon: const Icon(Icons.add), label: Text(L10n.of(context).homeCreateProject)),
+          ElevatedButton.icon(onPressed: onCreate, icon: Icon(Icons.add, color: Prefs().accentColor), label: Text(L10n.of(context).homeCreateProject, style: TextStyle(color: Prefs().accentColor))),
           const SizedBox(width: 8),
-          ElevatedButton.icon(onPressed: onImport, icon: const Icon(Icons.archive), label: Text(L10n.of(context).homeImportProject)),
+          ElevatedButton.icon(onPressed: onImport, icon: Icon(Icons.archive, color: Prefs().accentColor), label: Text(L10n.of(context).homeImportProject, style: TextStyle(color: Prefs().accentColor))),
         ])
       ]),
     );
