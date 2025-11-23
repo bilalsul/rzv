@@ -28,7 +28,7 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: _buildTitle(currentScreen, context),
       actions: _buildActions(currentScreen, context, ref),
       // backgroundColor: _getAppBarColor(currentScreen, context),
-      backgroundColor: prefs.primaryColor,
+      backgroundColor: prefs.secondaryColor,
       elevation: _getAppBarElevation(currentScreen),
     );
   }
@@ -100,19 +100,19 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
     }
   }
 
-  Color? _getAppBarColor(Screen screen, BuildContext context) {
-    final theme = Theme.of(context);
-    switch (screen) {
-      case Screen.editor:
-        return theme.colorScheme.primaryContainer;
-      case Screen.gitHistory:
-        return theme.colorScheme.secondaryContainer;
-      case Screen.settings:
-        return theme.colorScheme.tertiaryContainer;
-      default:
-        return theme.appBarTheme.backgroundColor;
-    }
-  }
+  // Color? _getAppBarColor(Screen screen, BuildContext context) {
+  //   final theme = Theme.of(context);
+  //   switch (screen) {
+  //     case Screen.editor:
+  //       return theme.colorScheme.primaryContainer;
+  //     case Screen.gitHistory:
+  //       return theme.colorScheme.secondaryContainer;
+  //     case Screen.settings:
+  //       return theme.colorScheme.tertiaryContainer;
+  //     default:
+  //       return theme.appBarTheme.backgroundColor;
+  //   }
+  // }
 
   double _getAppBarElevation(Screen screen) {
     switch (screen) {
