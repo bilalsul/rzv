@@ -30,6 +30,7 @@
   "settingsAppearanceLanguage": "Sprache",
   "settingsAppearanceBottomNavigatorShow": "Bottom-Navigator",
   "settingsAppearancePrimaryColor": "Primärfarbe",
+  "settingsAppearanceSecondaryColor": "Sekundärfarbe",
   "settingsAppearanceAccentColor": "Akzentfarbe",
   
   "settingsApplyThemeColors": "Theme-Farben anwenden",
@@ -53,6 +54,23 @@
   "settingsAiMaxTokens": "Maximale Tokens",
   "settingsApiKeySecure": "API-Schlüssel (sicher)",
   "settingsApplyAiSettings": "KI-Einstellungen anwenden",
+  "settingsConfigure": "Konfigurieren",
+  "settingsConfigureProvider": "{provider} konfigurieren",
+  "@settingsConfigureProvider": {
+    "description": "Titel des Dialogs beim Konfigurieren eines Anbieters",
+    "placeholders": { "provider": {} }
+  },
+  "settingsProviderSaved": "{provider}-Einstellungen gespeichert",
+  "@settingsProviderSaved": {
+    "description": "Snackbar-Meldung nach dem Speichern der Anbieterkonfiguration",
+    "placeholders": { "provider": {} }
+  },
+  "settingsResetAiSettings": "KI-Einstellungen zurücksetzen",
+  "settingsResetAiConfirm": "Möchtest du die KI-URLs und API-Schlüssel wirklich dauerhaft löschen?",
+  "settingsAiSettingsReset": "KI-Einstellungen wurden zurückgesetzt",
+  "settingsModelLabel": "Modell",
+  "settingsApiUrlOptional": "API-URL (optional)",
+  "settingsApiKey": "API-Schlüssel",
   "settingsApiKeySet": "Schlüssel gesetzt",
   "settingsApiKeyNotSet": "Kein Schlüssel gesetzt",
   "settingsSetApiKey": "API-Schlüssel setzen",
