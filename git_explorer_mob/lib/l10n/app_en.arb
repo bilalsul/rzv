@@ -30,6 +30,7 @@
   "settingsAppearanceLanguage": "Language",
   "settingsAppearanceBottomNavigatorShow": "Bottom Navigator",
   "settingsAppearancePrimaryColor": "Primary color",
+  "settingsAppearanceSecondaryColor": "Secondary color",
   "settingsAppearanceAccentColor": "Accent color",
   
   "settingsApplyThemeColors": "Apply Theme colors",

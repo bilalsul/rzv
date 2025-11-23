@@ -30,6 +30,7 @@
   "settingsAppearanceLanguage": "اللغة",
   "settingsAppearanceBottomNavigatorShow": "المستكشف السفلي",
   "settingsAppearancePrimaryColor": "اللون الأساسي",
+  "settingsAppearanceSecondaryColor": "اللون الثانوي",
   "settingsAppearanceAccentColor": "لون التمييز",
   
   "settingsApplyThemeColors": "تطبيق ألوان السمة",
