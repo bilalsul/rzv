@@ -21,6 +21,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // Temporary theme customizer state (apply button will persist)
   late Color _tempPrimaryColor;
   late Color _tempSecondaryColor;
+  late Color _tempAccentColor;
   // other temporary theme values (removed UI for now)
   // AI temporary state before apply
   int _selectedAiMaxTokens = 512;
@@ -135,7 +136,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 spacing: 8,
                 runSpacing: 8,
                 children: Colors.primaries.take(18).map((c) {
-                  final col = c.shade600;
+                  // final col = c.shade700;
+                  final col = c;
                   final selected = _tempPrimaryColor == col;
                   return GestureDetector(
                     onTap: () => setState(() { _tempPrimaryColor = col; }),
@@ -151,15 +153,37 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 }).toList(),
               ),
               const SizedBox(height: 8),
-              Text(L10n.of(context).settingsAppearanceAccentColor),
+              Text(L10n.of(context).settingsAppearanceSecondaryColor),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 children: Colors.primaries.reversed.take(18).map((c) {
-                  final col = c.shade400;
+                  // final col = c.shade400;
+                  final col = c;
                   final selected = _tempSecondaryColor == col;
                   return GestureDetector(
                     onTap: () => setState(() { _tempSecondaryColor = col; }),
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+                      ),
+                      child: CircleAvatar(backgroundColor: col, radius: 16),
+                    ),
+                  );
+                }).toList(),
+              ),
+              Text(L10n.of(context).settingsAppearanceAccentColor),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: Colors.accents.reversed.take(18).map((c) {
+                  // final col = c.shade400;
+                  final col = c;
+                  final selected = _tempAccentColor == col;
+                  return GestureDetector(
+                    onTap: () => setState(() { _tempAccentColor = col; }),
                     child: Container(
                       padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
@@ -177,6 +201,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   onPressed: () async {
                     await Prefs().savePrimaryColor(_tempPrimaryColor);
                     await Prefs().saveSecondaryColor(_tempSecondaryColor);
+                    await Prefs().saveAccentColor(_tempAccentColor);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsThemeApplied)));
                   },
                   child: Text(L10n.of(context).settingsApplyThemeColors),
@@ -188,6 +213,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     final p = Prefs();
                     _tempPrimaryColor = p.primaryColor;
                     _tempSecondaryColor = p.secondaryColor;
+                    _tempAccentColor = p.accentColor;
                   }),
                   child: Text(L10n.of(context).settingsRevertThemeColors),
                 ),
@@ -462,6 +488,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final p = Prefs();
     _tempPrimaryColor = p.primaryColor;
     _tempSecondaryColor = p.secondaryColor;
+    _tempAccentColor = p.accentColor;
+
     // AI defaults
     _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
   }
