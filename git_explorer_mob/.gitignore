@@ -46,3 +46,6 @@ lib/l10n/generated/*.dart
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# instructions
+,github/copilot-instructions.md

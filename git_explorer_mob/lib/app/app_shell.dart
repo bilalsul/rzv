@@ -267,47 +267,48 @@ Widget _buildBottomNavigationBar(List<String> plugins) {
   }
 
   List<NavItem> getVisibleNavItems(List<String> enabledPlugins) {
+    final prefs = ref.watch(prefsProvider);
     final allNavItems = [
       NavItem(
         screen: Screen.home,
         label: L10n.of(context).navBarHome,
-        icon: const Icon(Icons.folder_shared),
-        activeIcon: const Icon(Icons.folder_shared_outlined),
+        icon: const Icon(Icons.folder_shared_outlined),
+        activeIcon: Icon(Icons.folder_shared, color: prefs.accentColor),
         pluginKey: null,  // Always visible (but body may disable content)
       ),
       NavItem(
         screen: Screen.editor,
         label: L10n.of(context).navBarEditor,
-        icon: const Icon(Icons.edit),
-        activeIcon: const Icon(Icons.edit_outlined),
+        icon: const Icon(Icons.edit_outlined),
+        activeIcon: Icon(Icons.edit, color:  prefs.accentColor),
         pluginKey: null,
       ),
       NavItem(
         screen: Screen.AI,
         label: L10n.of(context).navBarAI,
-        icon: const Icon(Icons.chat_rounded),
-        activeIcon: const Icon(Icons.chat_outlined),
+        icon: const Icon(Icons.chat_outlined),
+        activeIcon: Icon(Icons.chat_rounded, color: prefs.accentColor),
         pluginKey: 'ai_assist',
       ),
       NavItem(
         screen: Screen.gitHistory,
         label: L10n.of(context).navBarGitHistory,
-        icon: const Icon(Icons.history),
-        activeIcon: const Icon(Icons.history_outlined),
+        icon: const Icon(Icons.history_outlined),
+        activeIcon: Icon(Icons.history, color: prefs.accentColor),
         pluginKey: 'git_history',
       ),
       NavItem(
         screen: Screen.terminal,
         label: L10n.of(context).navBarTerminal,
-        icon: const Icon(Icons.terminal),
-        activeIcon: const Icon(Icons.terminal_outlined),
+        icon: const Icon(Icons.terminal_outlined),
+        activeIcon: Icon(Icons.terminal, color: prefs.accentColor),
         pluginKey: 'terminal',
       ),
       NavItem(
         screen: Screen.settings,
         label: L10n.of(context).navBarSettings,
-        icon: const Icon(Icons.settings),
-        activeIcon: const Icon(Icons.settings_outlined),
+        icon: const Icon(Icons.settings_outlined),
+        activeIcon: Icon(Icons.settings, color: prefs.accentColor),
         pluginKey: null,
       ),
     ];

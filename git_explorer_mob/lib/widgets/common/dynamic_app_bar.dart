@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 
 class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -18,6 +19,7 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final prefs = ref.watch(prefsProvider);
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.menu),
@@ -25,7 +27,8 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
       ),
       title: _buildTitle(currentScreen, context),
       actions: _buildActions(currentScreen, context, ref),
-      backgroundColor: _getAppBarColor(currentScreen, context),
+      // backgroundColor: _getAppBarColor(currentScreen, context),
+      backgroundColor: prefs.secondaryColor,
       elevation: _getAppBarElevation(currentScreen),
     );
   }
@@ -97,19 +100,19 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
     }
   }
 
-  Color? _getAppBarColor(Screen screen, BuildContext context) {
-    final theme = Theme.of(context);
-    switch (screen) {
-      case Screen.editor:
-        return theme.colorScheme.primaryContainer;
-      case Screen.gitHistory:
-        return theme.colorScheme.secondaryContainer;
-      case Screen.settings:
-        return theme.colorScheme.tertiaryContainer;
-      default:
-        return theme.appBarTheme.backgroundColor;
-    }
-  }
+  // Color? _getAppBarColor(Screen screen, BuildContext context) {
+  //   final theme = Theme.of(context);
+  //   switch (screen) {
+  //     case Screen.editor:
+  //       return theme.colorScheme.primaryContainer;
+  //     case Screen.gitHistory:
+  //       return theme.colorScheme.secondaryContainer;
+  //     case Screen.settings:
+  //       return theme.colorScheme.tertiaryContainer;
+  //     default:
+  //       return theme.appBarTheme.backgroundColor;
+  //   }
+  // }
 
   double _getAppBarElevation(Screen screen) {
     switch (screen) {

@@ -19,17 +19,18 @@ class SettingsScreen extends ConsumerStatefulWidget {
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // Temporary theme customizer state (apply button will persist)
-  late Color _tempPrimaryColor;
+  // late Color _tempPrimaryColor;
   late Color _tempSecondaryColor;
-  late double _tempBorderRadius;
-  late double _tempElevation;
-  late double _tempAppFontSize;
-  late String _tempButtonStyle;
-
+  late Color _tempAccentColor;
+  // other temporary theme values (removed UI for now)
   // AI temporary state before apply
-  String _selectedAiProvider = 'gpt';
-  String _selectedAiModel = 'gpt-4o';
   int _selectedAiMaxTokens = 512;
+  // Temporary storage for provider configurations before Apply
+  final Map<String, String> _tempApiUrls = {}; // key: '<provider>_<model>' -> url
+  final Map<String, String> _tempApiKeys = {}; // key: 'ai_<provider>_<model>' -> apiKey (empty = remove)
+  final Map<String, String> _tempLastModel = {}; // provider -> model
+  String? _tempActiveProvider;
+  String? _tempActiveModel;
   @override
   Widget build(BuildContext context) {
     // single source: watch Prefs
@@ -80,6 +81,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   RadioListTile<ThemeMode>(
                 title: Text(L10n.of(context).settingsSystemMode),
                 value: ThemeMode.system,
+                activeColor: prefs.accentColor,
                 groupValue: currentTheme,
                 onChanged: (v) async {
                       await Prefs().saveThemeMode('system');
@@ -88,12 +90,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               RadioListTile<ThemeMode>(
                 title: Text(L10n.of(context).settingsLightMode),
                 value: ThemeMode.light,
+                activeColor: prefs.accentColor,
                 groupValue: currentTheme,
                 onChanged: (v) async { await Prefs().saveThemeMode('light'); },
               ),
               RadioListTile<ThemeMode>(
                 title: Text(L10n.of(context).settingsDarkMode),
                 value: ThemeMode.dark,
+                activeColor: prefs.accentColor,
                 groupValue: currentTheme,
                 onChanged: (v) async { await Prefs().saveThemeMode('dark'); },
               ),
@@ -128,35 +132,38 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             title: L10n.of(context).settingsAppearanceTheme,
             visible: themeCustomizerEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(L10n.of(context).settingsAppearancePrimaryColor),
+              // Text(L10n.of(context).settingsAppearancePrimaryColor),
+              // const SizedBox(height: 8),
+              // // clickable color circle palette
+              // Wrap(
+              //   spacing: 8,
+              //   runSpacing: 8,
+              //   children: Colors.primaries.take(18).map((c) {
+              //     // final col = c.shade700;
+              //     final col = c;
+              //     final selected = _tempPrimaryColor == col;
+              //     return GestureDetector(
+              //       onTap: () => setState(() { _tempPrimaryColor = col; }),
+              //       child: Container(
+              //         padding: const EdgeInsets.all(4),
+              //         decoration: BoxDecoration(
+              //           shape: BoxShape.circle,
+              //           border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+              //         ),
+              //         child: CircleAvatar(backgroundColor: col, radius: 18),
+              //       ),
+              //     );
+              //   }).toList(),
+              // ),
+              const SizedBox(height: 10),
+              Text(L10n.of(context).settingsAppearanceSecondaryColor),
               const SizedBox(height: 8),
-              // clickable color circle palette
               Wrap(
                 spacing: 8,
-                runSpacing: 8,
+                runSpacing: 4,
                 children: Colors.primaries.take(18).map((c) {
-                  final col = c.shade600;
-                  final selected = _tempPrimaryColor == col;
-                  return GestureDetector(
-                    onTap: () => setState(() { _tempPrimaryColor = col; }),
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
-                      ),
-                      child: CircleAvatar(backgroundColor: col, radius: 18),
-                    ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 8),
-              Text(L10n.of(context).settingsAppearanceAccentColor),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                children: Colors.primaries.reversed.take(8).map((c) {
-                  final col = c.shade400;
+                  // final col = c.shade400;
+                  final col = c;
                   final selected = _tempSecondaryColor == col;
                   return GestureDetector(
                     onTap: () => setState(() { _tempSecondaryColor = col; }),
@@ -171,66 +178,97 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   );
                 }).toList(),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
+              Text(L10n.of(context).settingsAppearanceAccentColor),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: Colors.accents.take(16).map((c) {
+                  // final col = c.shade400;
+                  final col = c;
+                  final selected = _tempAccentColor == col;
+                  return GestureDetector(
+                    onTap: () => setState(() { _tempAccentColor = col; }),
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: selected ? Border.all(color:prefs.accentColor, width: 2) : null,
+                      ),
+                      child: CircleAvatar(backgroundColor: col, radius: 14),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 15),
               Row(children: [
                 ElevatedButton(
                   onPressed: () async {
-                    await Prefs().savePrimaryColor(_tempPrimaryColor.value);
-                    await Prefs().saveSecondaryColor(_tempSecondaryColor.value);
+                    // await Prefs().savePrimaryColor(_tempPrimaryColor);
+                    await Prefs().saveSecondaryColor(_tempSecondaryColor);
+                    await Prefs().saveAccentColor(_tempAccentColor);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsThemeApplied)));
                   },
-                  child: Text(L10n.of(context).settingsApplyThemeColors),
+                  child: Text(L10n.of(context).settingsApplyThemeColors, style: TextStyle(color: prefs.accentColor)),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: () => setState(() {
                     // revert temps from prefs
                     final p = Prefs();
-                    _tempPrimaryColor = p.primaryColor;
+                    // _tempPrimaryColor = p.primaryColor;
                     _tempSecondaryColor = p.secondaryColor;
+                    _tempAccentColor = p.accentColor;
                   }),
-                  child: Text(L10n.of(context).settingsRevertThemeColors),
+                  child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
+                ),
+                ElevatedButton(
+                  onPressed: () => setState(() {
+                    // reset theme customizer colors from prefs
+                    Prefs().resetThemeCustomizerColors();
+                  }),
+                  child: Text(L10n.of(context).commonReset, style: TextStyle(color: prefs.accentColor)),
                 ),
               ]),
               const SizedBox(height: 12),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsBorderRadius)),
-                Expanded(
-                  child: Slider(
-                    value: _tempBorderRadius,
-                    min: 0,
-                    max: 32,
-                    divisions: 16,
-                    label: _tempBorderRadius.toStringAsFixed(0),
-                    onChanged: (v) => setState(() { _tempBorderRadius = v; }),
-                  ),
-                ),
-              ]),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsElevation)),
-                Expanded(
-                  child: Slider(value: _tempElevation, min: 0, max: 12, divisions: 12, label: _tempElevation.toStringAsFixed(0), onChanged: (v) => setState(() { _tempElevation = v; })),
-                ),
-              ]),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsAppFontSize)),
-                Expanded(child: Slider(value: _tempAppFontSize, min: 10, max: 22, divisions: 12, label: _tempAppFontSize.toStringAsFixed(0), onChanged: (v) => setState(() { _tempAppFontSize = v; }))),
-              ]),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsButtonStyle)),
-                DropdownButton<String>(
-                  value: _tempButtonStyle,
-                  items: ['elevated', 'outlined', 'text'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
-                  onChanged: (v) => setState(() { if (v != null) _tempButtonStyle = v; }),
-                ),
-              ]),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsReduceAnimations)),
-                Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); }),
-              ]),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsBorderRadius)),
+              //   Expanded(
+              //     child: Slider(
+              //       value: _tempBorderRadius,
+              //       min: 0,
+              //       max: 32,
+              //       divisions: 16,
+              //       label: _tempBorderRadius.toStringAsFixed(0),
+              //       onChanged: (v) => setState(() { _tempBorderRadius = v; }),
+              //     ),
+              //   ),
+              // ]),
+              // const SizedBox(height: 8),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsElevation)),
+              //   Expanded(
+              //     child: Slider(value: _tempElevation, min: 0, max: 12, divisions: 12, label: _tempElevation.toStringAsFixed(0), onChanged: (v) => setState(() { _tempElevation = v; })),
+              //   ),
+              // ]),
+              // const SizedBox(height: 8),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsAppFontSize)),
+              //   Expanded(child: Slider(value: _tempAppFontSize, min: 10, max: 22, divisions: 12, label: _tempAppFontSize.toStringAsFixed(0), onChanged: (v) => setState(() { _tempAppFontSize = v; }))),
+              // ]),
+              // const SizedBox(height: 8),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsButtonStyle)),
+              //   DropdownButton<String>(
+              //     value: _tempButtonStyle,
+              //     items: ['elevated', 'outlined', 'text'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+              //     onChanged: (v) => setState(() { if (v != null) _tempButtonStyle = v; }),
+              //   ),
+              // ]),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsReduceAnimations)),
+              //   Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); }),
+              // ]),
             ]),
           ),
 
@@ -241,6 +279,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(L10n.of(context).settingsEditorTabSize),
               Slider(
+                activeColor: prefs.accentColor,
                 value: (editorCfg['tabSize'] ?? 2).toDouble(),
                 min: 2,
                 max: 8,
@@ -267,7 +306,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsGitAutoFetch)),
-                Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v)),
+                Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v), activeColor: prefs.secondaryColor),
               ]),
               const SizedBox(height: 8),
               Text(L10n.of(context).settingsGitDefaultBranch),
@@ -287,53 +326,105 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(L10n.of(context).settingsAiModelProvider),
               const SizedBox(height: 8),
-              Wrap(spacing: 8, children: [
-                _providerTile('gpt', label: 'OpenAI', logoUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openai/openai-original.svg'),
-                _providerTile('claude', label: 'Anthropic', logoUrl: 'https://raw.githubusercontent.com/anthropic/images/main/anthropic-logo.png'),
-                _providerTile('grok', label: 'Grok', logoUrl: 'https://example.com/grok-logo.png'),
-                _providerTile('gemini', label: 'Gemini', logoUrl: 'https://example.com/gemini-logo.png'),
+              Wrap(spacing: 8, runSpacing: 4, children: [
+                _providerTile(context, 'gpt', label: 'OpenAI', assetName: 'openai.png'),
+                _providerTile(context, 'claude', label: 'Anthropic', assetName: 'claude.png'),
+                _providerTile(context, 'grok', label: 'Grok', assetName: 'deepseek.png'),
+                _providerTile(context, 'gemini', label: 'Gemini', assetName: 'gemini.png'),
+                // _providerTile(context, 'commonai', label: 'Common', assetName: 'commonAi.png'),
+                _providerTile(context, 'openrouter', label: 'OpenRouter', assetName: 'openrouter.png'),
+                _providerTile(context, 'xiaohongshu', label: 'Xiaohongshu', assetName: 'xiaohongshu.png'),
               ]),
               const SizedBox(height: 12),
               Text(L10n.of(context).settingsAiMaxTokens),
               Slider(
+                activeColor: prefs.accentColor,
                 value: _selectedAiMaxTokens.toDouble(),
                 min: 64,
-                max: 2048,
+                max: 9999,
                 divisions: 32,
                 label: '$_selectedAiMaxTokens',
                 onChanged: (v) => setState(() { _selectedAiMaxTokens = v.toInt(); }),
               ),
 
               const SizedBox(height: 12),
-              // API key storage (secure)
-              ListTile(
-                title: Text(L10n.of(context).settingsApiKeySecure),
-                subtitle: Text(prefs.hasPluginApiKey('ai') ? L10n.of(context).settingsApiKeySet : L10n.of(context).settingsApiKeyNotSet),
-                trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => _showApiKeyDialog(context, 'ai'),
-                  ),
-                  if (prefs.hasPluginApiKey('ai')) IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () async { await Prefs().removePluginApiKey('ai'); setState(() {}); },
-                  ),
-                ]),
-              ),
+              // Per-provider configuration: Configure API URL and secure API key per provider using the "Configure" button on each provider tile.
 
               const SizedBox(height: 8),
               Row(children: [
                 ElevatedButton(
                   onPressed: () async {
-                    // Persist provider/model/maxTokens
-                    await prefs.setPluginConfig('ai', 'provider', _selectedAiProvider);
-                    await prefs.setPluginConfig('ai', 'model', _selectedAiModel);
+                    // Persist any temporary API URLs
+                    for (final entry in _tempApiUrls.entries) {
+                      final full = entry.key; // '<provider>_<model>'
+                      final idx = full.indexOf('_');
+                      if (idx <= 0) continue;
+                      final provider = full.substring(0, idx);
+                      final model = full.substring(idx + 1);
+                      final urlConfigKey = '${provider}_${model}_api_url';
+                      await prefs.setPluginConfig('ai', urlConfigKey, entry.value);
+                      await prefs.setPluginConfig('ai', '${provider}_last_model', model);
+                    }
+                    // Persist any temporary API keys (secure)
+                    for (final entry in _tempApiKeys.entries) {
+                      final pluginId = entry.key; // 'ai_<provider>_<model>'
+                      final key = entry.value;
+                      if (key.isNotEmpty) {
+                        await prefs.setPluginApiKey(pluginId, key);
+                      } else {
+                        await prefs.removePluginApiKey(pluginId);
+                      }
+                    }
+                    // Persist active provider/model if the user configured one
+                    if (_tempActiveProvider != null) {
+                      await prefs.setPluginConfig('ai', 'provider', _tempActiveProvider);
+                      if (_tempActiveModel != null) await prefs.setPluginConfig('ai', 'model', _tempActiveModel);
+                    }
+                    // Persist max tokens
                     await prefs.setPluginConfig('ai', 'maxTokens', _selectedAiMaxTokens);
                     setState(() {});
-                    final ok = await _checkApiKey(_selectedAiProvider);
+                    final activeProvider = (prefs.getPluginConfig('ai', 'provider') as String?) ?? _tempActiveProvider ?? '';
+                    final ok = activeProvider != '' ? await _checkApiKey(activeProvider) : false;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? L10n.of(context).connectionSuccessful : L10n.of(context).connectionFailed)));
                   },
-                  child: Text(L10n.of(context).settingsApplyAiSettings),
+                  child: Text(L10n.of(context).settingsApplyAiSettings, style: TextStyle(color: prefs.accentColor)),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton(
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(L10n.of(context).settingsResetAiSettings),
+                        content: Text(L10n.of(context).settingsResetAiConfirm),
+                        actions: [
+                          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.secondaryColor))),
+                          FilledButton(onPressed: () => Navigator.of(context).pop(true),
+                          style: ButtonStyle(backgroundColor: WidgetStateProperty.all(prefs.secondaryColor)),
+                          child: Text(L10n.of(context).commonDelete),
+                           ),
+                        ],
+                      ),
+                    );
+                    if (confirm != true) return;
+                    // Delete AI-related SharedPreferences keys and secure API keys
+                    final sp = prefs.prefs;
+                    // collect secure key flags first (plugin_<pluginId>_has_api_key)
+                    final hasFlags = sp.getKeys().where((k) => k.startsWith('plugin_') && k.contains('plugin_ai_') && k.endsWith('_has_api_key')).toList();
+                    for (final flag in hasFlags) {
+                      final pluginId = flag.substring('plugin_'.length, flag.length - '_has_api_key'.length);
+                      // this will remove secure storage key and the 'has' flag, and notify
+                      await prefs.removePluginApiKey(pluginId);
+                    }
+                    // remove any remaining plugin_ai_ keys via setPluginConfig so Prefs notifies
+                    final aiKeys = sp.getKeys().where((k) => k.startsWith('plugin_ai_')).toList();
+                    for (final k in aiKeys) {
+                      final configKey = k.substring('plugin_ai_'.length);
+                      await prefs.setPluginConfig('ai', configKey, null);
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsAiSettingsReset)));
+                  },
+                  child: Text(L10n.of(context).settingsResetAiSettings, style: TextStyle(color: prefs.accentColor)),
                 ),
               ]),
             ]),
@@ -354,11 +445,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsTerminalFontSize)),
-                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt())),
+                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt()),
+                activeColor: prefs.accentColor,
+                ),
               ]),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsTerminalAudibleBell)),
-                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v)),
+                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v), activeColor: prefs.secondaryColor),
               ]),
             ]),
           ),
@@ -370,12 +463,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsFileExplorerShowHidden)),
-                Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'showHidden', v)),
+                Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'showHidden', v), activeColor: prefs.secondaryColor),
               ]),
               const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsFileExplorerPreviewMarkdown)),
-                Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v)),
+                Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v), activeColor: prefs.secondaryColor),
               ]),
             ]),
           ),
@@ -399,9 +492,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               await prefs.setPluginConfig('file_explorer', 'previewMarkdown', null);
               await prefs.setPluginConfig('ai', 'model', null);
               await prefs.setPluginConfig('ai', 'maxTokens', null);
+              prefs.resetThemeCustomizerColors();
             },
-            icon: const Icon(Icons.restore),
-            label: Text(L10n.of(context).settingsResetPluginDefaults),
+            icon: Icon(Icons.restore, color: prefs.accentColor),
+            label: Text(L10n.of(context).settingsResetPluginDefaults, style: TextStyle(color: prefs.accentColor)),
           ),
         ]),
       ),
@@ -412,66 +506,161 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     super.initState();
     // Read current persisted values from Prefs singleton into temporary state
     final p = Prefs();
-    _tempPrimaryColor = p.primaryColor;
+    // _tempPrimaryColor = p.primaryColor;
     _tempSecondaryColor = p.secondaryColor;
-    _tempBorderRadius = p.borderRadius;
-    _tempElevation = p.elevationLevel;
-    _tempAppFontSize = p.appFontSize;
-    _tempButtonStyle = p.buttonStyle;
+    _tempAccentColor = p.accentColor;
 
     // AI defaults
-    _selectedAiProvider = p.getPluginConfig('ai', 'provider') ?? 'gpt';
-    _selectedAiModel = p.getPluginConfig('ai', 'model') ?? 'gpt-4o';
     _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
   }
 
-  Widget _providerTile(String id, {required String label, required String logoUrl}) {
-    final selected = _selectedAiProvider == id;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedAiProvider = id;
-          // set a reasonable default model per provider
-          if (id == 'gpt') _selectedAiModel = 'gpt-4o';
-          else if (id == 'claude') _selectedAiModel = 'claude-2';
-          else if (id == 'grok') _selectedAiModel = 'grok-1';
-          else if (id == 'gemini') _selectedAiModel = 'gemini-1';
+  Widget _providerTile(BuildContext context, String id, {required String label, required String assetName}) {
+    final prefs =  ref.watch(prefsProvider);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CircleAvatar(
+          radius: 24,
+          backgroundColor: Colors.white,
+          child: ClipOval(
+            child: Image.asset('assets/images/ai/$assetName', width: 36, height: 36, errorBuilder: (c, e, st) => const Icon(Icons.cloud, size: 28)),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(label, style: const TextStyle(fontSize: 12)),
+        const SizedBox(height: 6),
+        SizedBox(
+          width: 90,
+          height: 20,
+          child: OutlinedButton(
+            onPressed: () => _showProviderConfigDialog(context, id, label),
+            child: Text(L10n.of(context).settingsConfigure, style: TextStyle(fontSize: 9, color: prefs.secondaryColor)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showProviderConfigDialog(BuildContext context, String providerId, String label) {
+    final prefs = ref.watch(prefsProvider);
+    // Simple synchronous dialog: initialize fields synchronously from Prefs (no futures)
+    // Models per provider
+    final Map<String, List<String>> providerModels = {
+      'gpt': ['gpt-4o', 'gpt-4o-mini', 'gpt-4', 'gpt-3.5-turbo'],
+      'claude': ['claude-2', 'claude-instant'],
+      'grok': ['grok-1'],
+      'gemini': ['gemini-1'],
+      // 'commonai': ['common-v1'],
+      'openrouter': ['openrouter-default'],
+      'xiaohongshu': ['xiaohongshu-v1'],
+    };
+    final models = providerModels[providerId] ?? ['default'];
+    final lastModel = Prefs().getPluginConfig('ai', '${providerId}_last_model') as String?;
+    String selectedModel = lastModel ?? (Prefs().getPluginConfig('ai', 'model') as String?) ?? models.first;
+    // Load any previously entered temp values or persisted ones synchronously
+    final tempUrlKey = '${providerId}_$selectedModel';
+    final initialUrl = _tempApiUrls[tempUrlKey] ?? (Prefs().getPluginConfig('ai', '${providerId}_${selectedModel}_api_url') as String?) ?? '';
+    final hasExistingKey = Prefs().hasPluginApiKey('ai_${providerId}_$selectedModel');
+    final urlController = TextEditingController(text: initialUrl);
+    final keyController = TextEditingController(text: _tempApiKeys['ai_${providerId}_$selectedModel'] ?? '');
+
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setStateDialog) {
+          return AlertDialog(
+            title: Text(L10n.of(context).settingsConfigureProvider(label)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField<String>(
+                  value: selectedModel,
+                  items: models.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
+                  onChanged: (v) {
+                    if (v == null) return;
+                    setStateDialog(() {
+                      selectedModel = v;
+                      // update url/key controllers for new model
+                      final key = '${providerId}_$selectedModel';
+                      urlController.text = _tempApiUrls[key] ?? (Prefs().getPluginConfig('ai', '${providerId}_${selectedModel}_api_url') as String?) ?? '';
+                      keyController.text = _tempApiKeys['ai_${providerId}_$selectedModel'] ?? '';
+                    });
+                  },
+                  decoration: InputDecoration(labelText: L10n.of(context).settingsModelLabel),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: urlController,
+                  decoration: InputDecoration(labelText: L10n.of(context).settingsApiUrlOptional),
+                  keyboardType: TextInputType.url,
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: keyController,
+                  decoration: InputDecoration(labelText: L10n.of(context).settingsApiKey),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(hasExistingKey ? L10n.of(context).settingsApiKeySet : L10n.of(context).settingsApiKeyNotSet, style: Theme.of(context).textTheme.bodySmall),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.secondaryColor))),
+              FilledButton(
+                style: ButtonStyle(backgroundColor: WidgetStateProperty.all(prefs.secondaryColor)),
+                onPressed: () async {
+                  final url = urlController.text.trim();
+                  final key = keyController.text.trim();
+                  // store temporarily; Apply will persist
+                  final urlKey = '${providerId}_$selectedModel';
+                  if (url.isNotEmpty) _tempApiUrls[urlKey] = url;
+                  else _tempApiUrls.remove(urlKey);
+                  final securePluginId = 'ai_${providerId}_$selectedModel';
+                  if (key.isNotEmpty) _tempApiKeys[securePluginId] = key;
+                  else _tempApiKeys[securePluginId] = '';
+                  _tempLastModel[providerId] = selectedModel;
+                  _tempActiveProvider = providerId;
+                  _tempActiveModel = selectedModel;
+                  Navigator.of(context).pop();
+                  setState(() {});
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsProviderSaved(label))));
+                },
+                child: Text(L10n.of(context).commonSave),
+              ),
+            ],
+          );
         });
       },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: selected ? Colors.blue.shade100 : Colors.grey.shade200,
-            child: ClipOval(
-              child: Image.network(logoUrl, width: 36, height: 36, errorBuilder: (c, e, st) => const Icon(Icons.cloud, size: 28)),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(label, style: TextStyle(fontSize: 12, fontWeight: selected ? FontWeight.w700 : FontWeight.normal)),
-        ],
-      ),
     );
   }
 
   Future<bool> _checkApiKey(String providerId) async {
     // Basic provider-specific connectivity check. This is intentionally lightweight
     // and does not exhaustively validate all provider API semantics.
-    final key = await Prefs().getPluginApiKey('ai');
+    // prefer the active model (persisted) for per-model keys and URLs
+    final model = (Prefs().getPluginConfig('ai', 'model') as String?) ?? (Prefs().getPluginConfig('ai', '${providerId}_last_model') as String?);
+    final pluginId = model != null ? 'ai_${providerId}_$model' : 'ai_${providerId}';
+    final key = await Prefs().getPluginApiKey(pluginId);
     if (key == null || key.isEmpty) return false;
+    final modelUrl = model != null ? (Prefs().getPluginConfig('ai', '${providerId}_' + model + '_api_url') as String?) : null;
+    final effectiveUrl = modelUrl ?? (Prefs().getPluginConfig('ai', '${providerId}_api_url') as String?);
     try {
       if (providerId == 'gpt') {
-        // OpenAI: try listing models
+        // OpenAI: try listing models (allow custom URL if configured)
+        final url = (effectiveUrl?.isNotEmpty == true ? effectiveUrl! : 'https://api.openai.com/v1/models');
         final resp = await http.get(
-          Uri.parse('https://api.openai.com/v1/models'),
+          Uri.parse(url),
           headers: {'Authorization': 'Bearer $key'},
         ).timeout(const Duration(seconds: 6));
         return resp.statusCode == 200;
       } else if (providerId == 'claude') {
-        // Anthropic: try listing models endpoint
+        // Anthropic: try listing models endpoint (allow custom URL)
+        final url = (effectiveUrl?.isNotEmpty == true ? effectiveUrl! : 'https://api.anthropic.com/v1/models');
         final resp = await http.get(
-          Uri.parse('https://api.anthropic.com/v1/models'),
+          Uri.parse(url),
           headers: {'x-api-key': key},
         ).timeout(const Duration(seconds: 6));
         return resp.statusCode == 200;
@@ -483,39 +672,5 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       return false;
     }
   }
-  void _showApiKeyDialog(BuildContext context, String pluginId) {
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return FutureBuilder<String?>(
-          future: Prefs().getPluginApiKey(pluginId),
-          builder: (context, snapshot) {
-            final controller = TextEditingController(text: snapshot.data ?? '');
-            return AlertDialog(
-              title: Text(L10n.of(context).settingsSetApiKey),
-              content: TextField(
-                controller: controller,
-                obscureText: true,
-                decoration: InputDecoration(hintText: L10n.of(context).commonCancel),
-              ),
-              actions: [
-                TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
-                FilledButton(
-                  onPressed: () async {
-                    final value = controller.text.trim();
-                    if (value.isNotEmpty) {
-                      await Prefs().setPluginApiKey(pluginId, value);
-                    }
-                    Navigator.of(context).pop();
-                    setState(() {});
-                  },
-                  child: Text(L10n.of(context).commonSave),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
+  
 }
