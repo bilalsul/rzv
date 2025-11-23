@@ -393,7 +393,7 @@ Future<void> saveCustomThemeName(String name) async {
 // Accent color
   Color get accentColor {
     final stored = prefs.getString('theme_accent_color');
-    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black);
+    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white);
     if (prefs.containsKey('theme_accent_color')) {
       final intValue = prefs.getInt('theme_accent_color');
       if (intValue != null) {
@@ -403,7 +403,7 @@ Future<void> saveCustomThemeName(String name) async {
         return col;
       }
     }
-    return Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black;
+    return Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white;
   }
 
   Future<void> saveAccentColor(Color color) async {
