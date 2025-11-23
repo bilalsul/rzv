@@ -290,6 +290,13 @@ Future<void> saveThemeMode(String themeMode) async {
   notifyListeners();
 }
 
+void resetThemeCustomizerColors() {
+    // prefs.remove('theme_primary_color');
+    prefs.remove('theme_secoondary_color');
+    prefs.remove('theme_accent_color');
+    notifyListeners();
+  }
+
 // Getter and setter for custom theme name
 String get customThemeName {
   return prefs.getString('theme_custom_name') ?? 'default_custom';
@@ -344,34 +351,34 @@ Future<void> saveCustomThemeName(String name) async {
   }
 
   // Getter and setter for primary color
-  Color get primaryColor {
-    // Support legacy int storage: if a string isn't found but an int exists, migrate it.
-    final stored = prefs.getString('theme_primary_color');
-    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white);
-    if (prefs.containsKey('theme_primary_color')) {
-      final intValue = prefs.getInt('theme_primary_color');
-      if (intValue != null) {
-        final col = Color(intValue);
-        // migrate to string name (fire-and-forget)
-        final name = _nameFromColor(col);
-        prefs.setString('theme_primary_color', name);
-        return col;
-      }
-    }
-    return Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white;
-  }
+  // Color get primaryColor {
+  //   // Support legacy int storage: if a string isn't found but an int exists, migrate it.
+  //   final stored = prefs.getString('theme_primary_color');
+  //   if (stored != null) return _colorFromName(stored, fallback: Colors.purple);
+  //   if (prefs.containsKey('theme_primary_color')) {
+  //     final intValue = prefs.getInt('theme_primary_color');
+  //     if (intValue != null) {
+  //       final col = Color(intValue);
+  //       // migrate to string name (fire-and-forget)
+  //       final name = _nameFromColor(col);
+  //       prefs.setString('theme_primary_color', name);
+  //       return col;
+  //     }
+  //   }
+  //   return Colors.purple;
+  // }
 
-  Future<void> savePrimaryColor(Color color) async {
-    final name = _nameFromColor(color);
-    await prefs.setString('theme_primary_color', name);
-    notifyListeners();
-  }
+  // Future<void> savePrimaryColor(Color color) async {
+  //   final name = _nameFromColor(color);
+  //   await prefs.setString('theme_primary_color', name);
+  //   notifyListeners();
+  // }
 
 // Getter and setter for secondary color
   // Getter and setter for secondary color
   Color get secondaryColor {
     final stored = prefs.getString('theme_secondary_color');
-    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black);
+    if (stored != null) return _colorFromName(stored, fallback: Colors.purple);
     if (prefs.containsKey('theme_secondary_color')) {
       final intValue = prefs.getInt('theme_secondary_color');
       if (intValue != null) {
@@ -381,7 +388,7 @@ Future<void> saveCustomThemeName(String name) async {
         return col;
       }
     }
-    return Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black;
+    return Colors.purple;
   }
 
   Future<void> saveSecondaryColor(Color color) async {
@@ -393,7 +400,7 @@ Future<void> saveCustomThemeName(String name) async {
 // Accent color
   Color get accentColor {
     final stored = prefs.getString('theme_accent_color');
-    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white);
+    if (stored != null) return _colorFromName(stored, fallback: Colors.purpleAccent);
     if (prefs.containsKey('theme_accent_color')) {
       final intValue = prefs.getInt('theme_accent_color');
       if (intValue != null) {
@@ -403,7 +410,7 @@ Future<void> saveCustomThemeName(String name) async {
         return col;
       }
     }
-    return Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white;
+    return Colors.purpleAccent;
   }
 
   Future<void> saveAccentColor(Color color) async {
@@ -873,6 +880,8 @@ bool get performanceMonitorEnabled {
     }
     notifyListeners();
   }
+
+
 }
 
 
