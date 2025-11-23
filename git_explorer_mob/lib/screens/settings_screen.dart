@@ -19,7 +19,7 @@ class SettingsScreen extends ConsumerStatefulWidget {
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // Temporary theme customizer state (apply button will persist)
-  late Color _tempPrimaryColor;
+  // late Color _tempPrimaryColor;
   late Color _tempSecondaryColor;
   late Color _tempAccentColor;
   // other temporary theme values (removed UI for now)
@@ -81,6 +81,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   RadioListTile<ThemeMode>(
                 title: Text(L10n.of(context).settingsSystemMode),
                 value: ThemeMode.system,
+                activeColor: prefs.accentColor,
                 groupValue: currentTheme,
                 onChanged: (v) async {
                       await Prefs().saveThemeMode('system');
@@ -89,12 +90,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               RadioListTile<ThemeMode>(
                 title: Text(L10n.of(context).settingsLightMode),
                 value: ThemeMode.light,
+                activeColor: prefs.accentColor,
                 groupValue: currentTheme,
                 onChanged: (v) async { await Prefs().saveThemeMode('light'); },
               ),
               RadioListTile<ThemeMode>(
                 title: Text(L10n.of(context).settingsDarkMode),
                 value: ThemeMode.dark,
+                activeColor: prefs.accentColor,
                 groupValue: currentTheme,
                 onChanged: (v) async { await Prefs().saveThemeMode('dark'); },
               ),
@@ -129,34 +132,35 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             title: L10n.of(context).settingsAppearanceTheme,
             visible: themeCustomizerEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(L10n.of(context).settingsAppearancePrimaryColor),
-              const SizedBox(height: 8),
-              // clickable color circle palette
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: Colors.primaries.take(18).map((c) {
-                  // final col = c.shade700;
-                  final col = c;
-                  final selected = _tempPrimaryColor == col;
-                  return GestureDetector(
-                    onTap: () => setState(() { _tempPrimaryColor = col; }),
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
-                      ),
-                      child: CircleAvatar(backgroundColor: col, radius: 18),
-                    ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 8),
+              // Text(L10n.of(context).settingsAppearancePrimaryColor),
+              // const SizedBox(height: 8),
+              // // clickable color circle palette
+              // Wrap(
+              //   spacing: 8,
+              //   runSpacing: 8,
+              //   children: Colors.primaries.take(18).map((c) {
+              //     // final col = c.shade700;
+              //     final col = c;
+              //     final selected = _tempPrimaryColor == col;
+              //     return GestureDetector(
+              //       onTap: () => setState(() { _tempPrimaryColor = col; }),
+              //       child: Container(
+              //         padding: const EdgeInsets.all(4),
+              //         decoration: BoxDecoration(
+              //           shape: BoxShape.circle,
+              //           border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+              //         ),
+              //         child: CircleAvatar(backgroundColor: col, radius: 18),
+              //       ),
+              //     );
+              //   }).toList(),
+              // ),
+              const SizedBox(height: 10),
               Text(L10n.of(context).settingsAppearanceSecondaryColor),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
+                runSpacing: 4,
                 children: Colors.primaries.take(18).map((c) {
                   // final col = c.shade400;
                   final col = c;
@@ -169,16 +173,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         shape: BoxShape.circle,
                         border: selected ? Border.all(color: Colors.black87, width: 2) : null,
                       ),
-                      child: CircleAvatar(backgroundColor: col, radius: 16),
+                      child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 10),
               Text(L10n.of(context).settingsAppearanceAccentColor),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: Colors.accents.take(18).map((c) {
+                children: Colors.accents.take(16).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempAccentColor == col;
@@ -188,34 +193,41 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+                        border: selected ? Border.all(color:prefs.accentColor, width: 2) : null,
                       ),
                       child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
                   );
                 }).toList(),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 15),
               Row(children: [
                 ElevatedButton(
                   onPressed: () async {
-                    await Prefs().savePrimaryColor(_tempPrimaryColor);
+                    // await Prefs().savePrimaryColor(_tempPrimaryColor);
                     await Prefs().saveSecondaryColor(_tempSecondaryColor);
                     await Prefs().saveAccentColor(_tempAccentColor);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsThemeApplied)));
                   },
-                  child: Text(L10n.of(context).settingsApplyThemeColors),
+                  child: Text(L10n.of(context).settingsApplyThemeColors, style: TextStyle(color: prefs.accentColor)),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: () => setState(() {
                     // revert temps from prefs
                     final p = Prefs();
-                    _tempPrimaryColor = p.primaryColor;
+                    // _tempPrimaryColor = p.primaryColor;
                     _tempSecondaryColor = p.secondaryColor;
                     _tempAccentColor = p.accentColor;
                   }),
-                  child: Text(L10n.of(context).settingsRevertThemeColors),
+                  child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
+                ),
+                ElevatedButton(
+                  onPressed: () => setState(() {
+                    // reset theme customizer colors from prefs
+                    Prefs().resetThemeCustomizerColors();
+                  }),
+                  child: Text(L10n.of(context).commonReset, style: TextStyle(color: prefs.accentColor)),
                 ),
               ]),
               const SizedBox(height: 12),
@@ -267,6 +279,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(L10n.of(context).settingsEditorTabSize),
               Slider(
+                activeColor: prefs.accentColor,
                 value: (editorCfg['tabSize'] ?? 2).toDouble(),
                 min: 2,
                 max: 8,
@@ -293,7 +306,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsGitAutoFetch)),
-                Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v)),
+                Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v), activeColor: prefs.secondaryColor),
               ]),
               const SizedBox(height: 8),
               Text(L10n.of(context).settingsGitDefaultBranch),
@@ -325,9 +338,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const SizedBox(height: 12),
               Text(L10n.of(context).settingsAiMaxTokens),
               Slider(
+                activeColor: prefs.accentColor,
                 value: _selectedAiMaxTokens.toDouble(),
                 min: 64,
-                max: 2048,
+                max: 9999,
                 divisions: 32,
                 label: '$_selectedAiMaxTokens',
                 onChanged: (v) => setState(() { _selectedAiMaxTokens = v.toInt(); }),
@@ -373,10 +387,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     final ok = activeProvider != '' ? await _checkApiKey(activeProvider) : false;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? L10n.of(context).connectionSuccessful : L10n.of(context).connectionFailed)));
                   },
-                  child: Text(L10n.of(context).settingsApplyAiSettings),
+                  child: Text(L10n.of(context).settingsApplyAiSettings, style: TextStyle(color: prefs.accentColor)),
                 ),
                 const SizedBox(width: 12),
-                OutlinedButton(
+                ElevatedButton(
                   onPressed: () async {
                     final confirm = await showDialog<bool>(
                       context: context,
@@ -384,8 +398,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         title: Text(L10n.of(context).settingsResetAiSettings),
                         content: Text(L10n.of(context).settingsResetAiConfirm),
                         actions: [
-                          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(L10n.of(context).commonCancel)),
-                          FilledButton(onPressed: () => Navigator.of(context).pop(true), child: Text(L10n.of(context).commonDelete)),
+                          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.secondaryColor))),
+                          FilledButton(onPressed: () => Navigator.of(context).pop(true),
+                          style: ButtonStyle(backgroundColor: WidgetStateProperty.all(prefs.secondaryColor)),
+                          child: Text(L10n.of(context).commonDelete),
+                           ),
                         ],
                       ),
                     );
@@ -407,7 +424,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     }
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsAiSettingsReset)));
                   },
-                  child: Text(L10n.of(context).settingsResetAiSettings),
+                  child: Text(L10n.of(context).settingsResetAiSettings, style: TextStyle(color: prefs.accentColor)),
                 ),
               ]),
             ]),
@@ -428,11 +445,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsTerminalFontSize)),
-                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt())),
+                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt()),
+                activeColor: prefs.accentColor,
+                ),
               ]),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsTerminalAudibleBell)),
-                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v)),
+                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v), activeColor: prefs.secondaryColor),
               ]),
             ]),
           ),
@@ -444,12 +463,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsFileExplorerShowHidden)),
-                Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'showHidden', v)),
+                Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'showHidden', v), activeColor: prefs.secondaryColor),
               ]),
               const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsFileExplorerPreviewMarkdown)),
-                Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v)),
+                Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v), activeColor: prefs.secondaryColor),
               ]),
             ]),
           ),
@@ -473,9 +492,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               await prefs.setPluginConfig('file_explorer', 'previewMarkdown', null);
               await prefs.setPluginConfig('ai', 'model', null);
               await prefs.setPluginConfig('ai', 'maxTokens', null);
+              prefs.resetThemeCustomizerColors();
             },
-            icon: const Icon(Icons.restore),
-            label: Text(L10n.of(context).settingsResetPluginDefaults),
+            icon: Icon(Icons.restore, color: prefs.accentColor),
+            label: Text(L10n.of(context).settingsResetPluginDefaults, style: TextStyle(color: prefs.accentColor)),
           ),
         ]),
       ),
@@ -486,7 +506,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     super.initState();
     // Read current persisted values from Prefs singleton into temporary state
     final p = Prefs();
-    _tempPrimaryColor = p.primaryColor;
+    // _tempPrimaryColor = p.primaryColor;
     _tempSecondaryColor = p.secondaryColor;
     _tempAccentColor = p.accentColor;
 
@@ -495,6 +515,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   Widget _providerTile(BuildContext context, String id, {required String label, required String assetName}) {
+    final prefs =  ref.watch(prefsProvider);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -513,7 +534,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           height: 20,
           child: OutlinedButton(
             onPressed: () => _showProviderConfigDialog(context, id, label),
-            child: Text(L10n.of(context).settingsConfigure, style: const TextStyle(fontSize: 9)),
+            child: Text(L10n.of(context).settingsConfigure, style: TextStyle(fontSize: 9, color: prefs.secondaryColor)),
           ),
         ),
       ],
@@ -521,6 +542,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   void _showProviderConfigDialog(BuildContext context, String providerId, String label) {
+    final prefs = ref.watch(prefsProvider);
     // Simple synchronous dialog: initialize fields synchronously from Prefs (no futures)
     // Models per provider
     final Map<String, List<String>> providerModels = {
@@ -586,8 +608,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ],
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel)),
+              TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.secondaryColor))),
               FilledButton(
+                style: ButtonStyle(backgroundColor: WidgetStateProperty.all(prefs.secondaryColor)),
                 onPressed: () async {
                   final url = urlController.text.trim();
                   final key = keyController.text.trim();
