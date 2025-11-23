@@ -157,7 +157,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: Colors.primaries.reversed.take(18).map((c) {
+                children: Colors.primaries.take(18).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempSecondaryColor == col;
@@ -178,7 +178,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: Colors.accents.reversed.take(18).map((c) {
+                children: Colors.accents.take(18).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempAccentColor == col;
