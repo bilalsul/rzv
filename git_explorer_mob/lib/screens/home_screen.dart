@@ -460,7 +460,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onDelete: () async {
           final confirm = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
             title: Text(L10n.of(context).commonDelete),
-            content: const Text('Delete project and all files permanently? This cannot be undone.'),
+            content: Text(L10n.of(context).homeDeleteProjectDialogContent),
             actions: [TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.accentColor))), TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: Text(L10n.of(context).commonDelete, style: TextStyle(color: prefs.accentColor)))],
           ));
           if (confirm != true) return;
@@ -562,9 +562,9 @@ class _ProjectCard extends StatelessWidget {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(_shortName(project.name), style: const TextStyle(fontWeight: FontWeight.w600)),
                 const SizedBox(height: 6),
-                Text('${project.fileCount ?? 0} files · ${project.type ?? 'Unknown'}', style: const TextStyle(fontSize: 12)),
+                Text('${project.fileCount ?? 0} ${L10n.of(context).homeFiles} · ${project.type ?? L10n.of(context).homeUnknown}', style: const TextStyle(fontSize: 12)),
                 const SizedBox(height: 6),
-                Text(project.lastModified != null ? 'Modified ${project.lastModified!.toLocal().toString().split('.').first}' : L10n.of(context).homeNoModificationInfo, style: const TextStyle(fontSize: 11)),
+                Text(project.lastModified != null ? '${L10n.of(context).homeModified} ${project.lastModified!.toLocal().toString().split('.').first}' : L10n.of(context).homeNoModificationInfo, style: const TextStyle(fontSize: 11)),
               ]),
             ),
             PopupMenuButton<String>(
