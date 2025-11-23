@@ -347,7 +347,7 @@ Future<void> saveCustomThemeName(String name) async {
   Color get primaryColor {
     // Support legacy int storage: if a string isn't found but an int exists, migrate it.
     final stored = prefs.getString('theme_primary_color');
-    if (stored != null) return _colorFromName(stored, fallback: const Color(0xFF2196F3));
+    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white);
     if (prefs.containsKey('theme_primary_color')) {
       final intValue = prefs.getInt('theme_primary_color');
       if (intValue != null) {
@@ -358,7 +358,7 @@ Future<void> saveCustomThemeName(String name) async {
         return col;
       }
     }
-    return const Color(0xFF2196F3);
+    return Prefs().themeMode == ThemeMode.dark ? Colors.black : Colors.white;
   }
 
   Future<void> savePrimaryColor(Color color) async {
@@ -371,7 +371,7 @@ Future<void> saveCustomThemeName(String name) async {
   // Getter and setter for secondary color
   Color get secondaryColor {
     final stored = prefs.getString('theme_secondary_color');
-    if (stored != null) return _colorFromName(stored, fallback: const Color(0xFFFF9800));
+    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black);
     if (prefs.containsKey('theme_secondary_color')) {
       final intValue = prefs.getInt('theme_secondary_color');
       if (intValue != null) {
@@ -381,12 +381,34 @@ Future<void> saveCustomThemeName(String name) async {
         return col;
       }
     }
-    return const Color(0xFFFF9800);
+    return Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black;
   }
 
   Future<void> saveSecondaryColor(Color color) async {
     final name = _nameFromColor(color);
     await prefs.setString('theme_secondary_color', name);
+    notifyListeners();
+  }
+
+// Accent color
+  Color get accentColor {
+    final stored = prefs.getString('theme_accent_color');
+    if (stored != null) return _colorFromName(stored, fallback: Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black);
+    if (prefs.containsKey('theme_accent_color')) {
+      final intValue = prefs.getInt('theme_accent_color');
+      if (intValue != null) {
+        final col = Color(intValue);
+        final name = _nameFromColor(col);
+        prefs.setString('theme_accent_color', name);
+        return col;
+      }
+    }
+    return Prefs().themeMode == ThemeMode.dark ? Colors.white : Colors.black;
+  }
+
+  Future<void> saveAccentColor(Color color) async {
+    final name = _nameFromColor(color);
+    await prefs.setString('theme_accent_color', name);
     notifyListeners();
   }
 
