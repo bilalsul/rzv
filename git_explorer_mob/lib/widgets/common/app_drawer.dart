@@ -418,7 +418,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               return Column(
                 children: [
                   Text(
-                    'v${appState.appVersion} (${appState.buildNumber})',
+                    'v${appState.appVersion}',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onSurface.withOpacity(0.5),
                     ),
@@ -531,7 +531,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     showAboutDialog(
       context: context,
       applicationName: L10n.of(context).appName,
-      applicationVersion: 'v${appState.appVersion} (${appState.buildNumber})',
+      applicationVersion: 'v${appState.appVersion}',
       applicationIcon: const Icon(Icons.code, size: 48),
       children: [
         const SizedBox(height: 16),

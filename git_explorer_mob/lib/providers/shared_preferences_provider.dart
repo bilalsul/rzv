@@ -888,13 +888,11 @@ bool get performanceMonitorEnabled {
 class AppState {
   final DateTime sessionStartTime;
   final String appVersion;
-  final String buildNumber;
   final DateTime firstInstallDate;
 
   const AppState({
     required this.sessionStartTime,
     this.appVersion = '0.0.1',
-    this.buildNumber = '1',
     required this.firstInstallDate,
   });
   
