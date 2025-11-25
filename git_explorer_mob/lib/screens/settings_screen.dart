@@ -171,7 +171,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+                        border: selected ? Border.all(color: prefs.secondaryColor, width: 2) : null,
                       ),
                       child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
@@ -209,7 +209,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     await Prefs().saveAccentColor(_tempAccentColor);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsThemeApplied)));
                   },
-                  child: Text(L10n.of(context).settingsApplyThemeColors, style: TextStyle(color: prefs.accentColor)),
+                  child: Text(L10n.of(context).commonApply, style: TextStyle(color: prefs.accentColor)),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
@@ -387,7 +387,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     final ok = activeProvider != '' ? await _checkApiKey(activeProvider) : false;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? L10n.of(context).connectionSuccessful : L10n.of(context).connectionFailed)));
                   },
-                  child: Text(L10n.of(context).settingsApplyAiSettings, style: TextStyle(color: prefs.accentColor)),
+                  child: Text(L10n.of(context).commonApply, style: TextStyle(color: prefs.accentColor)),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
@@ -424,7 +424,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     }
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsAiSettingsReset)));
                   },
-                  child: Text(L10n.of(context).settingsResetAiSettings, style: TextStyle(color: prefs.accentColor)),
+                  child: Text(L10n.of(context).commonReset, style: TextStyle(color: prefs.accentColor)),
                 ),
               ]),
             ]),
@@ -530,7 +530,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         Text(label, style: const TextStyle(fontSize: 12)),
         const SizedBox(height: 6),
         SizedBox(
-          width: 90,
+          width: 110,
           height: 20,
           child: OutlinedButton(
             onPressed: () => _showProviderConfigDialog(context, id, label),
