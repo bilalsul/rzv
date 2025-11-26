@@ -47,6 +47,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   get_it: ^8.2.0
   shared_preferences: ^2.5.3
+  flutter_dotenv: 6.0.0
   introduction_screen: ^4.0.0
   flutter_colorpicker: ^1.1.0
   logging: ^1.3.0
@@ -61,6 +62,7 @@ dependencies:
   path: ^1.9.1
   animated_tree_view: ^2.3.0
   archive: ^3.3.2
+  google_mobile_ads: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -105,6 +107,7 @@ flutter:
     - assets/images/
     - assets/images/ai/
     - pubspec.yaml
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
