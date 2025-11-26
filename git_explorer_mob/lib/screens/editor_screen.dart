@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'dart:io';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
 
@@ -27,7 +26,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       final prefs = Prefs();
       final filePath = prefs.currentOpenFile;
       if (filePath.isEmpty) return;
-      final content = prefs.currentOpenFileContent;
+      final content = prefs.currentOpenFileContent ?? L10n.of(context).editorCreateNewFilePlaceholder;
       // Derive project path as the parent directory of the file when possible
       String projectPath = prefs.currentOpenProject;
       if (projectPath.isEmpty) {
