@@ -830,6 +830,18 @@ bool get performanceMonitorEnabled {
       return projects;
   }
 
+// checks to see if a feature is supported
+bool featureSupported(String pluginId) {
+  List<String> features = [
+    "theme_customizer",
+    "file_explorer",
+    "ai",
+    // uncomment a feature below when it is supported
+    // "git_history",
+    // "terminal",
+  ];  
+  return features.contains(pluginId);
+}
   /// Check whether a plugin (by id) is enabled.
   bool isPluginEnabled(String pluginId) {
     return prefs.getStringList('plugins_enabled')?.contains(pluginId) ?? false;
