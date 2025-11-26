@@ -218,7 +218,7 @@ Future<void> saveCrashReportingEnabled(bool enabled) async {
 
 // Getter and setter for app version
 String get appVersion {
-  return prefs.getString('app_version') ?? '0.0.3';
+  return prefs.getString('app_version') ?? '0.0.4';
 }
 
 // Future<void> saveAppVersion(String version) async {
@@ -892,7 +892,7 @@ class AppState {
 
   const AppState({
     required this.sessionStartTime,
-    this.appVersion = '0.0.3',
+    this.appVersion = '0.0.4',
     required this.firstInstallDate,
   });
   
