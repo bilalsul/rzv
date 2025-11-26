@@ -44,6 +44,7 @@
   "settingsEditorSettings": "Editör Ayarları",
   "settingsEditorTabSize": "Sekme boyutu",
   "settingsEditorShowLineNumbers": "Satır numaralarını göster",
+  "editorCreateNewFilePlaceholder": "# Yeni dosya oluştur",
   
   "settingsGitSettings": "Git Ayarları",
   "settingsGitAutoFetch": "Otomatik çekme",
@@ -116,6 +117,10 @@
   "commonUndo": "Geri al",
   "commonResume": "Devam et",
   "commonRetry": "Tekrar dene",
+  "commonDisabled": "Devre dışı",
+  "commonNotSupported": "Desteklenmiyor",
+  "featureNotSupported": "Özellik şu anda desteklenmiyor. Gelecek sürümleri kontrol edin",
+  "enableFeatureFromPlugins": "Bu özelliği Eklentiler bölümünden etkinleştirin",
   
   "homeProjectsTitle": "İçe Aktarılan/Oluşturulan Projeler",
   "homeDefaultProjectName":"Proje",

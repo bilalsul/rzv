@@ -44,6 +44,7 @@
   "settingsEditorSettings": "エディター設定",
   "settingsEditorTabSize": "タブ幅",
   "settingsEditorShowLineNumbers": "行番号を表示",
+  "editorCreateNewFilePlaceholder": "# 新しいファイルを作成",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動フェッチ",
@@ -116,7 +117,11 @@
   "commonUndo": "元に戻す",
   "commonResume": "再開",
   "commonRetry": "再試行",
-  
+  "commonDisabled": "無効",
+  "commonNotSupported": "サポートされていません",
+  "featureNotSupported": "この機能は現時点でサポートされていません。今後のリリースをご確認ください",
+  "enableFeatureFromPlugins": "プラグインからこの機能を有効にしてください",
+
   "homeProjectsTitle": "インポート／作成済みプロジェクト",
   "homeDefaultProjectName":"プロジェクト",
   "homeNoProjects": "まだプロジェクトがありません",

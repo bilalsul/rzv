@@ -44,6 +44,7 @@
   "settingsEditorSettings": "إعدادات المحرر",
   "settingsEditorTabSize": "حجم علامة التبويب",
   "settingsEditorShowLineNumbers": "إظهار أرقام الأسطر",
+  "editorCreateNewFilePlaceholder": "# إنشاء ملف جديد",
   
   "settingsGitSettings": "إعدادات Git",
   "settingsGitAutoFetch": "جلب تلقائي",
@@ -116,6 +117,10 @@
   "commonUndo": "تراجع",
   "commonResume": "متابعة",
   "commonRetry": "إعادة المحاولة",
+  "commonDisabled": "معطل",
+  "commonNotSupported": "غير مدعوم",
+  "featureNotSupported": "الميزة غير مدعومة في الوقت الحالي. تحقق من الإصدارات المستقبلية",
+  "enableFeatureFromPlugins": "فعّل هذه الميزة من الإضافات",
   
   "homeProjectsTitle": "المشاريع المستوردة/المنشأة",
   "homeDefaultProjectName": "مشروع",

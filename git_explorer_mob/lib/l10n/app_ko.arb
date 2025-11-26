@@ -44,6 +44,7 @@
   "settingsEditorSettings": "편집기 설정",
   "settingsEditorTabSize": "탭 크기",
   "settingsEditorShowLineNumbers": "줄 번호 표시",
+  "editorCreateNewFilePlaceholder": "# 새 파일 만들기",
   
   "settingsGitSettings": "Git 설정",
   "settingsGitAutoFetch": "자동 가져오기",
@@ -116,6 +117,10 @@
   "commonUndo": "실행 취소",
   "commonResume": "계속",
   "commonRetry": "재시도",
+  "commonDisabled": "비활성화됨",
+  "commonNotSupported": "지원되지 않음",
+  "featureNotSupported": "현재 해당 기능은 지원되지 않습니다. 향후 릴리스에서 확인해 주세요",
+  "enableFeatureFromPlugins": "플러그인에서 이 기능을 활성화하세요",
   
   "homeProjectsTitle": "가져온/생성한 프로젝트",
   "homeDefaultProjectName":"프로젝트",

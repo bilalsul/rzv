@@ -44,6 +44,7 @@
   "settingsEditorSettings": "Editor Settings",
   "settingsEditorTabSize": "Tab size",
   "settingsEditorShowLineNumbers": "Show line numbers",
+  "editorCreateNewFilePlaceholder": "# Create New File",
   
   "settingsGitSettings": "Git Settings",
   "settingsGitAutoFetch": "Auto-fetch",
@@ -116,6 +117,10 @@
   "commonUndo": "Undo",
   "commonResume": "Resume",
   "commonRetry": "Retry",
+  "commonDisabled": "Disabled",
+  "commonNotSupported": "Not Supported",
+  "featureNotSupported":"Feature Not Supported At The Moment. Check Future Releases",
+  "enableFeatureFromPlugins": "Enable this feature from the Plugins",
   
   "homeProjectsTitle": "Imported/Created Projects",
   "homeDefaultProjectName":"Project",

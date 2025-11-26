@@ -44,6 +44,7 @@
   "settingsEditorSettings": "Paramètres de l'éditeur",
   "settingsEditorTabSize": "Taille des tabulations",
   "settingsEditorShowLineNumbers": "Afficher les numéros de ligne",
+  "editorCreateNewFilePlaceholder": "# Créer un nouveau fichier",
   
   "settingsGitSettings": "Paramètres Git",
   "settingsGitAutoFetch": "Récupération automatique",
@@ -116,6 +117,10 @@
   "commonUndo": "Annuler",
   "commonResume": "Reprendre",
   "commonRetry": "Réessayer",
+  "commonDisabled": "Désactivé",
+  "commonNotSupported": "Non pris en charge",
+  "featureNotSupported": "Fonctionnalité non prise en charge pour le moment. Vérifiez les futures versions",
+  "enableFeatureFromPlugins": "Activer cette fonctionnalité depuis les Plugins",
   
   "homeProjectsTitle": "Projets importés/créés",
   "homeDefaultProjectName": "Projet",
