@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/app/app_shell.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
@@ -9,12 +10,15 @@ import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
 import 'package:git_explorer_mob/utils/error/common.dart';
 import 'package:git_explorer_mob/utils/log/common.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:window_manager/window_manager.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
+  // await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   await Prefs().initPrefs();
   // if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
   //   await windowManager.ensureInitialized();
