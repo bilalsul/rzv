@@ -99,21 +99,21 @@ class _AppShellState extends ConsumerState<AppShell> {
       case Screen.home:
         return plugins.contains('file_explorer')
             ? const HomeScreen()
-            : const FeatureDisabledScreen(feature: 'File Explorer');
+            :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
       case Screen.editor:
         return const EditorScreen();
       case Screen.fileExplorer:
         return plugins.contains('file_explorer')
-            ? const HomeScreen()
-            : const FeatureDisabledScreen(feature: 'File Explorer');
+            ?  HomeScreen()
+            :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
       case Screen.gitHistory:
         return plugins.contains('git_history')
-            ? const TemplateScreen(screen: 'Git History',)
-            : const FeatureDisabledScreen(feature: 'Git History');
+            ? FeatureNotSupported(feature: L10n.of(context).navBarGitHistory)
+            : FeatureDisabledScreen(feature: L10n.of(context).navBarGitHistory);
       case Screen.terminal:
         return plugins.contains('terminal')
-            ? const TemplateScreen(screen: 'Terminal',)
-            : const FeatureDisabledScreen(feature: 'Integrated Terminal');
+            ? FeatureNotSupported(feature: L10n.of(context).navBarTerminal)
+            : FeatureDisabledScreen(feature: L10n.of(context).navBarTerminal);
       case Screen.settings:
         return const SettingsScreen();
       case Screen.AI:
@@ -334,12 +334,41 @@ class FeatureDisabledScreen extends StatelessWidget {
           const Icon(Icons.extension_off, size: 64, color: Colors.grey),
           const SizedBox(height: 16),
           Text(
-            '$feature Disabled',
+            '$feature ${L10n.of(context).commonDisabled}',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 8),
           Text(
-            'Enable this feature from the drawer or settings',
+            L10n.of(context).enableFeatureFromPlugins,
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FeatureNotSupported extends StatelessWidget {
+  final String feature;
+
+  const FeatureNotSupported({super.key, required this.feature});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.extension_off, size: 64, color: Colors.grey),
+          const SizedBox(height: 16),
+          Text(
+            '$feature ${L10n.of(context).commonNotSupported}',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            L10n.of(context).featureNotSupported,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
