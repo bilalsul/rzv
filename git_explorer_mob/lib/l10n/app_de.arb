@@ -44,6 +44,7 @@
   "settingsEditorSettings": "Editor-Einstellungen",
   "settingsEditorTabSize": "Tab-Größe",
   "settingsEditorShowLineNumbers": "Zeilennummern anzeigen",
+  "editorCreateNewFilePlaceholder": "# Neue Datei erstellen",
   
   "settingsGitSettings": "Git-Einstellungen",
   "settingsGitAutoFetch": "Auto-Fetch",

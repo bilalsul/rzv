@@ -44,6 +44,7 @@
   "settingsEditorSettings": "编辑器设置",
   "settingsEditorTabSize": "Tab 宽度",
   "settingsEditorShowLineNumbers": "显示行号",
+  "editorCreateNewFilePlaceholder": "# 创建新文件",
   
   "settingsGitSettings": "Git 设置",
   "settingsGitAutoFetch": "自动拉取",

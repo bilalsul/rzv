@@ -44,6 +44,7 @@
   "settingsEditorSettings": "إعدادات المحرر",
   "settingsEditorTabSize": "حجم علامة التبويب",
   "settingsEditorShowLineNumbers": "إظهار أرقام الأسطر",
+  "editorCreateNewFilePlaceholder": "# إنشاء ملف جديد",
   
   "settingsGitSettings": "إعدادات Git",
   "settingsGitAutoFetch": "جلب تلقائي",

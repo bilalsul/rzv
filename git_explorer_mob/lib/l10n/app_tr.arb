@@ -44,6 +44,7 @@
   "settingsEditorSettings": "Editör Ayarları",
   "settingsEditorTabSize": "Sekme boyutu",
   "settingsEditorShowLineNumbers": "Satır numaralarını göster",
+  "editorCreateNewFilePlaceholder": "# Yeni dosya oluştur",
   
   "settingsGitSettings": "Git Ayarları",
   "settingsGitAutoFetch": "Otomatik çekme",

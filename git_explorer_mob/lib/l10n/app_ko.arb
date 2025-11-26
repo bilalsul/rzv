@@ -44,6 +44,7 @@
   "settingsEditorSettings": "편집기 설정",
   "settingsEditorTabSize": "탭 크기",
   "settingsEditorShowLineNumbers": "줄 번호 표시",
+  "editorCreateNewFilePlaceholder": "# 새 파일 만들기",
   
   "settingsGitSettings": "Git 설정",
   "settingsGitAutoFetch": "자동 가져오기",

@@ -44,6 +44,7 @@
   "settingsEditorSettings": "編輯閣設定",
   "settingsEditorTabSize": "Tab 之廣",
   "settingsEditorShowLineNumbers": "顯行數",
+  "editorCreateNewFilePlaceholder": "# 創建新檔",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動取",
