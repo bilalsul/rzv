@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 // Theme provider removed; theme is driven from Prefs
@@ -13,11 +15,15 @@ import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
+
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  // AdMob native ad
+  NativeAd? _nativeAd;
+  bool _isNativeAdLoaded = false;
   // Temporary theme customizer state (apply button will persist)
   // late Color _tempPrimaryColor;
   late Color _tempSecondaryColor;
@@ -171,7 +177,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: selected ? Border.all(color: Colors.black87, width: 2) : null,
+                        border: selected ? Border.all(color: prefs.secondaryColor, width: 2) : null,
                       ),
                       child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
@@ -209,7 +215,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     await Prefs().saveAccentColor(_tempAccentColor);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsThemeApplied)));
                   },
-                  child: Text(L10n.of(context).settingsApplyThemeColors, style: TextStyle(color: prefs.accentColor)),
+                  child: Text(L10n.of(context).commonApply, style: TextStyle(color: prefs.accentColor)),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
@@ -387,7 +393,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     final ok = activeProvider != '' ? await _checkApiKey(activeProvider) : false;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ok ? L10n.of(context).connectionSuccessful : L10n.of(context).connectionFailed)));
                   },
-                  child: Text(L10n.of(context).settingsApplyAiSettings, style: TextStyle(color: prefs.accentColor)),
+                  child: Text(L10n.of(context).commonApply, style: TextStyle(color: prefs.accentColor)),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
@@ -424,7 +430,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     }
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).settingsAiSettingsReset)));
                   },
-                  child: Text(L10n.of(context).settingsResetAiSettings, style: TextStyle(color: prefs.accentColor)),
+                  child: Text(L10n.of(context).commonReset, style: TextStyle(color: prefs.accentColor)),
                 ),
               ]),
             ]),
@@ -497,6 +503,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             icon: Icon(Icons.restore, color: prefs.accentColor),
             label: Text(L10n.of(context).settingsResetPluginDefaults, style: TextStyle(color: prefs.accentColor)),
           ),
+          const SizedBox(height: 12),
+          // ad here
+          _isNativeAdLoaded && _nativeAd != null
+              ? SizedBox(
+                  height: 250,
+                  child: AdWidget(ad: _nativeAd!),
+                )
+              : const SizedBox.shrink(),
+          _isNativeAdLoaded ? Container(
+                margin: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                child: AdWidget(ad: _nativeAd!),
+              ) : SizedBox.shrink(),
         ]),
       ),
     );
@@ -504,6 +527,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   void initState() {
     super.initState();
+    // make sure initialized Mobile Ads in main then load native ad for this screen
+    _loadNativeAd();
     // Read current persisted values from Prefs singleton into temporary state
     final p = Prefs();
     // _tempPrimaryColor = p.primaryColor;
@@ -512,6 +537,30 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     // AI defaults
     _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
+  }
+
+  void _loadNativeAd() {
+    _nativeAd = NativeAd(
+      adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
+      factoryId: 'listTileMedium',
+      request: const AdRequest(),
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          if (!mounted) return;
+          setState(() => _isNativeAdLoaded = true);
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          debugPrint('Native Ad failed: $error');
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _nativeAd?.dispose();
+    super.dispose();
   }
 
   Widget _providerTile(BuildContext context, String id, {required String label, required String assetName}) {
@@ -530,7 +579,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         Text(label, style: const TextStyle(fontSize: 12)),
         const SizedBox(height: 6),
         SizedBox(
-          width: 90,
+          width: 110,
           height: 20,
           child: OutlinedButton(
             onPressed: () => _showProviderConfigDialog(context, id, label),

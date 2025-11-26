@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 // Navigation moved to AppShell
 // Navigation and plugin state now come from Prefs
 
 // Providers
 import '../../providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:git_explorer_mob/data/plugin_definitions.dart' as plugin_defs;
 
 // Models
@@ -24,6 +25,9 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   bool _expandedGitPlugins = true;
   bool _expandedUtilityPlugins = true;
   bool _expandedExperimentalPlugins = false;
+
+  NativeAd? _nativeAd;
+  bool _isNativeAdLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +54,40 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     ),
     );
   }
+
+ @override
+  void initState() {
+    super.initState();
+    // make sure initialized Mobile Ads in main then load native ad for this screen
+    _loadNativeAd();
+
+  }
+  
+  void _loadNativeAd() {
+    _nativeAd = NativeAd(
+      adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
+      factoryId: 'listTileMedium',
+      request: const AdRequest(),
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          if (!mounted) return;
+          setState(() => _isNativeAdLoaded = true);
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          debugPrint('Native Ad failed: $error');
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _nativeAd?.dispose();
+    super.dispose();
+  }
+
+ 
 
   // =============================================
   // Drawer Header
@@ -197,6 +235,13 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           theme: theme,
         ),
 
+        // _isNativeAdLoaded && _nativeAd != null
+        //       ? SizedBox(
+        //           height: 120,
+        //           child: AdWidget(ad: _nativeAd!),
+        //         )
+        //       : const SizedBox.shrink(),
+
         // Utility Plugins
         _buildPluginCategory(
           title: L10n.of(context).drawerUtilityPlugins,
@@ -216,9 +261,36 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           showExperimentalBadge: true,
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        // SliverToBoxAdapter(child: 
+        // _isNativeAdLoaded && _nativeAd != null
+        //       ? SizedBox(
+        //           height: 250,
+        //           child: AdWidget(ad: _nativeAd!),
+        //         )
+        //       : const SizedBox.shrink(),
+        // // SizedBox(height: 16)
+        // ),
+        
+        // _isNativeAdLoaded && _nativeAd != null
+        //       ? SizedBox(
+        //           height: 120,
+        //           child: AdWidget(ad: _nativeAd!),
+        //         )
+        //       : const SizedBox.shrink(),
+
         // Footer placed as a sliver so it only becomes visible when the user scrolls to the end
         SliverToBoxAdapter(child: _buildDrawerFooter(theme)),
+
+        SliverToBoxAdapter(child: 
+        _isNativeAdLoaded && _nativeAd != null
+              ? SizedBox(
+                  height: 250,
+                  child: AdWidget(ad: _nativeAd!),
+                )
+              : const SizedBox.shrink(),
+        ),
+
+        SliverToBoxAdapter(child: SizedBox(height: 16)),
       ],
     );
   }
@@ -383,6 +455,13 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
       ),
       child: Column(
         children: [
+          // _isNativeAdLoaded && _nativeAd != null
+          //     ? SizedBox(
+          //         height: 120,
+          //         width: double.infinity,
+          //         child: AdWidget(ad: _nativeAd!),
+          //       )
+          //     : const SizedBox.shrink(),
           // Quick Actions
           Row(
             children: [
