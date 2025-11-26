@@ -108,16 +108,22 @@ class _AppShellState extends ConsumerState<AppShell> {
             :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
       case Screen.gitHistory:
         return plugins.contains('git_history')
-            ? FeatureNotSupported(feature: L10n.of(context).navBarGitHistory)
+            ? (Prefs().featureSupported("git_history") ? SizedBox.shrink():
+            FeatureNotSupported(feature: L10n.of(context).navBarGitHistory))
             : FeatureDisabledScreen(feature: L10n.of(context).navBarGitHistory);
       case Screen.terminal:
         return plugins.contains('terminal')
-            ? FeatureNotSupported(feature: L10n.of(context).navBarTerminal)
+            ? (Prefs().featureSupported("terminal") ? SizedBox.shrink():
+            FeatureNotSupported(feature: L10n.of(context).navBarTerminal))
             : FeatureDisabledScreen(feature: L10n.of(context).navBarTerminal);
       case Screen.settings:
         return const SettingsScreen();
       case Screen.AI:
-        return const AIScreen();
+        // return const AIScreen();
+         return plugins.contains('ai_assist')
+            ? (Prefs().featureSupported("ai") ? const AIScreen():
+            FeatureNotSupported(feature: L10n.of(context).navBarAI))
+            : FeatureDisabledScreen(feature: L10n.of(context).navBarAI);
     }
   }
 
