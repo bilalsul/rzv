@@ -119,6 +119,7 @@
   "commonDisabled": "معطل",
   "commonNotSupported": "غير مدعوم",
   "featureNotSupported": "الميزة غير مدعومة في الوقت الحالي. تحقق من الإصدارات المستقبلية",
+  "enableFeatureFromPlugins": "فعّل هذه الميزة من الإضافات",
   
   "homeProjectsTitle": "المشاريع المستوردة/المنشأة",
   "homeDefaultProjectName": "مشروع",

@@ -119,7 +119,8 @@
   "commonDisabled": "無効",
   "commonNotSupported": "サポートされていません",
   "featureNotSupported": "この機能は現時点でサポートされていません。今後のリリースをご確認ください",
-  
+  "enableFeatureFromPlugins": "プラグインからこの機能を有効にしてください",
+
   "homeProjectsTitle": "インポート／作成済みプロジェクト",
   "homeDefaultProjectName":"プロジェクト",
   "homeNoProjects": "まだプロジェクトがありません",

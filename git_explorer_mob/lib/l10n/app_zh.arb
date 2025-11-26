@@ -119,6 +119,7 @@
   "commonDisabled": "已禁用",
   "commonNotSupported": "不支持",
   "featureNotSupported": "该功能目前不支持。请关注后续版本",
+  "enableFeatureFromPlugins": "从插件中启用此功能",
   
   "homeProjectsTitle": "已导入/创建的项目",
   "homeDefaultProjectName":"项目",

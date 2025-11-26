@@ -119,6 +119,7 @@
   "commonDisabled": "Devre dışı",
   "commonNotSupported": "Desteklenmiyor",
   "featureNotSupported": "Özellik şu anda desteklenmiyor. Gelecek sürümleri kontrol edin",
+  "enableFeatureFromPlugins": "Bu özelliği Eklentiler bölümünden etkinleştirin",
   
   "homeProjectsTitle": "İçe Aktarılan/Oluşturulan Projeler",
   "homeDefaultProjectName":"Proje",

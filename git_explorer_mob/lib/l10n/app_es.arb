@@ -116,6 +116,7 @@
     "commonDisabled": "Deshabilitado",
     "commonNotSupported": "No soportado",
     "featureNotSupported": "Función no soportada en este momento. Revisa las próximas versiones",
+    "enableFeatureFromPlugins": "Habilita esta función desde los Plugins",
    
     "homeProjectsTitle": "Proyectos Importados/Creados",
     "homeDefaultProjectName": "Proyecto",

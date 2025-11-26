@@ -119,6 +119,7 @@
   "commonDisabled": "Отключено",
   "commonNotSupported": "Не поддерживается",
   "featureNotSupported": "Функция пока не поддерживается. Следите за будущими релизами",
+  "enableFeatureFromPlugins": "Включите эту функцию в разделе Плагины",
   
   "homeProjectsTitle": "Импортированные/созданные проекты",
   "homeDefaultProjectName":"Проект",

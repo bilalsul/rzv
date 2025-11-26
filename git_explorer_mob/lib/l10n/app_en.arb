@@ -119,6 +119,7 @@
   "commonDisabled": "Disabled",
   "commonNotSupported": "Not Supported",
   "featureNotSupported":"Feature Not Supported At The Moment. Check Future Releases",
+  "enableFeatureFromPlugins": "Enable this feature from the Plugins",
   
   "homeProjectsTitle": "Imported/Created Projects",
   "homeDefaultProjectName":"Project",
