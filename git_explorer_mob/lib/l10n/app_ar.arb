@@ -116,6 +116,9 @@
   "commonUndo": "تراجع",
   "commonResume": "متابعة",
   "commonRetry": "إعادة المحاولة",
+  "commonDisabled": "معطل",
+  "commonNotSupported": "غير مدعوم",
+  "featureNotSupported": "الميزة غير مدعومة في الوقت الحالي. تحقق من الإصدارات المستقبلية",
   
   "homeProjectsTitle": "المشاريع المستوردة/المنشأة",
   "homeDefaultProjectName": "مشروع",

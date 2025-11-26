@@ -116,6 +116,9 @@
   "commonUndo": "元に戻す",
   "commonResume": "再開",
   "commonRetry": "再試行",
+  "commonDisabled": "無効",
+  "commonNotSupported": "サポートされていません",
+  "featureNotSupported": "この機能は現時点でサポートされていません。今後のリリースをご確認ください",
   
   "homeProjectsTitle": "インポート／作成済みプロジェクト",
   "homeDefaultProjectName":"プロジェクト",

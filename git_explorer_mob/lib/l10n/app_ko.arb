@@ -116,6 +116,9 @@
   "commonUndo": "실행 취소",
   "commonResume": "계속",
   "commonRetry": "재시도",
+  "commonDisabled": "비활성화됨",
+  "commonNotSupported": "지원되지 않음",
+  "featureNotSupported": "현재 해당 기능은 지원되지 않습니다. 향후 릴리스에서 확인해 주세요",
   
   "homeProjectsTitle": "가져온/생성한 프로젝트",
   "homeDefaultProjectName":"프로젝트",

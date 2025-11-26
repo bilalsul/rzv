@@ -113,6 +113,9 @@
     "commonUndo": "Deshacer",
     "commonResume": "Reanudar",
     "commonRetry": "Reintentar",
+    "commonDisabled": "Deshabilitado",
+    "commonNotSupported": "No soportado",
+    "featureNotSupported": "Función no soportada en este momento. Revisa las próximas versiones",
    
     "homeProjectsTitle": "Proyectos Importados/Creados",
     "homeDefaultProjectName": "Proyecto",

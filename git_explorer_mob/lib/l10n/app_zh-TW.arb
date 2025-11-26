@@ -116,6 +116,9 @@
   "commonUndo": "復原",
   "commonResume": "繼續",
   "commonRetry": "重試",
+  "commonDisabled": "已停用",
+  "commonNotSupported": "不支援",
+  "featureNotSupported": "此功能目前不支援。請留意未來版本",
   
   "homeProjectsTitle": "已匯入／建立的專案",
   "homeDefaultProjectName":"專案",

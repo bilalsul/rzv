@@ -116,6 +116,9 @@
   "commonUndo": "Geri al",
   "commonResume": "Devam et",
   "commonRetry": "Tekrar dene",
+  "commonDisabled": "Devre dışı",
+  "commonNotSupported": "Desteklenmiyor",
+  "featureNotSupported": "Özellik şu anda desteklenmiyor. Gelecek sürümleri kontrol edin",
   
   "homeProjectsTitle": "İçe Aktarılan/Oluşturulan Projeler",
   "homeDefaultProjectName":"Proje",

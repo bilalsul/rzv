@@ -116,6 +116,9 @@
   "commonUndo": "撤",
   "commonResume": "續",
   "commonRetry": "重試",
+  "commonDisabled": "已禁用",
+  "commonNotSupported": "不支援",
+  "featureNotSupported": "此機能暫不支援。請關注後續版本",
   
   "homeProjectsTitle": "已導入／自創之專案",
   "homeDefaultProjectName":"專案",

@@ -116,6 +116,9 @@
   "commonUndo": "Отменить",
   "commonResume": "Продолжить",
   "commonRetry": "Повторить",
+  "commonDisabled": "Отключено",
+  "commonNotSupported": "Не поддерживается",
+  "featureNotSupported": "Функция пока не поддерживается. Следите за будущими релизами",
   
   "homeProjectsTitle": "Импортированные/созданные проекты",
   "homeDefaultProjectName":"Проект",

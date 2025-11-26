@@ -116,6 +116,9 @@
   "commonUndo": "Annulla",
   "commonResume": "Riprendi",
   "commonRetry": "Riprova",
+  "commonDisabled": "Disabilitato",
+  "commonNotSupported": "Non supportato",
+  "featureNotSupported": "Funzionalità non supportata al momento. Controlla le versioni future",
   
   "homeProjectsTitle": "Progetti importati/creati",
   "homeDefaultProjectName":"Progetto",

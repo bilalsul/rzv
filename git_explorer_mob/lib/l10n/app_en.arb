@@ -116,6 +116,9 @@
   "commonUndo": "Undo",
   "commonResume": "Resume",
   "commonRetry": "Retry",
+  "commonDisabled": "Disabled",
+  "commonNotSupported": "Not Supported",
+  "featureNotSupported":"Feature Not Supported At The Moment. Check Future Releases",
   
   "homeProjectsTitle": "Imported/Created Projects",
   "homeDefaultProjectName":"Project",
