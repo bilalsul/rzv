@@ -511,15 +511,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: AdWidget(ad: _nativeAd!),
                 )
               : const SizedBox.shrink(),
-          _isNativeAdLoaded ? Container(
-                margin: const EdgeInsets.all(15),
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.white,
-                ),
-                child: AdWidget(ad: _nativeAd!),
-              ) : SizedBox.shrink(),
         ]),
       ),
     );
