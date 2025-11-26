@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
@@ -43,7 +43,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final prefs = ref.watch(prefsProvider);
   // Temporary theme values are initialized in initState from Prefs.
     // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
-    final editorEnabled = prefs.isPluginEnabled('editor');
+    // final editorEnabled = prefs.isPluginEnabled('editor');
     final gitEnabled = prefs.isPluginEnabled('git_history');
     final aiEnabled = prefs.isPluginEnabled('ai_assist');
     final fileExplorerEnabled = prefs.isPluginEnabled('file_explorer');
@@ -51,10 +51,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final themeCustomizerEnabled = prefs.isPluginEnabled('theme_customizer');
     
     // plugin configs read via Prefs.getPluginConfig(pluginName, key)
-    final editorCfg = {
-      'tabSize': prefs.getPluginConfig('editor', 'tabSize') ?? 2,
-      'showLineNumbers': prefs.getPluginConfig('editor', 'showLineNumbers') ?? true,
-    };
+    // final editorCfg = {
+    //   'tabSize': prefs.getPluginConfig('editor', 'tabSize') ?? 2,
+    //   'showLineNumbers': prefs.getPluginConfig('editor', 'showLineNumbers') ?? true,
+    // };
     final gitCfg = {
       'autoFetch': prefs.getPluginConfig('git', 'autoFetch') ?? true,
       'defaultBranch': prefs.getPluginConfig('git', 'defaultBranch') ?? 'main',
@@ -134,6 +134,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const SizedBox(height: 12),
 
           // Theme Customizer (plugin)
+          prefs.featureSupported("theme_customizer") ?
           PluginSettingsPanel(
             title: L10n.of(context).settingsAppearanceTheme,
             visible: themeCustomizerEnabled,
@@ -276,36 +277,37 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               //   Switch(value: prefs.reduceAnimations, onChanged: (v) async { await Prefs().saveReduceAnimations(v); }),
               // ]),
             ]),
-          ),
+          ) : SizedBox.shrink(),
 
           // Editor settings panel (visible only when editor plugin enabled)
-          PluginSettingsPanel(
-            title: L10n.of(context).settingsEditorSettings,
-            visible: editorEnabled,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(L10n.of(context).settingsEditorTabSize),
-              Slider(
-                activeColor: prefs.accentColor,
-                value: (editorCfg['tabSize'] ?? 2).toDouble(),
-                min: 2,
-                max: 8,
-                divisions: 6,
-                label: '${editorCfg['tabSize'] ?? 2}',
-                onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
-              ),
-              const SizedBox(height: 8),
-              Row(children: [
-                Text(L10n.of(context).settingsEditorShowLineNumbers),
-                const Spacer(),
-                Checkbox(
-                  value: (editorCfg['showLineNumbers'] ?? true) as bool,
-                  onChanged: (v) async => await prefs.setPluginConfig('editor', 'showLineNumbers', v ?? true),
-                ),
-              ]),
-            ]),
-          ),
+          // PluginSettingsPanel(
+          //   title: L10n.of(context).settingsEditorSettings,
+          //   visible: true,
+          //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          //     Text(L10n.of(context).settingsEditorTabSize),
+          //     Slider(
+          //       activeColor: prefs.accentColor,
+          //       value: (editorCfg['tabSize'] ?? 2).toDouble(),
+          //       min: 2,
+          //       max: 8,
+          //       divisions: 6,
+          //       label: '${editorCfg['tabSize'] ?? 2}',
+          //       onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
+          //     ),
+          //     const SizedBox(height: 8),
+          //     Row(children: [
+          //       Text(L10n.of(context).settingsEditorShowLineNumbers),
+          //       const Spacer(),
+          //       Checkbox(
+          //         value: (editorCfg['showLineNumbers'] ?? true) as bool,
+          //         onChanged: (v) async => await prefs.setPluginConfig('editor', 'showLineNumbers', v ?? true),
+          //       ),
+          //     ]),
+          //   ]),
+          // ),
 
           // Git settings
+          prefs.featureSupported("git_history") ?
           PluginSettingsPanel(
             title: L10n.of(context).settingsGitSettings,
             visible: gitEnabled,
@@ -323,9 +325,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onSubmitted: (v) async => await prefs.setPluginConfig('git', 'defaultBranch', v.trim()),
               ),
             ]),
-          ),
+          ) : SizedBox.shrink(),
 
           // AI settings
+          prefs.featureSupported("ai") ?
           PluginSettingsPanel(
             title: L10n.of(context).settingsAiSettings,
             visible: aiEnabled,
@@ -434,9 +437,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
               ]),
             ]),
-          ),
+          ) : SizedBox.shrink(),
 
           // Terminal settings
+          prefs.featureSupported("terminal") ?
           PluginSettingsPanel(
             title: L10n.of(context).settingsTerminalSettings,
             visible: terminalEnabled,
@@ -460,9 +464,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v), activeColor: prefs.secondaryColor),
               ]),
             ]),
-          ),
+          ) : SizedBox.shrink(),
 
           // File Explorer settings
+          prefs.featureSupported("file_explorer") ?
           PluginSettingsPanel(
             title: L10n.of(context).settingsFileExplorerSettings,
             visible: fileExplorerEnabled,
@@ -477,7 +482,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v), activeColor: prefs.secondaryColor),
               ]),
             ]),
-          ),
+          ) : SizedBox.shrink() ,
 
           const SizedBox(height: 24),
           ElevatedButton.icon(
