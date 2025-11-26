@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 // Other providers removed; Prefs is now the central settings source.
 import 'package:shared_preferences/shared_preferences.dart';
@@ -569,8 +571,8 @@ String get currentOpenFile {
   return prefs.getString('editor_current_file') ?? '';
 }
 
-String get currentOpenFileContent {
-  return prefs.getString('editor_current_content') ?? '# Create New File';
+String? get currentOpenFileContent {
+  return prefs.getString('editor_current_content');
 }
 
 Future<void> saveCurrentOpenFileContent(String content) async {
