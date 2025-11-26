@@ -26,13 +26,13 @@ const List<PluginDefinition> editorPlugins = [
     icon: Icons.unfold_less_outlined,
     category: PluginCategory.editor,
   ),
-  PluginDefinition(
-    id: 'bracket_matching',
-    name: 'bracket_matching',
-    description: 'bracket_matching',
-    icon: Icons.code_outlined,
-    category: PluginCategory.editor,
-  ),
+  // PluginDefinition(
+  //   id: 'bracket_matching',
+  //   name: 'bracket_matching',
+  //   description: 'bracket_matching',
+  //   icon: Icons.code_outlined,
+  //   category: PluginCategory.editor,
+  // ),
 ];
 
 const List<PluginDefinition> gitPlugins = [
@@ -43,20 +43,20 @@ const List<PluginDefinition> gitPlugins = [
     icon: Icons.history_outlined,
     category: PluginCategory.git,
   ),
-  PluginDefinition(
-    id: 'git_lens',
-    name: 'git_lens',
-    description: 'git_lens',
-    icon: Icons.remove_red_eye_outlined,
-    category: PluginCategory.git,
-  ),
-  PluginDefinition(
-    id: 'branch_manager',
-    name: 'branch_manager',
-    description: 'branch_manager',
-    icon: Icons.account_tree_outlined,
-    category: PluginCategory.git,
-  ),
+  // PluginDefinition(
+  //   id: 'git_lens',
+  //   name: 'git_lens',
+  //   description: 'git_lens',
+  //   icon: Icons.remove_red_eye_outlined,
+  //   category: PluginCategory.git,
+  // ),
+  // PluginDefinition(
+  //   id: 'branch_manager',
+  //   name: 'branch_manager',
+  //   description: 'branch_manager',
+  //   icon: Icons.account_tree_outlined,
+  //   category: PluginCategory.git,
+  // ),
 ];
 
 const List<PluginDefinition> utilityPlugins = [
@@ -67,13 +67,13 @@ const List<PluginDefinition> utilityPlugins = [
     icon: Icons.folder_outlined,
     category: PluginCategory.utility,
   ),
-  PluginDefinition(
-    id: 'search_replace',
-    name: 'search_replace',
-    description: 'search_replace',
-    icon: Icons.search_outlined,
-    category: PluginCategory.utility,
-  ),
+  // PluginDefinition(
+  //   id: 'search_replace',
+  //   name: 'search_replace',
+  //   description: 'search_replace',
+  //   icon: Icons.search_outlined,
+  //   category: PluginCategory.utility,
+  // ),
   PluginDefinition(
     id: 'terminal',
     name: 'terminal',
@@ -98,18 +98,18 @@ const List<PluginDefinition> experimentalPlugins = [
     icon: Icons.auto_awesome_outlined,
     category: PluginCategory.experimental,
   ),
-  PluginDefinition(
-    id: 'real_time_collab',
-    name: 'real_time_collab',
-    description: 'real_time_collab',
-    icon: Icons.people_outlined,
-    category: PluginCategory.experimental,
-  ),
-  PluginDefinition(
-    id: 'performance_monitor',
-    name: 'performance_monitor',
-    description: 'performance_monitor',
-    icon: Icons.monitor_heart_outlined,
-    category: PluginCategory.experimental,
-  ),
+  // PluginDefinition(
+  //   id: 'real_time_collab',
+  //   name: 'real_time_collab',
+  //   description: 'real_time_collab',
+  //   icon: Icons.people_outlined,
+  //   category: PluginCategory.experimental,
+  // ),
+  // PluginDefinition(
+  //   id: 'performance_monitor',
+  //   name: 'performance_monitor',
+  //   description: 'performance_monitor',
+  //   icon: Icons.monitor_heart_outlined,
+  //   category: PluginCategory.experimental,
+  // ),
 ];
