@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 // Other providers removed; Prefs is now the central settings source.
 import 'package:shared_preferences/shared_preferences.dart';
@@ -726,6 +725,12 @@ bool get readonlyModeEnabled {
   return isPluginEnabled('readonly_mode');
 }
 
+bool disabledByDefault(String feature) {
+  List<String> features = [
+    "readonly_mode",
+  ];
+  return features.contains(feature);
+}
 
 // Getter and setter for Syntax Highlighting plugin (editor)
 bool get syntaxHighlightingEnabled {
