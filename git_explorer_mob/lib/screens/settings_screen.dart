@@ -279,32 +279,40 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ) : SizedBox.shrink(),
 
           // Editor settings panel (visible only when editor plugin enabled)
-          // prefs.isPluginEnabled("advanced_editor_options") ?
-          // PluginSettingsPanel(
-          //   title: L10n.of(context).settingsEditorSettings,
-          //   visible: true,
-          //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          //     Text(L10n.of(context).settingsEditorTabSize),
-          //     Slider(
-          //       activeColor: prefs.accentColor,
-          //       value: (editorCfg['tabSize'] ?? 2).toDouble(),
-          //       min: 2,
-          //       max: 8,
-          //       divisions: 6,
-          //       label: '${editorCfg['tabSize'] ?? 2}',
-          //       onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
-          //     ),
-          //     const SizedBox(height: 8),
-          //     Row(children: [
-          //       Text(L10n.of(context).settingsEditorShowLineNumbers),
-          //       const Spacer(),
-          //       Checkbox(
-          //         value: (editorCfg['showLineNumbers'] ?? true) as bool,
-          //         onChanged: (v) async => await prefs.setPluginConfig('editor', 'showLineNumbers', v ?? true),
-          //       ),
-          //     ]),
-          //   ]),
-          // ) : SizedBox.shrink(),
+          prefs.isPluginEnabled("advanced_editor_options") ?
+          PluginSettingsPanel(
+            title: L10n.of(context).settingsEditorSettings,
+            visible: true,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              // Text(L10n.of(context).settingsEditorTabSize),
+              // Slider(
+              //   activeColor: prefs.accentColor,
+              //   value: (editorCfg['tabSize'] ?? 2).toDouble(),
+              //   min: 2,
+              //   max: 8,
+              //   divisions: 6,
+              //   label: '${editorCfg['tabSize'] ?? 2}',
+              //   onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
+              // ),
+              const SizedBox(height: 8),
+              Text(L10n.of(context).drawerEditorFontSize),
+              Slider(
+                activeColor: prefs.accentColor,
+                value: prefs.editorFontSize,
+                min: 8,
+                max: 40,
+                divisions: 16,
+                label: prefs.editorFontSize.toString(),
+                onChanged: (v) async => await prefs.saveEditorFontSize(v),
+              ),
+              Row(children: [
+                Expanded(child: Text(L10n.of(context).settingsEditorShowLineNumbers)),
+                Switch.adaptive(value: prefs.editorLineNumbers, 
+                onChanged: (v) async => await prefs.saveEditorLineNumbers(v),
+                activeColor: prefs.secondaryColor,
+                )]),
+            ]),
+          ) : SizedBox.shrink() ,
 
           // Git settings
           // prefs.featureSupported("git_history") ?
