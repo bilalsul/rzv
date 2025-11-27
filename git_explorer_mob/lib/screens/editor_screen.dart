@@ -26,7 +26,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       final prefs = Prefs();
       final filePath = prefs.currentOpenFile;
       if (filePath.isEmpty) return;
-      final content = prefs.currentOpenFileContent ?? L10n.of(context).editorCreateNewFilePlaceholder;
+      final content = prefs.currentOpenFileContent;
       // Derive project path as the parent directory of the file when possible
       String projectPath = prefs.currentOpenProject;
       if (projectPath.isEmpty) {
