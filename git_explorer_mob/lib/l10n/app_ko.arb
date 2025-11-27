@@ -44,7 +44,9 @@
   "settingsEditorSettings": "편집기 설정",
   "settingsEditorTabSize": "탭 크기",
   "settingsEditorShowLineNumbers": "줄 번호 표시",
-  "editorCreateNewFilePlaceholder": "# 새 파일 만들기",
+  "settingsEditorCreateNewFilePlaceholder": "# 새 파일 만들기",
+  "settingsEditorFontSize": "글꼴 크기",
+  "settingsEditorFontFamily": "글꼴 계열",
   
   "settingsGitSettings": "Git 설정",
   "settingsGitAutoFetch": "자동 가져오기",
@@ -199,7 +201,6 @@
   "drawerCommitChanges": "변경사항 커밋",
   "drawerCommitMessageHint": "커밋 메시지",
   "drawerCommit": "커밋",
-  "drawerEditorFontSize": "글꼴 크기",
   "drawerEditorTheme": "편집기 테마",
   "drawerEditorWordWrap": "자동 줄바꿈",
   "drawerFeedbackBody": "Git Explorer에 대한 소중한 의견을 보내주세요!",

@@ -44,7 +44,9 @@
   "settingsEditorSettings": "Настройки редактора",
   "settingsEditorTabSize": "Размер табуляции",
   "settingsEditorShowLineNumbers": "Номера строк",
-  "editorCreateNewFilePlaceholder": "# Создать новый файл",
+  "settingsEditorCreateNewFilePlaceholder": "# Создать новый файл",
+  "settingsEditorFontSize": "Размер шрифта",
+  "settingsEditorFontFamily": "Семейство шрифтов",
   
   "settingsGitSettings": "Настройки Git",
   "settingsGitAutoFetch": "Автозагрузка",
@@ -203,7 +205,6 @@
   "drawerCommitChanges": "Зафиксировать изменения",
   "drawerCommitMessageHint": "Сообщение коммита",
   "drawerCommit": "Коммит",
-  "drawerEditorFontSize": "Размер шрифта",
   "drawerEditorTheme": "Тема редактора",
   "drawerEditorWordWrap": "Перенос строк",
   "drawerFeedbackBody": "Мы будем рады вашему отзыву о Git Explorer!",

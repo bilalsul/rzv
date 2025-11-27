@@ -575,7 +575,7 @@ String get currentOpenFileContent {
 }
 
 String filePlaceholder(BuildContext context) {
-  return L10n.of(context).editorCreateNewFilePlaceholder;
+  return L10n.of(context).settingsEditorCreateNewFilePlaceholder;
 }
 Future<void> saveCurrentOpenFileContent(String content) async {
   await prefs.setString('editor_current_content', content);

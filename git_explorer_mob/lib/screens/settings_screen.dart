@@ -296,7 +296,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               //   onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
               // ),
               const SizedBox(height: 8),
-              Text(L10n.of(context).drawerEditorFontFamily, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              Text(L10n.of(context).settingsEditorFontFamily, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
                 // current stored locale code or 'System'
@@ -316,7 +316,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               const SizedBox(height: 12),
               const SizedBox(height: 8),
-              Text(L10n.of(context).drawerEditorFontSize),
+              Text(L10n.of(context).settingsEditorFontSize),
               Slider(
                 activeColor: prefs.accentColor,
                 value: prefs.editorFontSize,

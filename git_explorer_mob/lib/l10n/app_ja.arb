@@ -44,7 +44,9 @@
   "settingsEditorSettings": "エディター設定",
   "settingsEditorTabSize": "タブ幅",
   "settingsEditorShowLineNumbers": "行番号を表示",
-  "editorCreateNewFilePlaceholder": "# 新しいファイルを作成",
+  "settingsEditorCreateNewFilePlaceholder": "# 新しいファイルを作成",
+  "settingsEditorFontSize": "フォントサイズ",
+  "settingsEditorFontFamily": "フォントファミリー",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動フェッチ",
@@ -199,7 +201,6 @@
   "drawerCommitChanges": "変更をコミット",
   "drawerCommitMessageHint": "コミットメッセージ",
   "drawerCommit": "コミット",
-  "drawerEditorFontSize": "フォントサイズ",
   "drawerEditorTheme": "エディターテーマ",
   "drawerEditorWordWrap": "自動折り返し",
   "drawerFeedbackBody": "Git Explorer へのご意見をお待ちしています！",

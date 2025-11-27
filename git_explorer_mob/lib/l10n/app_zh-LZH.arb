@@ -44,7 +44,9 @@
   "settingsEditorSettings": "編輯閣設定",
   "settingsEditorTabSize": "Tab 之廣",
   "settingsEditorShowLineNumbers": "顯行數",
-  "editorCreateNewFilePlaceholder": "# 創建新檔",
+  "settingsEditorCreateNewFilePlaceholder": "# 創建新檔",
+  "settingsEditorFontSize": "字體大小",
+  "settingsEditorFontFamily": "字體家族",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動取",
@@ -199,7 +201,6 @@
   "drawerCommitChanges": "定變更",
   "drawerCommitMessageHint": "定變更之語",
   "drawerCommit": "定",
-  "drawerEditorFontSize": "字大小",
   "drawerEditorTheme": "編輯閣主題",
   "drawerEditorWordWrap": "自動換行",
   "drawerFeedbackBody": "敬候君對 Git Explorer 之卓見！",

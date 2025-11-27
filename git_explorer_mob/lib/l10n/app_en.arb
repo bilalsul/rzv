@@ -44,7 +44,9 @@
   "settingsEditorSettings": "Editor Settings",
   "settingsEditorTabSize": "Tab size",
   "settingsEditorShowLineNumbers": "Show line numbers",
-  "editorCreateNewFilePlaceholder": "# Create New File",
+  "settingsEditorCreateNewFilePlaceholder": "# Create New File",
+  "settingsEditorFontSize": "Font Size",
+  "settingsEditorFontFamily": "Font Family",
   
   "settingsGitSettings": "Git Settings",
   "settingsGitAutoFetch": "Auto-fetch",
@@ -203,7 +205,6 @@
   "drawerCommitChanges": "Commit Changes",
   "drawerCommitMessageHint": "Commit message",
   "drawerCommit": "Commit",
-  "drawerEditorFontSize": "Font Size",
   "drawerEditorTheme": "Editor Theme",
   "drawerEditorWordWrap": "Word Wrap",
   "drawerFeedbackBody": "We'd love to hear your feedback about the Git Explorer!",
