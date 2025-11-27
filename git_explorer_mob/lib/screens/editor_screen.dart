@@ -101,24 +101,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             //   },
             // ),
             
-            IconButton(
-              icon: const Icon(Icons.view_carousel),
-              visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-              padding: EdgeInsets.zero,
-              style: ButtonStyle(
-                iconSize: WidgetStateProperty.all(20),
-              ),
-              onPressed: () {
-                if(prefs.editorMinimapEnabled) {
-                    prefs.saveEditorMinimapEnabled(false);
-                    return;
-                }
-                if(!prefs.editorMinimapEnabled) {
-                    prefs.saveEditorMinimapEnabled(true);
-                    return;
-                }
-              },
-            ),
+            prefs.codeFoldingEnabled ?
             IconButton(
               icon: const Icon(Icons.wrap_text),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -136,7 +119,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                     return;
                 }
               },
-            ),
+            ) : SizedBox.shrink(),
             IconButton(
               icon: const Icon(Icons.numbers),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -151,6 +134,24 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                 }
                 if(!prefs.editorLineNumbers) {
                     prefs.saveEditorLineNumbers(true);
+                    return;
+                }
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.view_carousel),
+              visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+              padding: EdgeInsets.zero,
+              style: ButtonStyle(
+                iconSize: WidgetStateProperty.all(20),
+              ),
+              onPressed: () {
+                if(prefs.editorMinimapEnabled) {
+                    prefs.saveEditorMinimapEnabled(false);
+                    return;
+                }
+                if(!prefs.editorMinimapEnabled) {
+                    prefs.saveEditorMinimapEnabled(true);
                     return;
                 }
               },
