@@ -23,7 +23,7 @@ const List<PluginDefinition> editorPlugins = [
     id: 'code_folding',
     name: 'code_folding',
     description: 'code_folding',
-    icon: Icons.unfold_less_outlined,
+    icon: Icons.wrap_text,
     category: PluginCategory.editor,
   ),
   // PluginDefinition(
