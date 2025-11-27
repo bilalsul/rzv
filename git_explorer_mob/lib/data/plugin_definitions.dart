@@ -26,6 +26,13 @@ const List<PluginDefinition> editorPlugins = [
     icon: Icons.wrap_text,
     category: PluginCategory.editor,
   ),
+  PluginDefinition(
+    id: 'advanced_editor_options',
+    name: 'advanced_editor_options',
+    description: 'advanced_editor_options',
+    icon: Icons.edit,
+    category: PluginCategory.editor,
+  ),
   // PluginDefinition(
   //   id: 'bracket_matching',
   //   name: 'bracket_matching',
