@@ -44,7 +44,9 @@
   "settingsEditorSettings": "編輯器設定",
   "settingsEditorTabSize": "Tab 寬度",
   "settingsEditorShowLineNumbers": "顯示行號",
-  "editorCreateNewFilePlaceholder": "# 建立新檔案",
+  "settingsEditorOpenFilePlaceholder": "# 從專案中開啟檔案或建立新檔案",
+  "settingsEditorFontSize": "字型大小",
+  "settingsEditorFontFamily": "字型系列",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動擷取",
@@ -199,7 +201,6 @@
   "drawerCommitChanges": "提交變更",
   "drawerCommitMessageHint": "提交訊息",
   "drawerCommit": "提交",
-  "drawerEditorFontSize": "字型大小",
   "drawerEditorTheme": "編輯器主題",
   "drawerEditorWordWrap": "自動換行",
   "drawerFeedbackBody": "我們非常期待您對 Git Explorer 的寶貴意見！",

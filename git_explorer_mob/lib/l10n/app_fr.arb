@@ -44,7 +44,9 @@
   "settingsEditorSettings": "Paramètres de l'éditeur",
   "settingsEditorTabSize": "Taille des tabulations",
   "settingsEditorShowLineNumbers": "Afficher les numéros de ligne",
-  "editorCreateNewFilePlaceholder": "# Créer un nouveau fichier",
+  "settingsEditorOpenFilePlaceholder": "# Ouvrir un fichier depuis un projet ou créer un nouveau fichier",
+  "settingsEditorFontSize": "Taille de police",
+  "settingsEditorFontFamily": "Police de caractères",
   
   "settingsGitSettings": "Paramètres Git",
   "settingsGitAutoFetch": "Récupération automatique",
@@ -203,7 +205,6 @@
   "drawerCommitChanges": "Valider les modifications",
   "drawerCommitMessageHint": "Message de validation",
   "drawerCommit": "Valider",
-  "drawerEditorFontSize": "Taille de police",
   "drawerEditorTheme": "Thème de l'éditeur",
   "drawerEditorWordWrap": "Retour à la ligne",
   "drawerFeedbackBody": "Nous aimerions avoir votre retour sur Git Explorer !",

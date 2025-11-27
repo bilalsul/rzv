@@ -44,7 +44,9 @@
   "settingsEditorSettings": "إعدادات المحرر",
   "settingsEditorTabSize": "حجم علامة التبويب",
   "settingsEditorShowLineNumbers": "إظهار أرقام الأسطر",
-  "editorCreateNewFilePlaceholder": "# إنشاء ملف جديد",
+  "settingsEditorOpenFilePlaceholder": "# افتح ملفًا من مشروع أو أنشئ ملفًا جديدًا",
+  "settingsEditorFontSize": "حجم الخط",
+  "settingsEditorFontFamily": "عائلة الخط",
   
   "settingsGitSettings": "إعدادات Git",
   "settingsGitAutoFetch": "جلب تلقائي",
@@ -203,7 +205,6 @@
   "drawerCommitChanges": "تسجيل التغييرات",
   "drawerCommitMessageHint": "رسالة التسجيل",
   "drawerCommit": "تسجيل",
-  "drawerEditorFontSize": "حجم الخط",
   "drawerEditorTheme": "سمة المحرر",
   "drawerEditorWordWrap": "التفاف النص",
   "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول Git Explorer",

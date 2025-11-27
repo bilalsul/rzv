@@ -44,7 +44,9 @@
   "settingsEditorSettings": "Editör Ayarları",
   "settingsEditorTabSize": "Sekme boyutu",
   "settingsEditorShowLineNumbers": "Satır numaralarını göster",
-  "editorCreateNewFilePlaceholder": "# Yeni dosya oluştur",
+  "settingsEditorOpenFilePlaceholder": "# Projeden dosya aç veya yeni dosya oluştur",
+  "settingsEditorFontSize": "Yazı Boyutu",
+  "settingsEditorFontFamily": "Yazı Tipi Ailesi",
   
   "settingsGitSettings": "Git Ayarları",
   "settingsGitAutoFetch": "Otomatik çekme",
@@ -203,7 +205,6 @@
   "drawerCommitChanges": "Değişiklikleri Commit Et",
   "drawerCommitMessageHint": "Commit mesajı",
   "drawerCommit": "Commit",
-  "drawerEditorFontSize": "Yazı Boyutu",
   "drawerEditorTheme": "Editör Teması",
   "drawerEditorWordWrap": "Kelime Kaydırma",
   "drawerFeedbackBody": "Git Explorer hakkındaki görüşlerinizi duymak isteriz!",

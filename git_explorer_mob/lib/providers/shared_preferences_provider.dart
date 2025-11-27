@@ -575,7 +575,7 @@ String get currentOpenFileContent {
 }
 
 String filePlaceholder(BuildContext context) {
-  return L10n.of(context).editorCreateNewFilePlaceholder;
+  return L10n.of(context).settingsEditorOpenFilePlaceholder;
 }
 Future<void> saveCurrentOpenFileContent(String content) async {
   await prefs.setString('editor_current_content', content);
@@ -636,7 +636,7 @@ Future<void> saveEditorFontSize(double size) async {
 
 // Getter and setter for editor font family
 String get editorFontFamily {
-  return prefs.getString('editor_font_family') ?? 'Fira Code, Monaco, Menlo, Consolas';
+  return prefs.getString('editor_font_family') ?? 'Consolas';
 }
 
 Future<void> saveEditorFontFamily(String fontFamily) async {
