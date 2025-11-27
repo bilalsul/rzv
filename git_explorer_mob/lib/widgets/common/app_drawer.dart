@@ -547,7 +547,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           children: [
             Icon(plugin.icon, color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 12),
-            Text(plugin.name),
+            Text(_localizedPluginName(plugin.name, context)),
           ],
         ),
         content: Column(
@@ -555,15 +555,17 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (plugin.description != null) ...[
-              Text(plugin.description!),
+              // Text(plugin.description!),
+              Text(_localizedPluginDescription(plugin.description!, context)),
               const SizedBox(height: 16),
             ],
             Text(
-              L10n.of(context).drawerPluginId(plugin.id),
+              _localizedPluginName(plugin.name, context),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
-              L10n.of(context).drawerPluginCategory(plugin.category.name.toUpperCase()),
+              // L10n.of(context).drawerPluginCategory(plugin.category.name.toUpperCase()),
+              _localizedPluginCategory(plugin.category, context),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -614,7 +616,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
       applicationIcon: const Icon(Icons.code, size: 48),
       children: [
         const SizedBox(height: 16),
-        Text(L10n.of(context).drawerAboutDescription),
+        Text(L10n.of(context).appAbout),
         const SizedBox(height: 16),
         Text(
           L10n.of(context).drawerFirstInstalled(_formatDate(appState.firstInstallDate, context)),
@@ -697,4 +699,18 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return '';
     }
   }
+}
+
+String _localizedPluginCategory(PluginCategory category, BuildContext context) {
+    final l = L10n.of(context);
+    switch (category) {
+      case PluginCategory.editor:
+        return l.drawerEditorPlugins;
+      case PluginCategory.utility:
+        return l.drawerUtilityPlugins;
+      case PluginCategory.git:
+        return l.drawerGitIntegration;
+      case PluginCategory.experimental:
+        return l.drawerExperimental;
+    }
 }
