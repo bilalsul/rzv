@@ -62,7 +62,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     // AI config is read into local state in initState(); persisted values
     // are accessed via Prefs when Apply is pressed.
     final feCfg = {
-      'showHidden': prefs.getPluginConfig('file_explorer', 'showHidden') ?? false,
+      'show_hidden': prefs.getPluginConfig('file_explorer', 'show_hidden') ?? false,
       'previewMarkdown': prefs.getPluginConfig('file_explorer', 'previewMarkdown') ?? true,
     };
     final terminalCfg = {
@@ -473,15 +473,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             title: L10n.of(context).settingsFileExplorerSettings,
             visible: fileExplorerEnabled,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsFileExplorerShowHidden)),
-                Switch(value: (feCfg['showHidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'showHidden', v), activeColor: prefs.secondaryColor),
-              ]),
+              // Row(children: [
+              //   Expanded(child: Text(L10n.of(context).settingsFileExplorerShowHidden)),
+              //   Switch(value: (feCfg['show_hidden'] ?? false) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'show_hidden', v), activeColor: prefs.secondaryColor),
+              // ]),
               const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsFileExplorerPreviewMarkdown)),
-                Switch(value: (feCfg['previewMarkdown'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('file_explorer', 'previewMarkdown', v), activeColor: prefs.secondaryColor),
-              ]),
+                Switch.adaptive(value: prefs.isPluginOptionEnabled('preview_markdown'), 
+                onChanged: (v) async => await prefs.setPluginOptionEnabled('preview_markdown', v), 
+                activeColor: prefs.secondaryColor,
+                )]),
             ]),
           ) : SizedBox.shrink() ,
 
@@ -500,8 +502,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               await prefs.setPluginConfig('editor', 'showLineNumbers', null);
               await prefs.setPluginConfig('git', 'autoFetch', null);
               await prefs.setPluginConfig('git', 'defaultBranch', null);
-              await prefs.setPluginConfig('file_explorer', 'showHidden', null);
-              await prefs.setPluginConfig('file_explorer', 'previewMarkdown', null);
+              await prefs.setPluginConfig('file_explorer', 'show_hidden', null);
+              await prefs.setPluginConfig('file_explorer', 'preview_markdown', null);
               await prefs.setPluginConfig('ai', 'model', null);
               await prefs.setPluginConfig('ai', 'maxTokens', null);
               prefs.resetThemeCustomizerColors();
