@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 // Navigation moved to AppShell
@@ -357,82 +356,85 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     final isEnabled = Prefs().isPluginEnabled(plugin.id);
     final prefs = ref.watch(prefsProvider);
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: isEnabled
-            // ? theme.colorScheme.primaryContainer.withOpacity(0.1)
-            ? prefs.secondaryColor.withOpacity(0.1)
-            : theme.colorScheme.surfaceVariant.withOpacity(0.3),
-      ),
-      child: ListTile(
-        leading: Icon(
-          plugin.icon,
-          size: 18,
+    return AbsorbPointer(
+      absorbing: prefs.disabledByDefault(plugin.id),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
           color: isEnabled
-              // ? theme.colorScheme.primary
-              ? prefs.accentColor.withOpacity(0.4)
-              : theme.colorScheme.onSurface.withOpacity(0.4),
+              // ? theme.colorScheme.primaryContainer.withOpacity(0.1)
+              ? prefs.secondaryColor.withOpacity(0.1)
+              : theme.colorScheme.surfaceVariant.withOpacity(0.3),
         ),
-        title: Text(
-          _localizedPluginName(plugin.id, context),
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w500,
+        child: ListTile(
+          leading: Icon(
+            plugin.icon,
+            size: 18,
             color: isEnabled
-                ? theme.colorScheme.onSurface
-                : theme.colorScheme.onSurface.withOpacity(0.6),
+                // ? theme.colorScheme.primary
+                ? prefs.accentColor.withOpacity(0.4)
+                : theme.colorScheme.onSurface.withOpacity(0.4),
           ),
-        ),
-        subtitle: (_localizedPluginDescription(plugin.id, context)).isNotEmpty
-            ? Text(
-                _localizedPluginDescription(plugin.id, context),
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: isEnabled
-                      ? theme.colorScheme.onSurface.withOpacity(0.7)
-                      : theme.colorScheme.onSurface.withOpacity(0.4),
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              )
-            : null,
-        trailing: Switch.adaptive(
-          value: isEnabled,
-          onChanged: (enabled) async {
-            // If enabling the file explorer, request storage permission first
-            // if (plugin.id == 'file_explorer' && enabled) {
-            //   final status = await Permission.storage.request();
-            //     // Ask user to open app settings so they can grant permission
-            //     // user have to grant permissions, No permissions requested
-            //     // so the file explorer is enabled after sending the user to settings
-            //     if (!status.isGranted) {
-            //         final opened = await openAppSettings();
-            //         if (!opened) {
-            //           ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBar(content: Text(L10n.of(context).connectionFailed)),
-            //           );
-            //           return;
-            //     }
-            //   }
-            //     if (!status.isGranted && enabled) {
-            //       Prefs().enabledPlugins.remove("file_explorer");
-            //       return;
-            //     }
-            // }
-
-            await Prefs().setPluginEnabled(plugin.id, enabled);
-            // Trigger a rebuild so changes are visible immediately
-            setState(() {});
+          title: Text(
+            _localizedPluginName(plugin.id, context),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: isEnabled
+                  ? theme.colorScheme.onSurface
+                  : theme.colorScheme.onSurface.withOpacity(0.6),
+            ),
+          ),
+          subtitle: (_localizedPluginDescription(plugin.id, context)).isNotEmpty
+              ? Text(
+                  _localizedPluginDescription(plugin.id, context),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: isEnabled
+                        ? theme.colorScheme.onSurface.withOpacity(0.7)
+                        : theme.colorScheme.onSurface.withOpacity(0.4),
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                )
+              : null,
+          trailing: Switch.adaptive(
+            value: prefs.disabledByDefault(plugin.id) ? true : isEnabled,
+            onChanged: (enabled) async {
+              // If enabling the file explorer, request storage permission first
+              // if (plugin.id == 'file_explorer' && enabled) {
+              //   final status = await Permission.storage.request();
+              //     // Ask user to open app settings so they can grant permission
+              //     // user have to grant permissions, No permissions requested
+              //     // so the file explorer is enabled after sending the user to settings
+              //     if (!status.isGranted) {
+              //         final opened = await openAppSettings();
+              //         if (!opened) {
+              //           ScaffoldMessenger.of(context).showSnackBar(
+              //             SnackBar(content: Text(L10n.of(context).connectionFailed)),
+              //           );
+              //           return;
+              //     }
+              //   }
+              //     if (!status.isGranted && enabled) {
+              //       Prefs().enabledPlugins.remove("file_explorer");
+              //       return;
+              //     }
+              // }
+      
+              await Prefs().setPluginEnabled(plugin.id, enabled);
+              // Trigger a rebuild so changes are visible immediately
+              setState(() {});
+            },
+            activeColor: prefs.secondaryColor,
+            inactiveTrackColor: theme.colorScheme.surfaceVariant,
+          ),
+          onTap: () {
+            // Optional: Show plugin details or settings
+            _showPluginDetails(plugin);
           },
-          activeColor: prefs.secondaryColor,
-          inactiveTrackColor: theme.colorScheme.surfaceVariant,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+          visualDensity: const VisualDensity(vertical: -3),
         ),
-        onTap: () {
-          // Optional: Show plugin details or settings
-          _showPluginDetails(plugin);
-        },
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-        visualDensity: const VisualDensity(vertical: -3),
       ),
     );
   }
@@ -639,6 +641,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.codeFoldingName;
       case 'bracket_matching':
         return l.bracketMatchingName;
+      case 'advanced_editor_options':
+        return l.advancedEditorName;
       case 'git_history':
         return l.gitHistoryName;
       case 'git_lens':
@@ -675,6 +679,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.codeFoldingDescription;
       case 'bracket_matching':
         return l.bracketMatchingDescription;
+         case 'advanced_editor_options':
+        return l.advancedEditorDescription;
       case 'git_history':
         return l.gitHistoryDescription;
       case 'git_lens':
