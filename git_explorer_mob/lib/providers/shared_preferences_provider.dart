@@ -636,7 +636,7 @@ Future<void> saveEditorFontSize(double size) async {
 
 // Getter and setter for editor font family
 String get editorFontFamily {
-  return prefs.getString('editor_font_family') ?? 'Fira Code, Monaco, Menlo, Consolas';
+  return prefs.getString('editor_font_family') ?? 'Consolas';
 }
 
 Future<void> saveEditorFontFamily(String fontFamily) async {
