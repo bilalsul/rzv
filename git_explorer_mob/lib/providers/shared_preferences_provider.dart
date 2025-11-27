@@ -571,10 +571,13 @@ String get currentOpenFile {
   return prefs.getString('editor_current_file') ?? '';
 }
 
-String? get currentOpenFileContent {
-  return prefs.getString('editor_current_content');
+String get currentOpenFileContent {
+  return prefs.getString('editor_current_content') ?? '';
 }
 
+String filePlaceholder(BuildContext context) {
+  return L10n.of(context).editorCreateNewFilePlaceholder;
+}
 Future<void> saveCurrentOpenFileContent(String content) async {
   await prefs.setString('editor_current_content', content);
   notifyListeners();
