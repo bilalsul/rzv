@@ -868,6 +868,22 @@ bool featureSupported(String pluginId) {
     notifyListeners();
   }
 
+  Future<void> setPluginOptionEnabled(String pluginId, bool enabled) async {
+    final List<String> current = prefs.getStringList('plugins_options') ?? [];
+    final updated = List<String>.from(current);
+    if (enabled) {
+      if (!updated.contains(pluginId)) updated.add(pluginId);
+    } else {
+      updated.remove(pluginId);
+    }
+    await prefs.setStringList('plugins_options', updated);
+    notifyListeners();
+  }
+
+  bool isPluginOptionEnabled(String pluginId) {
+    return prefs.getStringList('plugins_options')?.contains(pluginId) ?? false;
+  }
+
   /// Read a plugin-specific config value stored as 'plugin_<pluginId>_<configKey>'.
   /// Returns null if not present.
   dynamic getPluginConfig(String pluginId, String configKey) {
