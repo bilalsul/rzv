@@ -43,13 +43,13 @@ const List<PluginDefinition> editorPlugins = [
 ];
 
 const List<PluginDefinition> gitPlugins = [
-  PluginDefinition(
-    id: 'git_history',
-    name: 'git_history',
-    description: 'git_history',
-    icon: Icons.history_outlined,
-    category: PluginCategory.git,
-  ),
+  // PluginDefinition(
+  //   id: 'git_history',
+  //   name: 'git_history',
+  //   description: 'git_history',
+  //   icon: Icons.history_outlined,
+  //   category: PluginCategory.git,
+  // ),
   // PluginDefinition(
   //   id: 'git_lens',
   //   name: 'git_lens',
@@ -81,13 +81,13 @@ const List<PluginDefinition> utilityPlugins = [
   //   icon: Icons.search_outlined,
   //   category: PluginCategory.utility,
   // ),
-  PluginDefinition(
-    id: 'terminal',
-    name: 'terminal',
-    description: 'terminal',
-    icon: Icons.terminal_outlined,
-    category: PluginCategory.utility,
-  ),
+  // PluginDefinition(
+  //   id: 'terminal',
+  //   name: 'terminal',
+  //   description: 'terminal',
+  //   icon: Icons.terminal_outlined,
+  //   category: PluginCategory.utility,
+  // ),
   PluginDefinition(
     id: 'theme_customizer',
     name: 'theme_customizer',
@@ -105,6 +105,20 @@ const List<PluginDefinition> experimentalPlugins = [
     icon: Icons.auto_awesome_outlined,
     category: PluginCategory.experimental,
   ),
+  // PluginDefinition(
+  //   id: 'git_history',
+  //   name: 'git_history',
+  //   description: 'git_history',
+  //   icon: Icons.history_outlined,
+  //   category: PluginCategory.experimental, //change to git
+  // ),
+  // PluginDefinition(
+  //   id: 'terminal',
+  //   name: 'terminal',
+  //   description: 'terminal',
+  //   icon: Icons.terminal_outlined,
+  //   category: PluginCategory.experimental, // change to utility
+  // ),
   // PluginDefinition(
   //   id: 'real_time_collab',
   //   name: 'real_time_collab',

@@ -226,13 +226,13 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ),
 
         // Git Plugins
-        _buildPluginCategory(
-          title: L10n.of(context).drawerGitIntegration,
-          plugins: plugin_defs.gitPlugins,
-          isExpanded: _expandedGitPlugins,
-          onToggle: () => setState(() => _expandedGitPlugins = !_expandedGitPlugins),
-          theme: theme,
-        ),
+        // _buildPluginCategory(
+        //   title: L10n.of(context).drawerGitIntegration,
+        //   plugins: plugin_defs.gitPlugins,
+        //   isExpanded: _expandedGitPlugins,
+        //   onToggle: () => setState(() => _expandedGitPlugins = !_expandedGitPlugins),
+        //   theme: theme,
+        // ),
 
         // _isNativeAdLoaded && _nativeAd != null
         //       ? SizedBox(
