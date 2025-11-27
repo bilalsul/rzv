@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:git_explorer_mob/enums/options/font_family.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
@@ -294,6 +295,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               //   label: '${editorCfg['tabSize'] ?? 2}',
               //   onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
               // ),
+              const SizedBox(height: 8),
+              Text(L10n.of(context).drawerEditorFontFamily, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              const SizedBox(height: 8),
+              DropdownButtonFormField<String>(
+                // current stored locale code or 'System'
+                value: prefs.editorFontFamily,
+                items: fontFamily.map((m) {
+                  final entry = m.entries.first;
+                  // final code = entry.key;
+                  final label = entry.value;
+                  final displayLabel = label[0].toUpperCase() + label.substring(1);
+                  return DropdownMenuItem<String>(value: label, child: Text(displayLabel));
+                }).toList(),
+                onChanged: (selectedFont) async {
+                  if (selectedFont == null) return;
+                  // Persist the font family to prefs
+                  await Prefs().saveEditorFontFamily(selectedFont);
+                },
+              ),
+              const SizedBox(height: 12),
               const SizedBox(height: 8),
               Text(L10n.of(context).drawerEditorFontSize),
               Slider(
