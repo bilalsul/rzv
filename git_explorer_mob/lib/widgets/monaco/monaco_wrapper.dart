@@ -88,13 +88,13 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
         //   const SizedBox(width: 8),
         // ]),
       ),
-      Expanded(child: Platform.isAndroid || Platform.isAndroid ? 
+      Expanded(child: Platform.isAndroid || Platform.isIOS ? 
       MonacoEditor(
-        initialValue: prefs.currentOpenFileContent,
+        initialValue: prefs.currentOpenFile.isEmpty ? prefs.filePlaceholder(context) : prefs.currentOpenFileContent,
         backgroundColor: prefs.backgroundColor,
         onContentChanged: (value) => prefs.saveCurrentOpenFileContent(value),
         options: EditorOptions(
-          language: prefs.currentOpenFile.toMonacoLanguage(),
+          language: prefs.isPluginEnabled("syntax_highlighting") ? prefs.currentOpenFile.toMonacoLanguage() : MonacoLanguage.plaintext,
           lineNumbers: prefs.editorLineNumbers,
           minimap: prefs.editorMinimapEnabled,
           readOnly: prefs.readonlyModeEnabled,
