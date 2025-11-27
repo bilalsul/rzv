@@ -51,10 +51,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final themeCustomizerEnabled = prefs.isPluginEnabled('theme_customizer');
     
     // plugin configs read via Prefs.getPluginConfig(pluginName, key)
-    // final editorCfg = {
-    //   'tabSize': prefs.getPluginConfig('editor', 'tabSize') ?? 2,
-    //   'showLineNumbers': prefs.getPluginConfig('editor', 'showLineNumbers') ?? true,
-    // };
+    final editorCfg = {
+      'tabSize': prefs.getPluginConfig('editor', 'tabSize') ?? 2,
+      'showLineNumbers': prefs.getPluginConfig('editor', 'showLineNumbers') ?? true,
+    };
     final gitCfg = {
       'autoFetch': prefs.getPluginConfig('git', 'autoFetch') ?? true,
       'defaultBranch': prefs.getPluginConfig('git', 'defaultBranch') ?? 'main',
@@ -280,31 +280,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ) : SizedBox.shrink(),
 
           // Editor settings panel (visible only when editor plugin enabled)
-          // PluginSettingsPanel(
-          //   title: L10n.of(context).settingsEditorSettings,
-          //   visible: true,
-          //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          //     Text(L10n.of(context).settingsEditorTabSize),
-          //     Slider(
-          //       activeColor: prefs.accentColor,
-          //       value: (editorCfg['tabSize'] ?? 2).toDouble(),
-          //       min: 2,
-          //       max: 8,
-          //       divisions: 6,
-          //       label: '${editorCfg['tabSize'] ?? 2}',
-          //       onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
-          //     ),
-          //     const SizedBox(height: 8),
-          //     Row(children: [
-          //       Text(L10n.of(context).settingsEditorShowLineNumbers),
-          //       const Spacer(),
-          //       Checkbox(
-          //         value: (editorCfg['showLineNumbers'] ?? true) as bool,
-          //         onChanged: (v) async => await prefs.setPluginConfig('editor', 'showLineNumbers', v ?? true),
-          //       ),
-          //     ]),
-          //   ]),
-          // ),
+          prefs.isPluginEnabled("advanced_editor_options") ?
+          PluginSettingsPanel(
+            title: L10n.of(context).settingsEditorSettings,
+            visible: true,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(L10n.of(context).settingsEditorTabSize),
+              Slider(
+                activeColor: prefs.accentColor,
+                value: (editorCfg['tabSize'] ?? 2).toDouble(),
+                min: 2,
+                max: 8,
+                divisions: 6,
+                label: '${editorCfg['tabSize'] ?? 2}',
+                onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
+              ),
+              const SizedBox(height: 8),
+              Row(children: [
+                Text(L10n.of(context).settingsEditorShowLineNumbers),
+                const Spacer(),
+                Checkbox(
+                  value: (editorCfg['showLineNumbers'] ?? true) as bool,
+                  onChanged: (v) async => await prefs.setPluginConfig('editor', 'showLineNumbers', v ?? true),
+                ),
+              ]),
+            ]),
+          ) : SizedBox.shrink(),
 
           // Git settings
           prefs.featureSupported("git_history") ?
