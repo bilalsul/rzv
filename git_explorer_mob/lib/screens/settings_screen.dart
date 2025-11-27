@@ -43,33 +43,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final prefs = ref.watch(prefsProvider);
   // Temporary theme values are initialized in initState from Prefs.
     // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
-    // final editorEnabled = prefs.isPluginEnabled('editor');
-    final gitEnabled = prefs.isPluginEnabled('git_history');
-    final aiEnabled = prefs.isPluginEnabled('ai_assist');
     final fileExplorerEnabled = prefs.isPluginEnabled('file_explorer');
-    final terminalEnabled = prefs.isPluginEnabled('terminal');
     final themeCustomizerEnabled = prefs.isPluginEnabled('theme_customizer');
+    final aiEnabled = prefs.isPluginEnabled('ai_assist');
+    // final gitEnabled = prefs.isPluginEnabled('git_history');
+    // final terminalEnabled = prefs.isPluginEnabled('terminal');
     
     // plugin configs read via Prefs.getPluginConfig(pluginName, key)
-    final editorCfg = {
-      'tabSize': prefs.getPluginConfig('editor', 'tabSize') ?? 2,
-      'showLineNumbers': prefs.getPluginConfig('editor', 'showLineNumbers') ?? true,
-    };
-    final gitCfg = {
-      'autoFetch': prefs.getPluginConfig('git', 'autoFetch') ?? true,
-      'defaultBranch': prefs.getPluginConfig('git', 'defaultBranch') ?? 'main',
-    };
+    // final editorCfg = {
+    //   'tabSize': prefs.getPluginConfig('editor', 'tabSize') ?? 2,
+    //   'showLineNumbers': prefs.getPluginConfig('editor', 'showLineNumbers') ?? true,
+    // };
+    // final gitCfg = {
+    //   'autoFetch': prefs.getPluginConfig('git', 'autoFetch') ?? true,
+    //   'defaultBranch': prefs.getPluginConfig('git', 'defaultBranch') ?? 'main',
+    // };
     // AI config is read into local state in initState(); persisted values
     // are accessed via Prefs when Apply is pressed.
-    final feCfg = {
-      'show_hidden': prefs.getPluginConfig('file_explorer', 'show_hidden') ?? false,
-      'previewMarkdown': prefs.getPluginConfig('file_explorer', 'previewMarkdown') ?? true,
-    };
-    final terminalCfg = {
-      'shellPath': prefs.getPluginConfig('terminal', 'shellPath') ?? '/bin/bash',
-      'fontSize': prefs.getPluginConfig('terminal', 'fontSize') ?? 14,
-      'bell': prefs.getPluginConfig('terminal', 'bell') ?? true,
-    };
+    // final feCfg = {
+    //   'show_hidden': prefs.getPluginConfig('file_explorer', 'show_hidden') ?? false,
+    //   'previewMarkdown': prefs.getPluginConfig('file_explorer', 'previewMarkdown') ?? true,
+    // };
+    // final terminalCfg = {
+    //   'shellPath': prefs.getPluginConfig('terminal', 'shellPath') ?? '/bin/bash',
+    //   'fontSize': prefs.getPluginConfig('terminal', 'fontSize') ?? 14,
+    //   'bell': prefs.getPluginConfig('terminal', 'bell') ?? true,
+    // };
   
 
     return Scaffold(
@@ -285,48 +284,56 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             title: L10n.of(context).settingsEditorSettings,
             visible: true,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(L10n.of(context).settingsEditorTabSize),
+              // Text(L10n.of(context).settingsEditorTabSize),
+              // Slider(
+              //   activeColor: prefs.accentColor,
+              //   value: (editorCfg['tabSize'] ?? 2).toDouble(),
+              //   min: 2,
+              //   max: 8,
+              //   divisions: 6,
+              //   label: '${editorCfg['tabSize'] ?? 2}',
+              //   onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
+              // ),
+              const SizedBox(height: 8),
+              Text(L10n.of(context).drawerEditorFontSize),
               Slider(
                 activeColor: prefs.accentColor,
-                value: (editorCfg['tabSize'] ?? 2).toDouble(),
-                min: 2,
-                max: 8,
-                divisions: 6,
-                label: '${editorCfg['tabSize'] ?? 2}',
-                onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
+                value: prefs.editorFontSize,
+                min: 8,
+                max: 40,
+                divisions: 16,
+                label: prefs.editorFontSize.toString(),
+                onChanged: (v) async => await prefs.saveEditorFontSize(v),
               ),
-              const SizedBox(height: 8),
               Row(children: [
-                Text(L10n.of(context).settingsEditorShowLineNumbers),
-                const Spacer(),
-                Checkbox(
-                  value: (editorCfg['showLineNumbers'] ?? true) as bool,
-                  onChanged: (v) async => await prefs.setPluginConfig('editor', 'showLineNumbers', v ?? true),
-                ),
-              ]),
+                Expanded(child: Text(L10n.of(context).settingsEditorShowLineNumbers)),
+                Switch.adaptive(value: prefs.editorLineNumbers, 
+                onChanged: (v) async => await prefs.saveEditorLineNumbers(v),
+                activeColor: prefs.secondaryColor,
+                )]),
             ]),
-          ) : SizedBox.shrink(),
+          ) : SizedBox.shrink() ,
 
           // Git settings
-          prefs.featureSupported("git_history") ?
-          PluginSettingsPanel(
-            title: L10n.of(context).settingsGitSettings,
-            visible: gitEnabled,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsGitAutoFetch)),
-                Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v), activeColor: prefs.secondaryColor),
-              ]),
-              const SizedBox(height: 8),
-              Text(L10n.of(context).settingsGitDefaultBranch),
-              const SizedBox(height: 4),
-              TextField(
-                controller: TextEditingController(text: (gitCfg['defaultBranch'] ?? 'main') as String),
-                decoration: const InputDecoration(hintText: 'main'),
-                onSubmitted: (v) async => await prefs.setPluginConfig('git', 'defaultBranch', v.trim()),
-              ),
-            ]),
-          ) : SizedBox.shrink(),
+          // prefs.featureSupported("git_history") ?
+          // PluginSettingsPanel(
+          //   title: L10n.of(context).settingsGitSettings,
+          //   visible: gitEnabled,
+          //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          //     Row(children: [
+          //       Expanded(child: Text(L10n.of(context).settingsGitAutoFetch)),
+          //       Switch(value: (gitCfg['autoFetch'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('git', 'autoFetch', v), activeColor: prefs.secondaryColor),
+          //     ]),
+          //     const SizedBox(height: 8),
+          //     Text(L10n.of(context).settingsGitDefaultBranch),
+          //     const SizedBox(height: 4),
+          //     TextField(
+          //       controller: TextEditingController(text: (gitCfg['defaultBranch'] ?? 'main') as String),
+          //       decoration: const InputDecoration(hintText: 'main'),
+          //       onSubmitted: (v) async => await prefs.setPluginConfig('git', 'defaultBranch', v.trim()),
+          //     ),
+          //   ]),
+          // ) : SizedBox.shrink(),
 
           // AI settings
           prefs.featureSupported("ai") ?
@@ -441,31 +448,31 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ) : SizedBox.shrink(),
 
           // Terminal settings
-          prefs.featureSupported("terminal") ?
-          PluginSettingsPanel(
-            title: L10n.of(context).settingsTerminalSettings,
-            visible: terminalEnabled,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(L10n.of(context).settingsTerminalShellExecutable),
-              const SizedBox(height: 8),
-              TextField(
-                controller: TextEditingController(text: (terminalCfg['shellPath'] ?? '/bin/bash') as String),
-                decoration: const InputDecoration(hintText: '/bin/bash'),
-                onSubmitted: (v) async => await prefs.setPluginConfig('terminal', 'shellPath', v.trim()),
-              ),
-              const SizedBox(height: 8),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsTerminalFontSize)),
-                Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt()),
-                activeColor: prefs.accentColor,
-                ),
-              ]),
-              Row(children: [
-                Expanded(child: Text(L10n.of(context).settingsTerminalAudibleBell)),
-                Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v), activeColor: prefs.secondaryColor),
-              ]),
-            ]),
-          ) : SizedBox.shrink(),
+          // prefs.featureSupported("terminal") ?
+          // PluginSettingsPanel(
+          //   title: L10n.of(context).settingsTerminalSettings,
+          //   visible: terminalEnabled,
+          //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          //     Text(L10n.of(context).settingsTerminalShellExecutable),
+          //     const SizedBox(height: 8),
+          //     TextField(
+          //       controller: TextEditingController(text: (terminalCfg['shellPath'] ?? '/bin/bash') as String),
+          //       decoration: const InputDecoration(hintText: '/bin/bash'),
+          //       onSubmitted: (v) async => await prefs.setPluginConfig('terminal', 'shellPath', v.trim()),
+          //     ),
+          //     const SizedBox(height: 8),
+          //     Row(children: [
+          //       Expanded(child: Text(L10n.of(context).settingsTerminalFontSize)),
+          //       Slider(value: (terminalCfg['fontSize'] ?? 14).toDouble(), min: 10, max: 24, divisions: 14, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'fontSize', v.toInt()),
+          //       activeColor: prefs.accentColor,
+          //       ),
+          //     ]),
+          //     Row(children: [
+          //       Expanded(child: Text(L10n.of(context).settingsTerminalAudibleBell)),
+          //       Switch(value: (terminalCfg['bell'] ?? true) as bool, onChanged: (v) async => await prefs.setPluginConfig('terminal', 'bell', v), activeColor: prefs.secondaryColor),
+          //     ]),
+          //   ]),
+          // ) : SizedBox.shrink(),
 
           // File Explorer settings
           prefs.featureSupported("file_explorer") ?
@@ -491,21 +498,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ElevatedButton.icon(
             onPressed: () async {
               // Reset selected plugin flags and a few common configs to defaults via Prefs.
-              await prefs.setPluginEnabled('editor', false);
-              await prefs.setPluginEnabled('git_history', false);
+              // await prefs.setPluginEnabled('editor', false);
               await prefs.setPluginEnabled('file_explorer', false);
-              await prefs.setPluginEnabled('terminal', false);
               await prefs.setPluginEnabled('theme_customizer', false);
               await prefs.setPluginEnabled('ai_assist', false);
+              await prefs.setPluginEnabled('git_history', false);
+              await prefs.setPluginEnabled('terminal', false);
               // remove a few plugin config keys
-              await prefs.setPluginConfig('editor', 'tabSize', null);
-              await prefs.setPluginConfig('editor', 'showLineNumbers', null);
-              await prefs.setPluginConfig('git', 'autoFetch', null);
-              await prefs.setPluginConfig('git', 'defaultBranch', null);
-              await prefs.setPluginConfig('file_explorer', 'show_hidden', null);
-              await prefs.setPluginConfig('file_explorer', 'preview_markdown', null);
-              await prefs.setPluginConfig('ai', 'model', null);
-              await prefs.setPluginConfig('ai', 'maxTokens', null);
+              // await prefs.setPluginConfig('editor', 'tabSize', null);
+              // await prefs.setPluginConfig('editor', 'showLineNumbers', null);
+              // await prefs.setPluginConfig('git', 'autoFetch', null);
+              // await prefs.setPluginConfig('git', 'defaultBranch', null);
+              // await prefs.setPluginConfig('file_explorer', 'show_hidden', null);
+              // await prefs.setPluginConfig('file_explorer', 'preview_markdown', null);
+              // await prefs.setPluginConfig('ai', 'model', null);
+              // await prefs.setPluginConfig('ai', 'maxTokens', null);
               prefs.resetThemeCustomizerColors();
             },
             icon: Icon(Icons.restore, color: prefs.accentColor),
