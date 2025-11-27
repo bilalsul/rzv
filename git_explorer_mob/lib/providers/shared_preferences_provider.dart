@@ -722,7 +722,8 @@ Future<void> saveEditorFormatOnSave(bool formatOnSave) async {
 // Plugins pref
 // Getter and setter for Read-Only Mode plugin (editor)
 bool get readonlyModeEnabled {
-  return isPluginEnabled('readonly_mode');
+  // return isPluginEnabled('readonly_mode');
+  return true;
 }
 
 bool disabledByDefault(String feature) {
