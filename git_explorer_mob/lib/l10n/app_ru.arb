@@ -231,6 +231,8 @@
   "codeFoldingDescription": "Скрытие и раскрытие блоков кода",
   "bracketMatchingName": "Сопоставление скобок",
   "bracketMatchingDescription": "Подсветка парных скобок и кавычек",
+  "advancedEditorName": "Расширенные настройки",
+  "advancedEditorDescription": "Расширенные параметры редактора в Настройках",
 
   "gitHistoryName": "История Git",
   "gitHistoryDescription": "Просмотр истории коммитов и различий",

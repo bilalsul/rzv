@@ -227,6 +227,8 @@
   "codeFoldingDescription": "Colapsar e expandir blocos de código",
   "bracketMatchingName": "Correspondência de Parênteses",
   "bracketMatchingDescription": "Destaca parênteses e chavetas correspondentes",
+  "advancedEditorName": "Opções avançadas",
+  "advancedEditorDescription": "Opções avançadas do editor nas Configurações",
 
   "gitHistoryName": "Histórico Git",
   "gitHistoryDescription": "Ver histórico de commits e diferenças",

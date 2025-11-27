@@ -227,6 +227,8 @@
   "codeFoldingDescription": "코드 블록을 접고 펼치기",
   "bracketMatchingName": "괄호 짝 맞춤",
   "bracketMatchingDescription": "짝이 되는 괄호 강조",
+  "advancedEditorName": "고급 옵션",
+  "advancedEditorDescription": "설정에서 편집기 고급 옵션",
 
   "gitHistoryName": "Git 기록",
   "gitHistoryDescription": "커밋 히스토리 및 차이 보기",

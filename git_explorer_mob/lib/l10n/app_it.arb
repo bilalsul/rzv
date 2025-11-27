@@ -231,6 +231,8 @@
   "codeFoldingDescription": "Comprimi ed espandi blocchi di codice",
   "bracketMatchingName": "Corrispondenza Parentesi",
   "bracketMatchingDescription": "Evidenzia le parentesi corrispondenti",
+  "advancedEditorName": "Opzioni avanzate",
+  "advancedEditorDescription": "Opzioni avanzate dell'editor nelle Impostazioni",
 
   "gitHistoryName": "Cronologia Git",
   "gitHistoryDescription": "Visualizza la cronologia dei commit e le differenze",

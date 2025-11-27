@@ -231,6 +231,8 @@
   "codeFoldingDescription": "Collapse and expand code blocks",
   "bracketMatchingName": "Bracket Matching",
   "bracketMatchingDescription": "Highlight matching brackets and parentheses",
+  "advancedEditorName" : "Advanced Options",
+  "advancedEditorDescription" :"Editor advanced options in Settings",
 
   "gitHistoryName": "Git History",
   "gitHistoryDescription": "View commit history and differences",

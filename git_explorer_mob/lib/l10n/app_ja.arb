@@ -227,6 +227,8 @@
   "codeFoldingDescription": "コードブロックを折りたたみ／展開",
   "bracketMatchingName": "括弧の対応表示",
   "bracketMatchingDescription": "対応する括弧をハイライト",
+  "advancedEditorName": "高度なオプション",
+  "advancedEditorDescription": "エディターの詳細オプション（設定内）",
 
   "gitHistoryName": "Git 履歴",
   "gitHistoryDescription": "コミット履歴と差分を確認",

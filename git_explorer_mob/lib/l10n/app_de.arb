@@ -231,6 +231,8 @@
   "codeFoldingDescription": "Code-Blöcke ein- und ausklappen",
   "bracketMatchingName": "Klammern-Zuordnung",
   "bracketMatchingDescription": "Passende Klammern und Klammerpaare hervorheben",
+  "advancedEditorName": "Erweiterte Optionen",
+  "advancedEditorDescription": "Erweiterte Editor-Optionen in den Einstellungen",
 
   "gitHistoryName": "Git-Verlauf",
   "gitHistoryDescription": "Commit-Verlauf und Unterschiede anzeigen",

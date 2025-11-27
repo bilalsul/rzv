@@ -231,6 +231,8 @@
   "codeFoldingDescription": "Kod bloklarını daraltıp genişletin",
   "bracketMatchingName": "Parantez Eşleştirme",
   "bracketMatchingDescription": "Eşleşen parantezleri vurgular",
+  "advancedEditorName": "Gelişmiş Seçenekler",
+  "advancedEditorDescription": "Düzenleyici gelişmiş seçenekleri Ayarlar'da",
 
   "gitHistoryName": "Git Geçmişi",
   "gitHistoryDescription": "Commit geçmişini ve farkları görüntüleyin",

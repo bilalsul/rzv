@@ -231,6 +231,8 @@
   "codeFoldingDescription": "Réduire et développer les blocs de code",
   "bracketMatchingName": "Correspondance des Parenthèses",
   "bracketMatchingDescription": "Mettre en évidence les parenthèses et crochets correspondants",
+  "advancedEditorName": "Options avancées",
+  "advancedEditorDescription": "Options avancées de l'éditeur dans les Paramètres",
 
   "gitHistoryName": "Historique Git",
   "gitHistoryDescription": "Voir l'historique des commits et les différences",

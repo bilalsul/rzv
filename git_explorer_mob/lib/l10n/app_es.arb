@@ -230,6 +230,8 @@
     "codeFoldingDescription": "Colapsa y expande bloques de código",
     "bracketMatchingName": "Coincidencia de paréntesis",
     "bracketMatchingDescription": "Resalta paréntesis y corchetes coincidentes",
+    "advancedEditorName": "Opciones avanzadas",
+    "advancedEditorDescription": "Opciones avanzadas del editor en Ajustes",
 
     "gitHistoryName": "Historial Git",
     "gitHistoryDescription": "Ver historial de commits y diferencias",

@@ -231,6 +231,8 @@
   "codeFoldingDescription": "طي وتوسيع كتل الكود",
   "bracketMatchingName": "مطابقة الأقواس",
   "bracketMatchingDescription": "تمييز الأقواس والأقواس المعقوفة المتطابقة",
+  "advancedEditorName": "خيارات متقدمة",
+  "advancedEditorDescription": "خيارات المحرر المتقدمة في الإعدادات",
 
   "gitHistoryName": "سجل Git",
   "gitHistoryDescription": "عرض سجل التسجيلات والاختلافات",

@@ -227,6 +227,8 @@
   "codeFoldingDescription": "折叠和展开代码块",
   "bracketMatchingName": "括号匹配",
   "bracketMatchingDescription": "高亮匹配的括号",
+  "advancedEditorName": "高级选项",
+  "advancedEditorDescription": "编辑器高级选项位于设置中",
 
   "gitHistoryName": "Git 历史",
   "gitHistoryDescription": "查看提交历史与差异",

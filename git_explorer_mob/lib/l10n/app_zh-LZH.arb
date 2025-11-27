@@ -227,6 +227,8 @@
   "codeFoldingDescription": "摺展碼段",
   "bracketMatchingName": "括號相應",
   "bracketMatchingDescription": "燦然示對應之括號",
+  "advancedEditorName": "進階選項",
+  "advancedEditorDescription": "編輯器進階設定於設定之中",
 
   "gitHistoryName": "Git 史記",
   "gitHistoryDescription": "觀定本之史與異同",
