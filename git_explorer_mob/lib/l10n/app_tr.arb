@@ -44,7 +44,7 @@
   "settingsEditorSettings": "Editör Ayarları",
   "settingsEditorTabSize": "Sekme boyutu",
   "settingsEditorShowLineNumbers": "Satır numaralarını göster",
-  "settingsEditorCreateNewFilePlaceholder": "# Yeni dosya oluştur",
+  "settingsEditorOpenFilePlaceholder": "# Projeden dosya aç veya yeni dosya oluştur",
   "settingsEditorFontSize": "Yazı Boyutu",
   "settingsEditorFontFamily": "Yazı Tipi Ailesi",
   

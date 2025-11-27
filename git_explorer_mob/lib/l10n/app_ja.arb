@@ -44,7 +44,7 @@
   "settingsEditorSettings": "エディター設定",
   "settingsEditorTabSize": "タブ幅",
   "settingsEditorShowLineNumbers": "行番号を表示",
-  "settingsEditorCreateNewFilePlaceholder": "# 新しいファイルを作成",
+  "settingsEditorOpenFilePlaceholder": "# プロジェクトからファイルを開くか新しいファイルを作成",
   "settingsEditorFontSize": "フォントサイズ",
   "settingsEditorFontFamily": "フォントファミリー",
   

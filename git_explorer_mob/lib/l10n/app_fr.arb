@@ -44,7 +44,7 @@
   "settingsEditorSettings": "Paramètres de l'éditeur",
   "settingsEditorTabSize": "Taille des tabulations",
   "settingsEditorShowLineNumbers": "Afficher les numéros de ligne",
-  "settingsEditorCreateNewFilePlaceholder": "# Créer un nouveau fichier",
+  "settingsEditorOpenFilePlaceholder": "# Ouvrir un fichier depuis un projet ou créer un nouveau fichier",
   "settingsEditorFontSize": "Taille de police",
   "settingsEditorFontFamily": "Police de caractères",
   

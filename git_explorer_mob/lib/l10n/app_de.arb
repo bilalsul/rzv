@@ -44,7 +44,7 @@
   "settingsEditorSettings": "Editor-Einstellungen",
   "settingsEditorTabSize": "Tab-Größe",
   "settingsEditorShowLineNumbers": "Zeilennummern anzeigen",
-  "settingsEditorCreateNewFilePlaceholder": "# Neue Datei erstellen",
+  "settingsEditorOpenFilePlaceholder": "# Datei aus Projekt öffnen oder neue Datei erstellen",
   "settingsEditorFontSize": "Schriftgröße",
   "settingsEditorFontFamily": "Schriftart",
   

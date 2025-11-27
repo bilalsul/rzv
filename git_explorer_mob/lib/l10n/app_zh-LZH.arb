@@ -44,7 +44,7 @@
   "settingsEditorSettings": "編輯閣設定",
   "settingsEditorTabSize": "Tab 之廣",
   "settingsEditorShowLineNumbers": "顯行數",
-  "settingsEditorCreateNewFilePlaceholder": "# 創建新檔",
+  "settingsEditorOpenFilePlaceholder": "# 自專案開檔或創建新檔",
   "settingsEditorFontSize": "字體大小",
   "settingsEditorFontFamily": "字體家族",
   

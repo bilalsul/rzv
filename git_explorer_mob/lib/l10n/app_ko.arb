@@ -44,7 +44,7 @@
   "settingsEditorSettings": "편집기 설정",
   "settingsEditorTabSize": "탭 크기",
   "settingsEditorShowLineNumbers": "줄 번호 표시",
-  "settingsEditorCreateNewFilePlaceholder": "# 새 파일 만들기",
+  "settingsEditorOpenFilePlaceholder": "# 프로젝트에서 파일 열기 또는 새 파일 만들기",
   "settingsEditorFontSize": "글꼴 크기",
   "settingsEditorFontFamily": "글꼴 계열",
   

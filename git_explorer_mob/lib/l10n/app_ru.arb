@@ -44,7 +44,7 @@
   "settingsEditorSettings": "Настройки редактора",
   "settingsEditorTabSize": "Размер табуляции",
   "settingsEditorShowLineNumbers": "Номера строк",
-  "settingsEditorCreateNewFilePlaceholder": "# Создать новый файл",
+  "settingsEditorOpenFilePlaceholder": "# Открыть файл из проекта или создать новый файл",
   "settingsEditorFontSize": "Размер шрифта",
   "settingsEditorFontFamily": "Семейство шрифтов",
   

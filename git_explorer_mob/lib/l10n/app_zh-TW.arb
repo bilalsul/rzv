@@ -44,7 +44,7 @@
   "settingsEditorSettings": "編輯器設定",
   "settingsEditorTabSize": "Tab 寬度",
   "settingsEditorShowLineNumbers": "顯示行號",
-  "settingsEditorCreateNewFilePlaceholder": "# 建立新檔案",
+  "settingsEditorOpenFilePlaceholder": "# 從專案中開啟檔案或建立新檔案",
   "settingsEditorFontSize": "字型大小",
   "settingsEditorFontFamily": "字型系列",
   

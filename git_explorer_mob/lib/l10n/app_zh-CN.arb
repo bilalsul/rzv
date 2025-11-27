@@ -44,7 +44,7 @@
   "settingsEditorSettings": "编辑器设置",
   "settingsEditorTabSize": "Tab 宽度",
   "settingsEditorShowLineNumbers": "显示行号",
-  "settingsEditorCreateNewFilePlaceholder": "# 创建新文件",
+  "settingsEditorOpenFilePlaceholder": "# 从项目中打开文件或创建新文件",
   "settingsEditorFontSize": "字体大小",
   "settingsEditorFontFamily": "字体系列",
   
