@@ -2,7 +2,7 @@
   "@@locale": "it",
 
   "appName": "Git Explorer",
-  "appAbout": "Informazioni su Git Explorer",
+  "appAbout": "Esplora progetti git e visualizza i file nell'editor di codice in modalità sola lettura.",
   "appVersion": "Versione",
   "appLicense": "Licenza",
   "appAuthor": "Autore",

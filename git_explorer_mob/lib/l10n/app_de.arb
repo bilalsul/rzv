@@ -2,7 +2,7 @@
   "@@locale": "de",
 
   "appName": "Git Explorer",
-  "appAbout": "Über Git Explorer",
+  "appAbout": "Git-Projekte durchsuchen und Dateien im Code-Editor im schreibgeschützten Modus anzeigen.",
   "appVersion": "Version",
   "appLicense": "Lizenz",
   "appAuthor": "Autor",

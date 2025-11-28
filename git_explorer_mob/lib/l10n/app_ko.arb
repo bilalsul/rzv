@@ -2,7 +2,7 @@
   "@@locale": "ko",
 
   "appName": "Git Explorer",
-  "appAbout": "Git Explorer 정보",
+  "appAbout": "git 프로젝트를 탐색하고 코드 편집기에서 파일을 읽기 전용 모드로 확인하세요.",
   "appVersion": "버전",
   "appLicense": "라이선스",
   "appAuthor": "제작자",

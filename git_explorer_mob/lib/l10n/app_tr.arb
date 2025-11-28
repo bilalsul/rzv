@@ -2,7 +2,7 @@
   "@@locale": "tr",
 
   "appName": "Git Explorer",
-  "appAbout": "Git Explorer Hakkında",
+  "appAbout": "Git projelerini keşfedin ve dosyaları kod editöründe salt okunur modda görüntüleyin.",
   "appVersion": "Sürüm",
   "appLicense": "Lisans",
   "appAuthor": "Geliştirici",

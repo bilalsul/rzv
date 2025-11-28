@@ -2,7 +2,7 @@
   "@@locale": "ar",
 
   "appName": "مستكشف Git",
-  "appAbout": "حول مستكشف Git",
+  "appAbout": "استعرض مشاريع git وعاين الملفات في محرر الأكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
   "appLicense": "الترخيص",
   "appAuthor": "المؤلف",

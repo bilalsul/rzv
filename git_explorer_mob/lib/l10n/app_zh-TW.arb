@@ -2,7 +2,7 @@
   "@@locale": "zh_TW",
 
   "appName": "Git Explorer",
-  "appAbout": "關於 Git Explorer",
+  "appAbout": "瀏覽 git 專案，並在程式碼編輯器中以唯讀模式檢視檔案。",
   "appVersion": "版本",
   "appLicense": "授權",
   "appAuthor": "作者",

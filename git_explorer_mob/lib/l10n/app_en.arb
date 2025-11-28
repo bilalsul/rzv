@@ -2,7 +2,7 @@
   "@@locale": "en",
 
   "appName": "Git Explorer",
-  "appAbout": "About Git Explorer",
+  "appAbout": "Explore git projects and view files in code editor read-only mode.",
   "appVersion": "Version",
   "appLicense": "License",
   "appAuthor": "Author",

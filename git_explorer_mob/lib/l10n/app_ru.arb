@@ -2,7 +2,7 @@
   "@@locale": "ru",
 
   "appName": "Git Explorer",
-  "appAbout": "О Git Explorer",
+  "appAbout": "Просматривайте git-проекты и открывайте файлы в редакторе кода в режиме только чтение.",
   "appVersion": "Версия",
   "appLicense": "Лицензия",
   "appAuthor": "Автор",
