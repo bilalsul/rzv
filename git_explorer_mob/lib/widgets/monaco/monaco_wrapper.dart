@@ -97,6 +97,7 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
           fontFamily: prefs.editorFontFamily,
           fontSize: prefs.editorFontSize,
           wordWrap: prefs.editorWordWrap,
+          renderControlCharacters: prefs.editorRenderControlCharacters
         ),
 
       ) : _buildFallbackEditor(prefs)),
