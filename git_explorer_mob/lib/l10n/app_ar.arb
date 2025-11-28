@@ -47,6 +47,7 @@
   "settingsEditorOpenFilePlaceholder": "# افتح ملفًا من مشروع أو أنشئ ملفًا جديدًا",
   "settingsEditorFontSize": "حجم الخط",
   "settingsEditorFontFamily": "عائلة الخط",
+  "settingsEditorZoomInOut": "تفعيل التكبير/التصغير",
   
   "settingsGitSettings": "إعدادات Git",
   "settingsGitAutoFetch": "جلب تلقائي",

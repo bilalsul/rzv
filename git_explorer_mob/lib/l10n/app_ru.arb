@@ -47,6 +47,7 @@
   "settingsEditorOpenFilePlaceholder": "# Открыть файл из проекта или создать новый файл",
   "settingsEditorFontSize": "Размер шрифта",
   "settingsEditorFontFamily": "Семейство шрифтов",
+  "settingsEditorZoomInOut": "Включить масштабирование (In/Out)",
   
   "settingsGitSettings": "Настройки Git",
   "settingsGitAutoFetch": "Автозагрузка",

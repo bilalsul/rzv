@@ -47,6 +47,7 @@
   "settingsEditorOpenFilePlaceholder": "# 從專案中開啟檔案或建立新檔案",
   "settingsEditorFontSize": "字型大小",
   "settingsEditorFontFamily": "字型系列",
+  "settingsEditorZoomInOut": "啟用放大/縮小",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動擷取",

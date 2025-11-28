@@ -100,6 +100,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Marked as current open file/project')));
             //   },
             // ),
+            prefs.editorZoomInOut ?
              IconButton(
               icon: const Icon(Icons.zoom_in),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -110,7 +111,8 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
               onPressed: () {
                 if(prefs.editorFontSize < 37) prefs.saveEditorFontSize(prefs.editorFontSize + 2);
               },
-            ),
+            ) : SizedBox.shrink(),
+            prefs.editorZoomInOut ?
             IconButton(
               icon: const Icon(Icons.zoom_out),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -121,7 +123,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
               onPressed: () {
                 if(prefs.editorFontSize > 11) prefs.saveEditorFontSize(prefs.editorFontSize - 2);
               },
-            ),
+            ): SizedBox.shrink(),
             prefs.codeFoldingEnabled ?
             IconButton(
               icon: const Icon(Icons.wrap_text),
