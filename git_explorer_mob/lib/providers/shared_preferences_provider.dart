@@ -893,7 +893,7 @@ bool featureSupported(String pluginId) {
 
 class AppState {
   final DateTime sessionStartTime;
-  final String appVersion = '0.0.1';
+  final String appVersion = '0.0.6';
   final DateTime firstInstallDate;
 
   AppState({

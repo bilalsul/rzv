@@ -24,7 +24,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   bool _expandedEditorPlugins = true;
   // bool _expandedGitPlugins = true;
   bool _expandedUtilityPlugins = true;
-  bool _expandedExperimentalPlugins = false;
+  // bool _expandedExperimentalPlugins = false;
 
   NativeAd? _nativeAd;
   bool _isNativeAdLoaded = false;
