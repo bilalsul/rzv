@@ -90,7 +90,7 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
         backgroundColor: prefs.backgroundColor,
         onContentChanged: (value) => prefs.saveCurrentOpenFileContent(value),
         options: EditorOptions(
-          language: prefs.isPluginEnabled("syntax_highlighting") ? prefs.currentOpenFile.toMonacoLanguage() : MonacoLanguage.plaintext,
+          language: prefs.syntaxHighlightingEnabled ? prefs.currentOpenFile.toMonacoLanguage() : MonacoLanguage.plaintext,
           lineNumbers: prefs.editorLineNumbers,
           minimap: prefs.editorMinimapEnabled,
           readOnly: prefs.readonlyModeEnabled,
