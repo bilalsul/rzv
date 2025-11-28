@@ -21,7 +21,7 @@ class AppDrawer extends ConsumerStatefulWidget {
 
 class _AppDrawerState extends ConsumerState<AppDrawer> {
   bool _expandedEditorPlugins = true;
-  bool _expandedGitPlugins = true;
+  // bool _expandedGitPlugins = true;
   bool _expandedUtilityPlugins = true;
   bool _expandedExperimentalPlugins = false;
 
@@ -639,30 +639,30 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.syntaxHighlightingName;
       case 'code_folding':
         return l.codeFoldingName;
-      case 'bracket_matching':
-        return l.bracketMatchingName;
+      // case 'bracket_matching':
+      //   return l.bracketMatchingName;
       case 'advanced_editor_options':
         return l.advancedEditorName;
       case 'git_history':
         return l.gitHistoryName;
-      case 'git_lens':
-        return l.gitLensName;
-      case 'branch_manager':
-        return l.branchManagerName;
+      // case 'git_lens':
+      //   return l.gitLensName;
+      // case 'branch_manager':
+      //   return l.branchManagerName;
       case 'file_explorer':
         return l.fileExplorerName;
-      case 'search_replace':
-        return l.searchReplaceName;
+      // case 'search_replace':
+      //   return l.searchReplaceName;
       case 'terminal':
         return l.terminalName;
       case 'theme_customizer':
         return l.themeCustomizerName;
       case 'ai_assist':
         return l.aiAssistName;
-      case 'real_time_collab':
-        return l.realtimeCollabName;
-      case 'performance_monitor':
-        return l.performanceMonitorName;
+      // case 'real_time_collab':
+      //   return l.realtimeCollabName;
+      // case 'performance_monitor':
+      //   return l.performanceMonitorName;
       default:
         return id;
     }
@@ -677,30 +677,30 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.syntaxHighlightingDescription;
       case 'code_folding':
         return l.codeFoldingDescription;
-      case 'bracket_matching':
-        return l.bracketMatchingDescription;
+      // case 'bracket_matching':
+      //   return l.bracketMatchingDescription;
          case 'advanced_editor_options':
         return l.advancedEditorDescription;
       case 'git_history':
         return l.gitHistoryDescription;
-      case 'git_lens':
-        return l.gitLensDescription;
-      case 'branch_manager':
-        return l.branchManagerDescription;
+      // case 'git_lens':
+      //   return l.gitLensDescription;
+      // case 'branch_manager':
+      //   return l.branchManagerDescription;
       case 'file_explorer':
         return l.fileExplorerDescription;
-      case 'search_replace':
-        return l.searchReplaceDescription;
+      // case 'search_replace':
+      //   return l.searchReplaceDescription;
       case 'terminal':
         return l.terminalDescription;
       case 'theme_customizer':
         return l.themeCustomizerDescription;
       case 'ai_assist':
         return l.aiAssistDescription;
-      case 'real_time_collab':
-        return l.realtimeCollabDescription;
-      case 'performance_monitor':
-        return l.performanceMonitorDescription;
+      // case 'real_time_collab':
+      //   return l.realtimeCollabDescription;
+      // case 'performance_monitor':
+      //   return l.performanceMonitorDescription;
       default:
         return '';
     }
