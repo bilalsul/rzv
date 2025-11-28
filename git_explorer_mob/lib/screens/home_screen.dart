@@ -63,7 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final projRoot = await Prefs().projectsRoot();
     final id = 'tutorial_project';
     final dir = Directory('${projRoot.path}/$id');
-    if (!await dir.exists()) {
+    // if (!await dir.exists()) {
       await dir.create(recursive: true);
       final readme = File('${dir.path}/README.md');
       final title = L10n.of(context).tutorialProjectReadmeTitle;
@@ -71,7 +71,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       final content = '$title\n\n$body';
       await readme.writeAsString(content);
       Prefs().setTutorialProject(false);
-    }
+    // }
   }
 
   Future<void> _loadProjectsFromDisk() async {
@@ -636,8 +636,21 @@ class _ProjectBrowser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final node = _nodeAtPath();
-    // If a markdown file is selected, render it
+    
+    // by default show the tutorial readme
     if (selectedFileContent != null) {
+      return Column(children: [
+        Expanded(
+          child: Markdown(
+            data: L10n.of(context).tutorialProjectReadmeBody,
+            selectable: true,
+          ),
+        ),
+      ]);
+    }
+
+    // If a markdown file is selected and is enabled, render it
+    if (Prefs().isPluginOptionEnabled('preview_markdown') && selectedFileContent != null) {
       return Column(children: [
         Expanded(
           child: Markdown(

@@ -2,7 +2,7 @@
   "@@locale": "ar",
 
   "appName": "مستكشف Git",
-  "appAbout": "حول مستكشف Git",
+  "appAbout": "استعرض مشاريع git وعاين الملفات في محرر الأكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
   "appLicense": "الترخيص",
   "appAuthor": "المؤلف",
@@ -32,22 +32,16 @@
   "settingsAppearancePrimaryColor": "اللون الأساسي",
   "settingsAppearanceSecondaryColor": "اللون الثانوي",
   "settingsAppearanceAccentColor": "لون التمييز",
-  
-  "settingsApplyThemeColors": "تطبيق ألوان السمة",
   "settingsRevertThemeColors": "تراجع",
-  "settingsBorderRadius": "نصف قطر الحدود",
-  "settingsElevation": "الارتفاع",
-  "settingsAppFontSize": "حجم خط التطبيق",
-  "settingsButtonStyle": "نمط الزر",
-  "settingsReduceAnimations": "تقليل الحركات",
   
   "settingsEditorSettings": "إعدادات المحرر",
   "settingsEditorTabSize": "حجم علامة التبويب",
   "settingsEditorShowLineNumbers": "إظهار أرقام الأسطر",
-  
-  "settingsGitSettings": "إعدادات Git",
-  "settingsGitAutoFetch": "جلب تلقائي",
-  "settingsGitDefaultBranch": "الفرع الافتراضي",
+  "settingsEditorOpenFilePlaceholder": "# افتح ملفًا من مشروع أو أنشئ ملفًا جديدًا",
+  "settingsEditorFontSize": "حجم الخط",
+  "settingsEditorFontFamily": "عائلة الخط",
+  "settingsEditorZoomInOut": "تفعيل التكبير/التصغير",
+  "settingsEditorRenderUnsupportedCharacters": "عرض الأحرف غير المدعومة مع تحذير 🔔",
   
   "settingsAiSettings": "إعدادات الذكاء الاصطناعي",
   "settingsAiModelProvider": "مزود النموذج",
@@ -77,11 +71,6 @@
   "connectionFailed": "فشل الاتصال",
   "connectionSuccessful": "تم الاتصال بنجاح",
   
-  "settingsTerminalSettings": "إعدادات الطرفية",
-  "settingsTerminalShellExecutable": "ملف Shell التنفيذي",
-  "settingsTerminalFontSize": "حجم الخط",
-  "settingsTerminalAudibleBell": "جرس مسموع",
-  
   "settingsFileExplorerSettings": "إعدادات مستكشف الملفات",
   "settingsFileExplorerShowHidden": "إظهار الملفات المخفية",
   "settingsFileExplorerPreviewMarkdown": "معاينة ملفات markdown",
@@ -90,6 +79,7 @@
   "settingsThemeApplied": "تم تطبيق ألوان السمة",
   
   "commonDelete": "حذف",
+  "commonCreate": "إنشاء",
   "commonSave": "حفظ",
   "commonCancel": "إلغاء",
   "commonOk": "موافق",
@@ -116,6 +106,10 @@
   "commonUndo": "تراجع",
   "commonResume": "متابعة",
   "commonRetry": "إعادة المحاولة",
+  "commonDisabled": "معطل",
+  "commonNotSupported": "غير مدعوم",
+  "featureNotSupported": "الميزة غير مدعومة في الوقت الحالي. تحقق من الإصدارات المستقبلية",
+  "enableFeatureFromPlugins": "فعّل هذه الميزة من الإضافات",
   
   "homeProjectsTitle": "المشاريع المستوردة/المنشأة",
   "homeDefaultProjectName": "مشروع",
@@ -192,18 +186,10 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "إنشاء مجلد جديد",
   "drawerFolderNameHint": "اسم المجلد",
-  "commonCreate": "إنشاء",
-  "drawerPullChanges": "سحب التغييرات",
-  "drawerPushChanges": "دفع التغييرات",
-  "drawerCommitChanges": "تسجيل التغييرات",
-  "drawerCommitMessageHint": "رسالة التسجيل",
-  "drawerCommit": "تسجيل",
-  "drawerEditorFontSize": "حجم الخط",
   "drawerEditorTheme": "سمة المحرر",
   "drawerEditorWordWrap": "التفاف النص",
-  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول محرر Flutter!",
+  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول Git Explorer",
   "drawerSendFeedback": "إرسال ملاحظات",
-  "drawerAboutDescription": "محرر كود قوي مبني باستخدام Flutter و Monaco، مصمم لسير عمل التطوير للجوال.",
   "drawerFirstInstalled": "أول تثبيت: {date}",
   "@drawerFirstInstalled": { "placeholders": { "date": {} } },
   "drawerFeedbackComingSoon": "ميزة الملاحظات قريبًا!",
@@ -227,27 +213,19 @@
   "codeFoldingDescription": "طي وتوسيع كتل الكود",
   "bracketMatchingName": "مطابقة الأقواس",
   "bracketMatchingDescription": "تمييز الأقواس والأقواس المعقوفة المتطابقة",
+  "advancedEditorName": "خيارات متقدمة",
+  "advancedEditorDescription": "خيارات المحرر المتقدمة في الإعدادات",
 
   "gitHistoryName": "سجل Git",
   "gitHistoryDescription": "عرض سجل التسجيلات والاختلافات",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "شروح Git المحسنة",
-  "branchManagerName": "مدير الفروع",
-  "branchManagerDescription": "إنشاء وتبديل الفروع بسهولة",
 
   "fileExplorerName": "مستكشف الملفات",
   "fileExplorerDescription": "تصفح وإدارة ملفات المشروع",
-  "searchReplaceName": "بحث واستبدال",
-  "searchReplaceDescription": "بحث واستبدال متقدم عبر الملفات",
   "terminalName": "طرفية مدمجة",
   "terminalDescription": "تشغيل الأوامر دون مغادرة المحرر",
   "themeCustomizerName": "مخصص السمة",
   "themeCustomizerDescription": "تخصيص مظهر المحرر والتطبيق",
 
   "aiAssistName": "مساعد الذكاء الاصطناعي للكود",
-  "aiAssistDescription": "احصل على اقتراحات كود مدعومة بالذكاء الاصطناعي",
-  "realtimeCollabName": "التعاون في الوقت الحقيقي",
-  "realtimeCollabDescription": "تحرير الكود مع الآخرين في الوقت الحقيقي",
-  "performanceMonitorName": "مراقب الأداء",
-  "performanceMonitorDescription": "مراقبة مقاييس أداء التطبيق"
+  "aiAssistDescription": "احصل على اقتراحات كود مدعومة بالذكاء الاصطناعي"
 }

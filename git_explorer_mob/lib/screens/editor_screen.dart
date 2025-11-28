@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'dart:io';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
 
@@ -101,25 +100,31 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Marked as current open file/project')));
             //   },
             // ),
-            
-            IconButton(
-              icon: const Icon(Icons.view_carousel),
+            prefs.editorZoomInOut ?
+             IconButton(
+              icon: const Icon(Icons.zoom_in),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
               padding: EdgeInsets.zero,
               style: ButtonStyle(
                 iconSize: WidgetStateProperty.all(20),
               ),
               onPressed: () {
-                if(prefs.editorMinimapEnabled) {
-                    prefs.saveEditorMinimapEnabled(false);
-                    return;
-                }
-                if(!prefs.editorMinimapEnabled) {
-                    prefs.saveEditorMinimapEnabled(true);
-                    return;
-                }
+                if(prefs.editorFontSize < 37) prefs.saveEditorFontSize(prefs.editorFontSize + 2);
               },
-            ),
+            ) : SizedBox.shrink(),
+            prefs.editorZoomInOut ?
+            IconButton(
+              icon: const Icon(Icons.zoom_out),
+              visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+              padding: EdgeInsets.zero,
+              style: ButtonStyle(
+                iconSize: WidgetStateProperty.all(20),
+              ),
+              onPressed: () {
+                if(prefs.editorFontSize > 11) prefs.saveEditorFontSize(prefs.editorFontSize - 2);
+              },
+            ): SizedBox.shrink(),
+            prefs.codeFoldingEnabled ?
             IconButton(
               icon: const Icon(Icons.wrap_text),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -137,7 +142,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                     return;
                 }
               },
-            ),
+            ) : SizedBox.shrink(),
             IconButton(
               icon: const Icon(Icons.numbers),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -152,6 +157,24 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                 }
                 if(!prefs.editorLineNumbers) {
                     prefs.saveEditorLineNumbers(true);
+                    return;
+                }
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.view_carousel),
+              visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+              padding: EdgeInsets.zero,
+              style: ButtonStyle(
+                iconSize: WidgetStateProperty.all(20),
+              ),
+              onPressed: () {
+                if(prefs.editorMinimapEnabled) {
+                    prefs.saveEditorMinimapEnabled(false);
+                    return;
+                }
+                if(!prefs.editorMinimapEnabled) {
+                    prefs.saveEditorMinimapEnabled(true);
                     return;
                 }
               },

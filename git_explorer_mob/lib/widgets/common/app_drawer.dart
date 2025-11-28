@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:url_launcher/url_launcher.dart';
 // Navigation moved to AppShell
 // Navigation and plugin state now come from Prefs
 
@@ -22,7 +22,7 @@ class AppDrawer extends ConsumerStatefulWidget {
 
 class _AppDrawerState extends ConsumerState<AppDrawer> {
   bool _expandedEditorPlugins = true;
-  bool _expandedGitPlugins = true;
+  // bool _expandedGitPlugins = true;
   bool _expandedUtilityPlugins = true;
   bool _expandedExperimentalPlugins = false;
 
@@ -227,13 +227,13 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ),
 
         // Git Plugins
-        _buildPluginCategory(
-          title: L10n.of(context).drawerGitIntegration,
-          plugins: plugin_defs.gitPlugins,
-          isExpanded: _expandedGitPlugins,
-          onToggle: () => setState(() => _expandedGitPlugins = !_expandedGitPlugins),
-          theme: theme,
-        ),
+        // _buildPluginCategory(
+        //   title: L10n.of(context).drawerGitIntegration,
+        //   plugins: plugin_defs.gitPlugins,
+        //   isExpanded: _expandedGitPlugins,
+        //   onToggle: () => setState(() => _expandedGitPlugins = !_expandedGitPlugins),
+        //   theme: theme,
+        // ),
 
         // _isNativeAdLoaded && _nativeAd != null
         //       ? SizedBox(
@@ -357,82 +357,85 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     final isEnabled = Prefs().isPluginEnabled(plugin.id);
     final prefs = ref.watch(prefsProvider);
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: isEnabled
-            // ? theme.colorScheme.primaryContainer.withOpacity(0.1)
-            ? prefs.secondaryColor.withOpacity(0.1)
-            : theme.colorScheme.surfaceVariant.withOpacity(0.3),
-      ),
-      child: ListTile(
-        leading: Icon(
-          plugin.icon,
-          size: 18,
+    return AbsorbPointer(
+      absorbing: prefs.disabledByDefault(plugin.id),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
           color: isEnabled
-              // ? theme.colorScheme.primary
-              ? prefs.accentColor.withOpacity(0.4)
-              : theme.colorScheme.onSurface.withOpacity(0.4),
+              // ? theme.colorScheme.primaryContainer.withOpacity(0.1)
+              ? prefs.secondaryColor.withOpacity(0.1)
+              : theme.colorScheme.surfaceVariant.withOpacity(0.3),
         ),
-        title: Text(
-          _localizedPluginName(plugin.id, context),
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w500,
+        child: ListTile(
+          leading: Icon(
+            plugin.icon,
+            size: 18,
             color: isEnabled
-                ? theme.colorScheme.onSurface
-                : theme.colorScheme.onSurface.withOpacity(0.6),
+                // ? theme.colorScheme.primary
+                ? prefs.accentColor.withOpacity(0.4)
+                : theme.colorScheme.onSurface.withOpacity(0.4),
           ),
-        ),
-        subtitle: (_localizedPluginDescription(plugin.id, context)).isNotEmpty
-            ? Text(
-                _localizedPluginDescription(plugin.id, context),
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: isEnabled
-                      ? theme.colorScheme.onSurface.withOpacity(0.7)
-                      : theme.colorScheme.onSurface.withOpacity(0.4),
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              )
-            : null,
-        trailing: Switch.adaptive(
-          value: isEnabled,
-          onChanged: (enabled) async {
-            // If enabling the file explorer, request storage permission first
-            // if (plugin.id == 'file_explorer' && enabled) {
-            //   final status = await Permission.storage.request();
-            //     // Ask user to open app settings so they can grant permission
-            //     // user have to grant permissions, No permissions requested
-            //     // so the file explorer is enabled after sending the user to settings
-            //     if (!status.isGranted) {
-            //         final opened = await openAppSettings();
-            //         if (!opened) {
-            //           ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBar(content: Text(L10n.of(context).connectionFailed)),
-            //           );
-            //           return;
-            //     }
-            //   }
-            //     if (!status.isGranted && enabled) {
-            //       Prefs().enabledPlugins.remove("file_explorer");
-            //       return;
-            //     }
-            // }
-
-            await Prefs().setPluginEnabled(plugin.id, enabled);
-            // Trigger a rebuild so changes are visible immediately
-            setState(() {});
+          title: Text(
+            _localizedPluginName(plugin.id, context),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: isEnabled
+                  ? theme.colorScheme.onSurface
+                  : theme.colorScheme.onSurface.withOpacity(0.6),
+            ),
+          ),
+          subtitle: (_localizedPluginDescription(plugin.id, context)).isNotEmpty
+              ? Text(
+                  _localizedPluginDescription(plugin.id, context),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: isEnabled
+                        ? theme.colorScheme.onSurface.withOpacity(0.7)
+                        : theme.colorScheme.onSurface.withOpacity(0.4),
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                )
+              : null,
+          trailing: Switch.adaptive(
+            value: prefs.disabledByDefault(plugin.id) ? true : isEnabled,
+            onChanged: (enabled) async {
+              // If enabling the file explorer, request storage permission first
+              // if (plugin.id == 'file_explorer' && enabled) {
+              //   final status = await Permission.storage.request();
+              //     // Ask user to open app settings so they can grant permission
+              //     // user have to grant permissions, No permissions requested
+              //     // so the file explorer is enabled after sending the user to settings
+              //     if (!status.isGranted) {
+              //         final opened = await openAppSettings();
+              //         if (!opened) {
+              //           ScaffoldMessenger.of(context).showSnackBar(
+              //             SnackBar(content: Text(L10n.of(context).connectionFailed)),
+              //           );
+              //           return;
+              //     }
+              //   }
+              //     if (!status.isGranted && enabled) {
+              //       Prefs().enabledPlugins.remove("file_explorer");
+              //       return;
+              //     }
+              // }
+      
+              await Prefs().setPluginEnabled(plugin.id, enabled);
+              // Trigger a rebuild so changes are visible immediately
+              setState(() {});
+            },
+            activeColor: prefs.secondaryColor,
+            inactiveTrackColor: theme.colorScheme.surfaceVariant,
+          ),
+          onTap: () {
+            // Optional: Show plugin details or settings
+            _showPluginDetails(plugin);
           },
-          activeColor: prefs.secondaryColor,
-          inactiveTrackColor: theme.colorScheme.surfaceVariant,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+          visualDensity: const VisualDensity(vertical: -3),
         ),
-        onTap: () {
-          // Optional: Show plugin details or settings
-          _showPluginDetails(plugin);
-        },
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-        visualDensity: const VisualDensity(vertical: -3),
       ),
     );
   }
@@ -478,7 +481,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               const SizedBox(width: 8),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: _showAboutDialog,
+                  onPressed: _showAboutDialogDonate,
                   icon: Icon(Icons.info_outlined, size: 16, color: prefs.accentColor,),
                   label: Text(L10n.of(context).drawerAbout, style: TextStyle(color: prefs.accentColor)),
                   style: OutlinedButton.styleFrom(
@@ -547,7 +550,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           children: [
             Icon(plugin.icon, color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 12),
-            Text(plugin.name),
+            Text(_localizedPluginName(plugin.name, context)),
           ],
         ),
         content: Column(
@@ -555,15 +558,17 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (plugin.description != null) ...[
-              Text(plugin.description!),
+              // Text(plugin.description!),
+              Text(_localizedPluginDescription(plugin.description!, context)),
               const SizedBox(height: 16),
             ],
             Text(
-              L10n.of(context).drawerPluginId(plugin.id),
+              _localizedPluginName(plugin.name, context),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
-              L10n.of(context).drawerPluginCategory(plugin.category.name.toUpperCase()),
+              // L10n.of(context).drawerPluginCategory(plugin.category.name.toUpperCase()),
+              _localizedPluginCategory(plugin.category, context),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -589,40 +594,114 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(L10n.of(context).commonCancel),
           ),
-          FilledButton(
-            onPressed: () {
-              // TODO: Implement feedback submission
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(L10n.of(context).drawerFeedbackComingSoon)),
-              );
-            },
-            child: Text(L10n.of(context).drawerSendFeedback),
+          AbsorbPointer(
+            absorbing: true,
+            child: FilledButton(
+              style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.grey[400])),
+              onPressed: () async {
+                // TODO: Implement feedback submission
+                Navigator.of(context).pop();
+                final Uri donateUrl = Uri.parse('https://github.com/uncrr/git-explorer/issues'); // Replace with your actual PLAYSTORE link after publish
+                if (await canLaunchUrl(donateUrl)) {
+                  await launchUrl(donateUrl);
+                } else {
+                  // Handle the case where the URL cannot be launched (e.g., no browser installed)
+                  // You might display a SnackBar or an AlertDialog to inform the user.
+                print('Could not launch $donateUrl');
+                
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(L10n.of(context).drawerFeedbackComingSoon)),
+                );
+              }
+              },
+              child: Text(L10n.of(context).drawerSendFeedback), // change when added
+            ),
           ),
         ],
       ),
     );
   }
 
-  void _showAboutDialog() {
-    final appState = ref.read(appStateProvider);
-    
-    showAboutDialog(
+    void _showAboutDialogDonate() {
+      final appState = ref.read(appStateProvider);
+    showDialog(
       context: context,
-      applicationName: L10n.of(context).appName,
-      applicationVersion: 'v${appState.appVersion}',
-      applicationIcon: const Icon(Icons.code, size: 48),
-      children: [
-        const SizedBox(height: 16),
-        Text(L10n.of(context).drawerAboutDescription),
-        const SizedBox(height: 16),
-        Text(
-          L10n.of(context).drawerFirstInstalled(_formatDate(appState.firstInstallDate, context)),
-          style: Theme.of(context).textTheme.bodySmall,
+      builder: (context) => AlertDialog(
+      // title: Text(L10n.of(context).appName),
+      content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              spacing: 10,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(40.0),
+                  child: Image.asset('assets/icons/git-explorer-icon.png', height: 60, width: 60)),
+                  Expanded(
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(L10n.of(context).appName, style: TextStyle(fontSize: 18)),
+                      Text('v${appState.appVersion}', style: TextStyle(fontSize: 10),)
+                  ],
+                    ),
+                  )
+          ]),
+          const SizedBox(height: 25),
+          Text(L10n.of(context).appAbout, style: TextStyle(fontSize: 15)),
+          const SizedBox(height: 25),
+          Text(L10n.of(context).appDonateTips, style: TextStyle(fontSize: 12)),
+          ],
         ),
-      ],
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(L10n.of(context).commonClose),
+          ),
+          FilledButton(
+            onPressed: () async {
+              // TODO: Implement donate submission
+              final Uri donateUrl = Uri.parse('https://github.com/uncrr'); // Replace with your actual donation link
+              if (await canLaunchUrl(donateUrl)) {
+                await launchUrl(donateUrl);
+              } else {
+                // Handle the case where the URL cannot be launched (e.g., no browser installed)
+                // You might display a SnackBar or an AlertDialog to inform the user.
+              print('Could not launch $donateUrl');
+              
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(L10n.of(context).commonFailed)),
+              );
+              }
+              Navigator.of(context).pop();
+            },
+            child: Text(L10n.of(context).appDonate),
+          ),
+        ],
+      ),
     );
   }
+
+  // void _showAboutDialogLicenses() {
+  //   final appState = ref.read(appStateProvider);
+    
+  //   showAboutDialog(
+  //     context: context,
+  //     applicationName: L10n.of(context).appName,
+  //     applicationVersion: 'v${appState.appVersion}',
+  //     applicationIcon: Image.asset('assets/icons/git-explorer-icon.png' , height: 48, width: 48,),
+  //     children: [
+  //       const SizedBox(height: 16),
+  //       Text(L10n.of(context).appAbout),
+  //       const SizedBox(height: 16),
+  //       Text(
+  //         L10n.of(context).drawerFirstInstalled(_formatDate(appState.firstInstallDate, context)),
+  //         style: Theme.of(context).textTheme.bodySmall,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   // Localized plugin name lookup. Keep a switch on plugin id so the id stays
   // canonical for pref lookups, while the displayed string comes from L10n.
@@ -635,28 +714,30 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.syntaxHighlightingName;
       case 'code_folding':
         return l.codeFoldingName;
-      case 'bracket_matching':
-        return l.bracketMatchingName;
+      // case 'bracket_matching':
+      //   return l.bracketMatchingName;
+      case 'advanced_editor_options':
+        return l.advancedEditorName;
       case 'git_history':
         return l.gitHistoryName;
-      case 'git_lens':
-        return l.gitLensName;
-      case 'branch_manager':
-        return l.branchManagerName;
+      // case 'git_lens':
+      //   return l.gitLensName;
+      // case 'branch_manager':
+      //   return l.branchManagerName;
       case 'file_explorer':
         return l.fileExplorerName;
-      case 'search_replace':
-        return l.searchReplaceName;
+      // case 'search_replace':
+      //   return l.searchReplaceName;
       case 'terminal':
         return l.terminalName;
       case 'theme_customizer':
         return l.themeCustomizerName;
       case 'ai_assist':
         return l.aiAssistName;
-      case 'real_time_collab':
-        return l.realtimeCollabName;
-      case 'performance_monitor':
-        return l.performanceMonitorName;
+      // case 'real_time_collab':
+      //   return l.realtimeCollabName;
+      // case 'performance_monitor':
+      //   return l.performanceMonitorName;
       default:
         return id;
     }
@@ -671,30 +752,46 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.syntaxHighlightingDescription;
       case 'code_folding':
         return l.codeFoldingDescription;
-      case 'bracket_matching':
-        return l.bracketMatchingDescription;
+      // case 'bracket_matching':
+      //   return l.bracketMatchingDescription;
+         case 'advanced_editor_options':
+        return l.advancedEditorDescription;
       case 'git_history':
         return l.gitHistoryDescription;
-      case 'git_lens':
-        return l.gitLensDescription;
-      case 'branch_manager':
-        return l.branchManagerDescription;
+      // case 'git_lens':
+      //   return l.gitLensDescription;
+      // case 'branch_manager':
+      //   return l.branchManagerDescription;
       case 'file_explorer':
         return l.fileExplorerDescription;
-      case 'search_replace':
-        return l.searchReplaceDescription;
+      // case 'search_replace':
+      //   return l.searchReplaceDescription;
       case 'terminal':
         return l.terminalDescription;
       case 'theme_customizer':
         return l.themeCustomizerDescription;
       case 'ai_assist':
         return l.aiAssistDescription;
-      case 'real_time_collab':
-        return l.realtimeCollabDescription;
-      case 'performance_monitor':
-        return l.performanceMonitorDescription;
+      // case 'real_time_collab':
+      //   return l.realtimeCollabDescription;
+      // case 'performance_monitor':
+      //   return l.performanceMonitorDescription;
       default:
         return '';
     }
   }
+}
+
+String _localizedPluginCategory(PluginCategory category, BuildContext context) {
+    final l = L10n.of(context);
+    switch (category) {
+      case PluginCategory.editor:
+        return l.drawerEditorPlugins;
+      case PluginCategory.utility:
+        return l.drawerUtilityPlugins;
+      case PluginCategory.git:
+        return l.drawerGitIntegration;
+      case PluginCategory.experimental:
+        return l.drawerExperimental;
+    }
 }

@@ -26,7 +26,7 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
         onPressed: () => scaffoldKey.currentState?.openDrawer(),
       ),
       title: _buildTitle(currentScreen, context),
-      actions: _buildActions(currentScreen, context, ref),
+      // actions: _buildActions(currentScreen, context, ref),
       // backgroundColor: _getAppBarColor(currentScreen, context),
       backgroundColor: prefs.secondaryColor,
       elevation: _getAppBarElevation(currentScreen),
@@ -52,53 +52,53 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
     }
   }
 
-  List<Widget> _buildActions(Screen screen, BuildContext context, WidgetRef ref) {
-    switch (screen) {
-      case Screen.editor:
-        return [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => _showSearch(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () => _showEditorMenu(context, ref),
-          ),
-        ];
-      case Screen.fileExplorer:
-        return [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => _refreshFileExplorer(ref),
-          ),
-          IconButton(
-            icon: const Icon(Icons.create_new_folder),
-            onPressed: () => _createNewFolder(context),
-          ),
-        ];
-      case Screen.gitHistory:
-        return [
-          IconButton(
-            icon: const Icon(Icons.abc), // Replace with pull request icon
-            onPressed: () => _showGitActions(context, ref),
-          ),
-        ];
-      case Screen.settings:
-        return [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: () => _saveSettings(ref),
-          ),
-        ];
-      default:
-        return [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () => _showAppInfo(context),
-          ),
-        ];
-    }
-  }
+  // List<Widget> _buildActions(Screen screen, BuildContext context, WidgetRef ref) {
+  //   switch (screen) {
+  //     case Screen.editor:
+  //       return [
+  //         IconButton(
+  //           icon: const Icon(Icons.search),
+  //           onPressed: () => _showSearch(context),
+  //         ),
+  //         IconButton(
+  //           icon: const Icon(Icons.more_vert),
+  //           onPressed: () => _showEditorMenu(context, ref),
+  //         ),
+  //       ];
+  //     case Screen.fileExplorer:
+  //       return [
+  //         IconButton(
+  //           icon: const Icon(Icons.refresh),
+  //           onPressed: () => _refreshFileExplorer(ref),
+  //         ),
+  //         IconButton(
+  //           icon: const Icon(Icons.create_new_folder),
+  //           onPressed: () => _createNewFolder(context),
+  //         ),
+  //       ];
+  //     case Screen.gitHistory:
+  //       return [
+  //         IconButton(
+  //           icon: const Icon(Icons.abc), // Replace with pull request icon
+  //           onPressed: () => _showGitActions(context, ref),
+  //         ),
+  //       ];
+  //     case Screen.settings:
+  //       return [
+  //         IconButton(
+  //           icon: const Icon(Icons.save),
+  //           onPressed: () => _saveSettings(ref),
+  //         ),
+  //       ];
+  //     default:
+  //       return [
+  //         IconButton(
+  //           icon: const Icon(Icons.info_outline),
+  //           onPressed: () => _showAppInfo(context),
+  //         ),
+  //       ];
+  //   }
+  // }
 
   // Color? _getAppBarColor(Screen screen, BuildContext context) {
   //   final theme = Theme.of(context);
