@@ -36,19 +36,19 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget _buildTitle(Screen screen, BuildContext context) {
     switch (screen) {
       case Screen.home:
-        return Text(L10n.of(context).navBarHome);
+        return Text(L10n.of(context).navBarHome,style: const TextStyle(fontWeight: FontWeight.w600));
       case Screen.editor:
-        return Text(L10n.of(context).navBarEditor);
+        return Text(L10n.of(context).navBarEditor,style: const TextStyle(fontWeight: FontWeight.w600));
       case Screen.fileExplorer:
-        return Text(L10n.of(context).navBarFileExplorer);
+        return Text(L10n.of(context).navBarFileExplorer,style: const TextStyle(fontWeight: FontWeight.w600));
       case Screen.gitHistory:
-        return Text(L10n.of(context).navBarGitHistory);
+        return Text(L10n.of(context).navBarGitHistory,style: const TextStyle(fontWeight: FontWeight.w600));
       case Screen.settings:
-        return Text(L10n.of(context).navBarSettings);
+        return Text(L10n.of(context).navBarSettings,style: const TextStyle(fontWeight: FontWeight.w600));
       case Screen.terminal:
-        return Text(L10n.of(context).navBarTerminal);
+        return Text(L10n.of(context).navBarTerminal,style: const TextStyle(fontWeight: FontWeight.w600));
       case Screen.AI:
-        return Text(L10n.of(context).navBarAI);
+        return Text(L10n.of(context).navBarAI,style: const TextStyle(fontWeight: FontWeight.w600));
     }
   }
 
@@ -126,219 +126,219 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   // Action methods
-  void _showSearch(BuildContext context) {
-    showSearch(context: context, delegate: _CodeSearchDelegate());
-  }
+  // void _showSearch(BuildContext context) {
+  //   showSearch(context: context, delegate: _CodeSearchDelegate());
+  // }
 
-  void _showEditorMenu(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => _EditorBottomSheet(ref: ref),
-    );
-  }
+  // void _showEditorMenu(BuildContext context, WidgetRef ref) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => _EditorBottomSheet(ref: ref),
+  //   );
+  // }
 
-  void _refreshFileExplorer(WidgetRef ref) {
-    // Refresh file explorer logic
-  }
+  // void _refreshFileExplorer(WidgetRef ref) {
+  //   // Refresh file explorer logic
+  // }
 
-  void _createNewFolder(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const _CreateFolderDialog(),
-    );
-  }
+  // void _createNewFolder(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => const _CreateFolderDialog(),
+  //   );
+  // }
 
-  void _showGitActions(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => _GitActionsSheet(ref: ref),
-    );
-  }
+  // void _showGitActions(BuildContext context, WidgetRef ref) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => _GitActionsSheet(ref: ref),
+  //   );
+  // }
 
-  void _saveSettings(WidgetRef ref) {
-    // Save settings logic
-  }
+  // void _saveSettings(WidgetRef ref) {
+  //   // Save settings logic
+  // }
 
-  void _showAppInfo(BuildContext context) {
-    showAboutDialog(context: context);
-  }
+  // void _showAppInfo(BuildContext context) {
+  //   showAboutDialog(context: context);
+  // }
 }
 
-class _CodeSearchDelegate extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: const Icon(Icons.clear),
-        onPressed: () => query = '',
-      ),
-    ];
-  }
+// class _CodeSearchDelegate extends SearchDelegate {
+//   @override
+//   List<Widget> buildActions(BuildContext context) {
+//     return [
+//       IconButton(
+//         icon: const Icon(Icons.clear),
+//         onPressed: () => query = '',
+//       ),
+//     ];
+//   }
 
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () => close(context, null),
-    );
-  }
+//   @override
+//   Widget buildLeading(BuildContext context) {
+//     return IconButton(
+//       icon: const Icon(Icons.arrow_back),
+//       onPressed: () => close(context, null),
+//     );
+//   }
 
-  @override
-  Widget buildResults(BuildContext context) {
-    return Center(
-      child: Text('Search results for: $query'),
-    );
-  }
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     return Center(
+//       child: Text('Search results for: $query'),
+//     );
+//   }
 
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return const Center(
-      child: Text('Search in code...'),
-    );
-  }
-}
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     return const Center(
+//       child: Text('Search in code...'),
+//     );
+//   }
+// }
 
-class _EditorBottomSheet extends ConsumerWidget {
-  final WidgetRef ref;
+// class _EditorBottomSheet extends ConsumerWidget {
+//   final WidgetRef ref;
 
-  const _EditorBottomSheet({required this.ref});
+//   const _EditorBottomSheet({required this.ref});
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.format_size),
-            title: const Text('Font Size'),
-            onTap: () => _showFontSizeDialog(context, ref),
-          ),
-          ListTile(
-            leading: const Icon(Icons.palette),
-            title: const Text('Editor Theme'),
-            onTap: () => _showThemeDialog(context, ref),
-          ),
-          ListTile(
-            leading: const Icon(Icons.wrap_text),
-            title: const Text('Word Wrap'),
-            onTap: () => _toggleWordWrap(ref),
-          ),
-        ],
-      ),
-    );
-  }
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     return Container(
+//       padding: const EdgeInsets.all(16),
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           ListTile(
+//             leading: const Icon(Icons.format_size),
+//             title: const Text('Font Size'),
+//             onTap: () => _showFontSizeDialog(context, ref),
+//           ),
+//           ListTile(
+//             leading: const Icon(Icons.palette),
+//             title: const Text('Editor Theme'),
+//             onTap: () => _showThemeDialog(context, ref),
+//           ),
+//           ListTile(
+//             leading: const Icon(Icons.wrap_text),
+//             title: const Text('Word Wrap'),
+//             onTap: () => _toggleWordWrap(ref),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
 
-  void _showFontSizeDialog(BuildContext context, WidgetRef ref) {
-    // Show font size dialog
-  }
+//   void _showFontSizeDialog(BuildContext context, WidgetRef ref) {
+//     // Show font size dialog
+//   }
 
-  void _showThemeDialog(BuildContext context, WidgetRef ref) {
-    // Show theme dialog
-  }
+//   void _showThemeDialog(BuildContext context, WidgetRef ref) {
+//     // Show theme dialog
+//   }
 
-  void _toggleWordWrap(WidgetRef ref) {
-    // Toggle word wrap
-  }
-}
+//   void _toggleWordWrap(WidgetRef ref) {
+//     // Toggle word wrap
+//   }
+// }
 
-class _CreateFolderDialog extends StatelessWidget {
-  const _CreateFolderDialog();
+// class _CreateFolderDialog extends StatelessWidget {
+//   const _CreateFolderDialog();
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Create New Folder'),
-      content: TextField(
-        decoration: const InputDecoration(hintText: 'Folder name'),
-        onSubmitted: (value) {
-          Navigator.of(context).pop();
-        },
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Create'),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return AlertDialog(
+//       title: const Text('Create New Folder'),
+//       content: TextField(
+//         decoration: const InputDecoration(hintText: 'Folder name'),
+//         onSubmitted: (value) {
+//           Navigator.of(context).pop();
+//         },
+//       ),
+//       actions: [
+//         TextButton(
+//           onPressed: () => Navigator.of(context).pop(),
+//           child: const Text('Cancel'),
+//         ),
+//         TextButton(
+//           onPressed: () => Navigator.of(context).pop(),
+//           child: const Text('Create'),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
-class _GitActionsSheet extends ConsumerWidget {
-  final WidgetRef ref;
+// class _GitActionsSheet extends ConsumerWidget {
+//   final WidgetRef ref;
 
-  const _GitActionsSheet({required this.ref});
+//   const _GitActionsSheet({required this.ref});
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.download),
-            title: const Text('Pull Changes'),
-            onTap: () => _pullChanges(ref),
-          ),
-          ListTile(
-            leading: const Icon(Icons.upload),
-            title: const Text('Push Changes'),
-            onTap: () => _pushChanges(ref),
-          ),
-          ListTile(
-            leading: const Icon(Icons.code),
-            title: const Text('Commit Changes'),
-            onTap: () => _showCommitDialog(context, ref),
-          ),
-        ],
-      ),
-    );
-  }
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     return Container(
+//       padding: const EdgeInsets.all(16),
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           ListTile(
+//             leading: const Icon(Icons.download),
+//             title: const Text('Pull Changes'),
+//             onTap: () => _pullChanges(ref),
+//           ),
+//           ListTile(
+//             leading: const Icon(Icons.upload),
+//             title: const Text('Push Changes'),
+//             onTap: () => _pushChanges(ref),
+//           ),
+//           ListTile(
+//             leading: const Icon(Icons.code),
+//             title: const Text('Commit Changes'),
+//             onTap: () => _showCommitDialog(context, ref),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
 
-  void _pullChanges(WidgetRef ref) {
-    // Pull changes logic
-  }
+//   void _pullChanges(WidgetRef ref) {
+//     // Pull changes logic
+//   }
 
-  void _pushChanges(WidgetRef ref) {
-    // Push changes logic
-  }
+//   void _pushChanges(WidgetRef ref) {
+//     // Push changes logic
+//   }
 
-  void _showCommitDialog(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (context) => const _CommitDialog(),
-    );
-  }
-}
+//   void _showCommitDialog(BuildContext context, WidgetRef ref) {
+//     showDialog(
+//       context: context,
+//       builder: (context) => const _CommitDialog(),
+//     );
+//   }
+// }
 
-class _CommitDialog extends StatelessWidget {
-  const _CommitDialog();
+// class _CommitDialog extends StatelessWidget {
+//   const _CommitDialog();
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Commit Changes'),
-      content: TextField(
-        decoration: const InputDecoration(hintText: 'Commit message'),
-        maxLines: 3,
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Commit'),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return AlertDialog(
+//       title: const Text('Commit Changes'),
+//       content: TextField(
+//         decoration: const InputDecoration(hintText: 'Commit message'),
+//         maxLines: 3,
+//       ),
+//       actions: [
+//         TextButton(
+//           onPressed: () => Navigator.of(context).pop(),
+//           child: const Text('Cancel'),
+//         ),
+//         TextButton(
+//           onPressed: () => Navigator.of(context).pop(),
+//           child: const Text('Commit'),
+//         ),
+//       ],
+//     );
+//   }
+// }
