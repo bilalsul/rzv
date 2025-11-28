@@ -41,7 +41,7 @@
   "settingsEditorFontSize": "フォントサイズ",
   "settingsEditorFontFamily": "フォントファミリー",
   "settingsEditorZoomInOut": "ズームイン/ズームアウトを有効にする",
-  "settingsEditorRenderUnsupportedCharacters": "サポートされていない文字を警告付きで表示 ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "サポートされていない文字を警告付きで表示 🔔",
   
   "settingsAiSettings": "AI 設定",
   "settingsAiModelProvider": "モデルプロバイダー",

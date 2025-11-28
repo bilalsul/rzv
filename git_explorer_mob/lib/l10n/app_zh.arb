@@ -41,7 +41,7 @@
   "settingsEditorFontSize": "字体大小",
   "settingsEditorFontFamily": "字体系列",
   "settingsEditorZoomInOut": "启用放大/缩小",
-  "settingsEditorRenderUnsupportedCharacters": "以警告形式显示不支持的字符 ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "以警告形式显示不支持的字符 🔔",
   
   "settingsAiSettings": "AI 设置",
   "settingsAiModelProvider": "模型提供商",

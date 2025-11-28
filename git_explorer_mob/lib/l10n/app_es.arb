@@ -41,7 +41,7 @@
     "settingsEditorFontSize": "Tamaño de fuente",
     "settingsEditorFontFamily": "Familia de fuentes",
     "settingsEditorZoomInOut": "Habilitar Zoom In/Out",
-    "settingsEditorRenderUnsupportedCharacters": "Mostrar caracteres no admitidos con advertencia ⚠️",
+    "settingsEditorRenderUnsupportedCharacters": "Mostrar caracteres no admitidos con advertencia 🔔",
     
     "settingsAiSettings": "Configuración de IA",
     "settingsAiModelProvider": "Proveedor de modelo",

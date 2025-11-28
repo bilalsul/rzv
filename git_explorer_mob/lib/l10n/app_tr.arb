@@ -41,7 +41,7 @@
   "settingsEditorFontSize": "Yazı Boyutu",
   "settingsEditorFontFamily": "Yazı Tipi Ailesi",
   "settingsEditorZoomInOut": "Yakınlaştırma/Uzaklaştırma'yı Etkinleştir",
-  "settingsEditorRenderUnsupportedCharacters": "Desteklenmeyen karakterleri uyarıyla göster ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "Desteklenmeyen karakterleri uyarıyla göster 🔔",
   
   "settingsAiSettings": "AI Ayarları",
   "settingsAiModelProvider": "Model sağlayıcısı",

@@ -41,7 +41,7 @@
   "settingsEditorFontSize": "Taille de police",
   "settingsEditorFontFamily": "Police de caractères",
   "settingsEditorZoomInOut": "Activer le Zoom In/Out",
-  "settingsEditorRenderUnsupportedCharacters": "Afficher les caractères non pris en charge avec avertissement ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "Afficher les caractères non pris en charge avec avertissement 🔔",
   
   
   "settingsAiSettings": "Paramètres IA",

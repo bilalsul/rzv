@@ -41,7 +41,7 @@
   "settingsEditorFontSize": "Schriftgröße",
   "settingsEditorFontFamily": "Schriftart",
   "settingsEditorZoomInOut": "Zoom In/Out aktivieren",
-  "settingsEditorRenderUnsupportedCharacters": "Nicht unterstützte Zeichen mit Warnung anzeigen ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "Nicht unterstützte Zeichen mit Warnung anzeigen 🔔",
   
   "settingsAiSettings": "KI-Einstellungen",
   "settingsAiModelProvider": "Modell-Anbieter",

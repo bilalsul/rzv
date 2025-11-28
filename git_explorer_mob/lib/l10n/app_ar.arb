@@ -41,7 +41,7 @@
   "settingsEditorFontSize": "حجم الخط",
   "settingsEditorFontFamily": "عائلة الخط",
   "settingsEditorZoomInOut": "تفعيل التكبير/التصغير",
-  "settingsEditorRenderUnsupportedCharacters": "عرض الأحرف غير المدعومة مع تحذير ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "عرض الأحرف غير المدعومة مع تحذير 🔔",
   
   "settingsAiSettings": "إعدادات الذكاء الاصطناعي",
   "settingsAiModelProvider": "مزود النموذج",

@@ -48,7 +48,7 @@
   "settingsEditorFontSize": "Размер шрифта",
   "settingsEditorFontFamily": "Семейство шрифтов",
   "settingsEditorZoomInOut": "Включить масштабирование (In/Out)",
-  "settingsEditorRenderUnsupportedCharacters": "Отображать неподдерживаемые символы с предупреждением ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "Отображать неподдерживаемые символы с предупреждением 🔔",
   
   "settingsAiSettings": "Настройки ИИ",
   "settingsAiModelProvider": "Провайдер модели",

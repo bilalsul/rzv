@@ -48,7 +48,7 @@
   "settingsEditorFontSize": "글꼴 크기",
   "settingsEditorFontFamily": "글꼴 계열",
   "settingsEditorZoomInOut": "확대/축소 활성화",
-  "settingsEditorRenderUnsupportedCharacters": "지원되지 않는 문자를 경고와 함께 표시 ⚠️",
+  "settingsEditorRenderUnsupportedCharacters": "지원되지 않는 문자를 경고와 함께 표시 🔔",
   
   "settingsAiSettings": "AI 설정",
   "settingsAiModelProvider": "모델 제공자",
