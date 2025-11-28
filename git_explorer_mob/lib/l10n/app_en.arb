@@ -47,6 +47,7 @@
   "settingsEditorOpenFilePlaceholder": "# Open File from a Project or Create New File",
   "settingsEditorFontSize": "Font Size",
   "settingsEditorFontFamily": "Font Family",
+  "settingsEditorZoomInOut": "Enable Zoom In/Out",
   
   "settingsGitSettings": "Git Settings",
   "settingsGitAutoFetch": "Auto-fetch",

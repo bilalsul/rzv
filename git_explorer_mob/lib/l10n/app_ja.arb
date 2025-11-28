@@ -47,6 +47,7 @@
   "settingsEditorOpenFilePlaceholder": "# プロジェクトからファイルを開くか新しいファイルを作成",
   "settingsEditorFontSize": "フォントサイズ",
   "settingsEditorFontFamily": "フォントファミリー",
+  "settingsEditorZoomInOut": "ズームイン/ズームアウトを有効にする",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動フェッチ",

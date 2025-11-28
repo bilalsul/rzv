@@ -47,6 +47,7 @@
   "settingsEditorOpenFilePlaceholder": "# 프로젝트에서 파일 열기 또는 새 파일 만들기",
   "settingsEditorFontSize": "글꼴 크기",
   "settingsEditorFontFamily": "글꼴 계열",
+  "settingsEditorZoomInOut": "확대/축소 활성화",
   
   "settingsGitSettings": "Git 설정",
   "settingsGitAutoFetch": "자동 가져오기",

@@ -47,6 +47,7 @@
   "settingsEditorOpenFilePlaceholder": "# Projeden dosya aç veya yeni dosya oluştur",
   "settingsEditorFontSize": "Yazı Boyutu",
   "settingsEditorFontFamily": "Yazı Tipi Ailesi",
+  "settingsEditorZoomInOut": "Yakınlaştırma/Uzaklaştırma'yı Etkinleştir",
   
   "settingsGitSettings": "Git Ayarları",
   "settingsGitAutoFetch": "Otomatik çekme",
