@@ -198,28 +198,28 @@ Future<void> saveTermsAccepted(bool accepted) async {
 }
 
 // Getter and setter for analytics opt-in status
-bool get isAnalyticsOptedIn {
-  return prefs.getBool('app_analytics_opted_in') ?? false;
-}
+// bool get isAnalyticsOptedIn {
+//   return prefs.getBool('app_analytics_opted_in') ?? false;
+// }
 
-Future<void> saveAnalyticsOptedIn(bool optedIn) async {
-  await prefs.setBool('app_analytics_opted_in', optedIn);
-  notifyListeners();
-}
+// Future<void> saveAnalyticsOptedIn(bool optedIn) async {
+//   await prefs.setBool('app_analytics_opted_in', optedIn);
+//   notifyListeners();
+// }
 
 // Getter and setter for crash reporting enabled status
-bool get isCrashReportingEnabled {
-  return prefs.getBool('app_crash_reporting') ?? true;
-}
+// bool get isCrashReportingEnabled {
+//   return prefs.getBool('app_crash_reporting') ?? true;
+// }
 
-Future<void> saveCrashReportingEnabled(bool enabled) async {
-  await prefs.setBool('app_crash_reporting', enabled);
-  notifyListeners();
-}
+// Future<void> saveCrashReportingEnabled(bool enabled) async {
+//   await prefs.setBool('app_crash_reporting', enabled);
+//   notifyListeners();
+// }
 
 // Getter and setter for app version
 String get appVersion {
-  return prefs.getString('app_version') ?? '1.0.0';
+  return prefs.getString('app_version') ?? '0.0.1';
 }
 
 // Future<void> saveAppVersion(String version) async {
@@ -228,14 +228,14 @@ String get appVersion {
 // }
 
 // Getter and setter for build number
-String get buildNumber {
-  return prefs.getString('app_build_number') ?? '1';
-}
+// String get buildNumber {
+//   return prefs.getString('app_build_number') ?? '1';
+// }
 
-Future<void> saveBuildNumber(String build) async {
-  await prefs.setString('app_build_number', build);
-  notifyListeners();
-}
+// Future<void> saveBuildNumber(String build) async {
+//   await prefs.setString('app_build_number', build);
+//   notifyListeners();
+// }
 
 // Getter and setter for first install date
 DateTime get firstInstallDate {
@@ -299,14 +299,14 @@ void resetThemeCustomizerColors() {
   }
 
 // Getter and setter for custom theme name
-String get customThemeName {
-  return prefs.getString('theme_custom_name') ?? 'default_custom';
-}
+// String get customThemeName {
+//   return prefs.getString('theme_custom_name') ?? 'default_custom';
+// }
 
-Future<void> saveCustomThemeName(String name) async {
-  await prefs.setString('theme_custom_name', name);
-  notifyListeners();
-}
+// Future<void> saveCustomThemeName(String name) async {
+//   await prefs.setString('theme_custom_name', name);
+//   notifyListeners();
+// }
 
 // Getter and setter for primary color
   // Color name mapping helpers ------------------------------------------------
@@ -432,127 +432,110 @@ Future<void> saveBackgroundColor(int colorValue) async {
 }
 
 // Getter and setter for surface color
-Color get surfaceColor {
-  int colorValue = prefs.getInt('theme_surface_color') ?? 0xFF1E1E1E;
-  return Color(colorValue);
-}
+// Color get surfaceColor {
+//   int colorValue = prefs.getInt('theme_surface_color') ?? 0xFF1E1E1E;
+//   return Color(colorValue);
+// }
 
-Future<void> saveSurfaceColor(int colorValue) async {
-  await prefs.setInt('theme_surface_color', colorValue);
-  notifyListeners();
-}
+// Future<void> saveSurfaceColor(int colorValue) async {
+//   await prefs.setInt('theme_surface_color', colorValue);
+//   notifyListeners();
+// }
 
 // Getter and setter for error color
-Color get errorColor {
-  int colorValue = prefs.getInt('theme_error_color') ?? 0xFFCF6679;
-  return Color(colorValue);
-}
+// Color get errorColor {
+//   int colorValue = prefs.getInt('theme_error_color') ?? 0xFFCF6679;
+//   return Color(colorValue);
+// }
 
-Future<void> saveErrorColor(int colorValue) async {
-  await prefs.setInt('theme_error_color', colorValue);
-  notifyListeners();
-}
+// Future<void> saveErrorColor(int colorValue) async {
+//   await prefs.setInt('theme_error_color', colorValue);
+//   notifyListeners();
+// }
 
 // Getter and setter for UI density
-String get uiDensity {
-  return prefs.getString('theme_ui_density') ?? 'comfortable';
-}
+// String get uiDensity {
+//   return prefs.getString('theme_ui_density') ?? 'comfortable';
+// }
 
-Future<void> saveUiDensity(String density) async {
-  await prefs.setString('theme_ui_density', density);
-  notifyListeners();
-}
+// Future<void> saveUiDensity(String density) async {
+//   await prefs.setString('theme_ui_density', density);
+//   notifyListeners();
+// }
 
 // Getter and setter for button style
-String get buttonStyle {
-  return prefs.getString('theme_button_style') ?? 'elevated';
-}
+// String get buttonStyle {
+//   return prefs.getString('theme_button_style') ?? 'elevated';
+// }
 
-Future<void> saveButtonStyle(String style) async {
-  await prefs.setString('theme_button_style', style);
-  notifyListeners();
-}
+// Future<void> saveButtonStyle(String style) async {
+//   await prefs.setString('theme_button_style', style);
+//   notifyListeners();
+// }
 
 // Getter and setter for border radius
-double get borderRadius {
-  return prefs.getDouble('theme_border_radius') ?? 8.0;
-}
+// double get borderRadius {
+//   return prefs.getDouble('theme_border_radius') ?? 8.0;
+// }
 
-Future<void> saveBorderRadius(double radius) async {
-  await prefs.setDouble('theme_border_radius', radius);
-  notifyListeners();
-}
+// Future<void> saveBorderRadius(double radius) async {
+//   await prefs.setDouble('theme_border_radius', radius);
+//   notifyListeners();
+// }
 
 // Getter and setter for elevation level
-double get elevationLevel {
-  return prefs.getDouble('theme_elevation_level') ?? 2.0;
-}
+// double get elevationLevel {
+//   return prefs.getDouble('theme_elevation_level') ?? 2.0;
+// }
 
-Future<void> saveElevationLevel(double elevation) async {
-  await prefs.setDouble('theme_elevation_level', elevation);
-  notifyListeners();
-}
+// Future<void> saveElevationLevel(double elevation) async {
+//   await prefs.setDouble('theme_elevation_level', elevation);
+//   notifyListeners();
+// }
 
 // Getter and setter for app font family
-String get appFontFamily {
-  return prefs.getString('theme_app_font_family') ?? 'Roboto';
-}
+// String get appFontFamily {
+//   return prefs.getString('theme_app_font_family') ?? 'Roboto';
+// }
 
-Future<void> saveAppFontFamily(String fontFamily) async {
-  await prefs.setString('theme_app_font_family', fontFamily);
-  notifyListeners();
-}
+// Future<void> saveAppFontFamily(String fontFamily) async {
+//   await prefs.setString('theme_app_font_family', fontFamily);
+//   notifyListeners();
+// }
 
 // Getter and setter for app font size
-double get appFontSize {
-  return prefs.getDouble('theme_app_font_size') ?? 14.0;
-}
+// double get appFontSize {
+//   return prefs.getDouble('theme_app_font_size') ?? 14.0;
+// }
 
-Future<void> saveAppFontSize(double fontSize) async {
-  await prefs.setDouble('theme_app_font_size', fontSize);
-  notifyListeners();
-}
+// Future<void> saveAppFontSize(double fontSize) async {
+//   await prefs.setDouble('theme_app_font_size', fontSize);
+//   notifyListeners();
+// }
 
 // Getter and setter for heading font scale
-double get headingFontScale {
-  return prefs.getDouble('theme_heading_font_scale') ?? 1.5;
-}
+// double get headingFontScale {
+//   return prefs.getDouble('theme_heading_font_scale') ?? 1.5;
+// }
 
-Future<void> saveHeadingFontScale(double scale) async {
-  await prefs.setDouble('theme_heading_font_scale', scale);
-  notifyListeners();
-}
+// Future<void> saveHeadingFontScale(double scale) async {
+//   await prefs.setDouble('theme_heading_font_scale', scale);
+//   notifyListeners();
+// }
 
 // Getter and setter for code font scale
-double get codeFontScale {
-  return prefs.getDouble('theme_code_font_scale') ?? 1.0;
-}
+// double get codeFontScale {
+//   return prefs.getDouble('theme_code_font_scale') ?? 1.0;
+// }
 
-Future<void> saveCodeFontScale(double scale) async {
-  await prefs.setDouble('theme_code_font_scale', scale);
-  notifyListeners();
-}
+// Future<void> saveCodeFontScale(double scale) async {
+//   await prefs.setDouble('theme_code_font_scale', scale);
+//   notifyListeners();
+// }
 
 // -------------------------------
 // Editor convenience helpers
 // -------------------------------
-
-/// Return a map of editor-related settings (used to configure Monaco)
-Map<String, dynamic> getEditorSettings() {
-  return {
-    // 'monacoTheme': editorMonacoTheme,
-    'fontFamily': editorFontFamily,
-    'fontSize': editorFontSize,
-    // 'tabSize': editorTabSize,
-    'lineNumbers': editorLineNumbers,
-    'minimap': editorMinimapEnabled,
-    'autoSave': editorAutoSave,
-    // 'autoSaveDelay': editorAutoSaveDelay,
-    'formatOnSave': editorFormatOnSave,
-    // 'wordWrap': editorWordWrap,
-    // 'insertSpaces': editorInsertSpaces,
-  };
-}
 
 /// Save the currently opened project and file path and its latest content.
 Future<void> saveCurrentOpenFile(String projectId, String filePath, String content) async {
@@ -594,34 +577,34 @@ DateTime get lastOpenedProjectTime {
 }
 
 // Getter and setter for animation speed
-double get animationSpeed {
-  return prefs.getDouble('theme_animation_speed') ?? 1.0;
-}
+// double get animationSpeed {
+//   return prefs.getDouble('theme_animation_speed') ?? 1.0;
+// }
 
-Future<void> saveAnimationSpeed(double speed) async {
-  await prefs.setDouble('theme_animation_speed', speed);
-  notifyListeners();
-}
+// Future<void> saveAnimationSpeed(double speed) async {
+//   await prefs.setDouble('theme_animation_speed', speed);
+//   notifyListeners();
+// }
 
 // Getter and setter for reduce animations setting
-bool get reduceAnimations {
-  return prefs.getBool('theme_reduce_animations') ?? false;
-}
+// bool get reduceAnimations {
+//   return prefs.getBool('theme_reduce_animations') ?? false;
+// }
 
-Future<void> saveReduceAnimations(bool reduce) async {
-  await prefs.setBool('theme_reduce_animations', reduce);
-  notifyListeners();
-}
+// Future<void> saveReduceAnimations(bool reduce) async {
+//   await prefs.setBool('theme_reduce_animations', reduce);
+//   notifyListeners();
+// }
 
 // Getter and setter for ripple effect setting
-bool get rippleEffect {
-  return prefs.getBool('theme_ripple_effect') ?? true;
-}
+// bool get rippleEffect {
+//   return prefs.getBool('theme_ripple_effect') ?? true;
+// }
 
-Future<void> saveRippleEffect(bool enable) async {
-  await prefs.setBool('theme_ripple_effect', enable);
-  notifyListeners();
-}
+// Future<void> saveRippleEffect(bool enable) async {
+//   await prefs.setBool('theme_ripple_effect', enable);
+//   notifyListeners();
+// }
 
 // Editor Prefs
 // Getter and setter for editor font size
@@ -655,14 +638,14 @@ Future<void> saveEditorFontFamily(String fontFamily) async {
 // }
 
 // Getter and setter for insert spaces setting
-bool get editorInsertSpaces {
-  return prefs.getBool('editor_insert_spaces') ?? true;
-}
+// bool get editorInsertSpaces {
+//   return prefs.getBool('editor_insert_spaces') ?? true;
+// }
 
-Future<void> saveEditorInsertSpaces(bool insertSpaces) async {
-  await prefs.setBool('editor_insert_spaces', insertSpaces);
-  notifyListeners();
-}
+// Future<void> saveEditorInsertSpaces(bool insertSpaces) async {
+//   await prefs.setBool('editor_insert_spaces', insertSpaces);
+//   notifyListeners();
+// }
 
 // Getter and setter for word wrap setting
 bool get editorWordWrap {
@@ -704,28 +687,12 @@ Future<void> saveEditorMinimapEnabled(bool enabled) async {
   notifyListeners();
 }
 
-// Getter and setter for auto-indent setting
-bool get editorAutoIndent {
-  return prefs.getBool('editor_auto_indent') ?? true;
+bool get editorRenderControlCharacters {
+  return prefs.getBool('editor_render_control_characters') ?? false;
 }
 
-// Getter and setter for auto-save setting
-bool get editorAutoSave {
-  return prefs.getBool('editor_auto_save') ?? true;
-}
-
-Future<void> saveEditorAutoSave(bool autoSave) async {
-  await prefs.setBool('editor_auto_save', autoSave);
-  notifyListeners();
-}
-
-// Getter and setter for format on save setting
-bool get editorFormatOnSave {
-  return prefs.getBool('editor_format_on_save') ?? false;
-}
-
-Future<void> saveEditorFormatOnSave(bool formatOnSave) async {
-  await prefs.setBool('editor_format_on_save', formatOnSave);
+Future<void> saveEditorRenderControlCharacters(bool enabled) async {
+  await prefs.setBool('editor_render_control_characters', enabled);
   notifyListeners();
 }
 
@@ -756,9 +723,9 @@ bool get codeFoldingEnabled {
 
 
 // Getter and setter for Bracket Matching plugin (editor)
-bool get bracketMatchingEnabled {
-  return isPluginEnabled('bracket_matching');
-}
+// bool get bracketMatchingEnabled {
+//   return isPluginEnabled('bracket_matching');
+// }
 
 // Getter and setter for Git History plugin (git)
 bool get gitHistoryEnabled {
@@ -767,15 +734,15 @@ bool get gitHistoryEnabled {
 
 
 // Getter and setter for GitLens plugin (git)
-bool get gitLensEnabled {
-  return isPluginEnabled('git_lens');
-}
+// bool get gitLensEnabled {
+//   return isPluginEnabled('git_lens');
+// }
 
 
 // Getter and setter for Branch Manager plugin (git)
-bool get branchManagerEnabled {
-  return isPluginEnabled('branch_manager');
-}
+// bool get branchManagerEnabled {
+//   return isPluginEnabled('branch_manager');
+// }
 
 
 // Getter and setter for File Explorer plugin (utility)
@@ -785,9 +752,9 @@ bool get fileExplorerEnabled {
 
 
 // Getter and setter for Search & Replace plugin (utility)
-bool get searchReplaceEnabled {
-  return isPluginEnabled('search_replace');
-}
+// bool get searchReplaceEnabled {
+//   return isPluginEnabled('search_replace');
+// }
 
 
 // Getter and setter for Integrated Terminal plugin (utility)
@@ -809,15 +776,15 @@ bool get aiAssistEnabled {
 
 
 // Getter and setter for Real-time Collaboration plugin (experimental)
-bool get realTimeCollabEnabled {
-  return isPluginEnabled("real_time_collab");
-}
+// bool get realTimeCollabEnabled {
+//   return isPluginEnabled("real_time_collab");
+// }
 
 
 // Getter and setter for Performance Monitor plugin (experimental)
-bool get performanceMonitorEnabled {
-  return isPluginEnabled('performance_monitor');
-}
+// bool get performanceMonitorEnabled {
+//   return isPluginEnabled('performance_monitor');
+// }
 
   // Generic plugin helpers -------------------------------------------------
   /// Returns the list of enabled plugins stored under 'plugins_enabled'.
@@ -936,12 +903,11 @@ bool featureSupported(String pluginId) {
 
 class AppState {
   final DateTime sessionStartTime;
-  final String appVersion;
+  final String appVersion = Prefs().appVersion;
   final DateTime firstInstallDate;
 
-  const AppState({
+  AppState({
     required this.sessionStartTime,
-    this.appVersion = '0.0.1',
     required this.firstInstallDate,
   });
   

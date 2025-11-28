@@ -48,6 +48,7 @@
   "settingsEditorFontSize": "Размер шрифта",
   "settingsEditorFontFamily": "Семейство шрифтов",
   "settingsEditorZoomInOut": "Включить масштабирование (In/Out)",
+  "settingsEditorRenderUnsupportedCharacters": "Отображать неподдерживаемые символы с предупреждением ⚠️",
   
   "settingsGitSettings": "Настройки Git",
   "settingsGitAutoFetch": "Автозагрузка",

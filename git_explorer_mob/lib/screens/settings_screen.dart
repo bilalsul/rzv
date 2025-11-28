@@ -338,6 +338,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onChanged: (v) async => await prefs.saveEditorLineNumbers(v),
                 activeColor: prefs.secondaryColor,
                 )]),
+              Row(children: [
+                Expanded(child: Text(L10n.of(context).settingsEditorRenderUnsupportedCharacters)),
+                Switch.adaptive(value: prefs.editorRenderControlCharacters, 
+                onChanged: (v) async => await prefs.saveEditorRenderControlCharacters(v),
+                activeColor: prefs.secondaryColor,
+                )]),
             ]),
           ) : SizedBox.shrink() ,
 

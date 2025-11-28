@@ -48,6 +48,7 @@
     "settingsEditorFontSize": "Tamaño de fuente",
     "settingsEditorFontFamily": "Familia de fuentes",
     "settingsEditorZoomInOut": "Habilitar Zoom In/Out",
+    "settingsEditorRenderUnsupportedCharacters": "Mostrar caracteres no admitidos con advertencia ⚠️",
     
     "settingsGitSettings": "Configuración de Git",
     "settingsGitAutoFetch": "Auto-obtener",

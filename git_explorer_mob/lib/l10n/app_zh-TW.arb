@@ -48,6 +48,7 @@
   "settingsEditorFontSize": "字型大小",
   "settingsEditorFontFamily": "字型系列",
   "settingsEditorZoomInOut": "啟用放大/縮小",
+  "settingsEditorRenderUnsupportedCharacters": "以警告形式顯示不支援的字元 ⚠️",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動擷取",

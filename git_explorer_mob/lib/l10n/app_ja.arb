@@ -48,6 +48,7 @@
   "settingsEditorFontSize": "フォントサイズ",
   "settingsEditorFontFamily": "フォントファミリー",
   "settingsEditorZoomInOut": "ズームイン/ズームアウトを有効にする",
+  "settingsEditorRenderUnsupportedCharacters": "サポートされていない文字を警告付きで表示 ⚠️",
   
   "settingsGitSettings": "Git 設定",
   "settingsGitAutoFetch": "自動フェッチ",

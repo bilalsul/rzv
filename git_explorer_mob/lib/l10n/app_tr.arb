@@ -48,6 +48,7 @@
   "settingsEditorFontSize": "Yazı Boyutu",
   "settingsEditorFontFamily": "Yazı Tipi Ailesi",
   "settingsEditorZoomInOut": "Yakınlaştırma/Uzaklaştırma'yı Etkinleştir",
+  "settingsEditorRenderUnsupportedCharacters": "Desteklenmeyen karakterleri uyarıyla göster ⚠️",
   
   "settingsGitSettings": "Git Ayarları",
   "settingsGitAutoFetch": "Otomatik çekme",

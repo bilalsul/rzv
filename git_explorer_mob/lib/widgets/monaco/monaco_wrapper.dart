@@ -35,14 +35,10 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
   }
 
   Widget _buildFallbackEditor(Prefs prefs ) {
-    final editorSettings = prefs.getEditorSettings();
-    final fontFamily = editorSettings['fontFamily'] as String? ?? prefs.editorFontFamily;
-    final fontSize = (editorSettings['fontSize'] as double?) ?? prefs.editorFontSize;
-
     return TextField(
       controller: _controller,
       maxLines: null,
-      style: TextStyle(fontFamily: fontFamily, fontSize: fontSize),
+      style: TextStyle(fontFamily: prefs.editorFontFamily, fontSize: prefs.editorFontSize),
       decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.all(12)),
       onChanged: (v) async {
         await Prefs().saveCurrentOpenFileContent(v);
@@ -94,13 +90,14 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
         backgroundColor: prefs.backgroundColor,
         onContentChanged: (value) => prefs.saveCurrentOpenFileContent(value),
         options: EditorOptions(
-          language: prefs.isPluginEnabled("syntax_highlighting") ? prefs.currentOpenFile.toMonacoLanguage() : MonacoLanguage.plaintext,
+          language: prefs.syntaxHighlightingEnabled ? prefs.currentOpenFile.toMonacoLanguage() : MonacoLanguage.plaintext,
           lineNumbers: prefs.editorLineNumbers,
           minimap: prefs.editorMinimapEnabled,
           readOnly: prefs.readonlyModeEnabled,
           fontFamily: prefs.editorFontFamily,
           fontSize: prefs.editorFontSize,
           wordWrap: prefs.editorWordWrap,
+          renderControlCharacters: prefs.editorRenderControlCharacters
         ),
 
       ) : _buildFallbackEditor(prefs)),

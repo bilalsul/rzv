@@ -48,6 +48,8 @@
   "settingsEditorFontSize": "Taille de police",
   "settingsEditorFontFamily": "Police de caractères",
   "settingsEditorZoomInOut": "Activer le Zoom In/Out",
+  "settingsEditorRenderUnsupportedCharacters": "Afficher les caractères non pris en charge avec avertissement ⚠️",
+  
   
   "settingsGitSettings": "Paramètres Git",
   "settingsGitAutoFetch": "Récupération automatique",
