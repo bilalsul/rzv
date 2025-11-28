@@ -188,7 +188,7 @@
   "drawerFolderNameHint": "Folder name",
   "drawerEditorTheme": "Editor Theme",
   "drawerEditorWordWrap": "Word Wrap",
-  "drawerFeedbackBody": "We'd love to hear your feedback about the Git Explorer!",
+  "drawerFeedbackBody": "We'd love to hear your feedback about Git Explorer!",
   "drawerSendFeedback": "Send Feedback",
   "drawerFirstInstalled": "First installed: {date}",
   "@drawerFirstInstalled": { "placeholders": { "date": {} } },
