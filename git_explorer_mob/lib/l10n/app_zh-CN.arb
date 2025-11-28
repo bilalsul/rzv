@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "主色调",
   "settingsAppearanceSecondaryColor": "次色调",
   "settingsAppearanceAccentColor": "强调色",
-  
-  "settingsApplyThemeColors": "应用主题颜色",
-  "settingsRevertThemeColors": "恢复默认",
-  "settingsBorderRadius": "圆角半径",
-  "settingsElevation": "阴影深度",
-  "settingsAppFontSize": "全局字体大小",
-  "settingsButtonStyle": "按钮样式",
-  "settingsReduceAnimations": "减少动画",
+  "settingsRevertThemeColors": "恢复默认",  
   
   "settingsEditorSettings": "编辑器设置",
   "settingsEditorTabSize": "Tab 宽度",
@@ -49,10 +42,6 @@
   "settingsEditorFontFamily": "字体系列",
   "settingsEditorZoomInOut": "启用放大/缩小",
   "settingsEditorRenderUnsupportedCharacters": "以警告形式显示不支持的字符 ⚠️",
-  
-  "settingsGitSettings": "Git 设置",
-  "settingsGitAutoFetch": "自动拉取",
-  "settingsGitDefaultBranch": "默认分支",
   
   "settingsAiSettings": "AI 设置",
   "settingsAiModelProvider": "模型提供商",
@@ -82,11 +71,6 @@
   "connectionFailed": "连接失败",
   "connectionSuccessful": "连接成功",
   
-  "settingsTerminalSettings": "终端设置",
-  "settingsTerminalShellExecutable": "Shell 可执行文件",
-  "settingsTerminalFontSize": "字体大小",
-  "settingsTerminalAudibleBell": "声音提示",
-  
   "settingsFileExplorerSettings": "文件管理器设置",
   "settingsFileExplorerShowHidden": "显示隐藏文件",
   "settingsFileExplorerPreviewMarkdown": "预览 Markdown 文件",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "主题颜色已应用",
   
   "commonDelete": "删除",
+  "commonCreate": "创建",
   "commonSave": "保存",
   "commonCancel": "取消",
   "commonOk": "确定",
@@ -197,12 +182,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "新建文件夹",
   "drawerFolderNameHint": "文件夹名称",
-  "commonCreate": "创建",
-  "drawerPullChanges": "拉取更改",
-  "drawerPushChanges": "推送更改",
-  "drawerCommitChanges": "提交更改",
-  "drawerCommitMessageHint": "提交信息",
-  "drawerCommit": "提交",
   "drawerEditorTheme": "编辑器主题",
   "drawerEditorWordWrap": "自动换行",
   "drawerFeedbackBody": "我们非常期待您对 Git Explorer 的宝贵意见！",

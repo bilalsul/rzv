@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "Primary color",
   "settingsAppearanceSecondaryColor": "Secondary color",
   "settingsAppearanceAccentColor": "Accent color",
-  
-  "settingsApplyThemeColors": "Apply Theme colors",
   "settingsRevertThemeColors": "Revert",
-  "settingsBorderRadius": "Border radius",
-  "settingsElevation": "Elevation",
-  "settingsAppFontSize": "App font size",
-  "settingsButtonStyle": "Button style",
-  "settingsReduceAnimations": "Reduce animations",
   
   "settingsEditorSettings": "Editor Settings",
   "settingsEditorTabSize": "Tab size",
@@ -49,10 +42,6 @@
   "settingsEditorFontFamily": "Font Family",
   "settingsEditorZoomInOut": "Enable Zoom In/Out",
   "settingsEditorRenderUnsupportedCharacters": "View Unsupported Characters with Warning ⚠️",
-  
-  "settingsGitSettings": "Git Settings",
-  "settingsGitAutoFetch": "Auto-fetch",
-  "settingsGitDefaultBranch": "Default branch",
   
   "settingsAiSettings": "AI Settings",
   "settingsAiModelProvider": "Model provider",
@@ -82,11 +71,6 @@
   "connectionFailed": "Connection failed",
   "connectionSuccessful": "Connection successful",
   
-  "settingsTerminalSettings": "Terminal Settings",
-  "settingsTerminalShellExecutable": "Shell executable",
-  "settingsTerminalFontSize": "Font size",
-  "settingsTerminalAudibleBell": "Audible bell",
-  
   "settingsFileExplorerSettings": "File Explorer Settings",
   "settingsFileExplorerShowHidden": "Show hidden files",
   "settingsFileExplorerPreviewMarkdown": "Preview markdown files",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "Theme colors applied",
   
   "commonDelete": "Delete",
+  "commonCreate": "Create",
   "commonSave": "Save",
   "commonCancel": "Cancel",
   "commonOk": "OK",
@@ -201,12 +186,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Create New Folder",
   "drawerFolderNameHint": "Folder name",
-  "commonCreate": "Create",
-  "drawerPullChanges": "Pull Changes",
-  "drawerPushChanges": "Push Changes",
-  "drawerCommitChanges": "Commit Changes",
-  "drawerCommitMessageHint": "Commit message",
-  "drawerCommit": "Commit",
   "drawerEditorTheme": "Editor Theme",
   "drawerEditorWordWrap": "Word Wrap",
   "drawerFeedbackBody": "We'd love to hear your feedback about the Git Explorer!",

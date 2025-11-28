@@ -50,10 +50,6 @@
   "settingsEditorZoomInOut": "확대/축소 활성화",
   "settingsEditorRenderUnsupportedCharacters": "지원되지 않는 문자를 경고와 함께 표시 ⚠️",
   
-  "settingsGitSettings": "Git 설정",
-  "settingsGitAutoFetch": "자동 가져오기",
-  "settingsGitDefaultBranch": "기본 브랜치",
-  
   "settingsAiSettings": "AI 설정",
   "settingsAiModelProvider": "모델 제공자",
   "settingsAiMaxTokens": "최대 토큰 수",
@@ -82,11 +78,6 @@
   "connectionFailed": "연결 실패",
   "connectionSuccessful": "연결 성공",
   
-  "settingsTerminalSettings": "터미널 설정",
-  "settingsTerminalShellExecutable": "쉘 실행 파일",
-  "settingsTerminalFontSize": "글꼴 크기",
-  "settingsTerminalAudibleBell": "소리 알림",
-  
   "settingsFileExplorerSettings": "파일 탐색기 설정",
   "settingsFileExplorerShowHidden": "숨김 파일 표시",
   "settingsFileExplorerPreviewMarkdown": "마크다운 미리보기",
@@ -95,6 +86,7 @@
   "settingsThemeApplied": "테마 색상이 적용되었습니다",
   
   "commonDelete": "삭제",
+  "commonCreate": "만들기",
   "commonSave": "저장",
   "commonCancel": "취소",
   "commonOk": "확인",
@@ -197,12 +189,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "새 폴더 만들기",
   "drawerFolderNameHint": "폴더 이름",
-  "commonCreate": "만들기",
-  "drawerPullChanges": "변경사항 가져오기",
-  "drawerPushChanges": "변경사항 푸시",
-  "drawerCommitChanges": "변경사항 커밋",
-  "drawerCommitMessageHint": "커밋 메시지",
-  "drawerCommit": "커밋",
   "drawerEditorTheme": "편집기 테마",
   "drawerEditorWordWrap": "자동 줄바꿈",
   "drawerFeedbackBody": "Git Explorer에 대한 소중한 의견을 보내주세요!",

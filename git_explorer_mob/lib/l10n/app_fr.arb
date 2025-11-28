@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "Couleur principale",
   "settingsAppearanceSecondaryColor": "Couleur secondaire",
   "settingsAppearanceAccentColor": "Couleur d'accentuation",
-  
-  "settingsApplyThemeColors": "Appliquer les couleurs du thème",
   "settingsRevertThemeColors": "Revenir",
-  "settingsBorderRadius": "Rayon de bordure",
-  "settingsElevation": "Élévation",
-  "settingsAppFontSize": "Taille de police de l'app",
-  "settingsButtonStyle": "Style de bouton",
-  "settingsReduceAnimations": "Réduire les animations",
   
   "settingsEditorSettings": "Paramètres de l'éditeur",
   "settingsEditorTabSize": "Taille des tabulations",
@@ -50,10 +43,6 @@
   "settingsEditorZoomInOut": "Activer le Zoom In/Out",
   "settingsEditorRenderUnsupportedCharacters": "Afficher les caractères non pris en charge avec avertissement ⚠️",
   
-  
-  "settingsGitSettings": "Paramètres Git",
-  "settingsGitAutoFetch": "Récupération automatique",
-  "settingsGitDefaultBranch": "Branche par défaut",
   
   "settingsAiSettings": "Paramètres IA",
   "settingsAiModelProvider": "Fournisseur de modèle",
@@ -83,11 +72,6 @@
   "connectionFailed": "Échec de la connexion",
   "connectionSuccessful": "Connexion réussie",
   
-  "settingsTerminalSettings": "Paramètres du terminal",
-  "settingsTerminalShellExecutable": "Exécutable du shell",
-  "settingsTerminalFontSize": "Taille de police",
-  "settingsTerminalAudibleBell": "Clochette audible",
-  
   "settingsFileExplorerSettings": "Paramètres de l'explorateur de fichiers",
   "settingsFileExplorerShowHidden": "Afficher les fichiers cachés",
   "settingsFileExplorerPreviewMarkdown": "Prévisualiser les fichiers markdown",
@@ -96,6 +80,7 @@
   "settingsThemeApplied": "Couleurs du thème appliquées",
   
   "commonDelete": "Supprimer",
+  "commonCreate": "Créer",
   "commonSave": "Sauvegarder",
   "commonCancel": "Annuler",
   "commonOk": "OK",
@@ -202,12 +187,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Créer un nouveau dossier",
   "drawerFolderNameHint": "Nom du dossier",
-  "commonCreate": "Créer",
-  "drawerPullChanges": "Récupérer les modifications",
-  "drawerPushChanges": "Pousser les modifications",
-  "drawerCommitChanges": "Valider les modifications",
-  "drawerCommitMessageHint": "Message de validation",
-  "drawerCommit": "Valider",
   "drawerEditorTheme": "Thème de l'éditeur",
   "drawerEditorWordWrap": "Retour à la ligne",
   "drawerFeedbackBody": "Nous aimerions avoir votre retour sur Git Explorer !",

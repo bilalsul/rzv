@@ -50,10 +50,6 @@
   "settingsEditorZoomInOut": "Включить масштабирование (In/Out)",
   "settingsEditorRenderUnsupportedCharacters": "Отображать неподдерживаемые символы с предупреждением ⚠️",
   
-  "settingsGitSettings": "Настройки Git",
-  "settingsGitAutoFetch": "Автозагрузка",
-  "settingsGitDefaultBranch": "Ветка по умолчанию",
-  
   "settingsAiSettings": "Настройки ИИ",
   "settingsAiModelProvider": "Провайдер модели",
   "settingsAiMaxTokens": "Максимум токенов",
@@ -82,11 +78,6 @@
   "connectionFailed": "Соединение не удалось",
   "connectionSuccessful": "Соединение установлено",
   
-  "settingsTerminalSettings": "Настройки терминала",
-  "settingsTerminalShellExecutable": "Исполняемый файл оболочки",
-  "settingsTerminalFontSize": "Размер шрифта",
-  "settingsTerminalAudibleBell": "Звуковой сигнал",
-  
   "settingsFileExplorerSettings": "Настройки проводника",
   "settingsFileExplorerShowHidden": "Показывать скрытые файлы",
   "settingsFileExplorerPreviewMarkdown": "Предпросмотр Markdown",
@@ -95,6 +86,7 @@
   "settingsThemeApplied": "Цвета темы применены",
   
   "commonDelete": "Удалить",
+  "commonCreate": "Создать",
   "commonSave": "Сохранить",
   "commonCancel": "Отмена",
   "commonOk": "ОК",
@@ -201,12 +193,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Создать новую папку",
   "drawerFolderNameHint": "Имя папки",
-  "commonCreate": "Создать",
-  "drawerPullChanges": "Потянуть изменения",
-  "drawerPushChanges": "Отправить изменения",
-  "drawerCommitChanges": "Зафиксировать изменения",
-  "drawerCommitMessageHint": "Сообщение коммита",
-  "drawerCommit": "Коммит",
   "drawerEditorTheme": "Тема редактора",
   "drawerEditorWordWrap": "Перенос строк",
   "drawerFeedbackBody": "Мы будем рады вашему отзыву о Git Explorer!",

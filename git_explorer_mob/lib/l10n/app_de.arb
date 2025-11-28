@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "Primärfarbe",
   "settingsAppearanceSecondaryColor": "Sekundärfarbe",
   "settingsAppearanceAccentColor": "Akzentfarbe",
-  
-  "settingsApplyThemeColors": "Theme-Farben anwenden",
   "settingsRevertThemeColors": "Zurücksetzen",
-  "settingsBorderRadius": "Rahmenradius",
-  "settingsElevation": "Erhebung",
-  "settingsAppFontSize": "App-Schriftgröße",
-  "settingsButtonStyle": "Button-Stil",
-  "settingsReduceAnimations": "Animationen reduzieren",
   
   "settingsEditorSettings": "Editor-Einstellungen",
   "settingsEditorTabSize": "Tab-Größe",
@@ -49,10 +42,6 @@
   "settingsEditorFontFamily": "Schriftart",
   "settingsEditorZoomInOut": "Zoom In/Out aktivieren",
   "settingsEditorRenderUnsupportedCharacters": "Nicht unterstützte Zeichen mit Warnung anzeigen ⚠️",
-  
-  "settingsGitSettings": "Git-Einstellungen",
-  "settingsGitAutoFetch": "Auto-Fetch",
-  "settingsGitDefaultBranch": "Standard-Branch",
   
   "settingsAiSettings": "KI-Einstellungen",
   "settingsAiModelProvider": "Modell-Anbieter",
@@ -82,11 +71,6 @@
   "connectionFailed": "Verbindung fehlgeschlagen",
   "connectionSuccessful": "Verbindung erfolgreich",
   
-  "settingsTerminalSettings": "Terminal-Einstellungen",
-  "settingsTerminalShellExecutable": "Shell-Executable",
-  "settingsTerminalFontSize": "Schriftgröße",
-  "settingsTerminalAudibleBell": "Hörbare Glocke",
-  
   "settingsFileExplorerSettings": "Datei-Explorer-Einstellungen",
   "settingsFileExplorerShowHidden": "Versteckte Dateien anzeigen",
   "settingsFileExplorerPreviewMarkdown": "Markdown-Dateien vorschauen",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "Theme-Farben angewendet",
   
   "commonDelete": "Löschen",
+  "commonCreate": "Erstellen",
   "commonSave": "Speichern",
   "commonCancel": "Abbrechen",
   "commonOk": "OK",
@@ -201,12 +186,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Neuen Ordner erstellen",
   "drawerFolderNameHint": "Ordnername",
-  "commonCreate": "Erstellen",
-  "drawerPullChanges": "Änderungen pullen",
-  "drawerPushChanges": "Änderungen pushen",
-  "drawerCommitChanges": "Änderungen committen",
-  "drawerCommitMessageHint": "Commit-Nachricht",
-  "drawerCommit": "Commit",
   "drawerEditorTheme": "Editor-Theme",
   "drawerEditorWordWrap": "Zeilenumbruch",
   "drawerFeedbackBody": "Wir würden uns über Ihr Feedback zum Git Explorer freuen!",

@@ -32,14 +32,8 @@
   "settingsAppearancePrimaryColor": "Colore primario",
   "settingsAppearanceSecondaryColor": "Colore secondario",
   "settingsAppearanceAccentColor": "Colore accento",
-  
-  "settingsApplyThemeColors": "Applica colori tema",
   "settingsRevertThemeColors": "Ripristina",
-  "settingsBorderRadius": "Raggio bordi",
-  "settingsElevation": "Rilievo",
-  "settingsAppFontSize": "Dimensione carattere app",
-  "settingsButtonStyle": "Stile pulsanti",
-  "settingsReduceAnimations": "Riduci animazioni",
+
   
   "settingsEditorSettings": "Impostazioni Editor",
   "settingsEditorTabSize": "Dimensione tab",
@@ -49,10 +43,6 @@
   "settingsEditorFontFamily": "Famiglia caratteri",
   "settingsEditorZoomInOut": "Abilita Zoom In/Out",
   "settingsEditorRenderUnsupportedCharacters": "Visualizza caratteri non supportati con avviso ⚠️",
-  
-  "settingsGitSettings": "Impostazioni Git",
-  "settingsGitAutoFetch": "Recupero automatico",
-  "settingsGitDefaultBranch": "Branch predefinito",
   
   "settingsAiSettings": "Impostazioni AI",
   "settingsAiModelProvider": "Provider modello",
@@ -95,6 +85,7 @@
   "settingsThemeApplied": "Colori tema applicati",
   
   "commonDelete": "Elimina",
+  "commonCreate": "Crea",
   "commonSave": "Salva",
   "commonCancel": "Annulla",
   "commonOk": "OK",
@@ -201,12 +192,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Crea Nuova Cartella",
   "drawerFolderNameHint": "Nome cartella",
-  "commonCreate": "Crea",
-  "drawerPullChanges": "Pull Modifiche",
-  "drawerPushChanges": "Push Modifiche",
-  "drawerCommitChanges": "Commit Modifiche",
-  "drawerCommitMessageHint": "Messaggio di commit",
-  "drawerCommit": "Commit",
   "drawerEditorTheme": "Tema Editor",
   "drawerEditorWordWrap": "A capo automatico",
   "drawerFeedbackBody": "Ci piacerebbe ricevere il tuo feedback sul Git Explorer !",

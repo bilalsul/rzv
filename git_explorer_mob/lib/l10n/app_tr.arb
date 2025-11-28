@@ -32,15 +32,8 @@
   "settingsAppearancePrimaryColor": "Birincil renk",
   "settingsAppearanceSecondaryColor": "İkincil renk",
   "settingsAppearanceAccentColor": "Vurgu rengi",
-  
-  "settingsApplyThemeColors": "Tema renklerini uygula",
   "settingsRevertThemeColors": "Geri al",
-  "settingsBorderRadius": "Kenar yuvarlaklığı",
-  "settingsElevation": "Yükselti",
-  "settingsAppFontSize": "Uygulama yazı boyutu",
-  "settingsButtonStyle": "Düğme stili",
-  "settingsReduceAnimations": "Animasyonları azalt",
-  
+    
   "settingsEditorSettings": "Editör Ayarları",
   "settingsEditorTabSize": "Sekme boyutu",
   "settingsEditorShowLineNumbers": "Satır numaralarını göster",
@@ -49,10 +42,6 @@
   "settingsEditorFontFamily": "Yazı Tipi Ailesi",
   "settingsEditorZoomInOut": "Yakınlaştırma/Uzaklaştırma'yı Etkinleştir",
   "settingsEditorRenderUnsupportedCharacters": "Desteklenmeyen karakterleri uyarıyla göster ⚠️",
-  
-  "settingsGitSettings": "Git Ayarları",
-  "settingsGitAutoFetch": "Otomatik çekme",
-  "settingsGitDefaultBranch": "Varsayılan dal",
   
   "settingsAiSettings": "AI Ayarları",
   "settingsAiModelProvider": "Model sağlayıcısı",
@@ -82,11 +71,6 @@
   "connectionFailed": "Bağlantı başarısız",
   "connectionSuccessful": "Bağlantı başarılı",
   
-  "settingsTerminalSettings": "Terminal Ayarları",
-  "settingsTerminalShellExecutable": "Kabuk çalıştırıcısı",
-  "settingsTerminalFontSize": "Yazı boyutu",
-  "settingsTerminalAudibleBell": "Sesli zil",
-  
   "settingsFileExplorerSettings": "Dosya Gezgini Ayarları",
   "settingsFileExplorerShowHidden": "Gizli dosyaları göster",
   "settingsFileExplorerPreviewMarkdown": "Markdown dosyalarını önizle",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "Tema renkleri uygulandı",
   
   "commonDelete": "Sil",
+  "commonCreate": "Oluştur",
   "commonSave": "Kaydet",
   "commonCancel": "İptal",
   "commonOk": "Tamam",
@@ -201,12 +186,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Yeni Klasör Oluştur",
   "drawerFolderNameHint": "Klasör adı",
-  "commonCreate": "Oluştur",
-  "drawerPullChanges": "Değişiklikleri Çek",
-  "drawerPushChanges": "Değişiklikleri Gönder",
-  "drawerCommitChanges": "Değişiklikleri Commit Et",
-  "drawerCommitMessageHint": "Commit mesajı",
-  "drawerCommit": "Commit",
   "drawerEditorTheme": "Editör Teması",
   "drawerEditorWordWrap": "Kelime Kaydırma",
   "drawerFeedbackBody": "Git Explorer hakkındaki görüşlerinizi duymak isteriz!",

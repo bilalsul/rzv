@@ -31,15 +31,8 @@
   "settingsAppearanceBottomNavigatorShow": "下部ナビゲーションバー",
   "settingsAppearancePrimaryColor": "プライマリカラー",
   "settingsAppearanceSecondaryColor": "セカンダリカラー",
-  "settingsAppearanceAccentColor": "アクセントカラー",
-  
-  "settingsApplyThemeColors": "テーマカラーを適用",
+  "settingsAppearanceAccentColor": "アクセントカラー",  
   "settingsRevertThemeColors": "元に戻す",
-  "settingsBorderRadius": "角丸",
-  "settingsElevation": "影の深さ",
-  "settingsAppFontSize": "アプリの文字サイズ",
-  "settingsButtonStyle": "ボタンスタイル",
-  "settingsReduceAnimations": "アニメーションを軽減",
   
   "settingsEditorSettings": "エディター設定",
   "settingsEditorTabSize": "タブ幅",
@@ -49,10 +42,6 @@
   "settingsEditorFontFamily": "フォントファミリー",
   "settingsEditorZoomInOut": "ズームイン/ズームアウトを有効にする",
   "settingsEditorRenderUnsupportedCharacters": "サポートされていない文字を警告付きで表示 ⚠️",
-  
-  "settingsGitSettings": "Git 設定",
-  "settingsGitAutoFetch": "自動フェッチ",
-  "settingsGitDefaultBranch": "デフォルトブランチ",
   
   "settingsAiSettings": "AI 設定",
   "settingsAiModelProvider": "モデルプロバイダー",
@@ -95,6 +84,7 @@
   "settingsThemeApplied": "テーマカラーを適用しました",
   
   "commonDelete": "削除",
+  "commonCreate": "作成",
   "commonSave": "保存",
   "commonCancel": "キャンセル",
   "commonOk": "OK",
@@ -197,12 +187,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "新しいフォルダーを作成",
   "drawerFolderNameHint": "フォルダー名",
-  "commonCreate": "作成",
-  "drawerPullChanges": "変更をプル",
-  "drawerPushChanges": "変更をプッシュ",
-  "drawerCommitChanges": "変更をコミット",
-  "drawerCommitMessageHint": "コミットメッセージ",
-  "drawerCommit": "コミット",
   "drawerEditorTheme": "エディターテーマ",
   "drawerEditorWordWrap": "自動折り返し",
   "drawerFeedbackBody": "Git Explorer へのご意見をお待ちしています！",

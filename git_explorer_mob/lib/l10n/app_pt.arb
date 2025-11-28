@@ -32,14 +32,8 @@
   "settingsAppearancePrimaryColor": "Cor primária",
   "settingsAppearanceSecondaryColor": "Cor secundária",
   "settingsAppearanceAccentColor": "Cor de destaque",
-  
-  "settingsApplyThemeColors": "Aplicar cores do tema",
   "settingsRevertThemeColors": "Reverter",
-  "settingsBorderRadius": "Raio das bordas",
-  "settingsElevation": "Elevação",
-  "settingsAppFontSize": "Tamanho da letra da app",
-  "settingsButtonStyle": "Estilo dos botões",
-  "settingsReduceAnimations": "Reduzir animações",
+  
   
   "settingsEditorSettings": "Definições do Editor",
   "settingsEditorTabSize": "Tamanho da tabulação",
@@ -49,11 +43,7 @@
   "settingsEditorFontFamily": "Família da fonte",
   "settingsEditorZoomInOut": "Ativar Zoom In/Out",
   "settingsEditorRenderUnsupportedCharacters": "Exibir caracteres não suportados com aviso ⚠️",
-  
-  "settingsGitSettings": "Definições do Git",
-  "settingsGitAutoFetch": "Busca automática",
-  "settingsGitDefaultBranch": "Branch predefinida",
-  
+    
   "settingsAiSettings": "Definições de IA",
   "settingsAiModelProvider": "Fornecedor do modelo",
   "settingsAiMaxTokens": "Máximo de tokens",
@@ -95,6 +85,7 @@
   "settingsThemeApplied": "Cores do tema aplicadas",
   
   "commonDelete": "Eliminar",
+  "commonCreate": "Criar",
   "commonSave": "Guardar",
   "commonCancel": "Cancelar",
   "commonOk": "OK",
@@ -197,12 +188,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Criar Nova Pasta",
   "drawerFolderNameHint": "Nome da pasta",
-  "commonCreate": "Criar",
-  "drawerPullChanges": "Puxar Alterações",
-  "drawerPushChanges": "Enviar Alterações",
-  "drawerCommitChanges": "Commit das Alterações",
-  "drawerCommitMessageHint": "Mensagem do commit",
-  "drawerCommit": "Commit",
   "drawerEditorTheme": "Tema do Editor",
   "drawerEditorWordWrap": "Quebra de Linha",
   "drawerFeedbackBody": "Gostaríamos muito de receber o seu feedback sobre o Git Explorer!",

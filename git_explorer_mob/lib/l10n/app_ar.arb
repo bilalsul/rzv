@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "اللون الأساسي",
   "settingsAppearanceSecondaryColor": "اللون الثانوي",
   "settingsAppearanceAccentColor": "لون التمييز",
-  
-  "settingsApplyThemeColors": "تطبيق ألوان السمة",
   "settingsRevertThemeColors": "تراجع",
-  "settingsBorderRadius": "نصف قطر الحدود",
-  "settingsElevation": "الارتفاع",
-  "settingsAppFontSize": "حجم خط التطبيق",
-  "settingsButtonStyle": "نمط الزر",
-  "settingsReduceAnimations": "تقليل الحركات",
   
   "settingsEditorSettings": "إعدادات المحرر",
   "settingsEditorTabSize": "حجم علامة التبويب",
@@ -49,10 +42,6 @@
   "settingsEditorFontFamily": "عائلة الخط",
   "settingsEditorZoomInOut": "تفعيل التكبير/التصغير",
   "settingsEditorRenderUnsupportedCharacters": "عرض الأحرف غير المدعومة مع تحذير ⚠️",
-  
-  "settingsGitSettings": "إعدادات Git",
-  "settingsGitAutoFetch": "جلب تلقائي",
-  "settingsGitDefaultBranch": "الفرع الافتراضي",
   
   "settingsAiSettings": "إعدادات الذكاء الاصطناعي",
   "settingsAiModelProvider": "مزود النموذج",
@@ -82,11 +71,6 @@
   "connectionFailed": "فشل الاتصال",
   "connectionSuccessful": "تم الاتصال بنجاح",
   
-  "settingsTerminalSettings": "إعدادات الطرفية",
-  "settingsTerminalShellExecutable": "ملف Shell التنفيذي",
-  "settingsTerminalFontSize": "حجم الخط",
-  "settingsTerminalAudibleBell": "جرس مسموع",
-  
   "settingsFileExplorerSettings": "إعدادات مستكشف الملفات",
   "settingsFileExplorerShowHidden": "إظهار الملفات المخفية",
   "settingsFileExplorerPreviewMarkdown": "معاينة ملفات markdown",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "تم تطبيق ألوان السمة",
   
   "commonDelete": "حذف",
+  "commonCreate": "إنشاء",
   "commonSave": "حفظ",
   "commonCancel": "إلغاء",
   "commonOk": "موافق",
@@ -201,12 +186,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "إنشاء مجلد جديد",
   "drawerFolderNameHint": "اسم المجلد",
-  "commonCreate": "إنشاء",
-  "drawerPullChanges": "سحب التغييرات",
-  "drawerPushChanges": "دفع التغييرات",
-  "drawerCommitChanges": "تسجيل التغييرات",
-  "drawerCommitMessageHint": "رسالة التسجيل",
-  "drawerCommit": "تسجيل",
   "drawerEditorTheme": "سمة المحرر",
   "drawerEditorWordWrap": "التفاف النص",
   "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول Git Explorer",

@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "主色",
   "settingsAppearanceSecondaryColor": "副色",
   "settingsAppearanceAccentColor": "點綴色",
-  
-  "settingsApplyThemeColors": "施主題之色",
   "settingsRevertThemeColors": "復舊",
-  "settingsBorderRadius": "圓角",
-  "settingsElevation": "浮凸",
-  "settingsAppFontSize": "全應用字大小",
-  "settingsButtonStyle": "鈕式",
-  "settingsReduceAnimations": "減動畫",
   
   "settingsEditorSettings": "編輯閣設定",
   "settingsEditorTabSize": "Tab 之廣",
@@ -49,10 +42,6 @@
   "settingsEditorFontFamily": "字體家族",
   "settingsEditorZoomInOut": "啟用放大／縮小",
   "settingsEditorRenderUnsupportedCharacters": "以警告顯示不支援之字元 ⚠️",
-  
-  "settingsGitSettings": "Git 設定",
-  "settingsGitAutoFetch": "自動取",
-  "settingsGitDefaultBranch": "預設枝",
   
   "settingsAiSettings": "人工智能設定",
   "settingsAiModelProvider": "模型供應者",
@@ -82,11 +71,6 @@
   "connectionFailed": "通訊未果",
   "connectionSuccessful": "通訊已成",
   
-  "settingsTerminalSettings": "終端設定",
-  "settingsTerminalShellExecutable": "殼可執行檔",
-  "settingsTerminalFontSize": "字大小",
-  "settingsTerminalAudibleBell": "鳴鈴",
-  
   "settingsFileExplorerSettings": "檔案探秘設定",
   "settingsFileExplorerShowHidden": "示隱檔",
   "settingsFileExplorerPreviewMarkdown": "預觀Markdown",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "主題之色已施",
   
   "commonDelete": "刪",
+  "commonCreate": "創",
   "commonSave": "存",
   "commonCancel": "罷",
   "commonOk": "可",
@@ -197,12 +182,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "創新資料夾",
   "drawerFolderNameHint": "資料夾之名",
-  "commonCreate": "創",
-  "drawerPullChanges": "取變更",
-  "drawerPushChanges": "推變更",
-  "drawerCommitChanges": "定變更",
-  "drawerCommitMessageHint": "定變更之語",
-  "drawerCommit": "定",
   "drawerEditorTheme": "編輯閣主題",
   "drawerEditorWordWrap": "自動換行",
   "drawerFeedbackBody": "敬候君對 Git Explorer 之卓見！",
