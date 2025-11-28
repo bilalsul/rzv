@@ -537,23 +537,6 @@ Future<void> saveCodeFontScale(double scale) async {
 // Editor convenience helpers
 // -------------------------------
 
-/// Return a map of editor-related settings (used to configure Monaco)
-Map<String, dynamic> getEditorSettings() {
-  return {
-    // 'monacoTheme': editorMonacoTheme,
-    'fontFamily': editorFontFamily,
-    'fontSize': editorFontSize,
-    // 'tabSize': editorTabSize,
-    'lineNumbers': editorLineNumbers,
-    'minimap': editorMinimapEnabled,
-    'autoSave': editorAutoSave,
-    // 'autoSaveDelay': editorAutoSaveDelay,
-    'formatOnSave': editorFormatOnSave,
-    // 'wordWrap': editorWordWrap,
-    // 'insertSpaces': editorInsertSpaces,
-  };
-}
-
 /// Save the currently opened project and file path and its latest content.
 Future<void> saveCurrentOpenFile(String projectId, String filePath, String content) async {
   await prefs.setString('editor_current_project', projectId);
@@ -704,28 +687,12 @@ Future<void> saveEditorMinimapEnabled(bool enabled) async {
   notifyListeners();
 }
 
-// Getter and setter for auto-indent setting
-bool get editorAutoIndent {
-  return prefs.getBool('editor_auto_indent') ?? true;
+bool get editorRenderControlCharacters {
+  return prefs.getBool('editor_render_control_characters') ?? false;
 }
 
-// Getter and setter for auto-save setting
-bool get editorAutoSave {
-  return prefs.getBool('editor_auto_save') ?? true;
-}
-
-Future<void> saveEditorAutoSave(bool autoSave) async {
-  await prefs.setBool('editor_auto_save', autoSave);
-  notifyListeners();
-}
-
-// Getter and setter for format on save setting
-bool get editorFormatOnSave {
-  return prefs.getBool('editor_format_on_save') ?? false;
-}
-
-Future<void> saveEditorFormatOnSave(bool formatOnSave) async {
-  await prefs.setBool('editor_format_on_save', formatOnSave);
+Future<void> saveEditorRenderControlCharacters(bool enabled) async {
+  await prefs.setBool('editor_render_control_characters', enabled);
   notifyListeners();
 }
 

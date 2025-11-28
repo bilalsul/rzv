@@ -35,14 +35,10 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
   }
 
   Widget _buildFallbackEditor(Prefs prefs ) {
-    final editorSettings = prefs.getEditorSettings();
-    final fontFamily = editorSettings['fontFamily'] as String? ?? prefs.editorFontFamily;
-    final fontSize = (editorSettings['fontSize'] as double?) ?? prefs.editorFontSize;
-
     return TextField(
       controller: _controller,
       maxLines: null,
-      style: TextStyle(fontFamily: fontFamily, fontSize: fontSize),
+      style: TextStyle(fontFamily: prefs.editorFontFamily, fontSize: prefs.editorFontSize),
       decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.all(12)),
       onChanged: (v) async {
         await Prefs().saveCurrentOpenFileContent(v);
