@@ -48,7 +48,7 @@
   "settingsEditorFontSize": "Font Size",
   "settingsEditorFontFamily": "Font Family",
   "settingsEditorZoomInOut": "Enable Zoom In/Out",
-  "settingsEditorRenderUnsupportedCharacters": "View Unsupported Characters with Warning",
+  "settingsEditorRenderUnsupportedCharacters": "View Unsupported Characters with Warning ⚠️",
   
   "settingsGitSettings": "Git Settings",
   "settingsGitAutoFetch": "Auto-fetch",

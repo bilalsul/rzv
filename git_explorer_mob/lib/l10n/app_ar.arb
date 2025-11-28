@@ -48,7 +48,7 @@
   "settingsEditorFontSize": "حجم الخط",
   "settingsEditorFontFamily": "عائلة الخط",
   "settingsEditorZoomInOut": "تفعيل التكبير/التصغير",
-  "settingsEditorRenderUnsupportedCharacters": "عرض الأحرف غير المدعومة مع تحذير",
+  "settingsEditorRenderUnsupportedCharacters": "عرض الأحرف غير المدعومة مع تحذير ⚠️",
   
   "settingsGitSettings": "إعدادات Git",
   "settingsGitAutoFetch": "جلب تلقائي",
