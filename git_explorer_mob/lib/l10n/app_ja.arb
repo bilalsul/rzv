@@ -219,24 +219,14 @@
 
   "gitHistoryName": "Git 履歴",
   "gitHistoryDescription": "コミット履歴と差分を確認",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "強化された git blame 表示",
-  "branchManagerName": "ブランチ管理",
-  "branchManagerDescription": "ブランチの作成・切替が簡単",
 
   "fileExplorerName": "ファイルエクスプローラー",
   "fileExplorerDescription": "プロジェクトファイルの閲覧と管理",
-  "searchReplaceName": "検索と置換",
-  "searchReplaceDescription": "ファイル全体を対象にした高度な検索・置換",
   "terminalName": "統合ターミナル",
   "terminalDescription": "エディターを離れずにコマンド実行",
   "themeCustomizerName": "テーマカスタマイザー",
   "themeCustomizerDescription": "エディターとアプリの外観を自由にカスタマイズ",
 
   "aiAssistName": "AI コードアシスタント",
-  "aiAssistDescription": "AI によるコード補完・提案",
-  "realtimeCollabName": "リアルタイム共同編集",
-  "realtimeCollabDescription": "複数人で同時にコードを編集",
-  "performanceMonitorName": "パフォーマンスモニター",
-  "performanceMonitorDescription": "アプリのパフォーマンス指標を監視"
+  "aiAssistDescription": "AI によるコード補完・提案"
 }

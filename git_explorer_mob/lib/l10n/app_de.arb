@@ -218,24 +218,14 @@
 
   "gitHistoryName": "Git-Verlauf",
   "gitHistoryDescription": "Commit-Verlauf und Unterschiede anzeigen",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Erweiterte Git-Blame-Annotationen",
-  "branchManagerName": "Branch-Manager",
-  "branchManagerDescription": "Branches einfach erstellen und wechseln",
 
   "fileExplorerName": "Datei-Explorer",
   "fileExplorerDescription": "Projektdateien durchsuchen und verwalten",
-  "searchReplaceName": "Suchen & Ersetzen",
-  "searchReplaceDescription": "Erweiterte Suche und Ersetzen über Dateien hinweg",
   "terminalName": "Integriertes Terminal",
   "terminalDescription": "Befehle ausführen ohne den Editor zu verlassen",
   "themeCustomizerName": "Theme-Anpasser",
   "themeCustomizerDescription": "Editor- und App-Erscheinungsbild anpassen",
 
   "aiAssistName": "KI-Code-Assistent",
-  "aiAssistDescription": "KI-gestützte Code-Vorschläge erhalten",
-  "realtimeCollabName": "Echtzeit-Kollaboration",
-  "realtimeCollabDescription": "Code in Echtzeit mit anderen bearbeiten",
-  "performanceMonitorName": "Leistungsmonitor",
-  "performanceMonitorDescription": "App-Leistungsmetriken überwachen"
+  "aiAssistDescription": "KI-gestützte Code-Vorschläge erhalten"
 }

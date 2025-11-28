@@ -214,24 +214,14 @@
 
   "gitHistoryName": "Git 史記",
   "gitHistoryDescription": "觀定本之史與異同",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "增強之責難註",
-  "branchManagerName": "枝幹司",
-  "branchManagerDescription": "輕創輕換枝幹",
 
   "fileExplorerName": "檔案探秘",
   "fileExplorerDescription": "周覽專案之檔案",
-  "searchReplaceName": "尋替",
-  "searchReplaceDescription": "遍檔案而尋替",
   "terminalName": "內建終端",
   "terminalDescription": "不離編輯閣而運命",
   "themeCustomizerName": "主題自定",
   "themeCustomizerDescription": "自定編輯閣與應用之形貌",
 
   "aiAssistName": "人工智能碼佐",
-  "aiAssistDescription": "藉人工智能助碼",
-  "realtimeCollabName": "即時共編",
-  "realtimeCollabDescription": "與他人同時編碼",
-  "performanceMonitorName": "效能監",
-  "performanceMonitorDescription": "監應用之速疾"
+  "aiAssistDescription": "藉人工智能助碼"
 }

@@ -214,24 +214,14 @@
 
   "gitHistoryName": "Git 歷史",
   "gitHistoryDescription": "檢視提交歷史與差異",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "增強的 git blame 註解",
-  "branchManagerName": "分支管理",
-  "branchManagerDescription": "輕鬆建立與切換分支",
 
   "fileExplorerName": "檔案總管",
   "fileExplorerDescription": "瀏覽與管理專案檔案",
-  "searchReplaceName": "搜尋與取代",
-  "searchReplaceDescription": "跨檔案進階搜尋與取代",
   "terminalName": "內建終端機",
   "terminalDescription": "不離開編輯器即可執行指令",
   "themeCustomizerName": "主題自訂器",
   "themeCustomizerDescription": "自由調整編輯器與應用外觀",
 
   "aiAssistName": "AI 程式碼助手",
-  "aiAssistDescription": "取得 AI 驅動的程式碼建議",
-  "realtimeCollabName": "即時協作",
-  "realtimeCollabDescription": "與他人即時共同編輯程式碼",
-  "performanceMonitorName": "效能監控",
-  "performanceMonitorDescription": "監控應用程式效能指標"
+  "aiAssistDescription": "取得 AI 驅動的程式碼建議"
 }

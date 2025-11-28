@@ -218,24 +218,14 @@
 
   "gitHistoryName": "Git History",
   "gitHistoryDescription": "View commit history and differences",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Enhanced git blame annotations",
-  "branchManagerName": "Branch Manager",
-  "branchManagerDescription": "Create and switch branches easily",
 
   "fileExplorerName": "File Explorer",
   "fileExplorerDescription": "Browse and manage project files",
-  "searchReplaceName": "Search & Replace",
-  "searchReplaceDescription": "Advanced find and replace across files",
   "terminalName": "Integrated Terminal",
   "terminalDescription": "Run commands without leaving the editor",
   "themeCustomizerName": "Theme Customizer",
   "themeCustomizerDescription": "Customize editor and app appearance",
 
   "aiAssistName": "AI Code Assistant",
-  "aiAssistDescription": "Get AI-powered code suggestions",
-  "realtimeCollabName": "Real-time Collaboration",
-  "realtimeCollabDescription": "Edit code with others in real-time",
-  "performanceMonitorName": "Performance Monitor",
-  "performanceMonitorDescription": "Monitor app performance metrics"
+  "aiAssistDescription": "Get AI-powered code suggestions"
 }

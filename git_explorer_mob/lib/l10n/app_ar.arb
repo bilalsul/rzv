@@ -218,24 +218,14 @@
 
   "gitHistoryName": "سجل Git",
   "gitHistoryDescription": "عرض سجل التسجيلات والاختلافات",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "شروح Git المحسنة",
-  "branchManagerName": "مدير الفروع",
-  "branchManagerDescription": "إنشاء وتبديل الفروع بسهولة",
 
   "fileExplorerName": "مستكشف الملفات",
   "fileExplorerDescription": "تصفح وإدارة ملفات المشروع",
-  "searchReplaceName": "بحث واستبدال",
-  "searchReplaceDescription": "بحث واستبدال متقدم عبر الملفات",
   "terminalName": "طرفية مدمجة",
   "terminalDescription": "تشغيل الأوامر دون مغادرة المحرر",
   "themeCustomizerName": "مخصص السمة",
   "themeCustomizerDescription": "تخصيص مظهر المحرر والتطبيق",
 
   "aiAssistName": "مساعد الذكاء الاصطناعي للكود",
-  "aiAssistDescription": "احصل على اقتراحات كود مدعومة بالذكاء الاصطناعي",
-  "realtimeCollabName": "التعاون في الوقت الحقيقي",
-  "realtimeCollabDescription": "تحرير الكود مع الآخرين في الوقت الحقيقي",
-  "performanceMonitorName": "مراقب الأداء",
-  "performanceMonitorDescription": "مراقبة مقاييس أداء التطبيق"
+  "aiAssistDescription": "احصل على اقتراحات كود مدعومة بالذكاء الاصطناعي"
 }

@@ -225,24 +225,14 @@
 
   "gitHistoryName": "История Git",
   "gitHistoryDescription": "Просмотр истории коммитов и различий",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Расширенные аннотации git blame",
-  "branchManagerName": "Управление ветками",
-  "branchManagerDescription": "Простое создание и переключение веток",
 
   "fileExplorerName": "Проводник",
   "fileExplorerDescription": "Обзор и управление файлами проекта",
-  "searchReplaceName": "Поиск и замена",
-  "searchReplaceDescription": "Продвинутый поиск и замена по всем файлам",
   "terminalName": "Встроенный терминал",
   "terminalDescription": "Запуск команд без выхода из редактора",
   "themeCustomizerName": "Настройка темы",
   "themeCustomizerDescription": "Кастомизация внешнего вида редактора и приложения",
 
   "aiAssistName": "ИИ-помощник кода",
-  "aiAssistDescription": "Подсказки кода на основе искусственного интеллекта",
-  "realtimeCollabName": "Совместная работа в реальном времени",
-  "realtimeCollabDescription": "Редактирование кода вместе с другими в реальном времени",
-  "performanceMonitorName": "Монитор производительности",
-  "performanceMonitorDescription": "Отслеживание метрик производительности приложения"
+  "aiAssistDescription": "Подсказки кода на основе искусственного интеллекта"
 }

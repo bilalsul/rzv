@@ -218,24 +218,14 @@
 
   "gitHistoryName": "Git Geçmişi",
   "gitHistoryDescription": "Commit geçmişini ve farkları görüntüleyin",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Gelişmiş git blame açıklamaları",
-  "branchManagerName": "Dal Yöneticisi",
-  "branchManagerDescription": "Kolayca dal oluşturun ve değiştirin",
 
   "fileExplorerName": "Dosya Gezgini",
   "fileExplorerDescription": "Proje dosyalarını göz atın ve yönetin",
-  "searchReplaceName": "Ara & Değiştir",
-  "searchReplaceDescription": "Dosyalar arasında gelişmiş bul ve değiştir",
   "terminalName": "Entegre Terminal",
   "terminalDescription": "Editörden çıkmadan komut çalıştırın",
   "themeCustomizerName": "Tema Özelleştirici",
   "themeCustomizerDescription": "Editör ve uygulama görünümünü özelleştirin",
 
   "aiAssistName": "AI Kod Asistanı",
-  "aiAssistDescription": "AI destekli kod önerileri alın",
-  "realtimeCollabName": "Gerçek Zamanlı İş Birliği",
-  "realtimeCollabDescription": "Başkalarıyla gerçek zamanlı kod düzenleme",
-  "performanceMonitorName": "Performans İzleyici",
-  "performanceMonitorDescription": "Uygulama performans ölçümlerini izleyin"
+  "aiAssistDescription": "AI destekli kod önerileri alın"
 }

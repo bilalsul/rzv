@@ -219,24 +219,14 @@
 
   "gitHistoryName": "Historique Git",
   "gitHistoryDescription": "Voir l'historique des commits et les différences",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Annotations de blame git améliorées",
-  "branchManagerName": "Gestionnaire de Branches",
-  "branchManagerDescription": "Créer et changer de branche facilement",
 
   "fileExplorerName": "Explorateur de Fichiers",
   "fileExplorerDescription": "Parcourir et gérer les fichiers du projet",
-  "searchReplaceName": "Rechercher & Remplacer",
-  "searchReplaceDescription": "Recherche et remplacement avancés dans les fichiers",
   "terminalName": "Terminal Intégré",
   "terminalDescription": "Exécuter des commandes sans quitter l'éditeur",
   "themeCustomizerName": "Personnalisateur de Thème",
   "themeCustomizerDescription": "Personnaliser l'apparence de l'éditeur et de l'application",
 
   "aiAssistName": "Assistant IA pour le Code",
-  "aiAssistDescription": "Obtenir des suggestions de code alimentées par l'IA",
-  "realtimeCollabName": "Collaboration en Temps Réel",
-  "realtimeCollabDescription": "Modifier le code avec d'autres en temps réel",
-  "performanceMonitorName": "Moniteur de Performance",
-  "performanceMonitorDescription": "Surveiller les métriques de performance de l'application"
+  "aiAssistDescription": "Obtenir des suggestions de code alimentées par l'IA"
 }

@@ -221,24 +221,14 @@
 
   "gitHistoryName": "Git 기록",
   "gitHistoryDescription": "커밋 히스토리 및 차이 보기",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "향상된 git blame 주석",
-  "branchManagerName": "브랜치 관리자",
-  "branchManagerDescription": "브랜치 쉽게 생성·전환",
 
   "fileExplorerName": "파일 탐색기",
   "fileExplorerDescription": "프로젝트 파일 탐색 및 관리",
-  "searchReplaceName": "검색 및 바꾸기",
-  "searchReplaceDescription": "전체 파일에서 고급 검색·바꾸기",
   "terminalName": "내장 터미널",
   "terminalDescription": "편집기를 벗어나지 않고 명령 실행",
   "themeCustomizerName": "테마 커스터마이저",
   "themeCustomizerDescription": "편집기와 앱 외관 자유롭게 꾸미기",
 
   "aiAssistName": "AI 코드 어시스턴트",
-  "aiAssistDescription": "AI 기반 코드 추천 받기",
-  "realtimeCollabName": "실시간 협업",
-  "realtimeCollabDescription": "다른 사람과 동시에 코드 편집",
-  "performanceMonitorName": "성능 모니터",
-  "performanceMonitorDescription": "앱 성능 지표 실시간 확인"
+  "aiAssistDescription": "AI 기반 코드 추천 받기"
 }

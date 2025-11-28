@@ -224,24 +224,14 @@
 
   "gitHistoryName": "Cronologia Git",
   "gitHistoryDescription": "Visualizza la cronologia dei commit e le differenze",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Annotazioni avanzate git blame",
-  "branchManagerName": "Gestore Branch",
-  "branchManagerDescription": "Crea e cambia branch facilmente",
 
   "fileExplorerName": "Esplora File",
   "fileExplorerDescription": "Sfoglia e gestisci i file del progetto",
-  "searchReplaceName": "Cerca e Sostituisci",
-  "searchReplaceDescription": "Trova e sostituisci avanzato tra i file",
   "terminalName": "Terminale Integrato",
   "terminalDescription": "Esegui comandi senza uscire dall'editor",
   "themeCustomizerName": "Personalizzatore Tema",
   "themeCustomizerDescription": "Personalizza l'aspetto dell'editor e dell'app",
 
   "aiAssistName": "Assistente Codice AI",
-  "aiAssistDescription": "Ottieni suggerimenti di codice basati su AI",
-  "realtimeCollabName": "Collaborazione in Tempo Reale",
-  "realtimeCollabDescription": "Modifica il codice insieme ad altri in tempo reale",
-  "performanceMonitorName": "Monitor Prestazioni",
-  "performanceMonitorDescription": "Monitora le metriche di prestazioni dell'app"
+  "aiAssistDescription": "Ottieni suggerimenti di codice basati su AI"
 }
