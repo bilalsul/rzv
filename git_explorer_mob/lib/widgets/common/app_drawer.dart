@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:url_launcher/url_launcher.dart';
 // Navigation moved to AppShell
 // Navigation and plugin state now come from Prefs
 
@@ -480,7 +481,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               const SizedBox(width: 8),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: _showAboutDialog,
+                  onPressed: _showAboutDialogDonate,
                   icon: Icon(Icons.info_outlined, size: 16, color: prefs.accentColor,),
                   label: Text(L10n.of(context).drawerAbout, style: TextStyle(color: prefs.accentColor)),
                   style: OutlinedButton.styleFrom(
@@ -593,40 +594,114 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(L10n.of(context).commonCancel),
           ),
-          FilledButton(
-            onPressed: () {
-              // TODO: Implement feedback submission
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(L10n.of(context).drawerFeedbackComingSoon)),
-              );
-            },
-            child: Text(L10n.of(context).drawerSendFeedback),
+          AbsorbPointer(
+            absorbing: true,
+            child: FilledButton(
+              style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.grey[400])),
+              onPressed: () async {
+                // TODO: Implement feedback submission
+                Navigator.of(context).pop();
+                final Uri donateUrl = Uri.parse('https://github.com/uncrr/git-explorer/issues'); // Replace with your actual PLAYSTORE link after publish
+                if (await canLaunchUrl(donateUrl)) {
+                  await launchUrl(donateUrl);
+                } else {
+                  // Handle the case where the URL cannot be launched (e.g., no browser installed)
+                  // You might display a SnackBar or an AlertDialog to inform the user.
+                print('Could not launch $donateUrl');
+                
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(L10n.of(context).drawerFeedbackComingSoon)),
+                );
+              }
+              },
+              child: Text(L10n.of(context).drawerSendFeedback), // change when added
+            ),
           ),
         ],
       ),
     );
   }
 
-  void _showAboutDialog() {
-    final appState = ref.read(appStateProvider);
-    
-    showAboutDialog(
+    void _showAboutDialogDonate() {
+      final appState = ref.read(appStateProvider);
+    showDialog(
       context: context,
-      applicationName: L10n.of(context).appName,
-      applicationVersion: 'v${appState.appVersion}',
-      applicationIcon: const Icon(Icons.code, size: 48),
-      children: [
-        const SizedBox(height: 16),
-        Text(L10n.of(context).appAbout),
-        const SizedBox(height: 16),
-        Text(
-          L10n.of(context).drawerFirstInstalled(_formatDate(appState.firstInstallDate, context)),
-          style: Theme.of(context).textTheme.bodySmall,
+      builder: (context) => AlertDialog(
+      // title: Text(L10n.of(context).appName),
+      content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              spacing: 10,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(40.0),
+                  child: Image.asset('assets/icons/git-explorer-icon.png', height: 60, width: 60)),
+                  Expanded(
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(L10n.of(context).appName, style: TextStyle(fontSize: 18)),
+                      Text('v${appState.appVersion}', style: TextStyle(fontSize: 10),)
+                  ],
+                    ),
+                  )
+          ]),
+          const SizedBox(height: 25),
+          Text(L10n.of(context).appAbout, style: TextStyle(fontSize: 15)),
+          const SizedBox(height: 25),
+          Text(L10n.of(context).appDonateTips, style: TextStyle(fontSize: 12)),
+          ],
         ),
-      ],
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(L10n.of(context).commonClose),
+          ),
+          FilledButton(
+            onPressed: () async {
+              // TODO: Implement donate submission
+              final Uri donateUrl = Uri.parse('https://github.com/uncrr'); // Replace with your actual donation link
+              if (await canLaunchUrl(donateUrl)) {
+                await launchUrl(donateUrl);
+              } else {
+                // Handle the case where the URL cannot be launched (e.g., no browser installed)
+                // You might display a SnackBar or an AlertDialog to inform the user.
+              print('Could not launch $donateUrl');
+              
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(L10n.of(context).commonFailed)),
+              );
+              }
+              Navigator.of(context).pop();
+            },
+            child: Text(L10n.of(context).appDonate),
+          ),
+        ],
+      ),
     );
   }
+
+  // void _showAboutDialogLicenses() {
+  //   final appState = ref.read(appStateProvider);
+    
+  //   showAboutDialog(
+  //     context: context,
+  //     applicationName: L10n.of(context).appName,
+  //     applicationVersion: 'v${appState.appVersion}',
+  //     applicationIcon: Image.asset('assets/icons/git-explorer-icon.png' , height: 48, width: 48,),
+  //     children: [
+  //       const SizedBox(height: 16),
+  //       Text(L10n.of(context).appAbout),
+  //       const SizedBox(height: 16),
+  //       Text(
+  //         L10n.of(context).drawerFirstInstalled(_formatDate(appState.firstInstallDate, context)),
+  //         style: Theme.of(context).textTheme.bodySmall,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   // Localized plugin name lookup. Keep a switch on plugin id so the id stays
   // canonical for pref lookups, while the displayed string comes from L10n.
