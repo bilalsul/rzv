@@ -252,14 +252,14 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ),
 
         // Experimental Plugins
-        _buildPluginCategory(
-          title: L10n.of(context).drawerExperimental,
-          plugins: plugin_defs.experimentalPlugins,
-          isExpanded: _expandedExperimentalPlugins,
-          onToggle: () => setState(() => _expandedExperimentalPlugins = !_expandedExperimentalPlugins),
-          theme: theme,
-          showExperimentalBadge: true,
-        ),
+        // _buildPluginCategory(
+        //   title: L10n.of(context).drawerExperimental,
+        //   plugins: plugin_defs.experimentalPlugins,
+        //   isExpanded: _expandedExperimentalPlugins,
+        //   onToggle: () => setState(() => _expandedExperimentalPlugins = !_expandedExperimentalPlugins),
+        //   theme: theme,
+        //   showExperimentalBadge: true,
+        // ),
 
         // SliverToBoxAdapter(child: 
         // _isNativeAdLoaded && _nativeAd != null
