@@ -327,6 +327,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onChanged: (v) async => await prefs.saveEditorFontSize(v),
               ),
               Row(children: [
+                Expanded(child: Text(L10n.of(context).settingsEditorZoomInOut)),
+                Switch.adaptive(value: prefs.editorZoomInOut, 
+                onChanged: (v) async => await prefs.saveEditorZoomInOut(v),
+                activeColor: prefs.secondaryColor,
+                )]),
+              Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsEditorShowLineNumbers)),
                 Switch.adaptive(value: prefs.editorLineNumbers, 
                 onChanged: (v) async => await prefs.saveEditorLineNumbers(v),
