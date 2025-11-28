@@ -684,6 +684,16 @@ Future<void> saveEditorLineNumbers(bool lineNumbers) async {
   notifyListeners();
 }
 
+// zoom in and out, default true (visible)
+bool get editorZoomInOut {
+  return prefs.getBool('editor_zoom_in_out') ?? true;
+}
+
+Future<void> saveEditorZoomInOut(bool lineNumbers) async {
+  await prefs.setBool('editor_zoom_in_out', lineNumbers);
+  notifyListeners();
+}
+
 // Getter and setter for minimap enabled setting
 bool get editorMinimapEnabled {
   return prefs.getBool('editor_minimap_enabled') ?? false;
