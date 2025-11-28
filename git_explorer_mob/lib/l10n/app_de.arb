@@ -2,7 +2,7 @@
   "@@locale": "de",
 
   "appName": "Git Explorer",
-  "appAbout": "Über Git Explorer",
+  "appAbout": "Git-Projekte durchsuchen und Dateien im Code-Editor im schreibgeschützten Modus anzeigen.",
   "appVersion": "Version",
   "appLicense": "Lizenz",
   "appAuthor": "Autor",
@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "Primärfarbe",
   "settingsAppearanceSecondaryColor": "Sekundärfarbe",
   "settingsAppearanceAccentColor": "Akzentfarbe",
-  
-  "settingsApplyThemeColors": "Theme-Farben anwenden",
   "settingsRevertThemeColors": "Zurücksetzen",
-  "settingsBorderRadius": "Rahmenradius",
-  "settingsElevation": "Erhebung",
-  "settingsAppFontSize": "App-Schriftgröße",
-  "settingsButtonStyle": "Button-Stil",
-  "settingsReduceAnimations": "Animationen reduzieren",
   
   "settingsEditorSettings": "Editor-Einstellungen",
   "settingsEditorTabSize": "Tab-Größe",
@@ -48,11 +41,7 @@
   "settingsEditorFontSize": "Schriftgröße",
   "settingsEditorFontFamily": "Schriftart",
   "settingsEditorZoomInOut": "Zoom In/Out aktivieren",
-  "settingsEditorRenderUnsupportedCharacters": "Nicht unterstützte Zeichen mit Warnung anzeigen ⚠️",
-  
-  "settingsGitSettings": "Git-Einstellungen",
-  "settingsGitAutoFetch": "Auto-Fetch",
-  "settingsGitDefaultBranch": "Standard-Branch",
+  "settingsEditorRenderUnsupportedCharacters": "Nicht unterstützte Zeichen mit Warnung anzeigen 🔔",
   
   "settingsAiSettings": "KI-Einstellungen",
   "settingsAiModelProvider": "Modell-Anbieter",
@@ -82,11 +71,6 @@
   "connectionFailed": "Verbindung fehlgeschlagen",
   "connectionSuccessful": "Verbindung erfolgreich",
   
-  "settingsTerminalSettings": "Terminal-Einstellungen",
-  "settingsTerminalShellExecutable": "Shell-Executable",
-  "settingsTerminalFontSize": "Schriftgröße",
-  "settingsTerminalAudibleBell": "Hörbare Glocke",
-  
   "settingsFileExplorerSettings": "Datei-Explorer-Einstellungen",
   "settingsFileExplorerShowHidden": "Versteckte Dateien anzeigen",
   "settingsFileExplorerPreviewMarkdown": "Markdown-Dateien vorschauen",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "Theme-Farben angewendet",
   
   "commonDelete": "Löschen",
+  "commonCreate": "Erstellen",
   "commonSave": "Speichern",
   "commonCancel": "Abbrechen",
   "commonOk": "OK",
@@ -201,12 +186,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Neuen Ordner erstellen",
   "drawerFolderNameHint": "Ordnername",
-  "commonCreate": "Erstellen",
-  "drawerPullChanges": "Änderungen pullen",
-  "drawerPushChanges": "Änderungen pushen",
-  "drawerCommitChanges": "Änderungen committen",
-  "drawerCommitMessageHint": "Commit-Nachricht",
-  "drawerCommit": "Commit",
   "drawerEditorTheme": "Editor-Theme",
   "drawerEditorWordWrap": "Zeilenumbruch",
   "drawerFeedbackBody": "Wir würden uns über Ihr Feedback zum Git Explorer freuen!",
@@ -239,24 +218,14 @@
 
   "gitHistoryName": "Git-Verlauf",
   "gitHistoryDescription": "Commit-Verlauf und Unterschiede anzeigen",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Erweiterte Git-Blame-Annotationen",
-  "branchManagerName": "Branch-Manager",
-  "branchManagerDescription": "Branches einfach erstellen und wechseln",
 
   "fileExplorerName": "Datei-Explorer",
   "fileExplorerDescription": "Projektdateien durchsuchen und verwalten",
-  "searchReplaceName": "Suchen & Ersetzen",
-  "searchReplaceDescription": "Erweiterte Suche und Ersetzen über Dateien hinweg",
   "terminalName": "Integriertes Terminal",
   "terminalDescription": "Befehle ausführen ohne den Editor zu verlassen",
   "themeCustomizerName": "Theme-Anpasser",
   "themeCustomizerDescription": "Editor- und App-Erscheinungsbild anpassen",
 
   "aiAssistName": "KI-Code-Assistent",
-  "aiAssistDescription": "KI-gestützte Code-Vorschläge erhalten",
-  "realtimeCollabName": "Echtzeit-Kollaboration",
-  "realtimeCollabDescription": "Code in Echtzeit mit anderen bearbeiten",
-  "performanceMonitorName": "Leistungsmonitor",
-  "performanceMonitorDescription": "App-Leistungsmetriken überwachen"
+  "aiAssistDescription": "KI-gestützte Code-Vorschläge erhalten"
 }

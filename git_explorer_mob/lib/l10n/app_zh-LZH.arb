@@ -2,7 +2,7 @@
   "@@locale": "zh_LZH",
 
   "appName": "Git Explorer",
-  "appAbout": "《Git Explorer》述略",
+  "appAbout": "瀏覽 git 專案，並以唯讀模式於程式碼編輯器中觀覽檔案。",
   "appVersion": "版本",
   "appLicense": "授權",
   "appAuthor": "作者",
@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "主色",
   "settingsAppearanceSecondaryColor": "副色",
   "settingsAppearanceAccentColor": "點綴色",
-  
-  "settingsApplyThemeColors": "施主題之色",
   "settingsRevertThemeColors": "復舊",
-  "settingsBorderRadius": "圓角",
-  "settingsElevation": "浮凸",
-  "settingsAppFontSize": "全應用字大小",
-  "settingsButtonStyle": "鈕式",
-  "settingsReduceAnimations": "減動畫",
   
   "settingsEditorSettings": "編輯閣設定",
   "settingsEditorTabSize": "Tab 之廣",
@@ -48,11 +41,7 @@
   "settingsEditorFontSize": "字體大小",
   "settingsEditorFontFamily": "字體家族",
   "settingsEditorZoomInOut": "啟用放大／縮小",
-  "settingsEditorRenderUnsupportedCharacters": "以警告顯示不支援之字元 ⚠️",
-  
-  "settingsGitSettings": "Git 設定",
-  "settingsGitAutoFetch": "自動取",
-  "settingsGitDefaultBranch": "預設枝",
+  "settingsEditorRenderUnsupportedCharacters": "以警告顯示不支援之字元 🔔",
   
   "settingsAiSettings": "人工智能設定",
   "settingsAiModelProvider": "模型供應者",
@@ -82,11 +71,6 @@
   "connectionFailed": "通訊未果",
   "connectionSuccessful": "通訊已成",
   
-  "settingsTerminalSettings": "終端設定",
-  "settingsTerminalShellExecutable": "殼可執行檔",
-  "settingsTerminalFontSize": "字大小",
-  "settingsTerminalAudibleBell": "鳴鈴",
-  
   "settingsFileExplorerSettings": "檔案探秘設定",
   "settingsFileExplorerShowHidden": "示隱檔",
   "settingsFileExplorerPreviewMarkdown": "預觀Markdown",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "主題之色已施",
   
   "commonDelete": "刪",
+  "commonCreate": "創",
   "commonSave": "存",
   "commonCancel": "罷",
   "commonOk": "可",
@@ -197,12 +182,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "創新資料夾",
   "drawerFolderNameHint": "資料夾之名",
-  "commonCreate": "創",
-  "drawerPullChanges": "取變更",
-  "drawerPushChanges": "推變更",
-  "drawerCommitChanges": "定變更",
-  "drawerCommitMessageHint": "定變更之語",
-  "drawerCommit": "定",
   "drawerEditorTheme": "編輯閣主題",
   "drawerEditorWordWrap": "自動換行",
   "drawerFeedbackBody": "敬候君對 Git Explorer 之卓見！",
@@ -235,24 +214,14 @@
 
   "gitHistoryName": "Git 史記",
   "gitHistoryDescription": "觀定本之史與異同",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "增強之責難註",
-  "branchManagerName": "枝幹司",
-  "branchManagerDescription": "輕創輕換枝幹",
 
   "fileExplorerName": "檔案探秘",
   "fileExplorerDescription": "周覽專案之檔案",
-  "searchReplaceName": "尋替",
-  "searchReplaceDescription": "遍檔案而尋替",
   "terminalName": "內建終端",
   "terminalDescription": "不離編輯閣而運命",
   "themeCustomizerName": "主題自定",
   "themeCustomizerDescription": "自定編輯閣與應用之形貌",
 
   "aiAssistName": "人工智能碼佐",
-  "aiAssistDescription": "藉人工智能助碼",
-  "realtimeCollabName": "即時共編",
-  "realtimeCollabDescription": "與他人同時編碼",
-  "performanceMonitorName": "效能監",
-  "performanceMonitorDescription": "監應用之速疾"
+  "aiAssistDescription": "藉人工智能助碼"
 }

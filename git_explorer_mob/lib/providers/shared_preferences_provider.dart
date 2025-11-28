@@ -178,24 +178,24 @@ Future<void> saveSessionStartTime(DateTime startTime) async {
 }
 
 // Getter and setter for onboarding completion status
-bool get isOnboardingCompleted {
-  return prefs.getBool('app_onboarding_completed') ?? false;
-}
+// bool get isOnboardingCompleted {
+//   return prefs.getBool('app_onboarding_completed') ?? false;
+// }
 
-Future<void> saveOnboardingCompleted(bool completed) async {
-  await prefs.setBool('app_onboarding_completed', completed);
-  notifyListeners();
-}
+// Future<void> saveOnboardingCompleted(bool completed) async {
+//   await prefs.setBool('app_onboarding_completed', completed);
+//   notifyListeners();
+// }
 
 // Getter and setter for terms acceptance status
-bool get isTermsAccepted {
-  return prefs.getBool('app_terms_accepted') ?? false;
-}
+// bool get isTermsAccepted {
+//   return prefs.getBool('app_terms_accepted') ?? false;
+// }
 
-Future<void> saveTermsAccepted(bool accepted) async {
-  await prefs.setBool('app_terms_accepted', accepted);
-  notifyListeners();
-}
+// Future<void> saveTermsAccepted(bool accepted) async {
+//   await prefs.setBool('app_terms_accepted', accepted);
+//   notifyListeners();
+// }
 
 // Getter and setter for analytics opt-in status
 // bool get isAnalyticsOptedIn {
@@ -214,26 +214,6 @@ Future<void> saveTermsAccepted(bool accepted) async {
 
 // Future<void> saveCrashReportingEnabled(bool enabled) async {
 //   await prefs.setBool('app_crash_reporting', enabled);
-//   notifyListeners();
-// }
-
-// Getter and setter for app version
-String get appVersion {
-  return prefs.getString('app_version') ?? '0.0.1';
-}
-
-// Future<void> saveAppVersion(String version) async {
-//   await prefs.setString('app_version', version);
-//   notifyListeners();
-// }
-
-// Getter and setter for build number
-// String get buildNumber {
-//   return prefs.getString('app_build_number') ?? '1';
-// }
-
-// Future<void> saveBuildNumber(String build) async {
-//   await prefs.setString('app_build_number', build);
 //   notifyListeners();
 // }
 
@@ -821,8 +801,8 @@ bool featureSupported(String pluginId) {
   List<String> features = [
     "theme_customizer",
     "file_explorer",
-    "ai",
     // uncomment a feature below when it is supported
+    // "ai",
     // "git_history",
     // "terminal",
   ];  
@@ -903,7 +883,7 @@ bool featureSupported(String pluginId) {
 
 class AppState {
   final DateTime sessionStartTime;
-  final String appVersion = Prefs().appVersion;
+  final String appVersion = '0.0.1';
   final DateTime firstInstallDate;
 
   AppState({

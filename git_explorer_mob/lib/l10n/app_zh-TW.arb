@@ -2,7 +2,7 @@
   "@@locale": "zh_TW",
 
   "appName": "Git Explorer",
-  "appAbout": "關於 Git Explorer",
+  "appAbout": "瀏覽 git 專案，並在程式碼編輯器中以唯讀模式檢視檔案。",
   "appVersion": "版本",
   "appLicense": "授權",
   "appAuthor": "作者",
@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "主要顏色",
   "settingsAppearanceSecondaryColor": "次要顏色",
   "settingsAppearanceAccentColor": "強調色",
-  
-  "settingsApplyThemeColors": "套用主題配色",
   "settingsRevertThemeColors": "還原",
-  "settingsBorderRadius": "圓角半徑",
-  "settingsElevation": "陰影深度",
-  "settingsAppFontSize": "全域字型大小",
-  "settingsButtonStyle": "按鈕樣式",
-  "settingsReduceAnimations": "減少動畫",
   
   "settingsEditorSettings": "編輯器設定",
   "settingsEditorTabSize": "Tab 寬度",
@@ -48,11 +41,7 @@
   "settingsEditorFontSize": "字型大小",
   "settingsEditorFontFamily": "字型系列",
   "settingsEditorZoomInOut": "啟用放大/縮小",
-  "settingsEditorRenderUnsupportedCharacters": "以警告形式顯示不支援的字元 ⚠️",
-  
-  "settingsGitSettings": "Git 設定",
-  "settingsGitAutoFetch": "自動擷取",
-  "settingsGitDefaultBranch": "預設分支",
+  "settingsEditorRenderUnsupportedCharacters": "以警告形式顯示不支援的字元 🔔",
   
   "settingsAiSettings": "AI 設定",
   "settingsAiModelProvider": "模型提供者",
@@ -82,11 +71,6 @@
   "connectionFailed": "連線失敗",
   "connectionSuccessful": "連線成功",
   
-  "settingsTerminalSettings": "終端機設定",
-  "settingsTerminalShellExecutable": "Shell 可執行檔",
-  "settingsTerminalFontSize": "字型大小",
-  "settingsTerminalAudibleBell": "聲音提示",
-  
   "settingsFileExplorerSettings": "檔案總管設定",
   "settingsFileExplorerShowHidden": "顯示隱藏檔案",
   "settingsFileExplorerPreviewMarkdown": "預覽 Markdown 檔案",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "主題配色已套用",
   
   "commonDelete": "刪除",
+  "commonCreate": "建立",
   "commonSave": "儲存",
   "commonCancel": "取消",
   "commonOk": "確定",
@@ -197,12 +182,6 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "新增資料夾",
   "drawerFolderNameHint": "資料夾名稱",
-  "commonCreate": "建立",
-  "drawerPullChanges": "拉取變更",
-  "drawerPushChanges": "推送變更",
-  "drawerCommitChanges": "提交變更",
-  "drawerCommitMessageHint": "提交訊息",
-  "drawerCommit": "提交",
   "drawerEditorTheme": "編輯器主題",
   "drawerEditorWordWrap": "自動換行",
   "drawerFeedbackBody": "我們非常期待您對 Git Explorer 的寶貴意見！",
@@ -235,24 +214,14 @@
 
   "gitHistoryName": "Git 歷史",
   "gitHistoryDescription": "檢視提交歷史與差異",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "增強的 git blame 註解",
-  "branchManagerName": "分支管理",
-  "branchManagerDescription": "輕鬆建立與切換分支",
 
   "fileExplorerName": "檔案總管",
   "fileExplorerDescription": "瀏覽與管理專案檔案",
-  "searchReplaceName": "搜尋與取代",
-  "searchReplaceDescription": "跨檔案進階搜尋與取代",
   "terminalName": "內建終端機",
   "terminalDescription": "不離開編輯器即可執行指令",
   "themeCustomizerName": "主題自訂器",
   "themeCustomizerDescription": "自由調整編輯器與應用外觀",
 
   "aiAssistName": "AI 程式碼助手",
-  "aiAssistDescription": "取得 AI 驅動的程式碼建議",
-  "realtimeCollabName": "即時協作",
-  "realtimeCollabDescription": "與他人即時共同編輯程式碼",
-  "performanceMonitorName": "效能監控",
-  "performanceMonitorDescription": "監控應用程式效能指標"
+  "aiAssistDescription": "取得 AI 驅動的程式碼建議"
 }

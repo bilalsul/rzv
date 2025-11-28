@@ -2,7 +2,7 @@
     "@@locale": "es",
 
     "appName": "Git Explorer",
-    "appAbout": "Acerca de Git Explorer",
+    "appAbout": "Explora proyectos git y visualiza archivos en el editor de código en modo solo lectura.",
     "appVersion": "Versión",
     "appLicense": "Licencia",
     "appAuthor": "Autor",
@@ -32,14 +32,7 @@
     "settingsAppearancePrimaryColor": "Color primario",
     "settingsAppearanceSecondaryColor": "Color secundario",
     "settingsAppearanceAccentColor": "Color de acento",
-    
-    "settingsApplyThemeColors": "Aplicar colores del tema",
     "settingsRevertThemeColors": "Restaurar",
-    "settingsBorderRadius": "Radio de borde",
-    "settingsElevation": "Elevación",
-    "settingsAppFontSize": "Tamaño de fuente de la app",
-    "settingsButtonStyle": "Estilo de botón",
-    "settingsReduceAnimations": "Reducir animaciones",
     
     "settingsEditorSettings": "Configuración del editor",
     "settingsEditorTabSize": "Tamaño de tabulación",
@@ -48,11 +41,7 @@
     "settingsEditorFontSize": "Tamaño de fuente",
     "settingsEditorFontFamily": "Familia de fuentes",
     "settingsEditorZoomInOut": "Habilitar Zoom In/Out",
-    "settingsEditorRenderUnsupportedCharacters": "Mostrar caracteres no admitidos con advertencia ⚠️",
-    
-    "settingsGitSettings": "Configuración de Git",
-    "settingsGitAutoFetch": "Auto-obtener",
-    "settingsGitDefaultBranch": "Rama por defecto",
+    "settingsEditorRenderUnsupportedCharacters": "Mostrar caracteres no admitidos con advertencia 🔔",
     
     "settingsAiSettings": "Configuración de IA",
     "settingsAiModelProvider": "Proveedor de modelo",
@@ -92,6 +81,7 @@
     "connectionSuccessful": "Conexión exitosa",
 
     "commonDelete": "Eliminar",
+    "commonCreate": "Crear",
     "commonSave": "Guardar",
     "commonCancel": "Cancelar",
     "commonOk": "Aceptar",
@@ -209,12 +199,6 @@
     "@drawerPluginCategory": { "placeholders": { "category": {} } },
     "drawerCreateNewFolderTitle": "Crear nueva carpeta",
     "drawerFolderNameHint": "Nombre de la carpeta",
-    "commonCreate": "Crear",
-    "drawerPullChanges": "Obtener cambios",
-    "drawerPushChanges": "Enviar cambios",
-    "drawerCommitChanges": "Confirmar cambios",
-    "drawerCommitMessageHint": "Mensaje de commit",
-    "drawerCommit": "Confirmar",
     "drawerEditorTheme": "Tema del editor",
     "drawerEditorWordWrap": "Ajuste de línea",
     "drawerFeedbackBody": "Nos encantaría recibir tus comentarios sobre Git Explorer!",
@@ -238,24 +222,14 @@
 
     "gitHistoryName": "Historial Git",
     "gitHistoryDescription": "Ver historial de commits y diferencias",
-    "gitLensName": "GitLens",
-    "gitLensDescription": "Anotaciones mejoradas de blame de git",
-    "branchManagerName": "Gestor de ramas",
-    "branchManagerDescription": "Crear y cambiar ramas fácilmente",
 
     "fileExplorerName": "Explorador de archivos",
     "fileExplorerDescription": "Navega y gestiona archivos del proyecto",
-    "searchReplaceName": "Buscar y reemplazar",
-    "searchReplaceDescription": "Búsqueda y reemplazo avanzados en archivos",
     "terminalName": "Terminal integrado",
     "terminalDescription": "Ejecuta comandos sin salir del editor",
     "themeCustomizerName": "Personalizador de tema",
     "themeCustomizerDescription": "Personaliza la apariencia del editor y la app",
 
     "aiAssistName": "Asistente de IA",
-    "aiAssistDescription": "Obtén sugerencias de código impulsadas por IA",
-    "realtimeCollabName": "Colaboración en tiempo real",
-    "realtimeCollabDescription": "Edita código con otros en tiempo real",
-    "performanceMonitorName": "Monitor de rendimiento",
-    "performanceMonitorDescription": "Monitorea métricas de rendimiento de la app"
+    "aiAssistDescription": "Obtén sugerencias de código impulsadas por IA"
 }

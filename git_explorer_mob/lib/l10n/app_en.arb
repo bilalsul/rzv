@@ -2,7 +2,7 @@
   "@@locale": "en",
 
   "appName": "Git Explorer",
-  "appAbout": "About Git Explorer",
+  "appAbout": "Explore git projects and view files in code editor read-only mode.",
   "appVersion": "Version",
   "appLicense": "License",
   "appAuthor": "Author",
@@ -32,14 +32,7 @@
   "settingsAppearancePrimaryColor": "Primary color",
   "settingsAppearanceSecondaryColor": "Secondary color",
   "settingsAppearanceAccentColor": "Accent color",
-  
-  "settingsApplyThemeColors": "Apply Theme colors",
   "settingsRevertThemeColors": "Revert",
-  "settingsBorderRadius": "Border radius",
-  "settingsElevation": "Elevation",
-  "settingsAppFontSize": "App font size",
-  "settingsButtonStyle": "Button style",
-  "settingsReduceAnimations": "Reduce animations",
   
   "settingsEditorSettings": "Editor Settings",
   "settingsEditorTabSize": "Tab size",
@@ -48,11 +41,7 @@
   "settingsEditorFontSize": "Font Size",
   "settingsEditorFontFamily": "Font Family",
   "settingsEditorZoomInOut": "Enable Zoom In/Out",
-  "settingsEditorRenderUnsupportedCharacters": "View Unsupported Characters with Warning ⚠️",
-  
-  "settingsGitSettings": "Git Settings",
-  "settingsGitAutoFetch": "Auto-fetch",
-  "settingsGitDefaultBranch": "Default branch",
+  "settingsEditorRenderUnsupportedCharacters": "View Unsupported Characters with Warning 🔔",
   
   "settingsAiSettings": "AI Settings",
   "settingsAiModelProvider": "Model provider",
@@ -82,11 +71,6 @@
   "connectionFailed": "Connection failed",
   "connectionSuccessful": "Connection successful",
   
-  "settingsTerminalSettings": "Terminal Settings",
-  "settingsTerminalShellExecutable": "Shell executable",
-  "settingsTerminalFontSize": "Font size",
-  "settingsTerminalAudibleBell": "Audible bell",
-  
   "settingsFileExplorerSettings": "File Explorer Settings",
   "settingsFileExplorerShowHidden": "Show hidden files",
   "settingsFileExplorerPreviewMarkdown": "Preview markdown files",
@@ -95,6 +79,7 @@
   "settingsThemeApplied": "Theme colors applied",
   
   "commonDelete": "Delete",
+  "commonCreate": "Create",
   "commonSave": "Save",
   "commonCancel": "Cancel",
   "commonOk": "OK",
@@ -201,15 +186,9 @@
   "@drawerPluginCategory": { "placeholders": { "category": {} } },
   "drawerCreateNewFolderTitle": "Create New Folder",
   "drawerFolderNameHint": "Folder name",
-  "commonCreate": "Create",
-  "drawerPullChanges": "Pull Changes",
-  "drawerPushChanges": "Push Changes",
-  "drawerCommitChanges": "Commit Changes",
-  "drawerCommitMessageHint": "Commit message",
-  "drawerCommit": "Commit",
   "drawerEditorTheme": "Editor Theme",
   "drawerEditorWordWrap": "Word Wrap",
-  "drawerFeedbackBody": "We'd love to hear your feedback about the Git Explorer!",
+  "drawerFeedbackBody": "We'd love to hear your feedback about Git Explorer!",
   "drawerSendFeedback": "Send Feedback",
   "drawerFirstInstalled": "First installed: {date}",
   "@drawerFirstInstalled": { "placeholders": { "date": {} } },
@@ -239,24 +218,14 @@
 
   "gitHistoryName": "Git History",
   "gitHistoryDescription": "View commit history and differences",
-  "gitLensName": "GitLens",
-  "gitLensDescription": "Enhanced git blame annotations",
-  "branchManagerName": "Branch Manager",
-  "branchManagerDescription": "Create and switch branches easily",
 
   "fileExplorerName": "File Explorer",
   "fileExplorerDescription": "Browse and manage project files",
-  "searchReplaceName": "Search & Replace",
-  "searchReplaceDescription": "Advanced find and replace across files",
   "terminalName": "Integrated Terminal",
   "terminalDescription": "Run commands without leaving the editor",
   "themeCustomizerName": "Theme Customizer",
   "themeCustomizerDescription": "Customize editor and app appearance",
 
   "aiAssistName": "AI Code Assistant",
-  "aiAssistDescription": "Get AI-powered code suggestions",
-  "realtimeCollabName": "Real-time Collaboration",
-  "realtimeCollabDescription": "Edit code with others in real-time",
-  "performanceMonitorName": "Performance Monitor",
-  "performanceMonitorDescription": "Monitor app performance metrics"
+  "aiAssistDescription": "Get AI-powered code suggestions"
 }
