@@ -360,16 +360,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: Text(L10n.of(context).commonApply, style: TextStyle(color: prefs.accentColor)),
                 ),
                 // const SizedBox(width: 6),
-                ElevatedButton(
-                  onPressed: () => setState(() {
-                    // revert temps from prefs
-                    // final p = Prefs();
-                    // _tempPrimaryColor = p.primaryColor;
-                    _tempSecondaryColor = prefs.secondaryColor;
-                    _tempAccentColor = prefs.accentColor;
-                  }),
-                  child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
-                ),
+                // ElevatedButton(
+                //   onPressed: () => setState(() {
+                //     // revert temps from prefs
+                //     // final p = Prefs();
+                //     // _tempPrimaryColor = p.primaryColor;
+                //     _tempSecondaryColor = prefs.secondaryColor;
+                //     _tempAccentColor = prefs.accentColor;
+                //   }),
+                //   child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
+                // ),
                 // const SizedBox(width: 2),
                 ElevatedButton(
                   // style: ButtonStyle(maximumSize: WidgetStateProperty.all(Size.infinite)),
