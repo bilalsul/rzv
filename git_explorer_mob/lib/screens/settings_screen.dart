@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/font_family.dart';
+import 'package:git_explorer_mob/widgets/settings/settings_tile.dart';
+import 'package:git_explorer_mob/widgets/settings/simple_dialog.dart';
 import 'package:git_explorer_mob/widgets/settings/theme_mode.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
@@ -48,6 +50,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final fileExplorerEnabled = prefs.isPluginEnabled('file_explorer');
     final themeCustomizerEnabled = prefs.isPluginEnabled('theme_customizer');
     final aiEnabled = prefs.isPluginEnabled('ai_assist');
+
+    final languageSubtitle = prefs.locale == null
+        ? supportedLanguages[0].values.first
+        : supportedLanguages
+            .firstWhere(
+                (element) =>
+                    element.values.first ==
+                    prefs.locale!.languageCode +
+                        (prefs.locale!.countryCode != null
+                            ? "-${prefs.locale!.countryCode}"
+                            : ""),
+                orElse: () => supportedLanguages[0])
+            .keys
+            .first;
     // final gitEnabled = prefs.isPluginEnabled('git_history');
     // final terminalEnabled = prefs.isPluginEnabled('terminal');
     
@@ -132,25 +148,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           // }),
 
           // Language selection
-          const SizedBox(height: 25),
-          Text(L10n.of(context).settingsAppearanceLanguage, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          const SizedBox(height: 8),
-          DropdownButtonFormField<String>(
-            // current stored locale code or 'System'
-            value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
-            items: supportedLanguages.map((m) {
-              final entry = m.entries.first;
-              final label = entry.key;
-              final code = entry.value;
-              final displayLabel = label[0].toUpperCase() + label.substring(1);
-              return DropdownMenuItem<String>(value: code == 'System' ? 'System' : code, child: Text(displayLabel));
-            }).toList(),
-            onChanged: (selectedCode) async {
-              if (selectedCode == null) return;
-              // Persist the language code (e.g., 'en', 'zh-CN' or 'System') to prefs
-              await Prefs().saveLocaleToPrefs(selectedCode);
-            },
-          ),
+          const SizedBox(height: 15),
+          // Text(L10n.of(context).settingsAppearanceLanguage, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          // const SizedBox(height: 8),
+          SettingsTile.navigation(
+                  title: Text(L10n.of(context).settingsAppearanceLanguage),
+                  value: Text(languageSubtitle),
+                  leading: const Icon(Icons.language),
+                  onPressed: (context) {
+                    showLanguagePickerDialog(context);
+                  }),
+          // DropdownButtonFormField<String>(
+          //   // current stored locale code or 'System'
+          //   value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
+          //   items: supportedLanguages.map((m) {
+          //     final entry = m.entries.first;
+          //     final label = entry.key;
+          //     final code = entry.value;
+          //     final displayLabel = label[0].toUpperCase() + label.substring(1);
+          //     return DropdownMenuItem<String>(value: code == 'System' ? 'System' : code, child: Text(displayLabel));
+          //   }).toList(),
+          //   onChanged: (selectedCode) async {
+          //     if (selectedCode == null) return;
+          //     // Persist the language code (e.g., 'en', 'zh-CN' or 'System') to prefs
+          //     await Prefs().saveLocaleToPrefs(selectedCode);
+          //   },
+          // ),
           const SizedBox(height: 12),
 
           // Theme Customizer (plugin)
@@ -739,6 +762,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       ],
     );
   }
+
+void showLanguagePickerDialog(BuildContext context) {
+    final title = L10n.of(context).settingsAppearanceLanguage;
+    final saveToPrefs = Prefs().saveLocaleToPrefs;
+
+    final children = supportedLanguages.map((e) {
+      final key = e.keys.first;
+      final value = e[key]!;
+      return dialogOption(key, value, saveToPrefs);
+    }).toList();
+    showSimpleDialog(title, saveToPrefs, children);
+}
 
   void _showProviderConfigDialog(BuildContext context, String providerId, String label) {
     final prefs = ref.watch(prefsProvider);
