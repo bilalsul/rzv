@@ -183,7 +183,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           //     await Prefs().saveLocaleToPrefs(selectedCode);
           //   },
           // ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 15),
 
           // Theme Customizer (plugin)
           prefs.featureSupported("theme_customizer") ?
@@ -347,7 +347,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               // }),
             ),
               const SizedBox(height: 15),
-              Row(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
                 ElevatedButton(
                   onPressed: () async {
                     // await Prefs().savePrimaryColor(_tempPrimaryColor);
@@ -357,7 +359,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   },
                   child: Text(L10n.of(context).commonApply, style: TextStyle(color: prefs.accentColor)),
                 ),
-                const SizedBox(width: 12),
+                // const SizedBox(width: 6),
                 ElevatedButton(
                   onPressed: () => setState(() {
                     // revert temps from prefs
@@ -368,8 +370,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   }),
                   child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
                 ),
-                const SizedBox(width: 12),
+                // const SizedBox(width: 2),
                 ElevatedButton(
+                  // style: ButtonStyle(maximumSize: WidgetStateProperty.all(Size.infinite)),
                   onPressed: () => setState(() {
                     // reset theme customizer colors from prefs
                     Prefs().resetThemeCustomizerColors(context);
@@ -418,6 +421,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               // ]),
             ]),
           ) : SizedBox.shrink(),
+              const SizedBox(height: 15),
 
           // Editor settings panel (visible only when editor plugin enabled)
           prefs.isPluginEnabled("advanced_editor_options") ?
@@ -436,26 +440,33 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               //   onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
               // ),
               const SizedBox(height: 8),
-              Text(L10n.of(context).settingsEditorFontFamily),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
-                // current stored locale code or 'System'
-                value: prefs.editorFontFamily,
-                items: fontFamily.map((m) {
-                  final entry = m.entries.first;
-                  // final code = entry.key;
-                  final label = entry.value;
-                  final displayLabel = label[0].toUpperCase() + label.substring(1);
-                  return DropdownMenuItem<String>(value: label, child: Text(displayLabel));
-                }).toList(),
-                onChanged: (selectedFont) async {
-                  if (selectedFont == null) return;
-                  // Persist the font family to prefs
-                  await Prefs().saveEditorFontFamily(selectedFont);
-                },
-              ),
-              const SizedBox(height: 12),
-              const SizedBox(height: 8),
+              SettingsTile.navigation(
+                  title: Text(L10n.of(context).settingsEditorFontFamily),
+                  value: Text(prefs.editorFontFamily),
+                  leading: const Icon(Icons.font_download),
+                  onPressed: (context) {
+                    showFontPickerDialog(context);
+                  }),
+              // Text(L10n.of(context).settingsEditorFontFamily),
+              // const SizedBox(height: 11),
+              
+              // DropdownButtonFormField<String>(
+              //   // current stored locale code or 'System'
+              //   value: prefs.editorFontFamily,
+              //   items: fontFamily.map((m) {
+              //     final entry = m.entries.first;
+              //     // final code = entry.key;
+              //     final label = entry.value;
+              //     final displayLabel = label[0].toUpperCase() + label.substring(1);
+              //     return DropdownMenuItem<String>(value: label, child: Text(displayLabel));
+              //   }).toList(),
+              //   onChanged: (selectedFont) async {
+              //     if (selectedFont == null) return;
+              //     // Persist the font family to prefs
+              //     await Prefs().saveEditorFontFamily(selectedFont);
+              //   },
+              // ),
+              const SizedBox(height: 25),
               Text(L10n.of(context).settingsEditorFontSize),
               Slider(
                 activeColor: prefs.accentColor,
@@ -466,18 +477,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 label: prefs.editorFontSize.toString(),
                 onChanged: (v) async => await prefs.saveEditorFontSize(v),
               ),
+              const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsEditorZoomInOut)),
                 Switch.adaptive(value: prefs.editorZoomInOut, 
                 onChanged: (v) async => await prefs.saveEditorZoomInOut(v),
                 activeColor: prefs.secondaryColor,
                 )]),
+              const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsEditorShowLineNumbers)),
                 Switch.adaptive(value: prefs.editorLineNumbers, 
                 onChanged: (v) async => await prefs.saveEditorLineNumbers(v),
                 activeColor: prefs.secondaryColor,
                 )]),
+              const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsEditorRenderUnsupportedCharacters, style: TextStyle(fontSize: 11))),
                 Switch.adaptive(value: prefs.editorRenderControlCharacters, 
@@ -486,6 +500,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 )]),
             ]),
           ) : SizedBox.shrink() ,
+              const SizedBox(height: 15),
 
           // Git settings
           // prefs.featureSupported("git_history") ?
@@ -619,6 +634,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ]),
             ]),
           ) : SizedBox.shrink(),
+              const SizedBox(height: 15),
+
 
           // Terminal settings
           // prefs.featureSupported("terminal") ?
@@ -796,12 +813,23 @@ void showLanguagePickerDialog(BuildContext context) {
 
     final children = supportedLanguages.map((e) {
       final key = e.keys.first;
+      // final dialogOptionLabel = key.substring(0,1).toUpperCase() + key.substring(1);
       final value = e[key]!;
       return dialogOption(key, value, saveToPrefs);
     }).toList();
     showSimpleDialog(title, saveToPrefs, children);
 }
+void showFontPickerDialog(BuildContext context) {
+    final title = L10n.of(context).settingsEditorFontFamily;
+    final saveToPrefs = Prefs().saveEditorFontFamily;
 
+    final children = fontFamily.map((e) {
+      final key = e.keys.first;
+      final value = e[key]!;
+      return dialogOption(value, value, saveToPrefs);
+    }).toList();
+    showSimpleDialog(title, saveToPrefs, children);
+}
   void _showProviderConfigDialog(BuildContext context, String providerId, String label) {
     final prefs = ref.watch(prefsProvider);
     // Simple synchronous dialog: initialize fields synchronously from Prefs (no futures)
