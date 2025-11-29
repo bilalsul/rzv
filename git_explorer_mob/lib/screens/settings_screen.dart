@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/font_family.dart';
+import 'package:git_explorer_mob/widgets/settings/theme_mode.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
@@ -76,43 +77,62 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.all(12), children: [
           // const Text('Application Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
-
-          // Appearance / Theme
           Text(L10n.of(context).settingsAppearance, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          const SizedBox(height: 8),
-          Builder(builder: (context) {
-            final currentTheme = prefs.themeMode;
-            return Column(children: [
-                  RadioListTile<ThemeMode>(
-                title: Text(L10n.of(context).settingsSystemMode),
-                value: ThemeMode.system,
-                activeColor: prefs.accentColor,
-                groupValue: currentTheme,
-                onChanged: (v) async {
-                      await Prefs().saveThemeMode('system');
-                },
-              ),
-              RadioListTile<ThemeMode>(
-                title: Text(L10n.of(context).settingsLightMode),
-                value: ThemeMode.light,
-                activeColor: prefs.accentColor,
-                groupValue: currentTheme,
-                onChanged: (v) async { await Prefs().saveThemeMode('light'); },
-              ),
-              RadioListTile<ThemeMode>(
-                title: Text(L10n.of(context).settingsDarkMode),
-                value: ThemeMode.dark,
-                activeColor: prefs.accentColor,
-                groupValue: currentTheme,
-                onChanged: (v) async { await Prefs().saveThemeMode('dark'); },
-              ),
-              const SizedBox(height: 12),
-            ]);
-          }),
+          const SizedBox(height: 12),
+          ChangeThemeMode(),
+          
+          // Appearance / Theme
+          // const SizedBox(height: 8),
+          // Builder(builder: (context) {
+          //   final currentTheme = prefs.themeMode;
+          //   return Column(children: [
+          //         RadioListTile<ThemeMode>(
+          //       title: Text(L10n.of(context).settingsSystemMode),
+          //       value: ThemeMode.system,
+          //       activeColor: prefs.accentColor,
+          //       groupValue: currentTheme,
+          //       onChanged: (v) {
+          //           Prefs().resetThemeCustomizerColors();
+          //           Prefs().saveThemeMode('system');
+          //             if (Theme.of(context).brightness == Brightness.dark) {
+          //           Prefs().saveSecondaryColor(Colors.white);
+          //           Prefs().saveAccentColor(Colors.white70);
+          //               } else {
+          //               Prefs().saveSecondaryColor(Colors.black87);
+          //               Prefs().saveAccentColor(Colors.black54);
+          //                 }
+          //       },
+          //     ),
+          //     RadioListTile<ThemeMode>(
+          //       title: Text(L10n.of(context).settingsLightMode),
+          //       value: ThemeMode.light,
+          //       activeColor: prefs.accentColor,
+          //       groupValue: currentTheme,
+          //       onChanged: (v) { 
+          //       Prefs().resetThemeCustomizerColors();
+          //       Prefs().saveThemeMode('light');
+          //       Prefs().saveSecondaryColor(Colors.black87);
+          //       Prefs().saveAccentColor(Colors.black54);
+          //        },
+          //     ),
+          //     RadioListTile<ThemeMode>(
+          //       title: Text(L10n.of(context).settingsDarkMode),
+          //       value: ThemeMode.dark,
+          //       activeColor: prefs.accentColor,
+          //       groupValue: currentTheme,
+          //       onChanged: (v) { 
+          //         Prefs().resetThemeCustomizerColors();
+          //         Prefs().saveThemeMode('dark');
+          //         Prefs().saveSecondaryColor(Colors.white);
+          //         Prefs().saveAccentColor(Colors.white70);
+          //          },
+          //     ),
+          //     const SizedBox(height: 12),
+          //   ]);
+          // }),
 
           // Language selection
-          const SizedBox(height: 8),
+          const SizedBox(height: 25),
           Text(L10n.of(context).settingsAppearanceLanguage, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           DropdownButtonFormField<String>(
@@ -168,7 +188,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Wrap(
                 spacing: 8,
                 runSpacing: 4,
-                children: Colors.primaries.take(18).map((c) {
+                children: [ 
+                  ...Colors.primaries.take(18).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempSecondaryColor == col;
@@ -183,14 +204,51 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
                   );
-                }).toList(),
-              ),
-              const SizedBox(height: 10),
+                }),
+    //             if (Theme.of(context).brightness == Brightness.light) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         // if (prefs.secondaryColor != _tempSecondaryColor){
+    //         _tempSecondaryColor = Colors.black87; 
+    //         // }
+    //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempSecondaryColor == Colors.black87 ? Border.all(color: prefs.secondaryColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.black87, radius: 14),
+    //     ),
+    //   ),
+    // ],
+    // if (Theme.of(context).brightness == Brightness.dark) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         _tempSecondaryColor = Colors.white;
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempSecondaryColor == Colors.white ? Border.all(color: prefs.secondaryColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.white, radius: 14),
+    //     ),
+    //   ),
+    // ],
+            ]),
+              const SizedBox(height: 25),
               Text(L10n.of(context).settingsAppearanceAccentColor),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: Colors.accents.take(16).map((c) {
+                children: [ ...Colors.accents.take(16).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempAccentColor == col;
@@ -205,8 +263,57 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
                   );
-                }).toList(),
-              ),
+                }),
+    //     if (Theme.of(context).brightness == Brightness.light) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         _tempAccentColor = Colors.black54; 
+    //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempAccentColor == Colors.black54 ? Border.all(color: prefs.accentColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.black54, radius: 14),
+    //     ),
+    //   ),
+    // ],
+    // if (Theme.of(context).brightness == Brightness.dark) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         _tempAccentColor = Colors.white70;
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempAccentColor == Colors.white70 ? Border.all(color: prefs.accentColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.white70, radius: 14),
+    //     ),
+    //   ),
+    // ],
+              // ...[Colors.black12,Colors.white].map((color) {
+              //   final selected = _tempAccentColor == color;
+              //   return GestureDetector(
+              //     onTap: () => setState(() { _tempAccentColor = color; }),
+              //     child: Container(
+              //       padding: const EdgeInsets.all(3),
+              //       decoration: BoxDecoration(
+              //         shape: BoxShape.circle,
+              //         border: selected ? Border.all(color: prefs.accentColor, width: 2) : null,
+              //       ),
+              //       child: CircleAvatar(backgroundColor: color, radius: 14),
+              //     ),
+              //   );
+              // }),
+            ]),
               const SizedBox(height: 15),
               Row(children: [
                 ElevatedButton(
@@ -222,13 +329,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ElevatedButton(
                   onPressed: () => setState(() {
                     // revert temps from prefs
-                    final p = Prefs();
+                    // final p = Prefs();
                     // _tempPrimaryColor = p.primaryColor;
-                    _tempSecondaryColor = p.secondaryColor;
-                    _tempAccentColor = p.accentColor;
+                    _tempSecondaryColor = prefs.secondaryColor;
+                    _tempAccentColor = prefs.accentColor;
                   }),
                   child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
                 ),
+                const SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: () => setState(() {
                     // reset theme customizer colors from prefs
@@ -571,11 +679,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     // Read current persisted values from Prefs singleton into temporary state
     final p = Prefs();
     // _tempPrimaryColor = p.primaryColor;
+    // final prefs = ref.watch(prefsProvider);
+
     _tempSecondaryColor = p.secondaryColor;
     _tempAccentColor = p.accentColor;
-
+    
     // AI defaults
-    _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
+    // _selectedAiMaxTokens = prefs.getPluginConfig('ai', 'maxTokens') ?? 512;
+    setState(() {});
   }
 
   void _loadNativeAd() {
