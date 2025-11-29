@@ -49,6 +49,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget build(BuildContext context) {
     // single source: watch Prefs
     final prefs = ref.watch(prefsProvider);
+    final appState = ref.watch(appStateProvider);
   // Temporary theme values are initialized in initState from Prefs.
     // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
     final fileExplorerEnabled = prefs.isPluginEnabled('file_explorer');
@@ -690,7 +691,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             icon: Icon(Icons.restore, color: prefs.accentColor),
             label: Text(L10n.of(context).settingsResetPluginDefaults, style: TextStyle(color: prefs.accentColor)),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 35),
           // ad here
           _isNativeAdLoaded && _nativeAd != null
               ? SizedBox(
@@ -698,7 +699,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: AdWidget(ad: _nativeAd!),
                 )
               : const SizedBox.shrink(),
-          const SizedBox(height: 100),
+
+          const SizedBox(height: 130),
+          Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(L10n.of(context).appName, style: TextStyle(fontSize: 13)),
+                  Text('v${appState.appVersion}', style: TextStyle(fontSize: 10),)
+                ],
+                  ),
+          ),
+          const SizedBox(height: 120),
+
           
         ]),
       ),
