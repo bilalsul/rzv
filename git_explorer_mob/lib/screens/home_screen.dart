@@ -392,40 +392,46 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ),
       floatingActionButton: _openedProject != null
-          ? FloatingActionButton.extended(
-              heroTag: 'create_file',
-              icon: Icon(Icons.note_add, color: 
-              prefs.accentColor,
+          ? Padding(
+            padding: EdgeInsets.only(bottom: 70),
+            child: FloatingActionButton.extended(
+                heroTag: 'create_file',
+                icon: Icon(Icons.note_add, color: 
+                prefs.accentColor,
+                ),
+                backgroundColor: prefs.secondaryColor,
+                label: Text(L10n.of(context).commonCreate),
+                onPressed: _createFileInCurrentFolder,
               ),
-              backgroundColor: prefs.secondaryColor,
-              label: Text(L10n.of(context).commonCreate),
-              onPressed: _createFileInCurrentFolder,
-            )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 8),
-                FloatingActionButton.small(
-                  heroTag: 'create_details',
-                  onPressed: _createProjectWithDetails,
-                  tooltip: L10n.of(context).homeTooltipCreateDetails,
-                  backgroundColor: prefs.secondaryColor,
-                  child: Icon(Icons.add, 
-                  color: prefs.accentColor
+          )
+          : Padding(
+            padding: EdgeInsets.only(bottom: 70),
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 8),
+                  FloatingActionButton.small(
+                    heroTag: 'create_details',
+                    onPressed: _createProjectWithDetails,
+                    tooltip: L10n.of(context).homeTooltipCreateDetails,
+                    backgroundColor: prefs.secondaryColor,
+                    child: Icon(Icons.add, 
+                    color: prefs.accentColor
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                FloatingActionButton(
-                  heroTag: 'sample_zip',
-                  onPressed: _importZipProject,
-                  tooltip: L10n.of(context).homeTooltipCreateSampleZip,
-                  backgroundColor: prefs.secondaryColor,
-                  child: Icon(Icons.archive, 
-                  color: prefs.accentColor
+                  const SizedBox(height: 8),
+                  FloatingActionButton(
+                    heroTag: 'sample_zip',
+                    onPressed: _importZipProject,
+                    tooltip: L10n.of(context).homeTooltipCreateSampleZip,
+                    backgroundColor: prefs.secondaryColor,
+                    child: Icon(Icons.archive, 
+                    color: prefs.accentColor
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+          ),
     );
   }
 
