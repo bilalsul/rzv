@@ -17,9 +17,13 @@ import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 /// This screen exposes plugin-specific settings panels and connects them
 /// to plugin configuration stored through `pluginSettingsProvider`.
 class SettingsScreen extends ConsumerStatefulWidget {
-  const SettingsScreen({super.key});
+  
+  const SettingsScreen({super.key,
+  required this.controller
+  });
 
-
+  final ScrollController controller;
+  
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
@@ -91,7 +95,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: ListView(padding: const EdgeInsets.all(12), children: [
+        child: ListView(
+          controller: widget.controller,
+          padding: const EdgeInsets.all(12), children: [
+          const SizedBox(height: 20),
+
           // const Text('Application Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           Text(L10n.of(context).settingsAppearance, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           const SizedBox(height: 12),
@@ -690,6 +698,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: AdWidget(ad: _nativeAd!),
                 )
               : const SizedBox.shrink(),
+          const SizedBox(height: 100),
+          
         ]),
       ),
     );
@@ -712,6 +722,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     setState(() {});
   }
 
+// ScrollController get getController{
+//   return controller;
+// }
   void _loadNativeAd() {
     _nativeAd = NativeAd(
       adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit

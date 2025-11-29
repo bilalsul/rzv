@@ -11,7 +11,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as p;
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key,
+  required this.controller});
+
+  final ScrollController controller;
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -322,6 +325,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               // If a project is opened, show ProjectBrowser inside HomeScreen
               if (_openedProject != null) {
                 return _ProjectBrowser(
+                  controller: widget.controller,
                   project: _openedProject!,
                   pathStack: _pathStack,
                   selectedFileContent: _selectedFileContent,
@@ -362,6 +366,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   );
                 } else {
                   return ListView.separated(
+                    controller: widget.controller,
                     itemCount: _projects.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 8),
                     itemBuilder: (context, idx) {
@@ -618,8 +623,9 @@ class _ProjectBrowser extends StatelessWidget {
   final String? selectedFileContent;
   final void Function(String name) onEnterDirectory;
   final void Function(String content) onOpenFile;
+  final ScrollController controller;
 
-  _ProjectBrowser({required this.project, required this.pathStack, required this.onEnterDirectory, required this.onOpenFile, this.selectedFileContent});
+  const _ProjectBrowser({required this.controller,required this.project, required this.pathStack, required this.onEnterDirectory, required this.onOpenFile, this.selectedFileContent});
 
   dynamic _nodeAtPath() {
     dynamic node = project.fs;
@@ -676,6 +682,7 @@ class _ProjectBrowser extends StatelessWidget {
     }
 
     return ListView.builder(
+      controller: controller,
       itemCount: dirs.length + files.length,
       itemBuilder: (context, index) {
         if (index < dirs.length) {

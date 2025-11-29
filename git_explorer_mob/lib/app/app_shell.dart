@@ -112,13 +112,13 @@ class _AppShellState extends ConsumerState<AppShell> {
     switch (currentScreen) {
       case Screen.home:
         return plugins.contains('file_explorer')
-            ? const HomeScreen()
+            ? HomeScreen(controller: controller)
             :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
       case Screen.editor:
         return const EditorScreen();
       case Screen.fileExplorer:
         return plugins.contains('file_explorer')
-            ?  HomeScreen()
+            ?  HomeScreen(controller: controller)
             :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
       case Screen.gitHistory:
         return plugins.contains('git_history')
@@ -131,7 +131,7 @@ class _AppShellState extends ConsumerState<AppShell> {
             FeatureNotSupported(feature: L10n.of(context).navBarTerminal))
             : FeatureDisabledScreen(feature: L10n.of(context).navBarTerminal);
       case Screen.settings:
-        return const SettingsScreen();
+        return SettingsScreen(controller: controller);
       case Screen.AI:
         // return const AIScreen();
          return plugins.contains('ai_assist')
