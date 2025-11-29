@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
@@ -6,7 +8,7 @@ import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/screens/ai_screen.dart';
 import 'package:git_explorer_mob/screens/editor_screen.dart';
 import 'package:git_explorer_mob/screens/settings_screen.dart';
-import 'package:git_explorer_mob/screens/template.dart';
+import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 
 // Providers
 // import 'package:git_explorer_mob/providers/plugin_provider.dart';
@@ -23,6 +25,7 @@ import 'package:git_explorer_mob/screens/home_screen.dart';
 // Widgets
 import 'package:git_explorer_mob/widgets/common/app_drawer.dart';
 import 'package:git_explorer_mob/widgets/common/dynamic_app_bar.dart';
+import 'package:hidable/hidable.dart';
 
 class NavItem {
   final Screen screen;
@@ -50,6 +53,8 @@ class AppShell extends ConsumerStatefulWidget {
 class _AppShellState extends ConsumerState<AppShell> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   // Navigation is driven by Prefs via prefsProvider
+
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -88,13 +93,22 @@ class _AppShellState extends ConsumerState<AppShell> {
           currentScreen: currentScreen,
         ),
         drawer: const AppDrawer(),
-        body: _buildBody(currentScreen, plugins),
-        bottomNavigationBar: _buildBottomNavigationBar(plugins),
+        // body: _buildBody(currentScreen, plugins),
+        body: _buildFloatingNavigationBar(plugins,currentScreen),
+        // body: Expanded(
+        //   child: Column(children: [
+        //     _buildBody(currentScreen, plugins),
+        //     _buildFloatingNavigationBar(plugins,currentScreen),
+        //   ],),
+        // ),
+        // bottomNavigationBar: _buildBottomNavigationBar(plugins),
+        // bottomNavigationBar: _buildFloatingNavigationBar(plugins,currentScreen),
+
      ) 
     );
   }
 
-  Widget _buildBody(Screen currentScreen, List<String> plugins) {
+  Widget _buildBody(Screen currentScreen, List<String> plugins, ScrollController controller) {
     switch (currentScreen) {
       case Screen.home:
         return plugins.contains('file_explorer')
@@ -236,9 +250,8 @@ class _AppShellState extends ConsumerState<AppShell> {
 //     return Prefs().getValueExistInList('plugins_enabled',flagKey);
 //   }).toList();
 // }
-
-Widget _buildBottomNavigationBar(List<String> plugins) {
-    final visibleNavItems = getVisibleNavItems(plugins);
+Widget _buildFloatingNavigationBar(List<String> plugins, Screen currentScreen,){
+  final visibleNavItems = getVisibleNavItems(plugins);
 
     // Compute current index based on currentScreen
     int currentIndex = visibleNavItems.indexWhere((item) => item.screen == Prefs().lastKnownScreen);
@@ -246,31 +259,126 @@ Widget _buildBottomNavigationBar(List<String> plugins) {
       currentIndex = 0;  // Fallback to first item
     }
 
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) {
-  final selectedItem = visibleNavItems[index];
-  final selectedScreen = selectedItem.screen;
-  // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
-  Prefs().saveLastKnownRoute(screenToString(selectedScreen));
-  // Also trigger a local rebuild for immediate feedback
-  // setState(() {});
+    List<BottomNavigationBarItem> bottomBarItems = visibleNavItems.map((item) {
+      return BottomNavigationBarItem(
+        icon: item.icon,
+        activeIcon: item.activeIcon,
+        label: item.label,
+      );
+    }).toList();
 
-        // For debugging: Get/print the value of the current selected item
-        print('Selected index: $index');
-        print('Selected screen: $selectedScreen');
-        print('Selected label: ${selectedItem.label}');
-      },
-      type: BottomNavigationBarType.fixed,
-      items: visibleNavItems.map((item) {
-        return BottomNavigationBarItem(
-          icon: item.icon,
-          activeIcon: item.activeIcon,
-          label: item.label,
-        );
-      }).toList(),
-    );
-  }
+    // final currentScreen = Prefs().lastKnownScreen;
+
+  return //Scaffold(
+            // extendBody: true,
+            // body:
+             BottomBar(
+              body: (context, _) =>
+                // controller: scrollController,
+                _buildBody(currentScreen, plugins, scrollController),
+              // body: (context, _) => SizedBox.shrink(),
+
+              // body: (_, controller) =>
+              //     pages(currentIndex, constraints, controller),
+              hideOnScroll: true,
+              scrollOpposite: false,
+              curve: Curves.easeIn,
+              barColor: Colors.transparent,
+              iconDecoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(500),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(32),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                  child: Container(
+                    height: 64,
+                    decoration: BoxDecoration(
+                      // color: Theme.of(context)
+                      //     .colorScheme
+                      //     .surfaceContainer
+                      //     .withAlpha(123),
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(
+                        // color: Theme.of(context).colorScheme.outline,
+                        width: 0.5,
+                      ),
+                    ),
+                    child: Hidable(
+                      controller:  scrollController,
+                      preferredWidgetSize:Size.fromHeight(60),
+                      child: BottomNavigationBar(
+                        selectedFontSize: 14,
+                        // selectedItemColor: Prefs().secondaryColor,
+                        // selectedLabelStyle: TextStyle(color: Prefs().accentColor),
+                        // selectedIconTheme: IconThemeData(color: Prefs().secondaryColor),
+                        // showSelectedLabels: true,
+                        enableFeedback: true,
+                        type: BottomNavigationBarType.fixed,
+                        landscapeLayout:
+                            BottomNavigationBarLandscapeLayout.linear,
+                        currentIndex: currentIndex,
+                        // onTap: (int index) => onBottomTap(index, false),
+                        onTap: (index) {
+                                  final selectedItem = visibleNavItems[index];
+                                  final selectedScreen = selectedItem.screen;
+                                  // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
+                                  Prefs().saveLastKnownRoute(screenToString(selectedScreen));
+                                  
+                                  // For debugging: Get/print the value of the current selected item
+                                  print('Selected index: $index');
+                                  print('Selected screen: $selectedScreen');
+                                  print('Selected label: ${selectedItem.label}');
+                      
+                        },
+                        items: bottomBarItems,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        // height: 64,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            // ),
+          );
+}
+
+// Widget _buildBottomNavigationBar(List<String> plugins) {
+//     final visibleNavItems = getVisibleNavItems(plugins);
+
+//     // Compute current index based on currentScreen
+//     int currentIndex = visibleNavItems.indexWhere((item) => item.screen == Prefs().lastKnownScreen);
+//     if (currentIndex == -1) {
+//       currentIndex = 0;  // Fallback to first item
+//     }
+
+//     return BottomNavigationBar(
+//       currentIndex: currentIndex,
+//       onTap: (index) {
+//   final selectedItem = visibleNavItems[index];
+//   final selectedScreen = selectedItem.screen;
+//   // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
+//   Prefs().saveLastKnownRoute(screenToString(selectedScreen));
+//   // Also trigger a local rebuild for immediate feedback
+//   // setState(() {});
+
+//         // For debugging: Get/print the value of the current selected item
+//         print('Selected index: $index');
+//         print('Selected screen: $selectedScreen');
+//         print('Selected label: ${selectedItem.label}');
+//       },
+//       type: BottomNavigationBarType.fixed,
+//       items: visibleNavItems.map((item) {
+//         return BottomNavigationBarItem(
+//           icon: item.icon,
+//           activeIcon: item.activeIcon,
+//           label: item.label,
+//         );
+//       }).toList(),
+//     );
+//   }
 
   List<NavItem> getVisibleNavItems(List<String> enabledPlugins) {
     final prefs = ref.watch(prefsProvider);
@@ -324,6 +432,7 @@ Widget _buildBottomNavigationBar(List<String> plugins) {
       return enabledPlugins.contains(item.pluginKey);
     }).toList();
   }
+
 }
 
 class FeatureDisabledScreen extends StatelessWidget {
