@@ -46,6 +46,13 @@ class _ChangeThemeModeState extends State<ChangeThemeMode> {
         Prefs().saveThemeMode(mode);
         setState(() {
           _themeMode = mode;
+           if(Theme.of(context).brightness == Brightness.dark && Prefs().secondaryColor==Colors.white &&Prefs().accentColor==Colors.white70) {
+          Prefs().saveSecondaryColor(Colors.black87);
+          Prefs().saveAccentColor(Colors.black54);
+        } else if (Theme.of(context).brightness == Brightness.light && Prefs().secondaryColor==Colors.black87 &&Prefs().accentColor==Colors.black54){
+          Prefs().saveSecondaryColor(Colors.white);
+          Prefs().saveAccentColor(Colors.white70);
+        }
         });
       },
     );
