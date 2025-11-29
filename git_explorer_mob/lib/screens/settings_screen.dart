@@ -211,8 +211,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Wrap(
                 spacing: 8,
                 runSpacing: 4,
-                children: [ 
-                  ...Colors.primaries.take(18).map((c) {
+                children:
+                  Colors.primaries.take(18).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempSecondaryColor == col;
@@ -227,7 +227,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
                   );
-                }),
+                }).toList(),
     //             if (Theme.of(context).brightness == Brightness.light) ...[
     //   GestureDetector(
     //     onTap: () {
@@ -265,13 +265,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     //     ),
     //   ),
     // ],
-            ]),
+            ),
               const SizedBox(height: 25),
               Text(L10n.of(context).settingsAppearanceAccentColor),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                children: [ ...Colors.accents.take(16).map((c) {
+                children: Colors.accents.take(16).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempAccentColor == col;
@@ -286,7 +286,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       child: CircleAvatar(backgroundColor: col, radius: 14),
                     ),
                   );
-                }),
+                }).toList(),
     //     if (Theme.of(context).brightness == Brightness.light) ...[
     //   GestureDetector(
     //     onTap: () {
@@ -336,7 +336,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               //     ),
               //   );
               // }),
-            ]),
+            ),
               const SizedBox(height: 15),
               Row(children: [
                 ElevatedButton(
@@ -363,7 +363,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ElevatedButton(
                   onPressed: () => setState(() {
                     // reset theme customizer colors from prefs
-                    Prefs().resetThemeCustomizerColors();
+                    Prefs().resetThemeCustomizerColors(context);
                   }),
                   child: Text(L10n.of(context).commonReset, style: TextStyle(color: prefs.accentColor)),
                 ),
@@ -677,7 +677,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               // await prefs.setPluginConfig('file_explorer', 'preview_markdown', null);
               // await prefs.setPluginConfig('ai', 'model', null);
               // await prefs.setPluginConfig('ai', 'maxTokens', null);
-              prefs.resetThemeCustomizerColors();
+              prefs.resetThemeCustomizerColors(context);
             },
             icon: Icon(Icons.restore, color: prefs.accentColor),
             label: Text(L10n.of(context).settingsResetPluginDefaults, style: TextStyle(color: prefs.accentColor)),

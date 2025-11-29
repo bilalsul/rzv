@@ -271,10 +271,17 @@ Future<void> saveThemeMode(String themeMode) async {
   notifyListeners();
 }
 
-void resetThemeCustomizerColors() {
+void resetThemeCustomizerColors(BuildContext context) {
     // prefs.remove('theme_primary_color');
-    prefs.remove('theme_secoondary_color');
-    prefs.remove('theme_accent_color');
+    if(Theme.of(context).brightness == Brightness.light) {
+      Prefs().saveSecondaryColor(Colors.black87);
+      Prefs().saveAccentColor(Colors.black54);
+    } else if (Theme.of(context).brightness == Brightness.dark){
+      Prefs().saveSecondaryColor(Colors.white);
+      Prefs().saveAccentColor(Colors.white70);
+    }
+    // prefs.remove('theme_secondary_color');
+    // prefs.remove('theme_accent_color');
     notifyListeners();
   }
 
@@ -359,7 +366,7 @@ void resetThemeCustomizerColors() {
   // Getter and setter for secondary color
   Color get secondaryColor {
     final stored = prefs.getString('theme_secondary_color');
-    if (stored != null) return _colorFromName(stored, fallback: Colors.purple);
+    if (stored != null) return _colorFromName(stored, fallback: Colors.primaries[4]);
     if (prefs.containsKey('theme_secondary_color')) {
       final intValue = prefs.getInt('theme_secondary_color');
       if (intValue != null) {
@@ -369,7 +376,7 @@ void resetThemeCustomizerColors() {
         return col;
       }
     }
-    return Colors.purple;
+    return Colors.primaries[4];
   }
 
   Future<void> saveSecondaryColor(Color color) async {
@@ -381,7 +388,9 @@ void resetThemeCustomizerColors() {
 // Accent color
   Color get accentColor {
     final stored = prefs.getString('theme_accent_color');
-    if (stored != null) return _colorFromName(stored, fallback: Colors.purpleAccent);
+    if (stored != null) {
+      return _colorFromName(stored, fallback: Colors.white);
+    }
     if (prefs.containsKey('theme_accent_color')) {
       final intValue = prefs.getInt('theme_accent_color');
       if (intValue != null) {
@@ -391,8 +400,27 @@ void resetThemeCustomizerColors() {
         return col;
       }
     }
-    return Colors.purpleAccent;
+    return Colors.white;
   }
+
+  // Color accentColorWithContext(BuildContext context){
+  //   final stored = prefs.getString('theme_accent_color');
+  //   if (stored != null) {
+  //     return _colorFromName(stored, fallback: 
+  //         Theme.of(context).brightness == Brightness.light ? Colors.white: Colors.black87
+  //   );
+  //   }
+  //   if (prefs.containsKey('theme_accent_color')) {
+  //     final intValue = prefs.getInt('theme_accent_color');
+  //     if (intValue != null) {
+  //       final col = Color(intValue);
+  //       final name = _nameFromColor(col);
+  //       prefs.setString('theme_accent_color', name);
+  //       return col;
+  //     }
+  //   }
+  //   return Theme.of(context).brightness == Brightness.light ? Colors.white: Colors.black87;
+  // }
 
   Future<void> saveAccentColor(Color color) async {
     final name = _nameFromColor(color);
