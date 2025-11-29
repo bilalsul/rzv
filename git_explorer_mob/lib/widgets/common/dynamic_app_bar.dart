@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 
 class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -19,7 +18,7 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final prefs = ref.watch(prefsProvider);
+    // final prefs = ref.watch(prefsProvider);
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.menu),
@@ -28,27 +27,32 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: _buildTitle(currentScreen, context),
       // actions: _buildActions(currentScreen, context, ref),
       // backgroundColor: _getAppBarColor(currentScreen, context),
-      backgroundColor: prefs.secondaryColor,
-      elevation: _getAppBarElevation(currentScreen),
+      // backgroundColor: prefs.secondaryColor,
+      // elevation: _getAppBarElevation(currentScreen),
     );
   }
 
   Widget _buildTitle(Screen screen, BuildContext context) {
     switch (screen) {
       case Screen.home:
-        return Text(L10n.of(context).navBarHome,style: const TextStyle(fontWeight: FontWeight.w600));
+        return _buildText(L10n.of(context).navBarHome);
       case Screen.editor:
-        return Text(L10n.of(context).navBarEditor,style: const TextStyle(fontWeight: FontWeight.w600));
+        return _buildText(L10n.of(context).navBarEditor);
       case Screen.fileExplorer:
-        return Text(L10n.of(context).navBarFileExplorer,style: const TextStyle(fontWeight: FontWeight.w600));
+        return _buildText(L10n.of(context).navBarFileExplorer);
       case Screen.gitHistory:
-        return Text(L10n.of(context).navBarGitHistory,style: const TextStyle(fontWeight: FontWeight.w600));
+        return _buildText(L10n.of(context).navBarGitHistory);
       case Screen.settings:
-        return Text(L10n.of(context).navBarSettings,style: const TextStyle(fontWeight: FontWeight.w600));
+        return _buildText(L10n.of(context).navBarSettings);
       case Screen.terminal:
-        return Text(L10n.of(context).navBarTerminal,style: const TextStyle(fontWeight: FontWeight.w600));
+        return _buildText(L10n.of(context).navBarTerminal);
       case Screen.AI:
-        return Text(L10n.of(context).navBarAI,style: const TextStyle(fontWeight: FontWeight.w600));
+        return _buildText(L10n.of(context).navBarAI);
+    }
+  }
+
+  Widget _buildText(String text) {
+        return Text(text, style: const TextStyle(fontSize: 19,fontWeight: FontWeight.w600));
     }
   }
 
@@ -114,16 +118,16 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
   //   }
   // }
 
-  double _getAppBarElevation(Screen screen) {
-    switch (screen) {
-      case Screen.home:
-        return 0;
-      case Screen.editor:
-        return 2;
-      default:
-        return 1;
-    }
-  }
+  // double _getAppBarElevation(Screen screen) {
+  //   switch (screen) {
+  //     case Screen.home:
+  //       return 0;
+  //     case Screen.editor:
+  //       return 2;
+  //     default:
+  //       return 1;
+  //   }
+  // }
 
   // Action methods
   // void _showSearch(BuildContext context) {
@@ -162,7 +166,7 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
   // void _showAppInfo(BuildContext context) {
   //   showAboutDialog(context: context);
   // }
-}
+// }
 
 // class _CodeSearchDelegate extends SearchDelegate {
 //   @override
