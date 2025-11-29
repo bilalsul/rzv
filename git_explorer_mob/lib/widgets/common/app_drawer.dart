@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart' hide AppState;
 import 'package:url_launcher/url_launcher.dart';
 // Navigation moved to AppShell
 // Navigation and plugin state now come from Prefs
@@ -110,17 +110,22 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           // App Logo and Name
           Row(
             children: [
-              Icon(
-                Icons.code,
-                size: 32,
-                // color: theme.colorScheme.primary,
-                color: prefs.accentColor,
-              ),
+              // Icon(
+              //   Icons.code,
+              //   size: 32,
+              //   // color: theme.colorScheme.primary,
+              //   color: prefs.accentColor,
+              // ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset('assets/icons/git-explorer-icon.png', height: 35, width: 35)),
+               
               const SizedBox(width: 12),
               Text(
                 L10n.of(context).appName,
                 style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
                   // color: theme.colorScheme.primary,
                   color: prefs.accentColor,
                 ),
@@ -446,6 +451,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   Widget _buildDrawerFooter(ThemeData theme) {
     final prefs = ref.watch(prefsProvider);
+    final appState = ref.watch(appStateProvider);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -470,7 +476,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             children: [
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: _showFeedbackDialog,
+                  onPressed: () => _showFeedbackDialog(prefs),
                   icon: Icon(Icons.feedback_outlined, size: 16, color: prefs.accentColor),
                   label: Text(L10n.of(context).drawerFeedback, style: TextStyle(color: prefs.accentColor),),
                   style: OutlinedButton.styleFrom(
@@ -481,7 +487,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               const SizedBox(width: 8),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: _showAboutDialogDonate,
+                  onPressed: () => _showAboutDialogDonate(appState, prefs),
                   icon: Icon(Icons.info_outlined, size: 16, color: prefs.accentColor,),
                   label: Text(L10n.of(context).drawerAbout, style: TextStyle(color: prefs.accentColor)),
                   style: OutlinedButton.styleFrom(
@@ -583,7 +589,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  void _showFeedbackDialog() {
+  void _showFeedbackDialog(Prefs prefs) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -592,12 +598,13 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(L10n.of(context).commonCancel),
+            child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.accentColor)),
           ),
           AbsorbPointer(
             absorbing: true,
             child: FilledButton(
-              style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.grey[400])),
+              style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.grey[400]),
+              textStyle: WidgetStatePropertyAll(TextStyle(color: Colors.grey[500]))),
               onPressed: () async {
                 // TODO: Implement feedback submission
                 Navigator.of(context).pop();
@@ -614,7 +621,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 );
               }
               },
-              child: Text(L10n.of(context).drawerSendFeedback), // change when added
+              child: Text(L10n.of(context).drawerSendFeedback,), // change when added
             ),
           ),
         ],
@@ -622,8 +629,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-    void _showAboutDialogDonate() {
-      final appState = ref.read(appStateProvider);
+    void _showAboutDialogDonate(AppState appState, Prefs prefs) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -657,9 +663,10 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(L10n.of(context).commonClose),
+            child: Text(L10n.of(context).commonClose, style: TextStyle(color: prefs.accentColor)),
           ),
           FilledButton(
+            style: ButtonStyle(backgroundColor: WidgetStateProperty.all(prefs.accentColor)),
             onPressed: () async {
               // TODO: Implement donate submission
               final Uri donateUrl = Uri.parse('https://github.com/uncrr'); // Replace with your actual donation link
@@ -671,7 +678,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               print('Could not launch $donateUrl');
               
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(L10n.of(context).commonFailed)),
+                SnackBar(content: Text(L10n.of(context).commonFailed,)),
               );
               }
               Navigator.of(context).pop();

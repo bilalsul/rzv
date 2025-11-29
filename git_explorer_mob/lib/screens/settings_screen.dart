@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/font_family.dart';
+import 'package:git_explorer_mob/widgets/settings/settings_tile.dart';
+import 'package:git_explorer_mob/widgets/settings/simple_dialog.dart';
+import 'package:git_explorer_mob/widgets/settings/theme_mode.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
@@ -14,9 +17,13 @@ import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 /// This screen exposes plugin-specific settings panels and connects them
 /// to plugin configuration stored through `pluginSettingsProvider`.
 class SettingsScreen extends ConsumerStatefulWidget {
-  const SettingsScreen({super.key});
+  
+  const SettingsScreen({super.key,
+  required this.controller
+  });
 
-
+  final ScrollController controller;
+  
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
@@ -42,11 +49,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget build(BuildContext context) {
     // single source: watch Prefs
     final prefs = ref.watch(prefsProvider);
+    final appState = ref.watch(appStateProvider);
   // Temporary theme values are initialized in initState from Prefs.
     // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
     final fileExplorerEnabled = prefs.isPluginEnabled('file_explorer');
     final themeCustomizerEnabled = prefs.isPluginEnabled('theme_customizer');
     final aiEnabled = prefs.isPluginEnabled('ai_assist');
+
+    final languageSubtitle = prefs.locale == null
+        ? supportedLanguages[0].values.first
+        : supportedLanguages
+            .firstWhere(
+                (element) =>
+                    element.values.first ==
+                    prefs.locale!.languageCode +
+                        (prefs.locale!.countryCode != null
+                            ? "-${prefs.locale!.countryCode}"
+                            : ""),
+                orElse: () => supportedLanguages[0])
+            .keys
+            .first;
     // final gitEnabled = prefs.isPluginEnabled('git_history');
     // final terminalEnabled = prefs.isPluginEnabled('terminal');
     
@@ -74,64 +96,94 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: ListView(padding: const EdgeInsets.all(12), children: [
-          // const Text('Application Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
+        child: ListView(
+          controller: widget.controller,
+          padding: const EdgeInsets.all(12), children: [
+          const SizedBox(height: 20),
 
-          // Appearance / Theme
+          // const Text('Application Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           Text(L10n.of(context).settingsAppearance, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          const SizedBox(height: 8),
-          Builder(builder: (context) {
-            final currentTheme = prefs.themeMode;
-            return Column(children: [
-                  RadioListTile<ThemeMode>(
-                title: Text(L10n.of(context).settingsSystemMode),
-                value: ThemeMode.system,
-                activeColor: prefs.accentColor,
-                groupValue: currentTheme,
-                onChanged: (v) async {
-                      await Prefs().saveThemeMode('system');
-                },
-              ),
-              RadioListTile<ThemeMode>(
-                title: Text(L10n.of(context).settingsLightMode),
-                value: ThemeMode.light,
-                activeColor: prefs.accentColor,
-                groupValue: currentTheme,
-                onChanged: (v) async { await Prefs().saveThemeMode('light'); },
-              ),
-              RadioListTile<ThemeMode>(
-                title: Text(L10n.of(context).settingsDarkMode),
-                value: ThemeMode.dark,
-                activeColor: prefs.accentColor,
-                groupValue: currentTheme,
-                onChanged: (v) async { await Prefs().saveThemeMode('dark'); },
-              ),
-              const SizedBox(height: 12),
-            ]);
-          }),
+          const SizedBox(height: 12),
+          ChangeThemeMode(),
+          
+          // Appearance / Theme
+          // const SizedBox(height: 8),
+          // Builder(builder: (context) {
+          //   final currentTheme = prefs.themeMode;
+          //   return Column(children: [
+          //         RadioListTile<ThemeMode>(
+          //       title: Text(L10n.of(context).settingsSystemMode),
+          //       value: ThemeMode.system,
+          //       activeColor: prefs.accentColor,
+          //       groupValue: currentTheme,
+          //       onChanged: (v) {
+          //           Prefs().resetThemeCustomizerColors();
+          //           Prefs().saveThemeMode('system');
+          //             if (Theme.of(context).brightness == Brightness.dark) {
+          //           Prefs().saveSecondaryColor(Colors.white);
+          //           Prefs().saveAccentColor(Colors.white70);
+          //               } else {
+          //               Prefs().saveSecondaryColor(Colors.black87);
+          //               Prefs().saveAccentColor(Colors.black54);
+          //                 }
+          //       },
+          //     ),
+          //     RadioListTile<ThemeMode>(
+          //       title: Text(L10n.of(context).settingsLightMode),
+          //       value: ThemeMode.light,
+          //       activeColor: prefs.accentColor,
+          //       groupValue: currentTheme,
+          //       onChanged: (v) { 
+          //       Prefs().resetThemeCustomizerColors();
+          //       Prefs().saveThemeMode('light');
+          //       Prefs().saveSecondaryColor(Colors.black87);
+          //       Prefs().saveAccentColor(Colors.black54);
+          //        },
+          //     ),
+          //     RadioListTile<ThemeMode>(
+          //       title: Text(L10n.of(context).settingsDarkMode),
+          //       value: ThemeMode.dark,
+          //       activeColor: prefs.accentColor,
+          //       groupValue: currentTheme,
+          //       onChanged: (v) { 
+          //         Prefs().resetThemeCustomizerColors();
+          //         Prefs().saveThemeMode('dark');
+          //         Prefs().saveSecondaryColor(Colors.white);
+          //         Prefs().saveAccentColor(Colors.white70);
+          //          },
+          //     ),
+          //     const SizedBox(height: 12),
+          //   ]);
+          // }),
 
           // Language selection
-          const SizedBox(height: 8),
-          Text(L10n.of(context).settingsAppearanceLanguage, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          const SizedBox(height: 8),
-          DropdownButtonFormField<String>(
-            // current stored locale code or 'System'
-            value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
-            items: supportedLanguages.map((m) {
-              final entry = m.entries.first;
-              final label = entry.key;
-              final code = entry.value;
-              final displayLabel = label[0].toUpperCase() + label.substring(1);
-              return DropdownMenuItem<String>(value: code == 'System' ? 'System' : code, child: Text(displayLabel));
-            }).toList(),
-            onChanged: (selectedCode) async {
-              if (selectedCode == null) return;
-              // Persist the language code (e.g., 'en', 'zh-CN' or 'System') to prefs
-              await Prefs().saveLocaleToPrefs(selectedCode);
-            },
-          ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 15),
+          // Text(L10n.of(context).settingsAppearanceLanguage, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          // const SizedBox(height: 8),
+          SettingsTile.navigation(
+                  title: Text(L10n.of(context).settingsAppearanceLanguage),
+                  value: Text(languageSubtitle),
+                  leading: const Icon(Icons.language),
+                  onPressed: (context) {
+                    showLanguagePickerDialog(context);
+                  }),
+          // DropdownButtonFormField<String>(
+          //   // current stored locale code or 'System'
+          //   value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
+          //   items: supportedLanguages.map((m) {
+          //     final entry = m.entries.first;
+          //     final label = entry.key;
+          //     final code = entry.value;
+          //     final displayLabel = label[0].toUpperCase() + label.substring(1);
+          //     return DropdownMenuItem<String>(value: code == 'System' ? 'System' : code, child: Text(displayLabel));
+          //   }).toList(),
+          //   onChanged: (selectedCode) async {
+          //     if (selectedCode == null) return;
+          //     // Persist the language code (e.g., 'en', 'zh-CN' or 'System') to prefs
+          //     await Prefs().saveLocaleToPrefs(selectedCode);
+          //   },
+          // ),
+          const SizedBox(height: 15),
 
           // Theme Customizer (plugin)
           prefs.featureSupported("theme_customizer") ?
@@ -168,7 +220,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Wrap(
                 spacing: 8,
                 runSpacing: 4,
-                children: Colors.primaries.take(18).map((c) {
+                children:
+                  Colors.primaries.take(18).map((c) {
                   // final col = c.shade400;
                   final col = c;
                   final selected = _tempSecondaryColor == col;
@@ -184,8 +237,45 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                   );
                 }).toList(),
-              ),
-              const SizedBox(height: 10),
+    //             if (Theme.of(context).brightness == Brightness.light) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         // if (prefs.secondaryColor != _tempSecondaryColor){
+    //         _tempSecondaryColor = Colors.black87; 
+    //         // }
+    //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempSecondaryColor == Colors.black87 ? Border.all(color: prefs.secondaryColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.black87, radius: 14),
+    //     ),
+    //   ),
+    // ],
+    // if (Theme.of(context).brightness == Brightness.dark) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         _tempSecondaryColor = Colors.white;
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempSecondaryColor == Colors.white ? Border.all(color: prefs.secondaryColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.white, radius: 14),
+    //     ),
+    //   ),
+    // ],
+            ),
+              const SizedBox(height: 25),
               Text(L10n.of(context).settingsAppearanceAccentColor),
               const SizedBox(height: 8),
               Wrap(
@@ -206,9 +296,60 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     ),
                   );
                 }).toList(),
-              ),
+    //     if (Theme.of(context).brightness == Brightness.light) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         _tempAccentColor = Colors.black54; 
+    //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempAccentColor == Colors.black54 ? Border.all(color: prefs.accentColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.black54, radius: 14),
+    //     ),
+    //   ),
+    // ],
+    // if (Theme.of(context).brightness == Brightness.dark) ...[
+    //   GestureDetector(
+    //     onTap: () {
+    //       setState(() {
+    //         _tempAccentColor = Colors.white70;
+    //       });
+    //     },
+    //     child: Container(
+    //       padding: const EdgeInsets.all(3),
+    //       decoration: BoxDecoration(
+    //         shape: BoxShape.circle,
+    //         border: _tempAccentColor == Colors.white70 ? Border.all(color: prefs.accentColor, width: 2) : null,
+    //       ),
+    //       child: CircleAvatar(backgroundColor: Colors.white70, radius: 14),
+    //     ),
+    //   ),
+    // ],
+              // ...[Colors.black12,Colors.white].map((color) {
+              //   final selected = _tempAccentColor == color;
+              //   return GestureDetector(
+              //     onTap: () => setState(() { _tempAccentColor = color; }),
+              //     child: Container(
+              //       padding: const EdgeInsets.all(3),
+              //       decoration: BoxDecoration(
+              //         shape: BoxShape.circle,
+              //         border: selected ? Border.all(color: prefs.accentColor, width: 2) : null,
+              //       ),
+              //       child: CircleAvatar(backgroundColor: color, radius: 14),
+              //     ),
+              //   );
+              // }),
+            ),
               const SizedBox(height: 15),
-              Row(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
                 ElevatedButton(
                   onPressed: () async {
                     // await Prefs().savePrimaryColor(_tempPrimaryColor);
@@ -218,21 +359,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   },
                   child: Text(L10n.of(context).commonApply, style: TextStyle(color: prefs.accentColor)),
                 ),
-                const SizedBox(width: 12),
+                // const SizedBox(width: 6),
+                // ElevatedButton(
+                //   onPressed: () => setState(() {
+                //     // revert temps from prefs
+                //     // final p = Prefs();
+                //     // _tempPrimaryColor = p.primaryColor;
+                //     _tempSecondaryColor = prefs.secondaryColor;
+                //     _tempAccentColor = prefs.accentColor;
+                //   }),
+                //   child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
+                // ),
+                // const SizedBox(width: 2),
                 ElevatedButton(
-                  onPressed: () => setState(() {
-                    // revert temps from prefs
-                    final p = Prefs();
-                    // _tempPrimaryColor = p.primaryColor;
-                    _tempSecondaryColor = p.secondaryColor;
-                    _tempAccentColor = p.accentColor;
-                  }),
-                  child: Text(L10n.of(context).settingsRevertThemeColors, style: TextStyle(color: prefs.accentColor)),
-                ),
-                ElevatedButton(
+                  // style: ButtonStyle(maximumSize: WidgetStateProperty.all(Size.infinite)),
                   onPressed: () => setState(() {
                     // reset theme customizer colors from prefs
-                    Prefs().resetThemeCustomizerColors();
+                    Prefs().resetThemeCustomizerColors(context);
                   }),
                   child: Text(L10n.of(context).commonReset, style: TextStyle(color: prefs.accentColor)),
                 ),
@@ -278,6 +421,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               // ]),
             ]),
           ) : SizedBox.shrink(),
+              const SizedBox(height: 15),
 
           // Editor settings panel (visible only when editor plugin enabled)
           prefs.isPluginEnabled("advanced_editor_options") ?
@@ -296,26 +440,33 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               //   onChanged: (v) async => await prefs.setPluginConfig('editor', 'tabSize', v.toInt()),
               // ),
               const SizedBox(height: 8),
-              Text(L10n.of(context).settingsEditorFontFamily),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
-                // current stored locale code or 'System'
-                value: prefs.editorFontFamily,
-                items: fontFamily.map((m) {
-                  final entry = m.entries.first;
-                  // final code = entry.key;
-                  final label = entry.value;
-                  final displayLabel = label[0].toUpperCase() + label.substring(1);
-                  return DropdownMenuItem<String>(value: label, child: Text(displayLabel));
-                }).toList(),
-                onChanged: (selectedFont) async {
-                  if (selectedFont == null) return;
-                  // Persist the font family to prefs
-                  await Prefs().saveEditorFontFamily(selectedFont);
-                },
-              ),
-              const SizedBox(height: 12),
-              const SizedBox(height: 8),
+              SettingsTile.navigation(
+                  title: Text(L10n.of(context).settingsEditorFontFamily),
+                  value: Text(prefs.editorFontFamily),
+                  leading: const Icon(Icons.font_download),
+                  onPressed: (context) {
+                    showFontPickerDialog(context);
+                  }),
+              // Text(L10n.of(context).settingsEditorFontFamily),
+              // const SizedBox(height: 11),
+              
+              // DropdownButtonFormField<String>(
+              //   // current stored locale code or 'System'
+              //   value: prefs.editorFontFamily,
+              //   items: fontFamily.map((m) {
+              //     final entry = m.entries.first;
+              //     // final code = entry.key;
+              //     final label = entry.value;
+              //     final displayLabel = label[0].toUpperCase() + label.substring(1);
+              //     return DropdownMenuItem<String>(value: label, child: Text(displayLabel));
+              //   }).toList(),
+              //   onChanged: (selectedFont) async {
+              //     if (selectedFont == null) return;
+              //     // Persist the font family to prefs
+              //     await Prefs().saveEditorFontFamily(selectedFont);
+              //   },
+              // ),
+              const SizedBox(height: 25),
               Text(L10n.of(context).settingsEditorFontSize),
               Slider(
                 activeColor: prefs.accentColor,
@@ -326,18 +477,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 label: prefs.editorFontSize.toString(),
                 onChanged: (v) async => await prefs.saveEditorFontSize(v),
               ),
+              const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsEditorZoomInOut)),
                 Switch.adaptive(value: prefs.editorZoomInOut, 
                 onChanged: (v) async => await prefs.saveEditorZoomInOut(v),
                 activeColor: prefs.secondaryColor,
                 )]),
+              const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsEditorShowLineNumbers)),
                 Switch.adaptive(value: prefs.editorLineNumbers, 
                 onChanged: (v) async => await prefs.saveEditorLineNumbers(v),
                 activeColor: prefs.secondaryColor,
                 )]),
+              const SizedBox(height: 8),
               Row(children: [
                 Expanded(child: Text(L10n.of(context).settingsEditorRenderUnsupportedCharacters, style: TextStyle(fontSize: 11))),
                 Switch.adaptive(value: prefs.editorRenderControlCharacters, 
@@ -346,6 +500,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 )]),
             ]),
           ) : SizedBox.shrink() ,
+              const SizedBox(height: 15),
 
           // Git settings
           // prefs.featureSupported("git_history") ?
@@ -479,6 +634,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ]),
             ]),
           ) : SizedBox.shrink(),
+              const SizedBox(height: 15),
+
 
           // Terminal settings
           // prefs.featureSupported("terminal") ?
@@ -546,12 +703,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               // await prefs.setPluginConfig('file_explorer', 'preview_markdown', null);
               // await prefs.setPluginConfig('ai', 'model', null);
               // await prefs.setPluginConfig('ai', 'maxTokens', null);
-              prefs.resetThemeCustomizerColors();
+              prefs.resetThemeCustomizerColors(context);
             },
             icon: Icon(Icons.restore, color: prefs.accentColor),
             label: Text(L10n.of(context).settingsResetPluginDefaults, style: TextStyle(color: prefs.accentColor)),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 35),
           // ad here
           _isNativeAdLoaded && _nativeAd != null
               ? SizedBox(
@@ -559,6 +716,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: AdWidget(ad: _nativeAd!),
                 )
               : const SizedBox.shrink(),
+
+          const SizedBox(height: 130),
+          Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(L10n.of(context).appName, style: TextStyle(fontSize: 13)),
+                  Text('v${appState.appVersion}', style: TextStyle(fontSize: 10),)
+                ],
+                  ),
+          ),
+          const SizedBox(height: 120),
+
+          
         ]),
       ),
     );
@@ -571,13 +743,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     // Read current persisted values from Prefs singleton into temporary state
     final p = Prefs();
     // _tempPrimaryColor = p.primaryColor;
+    // final prefs = ref.watch(prefsProvider);
+
     _tempSecondaryColor = p.secondaryColor;
     _tempAccentColor = p.accentColor;
-
+    
     // AI defaults
-    _selectedAiMaxTokens = p.getPluginConfig('ai', 'maxTokens') ?? 512;
+    // _selectedAiMaxTokens = prefs.getPluginConfig('ai', 'maxTokens') ?? 512;
+    setState(() {});
   }
 
+// ScrollController get getController{
+//   return controller;
+// }
   void _loadNativeAd() {
     _nativeAd = NativeAd(
       adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
@@ -629,6 +807,29 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
+void showLanguagePickerDialog(BuildContext context) {
+    final title = L10n.of(context).settingsAppearanceLanguage;
+    final saveToPrefs = Prefs().saveLocaleToPrefs;
+
+    final children = supportedLanguages.map((e) {
+      final key = e.keys.first;
+      // final dialogOptionLabel = key.substring(0,1).toUpperCase() + key.substring(1);
+      final value = e[key]!;
+      return dialogOption(key, value, saveToPrefs);
+    }).toList();
+    showSimpleDialog(title, saveToPrefs, children);
+}
+void showFontPickerDialog(BuildContext context) {
+    final title = L10n.of(context).settingsEditorFontFamily;
+    final saveToPrefs = Prefs().saveEditorFontFamily;
+
+    final children = fontFamily.map((e) {
+      final key = e.keys.first;
+      final value = e[key]!;
+      return dialogOption(value, value, saveToPrefs);
+    }).toList();
+    showSimpleDialog(title, saveToPrefs, children);
+}
   void _showProviderConfigDialog(BuildContext context, String providerId, String label) {
     final prefs = ref.watch(prefsProvider);
     // Simple synchronous dialog: initialize fields synchronously from Prefs (no futures)
