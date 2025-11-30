@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+// import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
 
 class EditorScreen extends ConsumerStatefulWidget {

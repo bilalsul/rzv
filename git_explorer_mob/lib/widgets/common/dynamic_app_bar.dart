@@ -46,7 +46,7 @@ class DynamicAppBar extends ConsumerWidget implements PreferredSizeWidget {
         return _buildText(L10n.of(context).navBarSettings);
       case Screen.terminal:
         return _buildText(L10n.of(context).navBarTerminal);
-      case Screen.AI:
+      case Screen.ai:
         return _buildText(L10n.of(context).navBarAI);
     }
   }

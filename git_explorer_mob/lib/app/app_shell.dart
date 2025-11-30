@@ -132,7 +132,7 @@ class _AppShellState extends ConsumerState<AppShell> {
             : FeatureDisabledScreen(feature: L10n.of(context).navBarTerminal);
       case Screen.settings:
         return SettingsScreen(controller: controller);
-      case Screen.AI:
+      case Screen.ai:
         // return const AIScreen();
          return plugins.contains('ai_assist')
             ? (Prefs().featureSupported("ai") ? const AIScreen():
@@ -327,9 +327,9 @@ Widget _buildFloatingNavigationBar(List<String> plugins, Screen currentScreen,){
                                   Prefs().saveLastKnownRoute(screenToString(selectedScreen));
                                   
                                   // For debugging: Get/print the value of the current selected item
-                                  print('Selected index: $index');
-                                  print('Selected screen: $selectedScreen');
-                                  print('Selected label: ${selectedItem.label}');
+                                  // print('Selected index: $index');
+                                  // print('Selected screen: $selectedScreen');
+                                  // print('Selected label: ${selectedItem.label}');
                       
                         },
                         items: bottomBarItems,
@@ -398,7 +398,7 @@ Widget _buildFloatingNavigationBar(List<String> plugins, Screen currentScreen,){
         pluginKey: null,
       ),
       NavItem(
-        screen: Screen.AI,
+        screen: Screen.ai,
         label: L10n.of(context).navBarAI,
         icon: const Icon(Icons.chat_outlined),
         activeIcon: Icon(Icons.chat_rounded, color: prefs.accentColor),

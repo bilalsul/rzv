@@ -8,10 +8,10 @@ class ChangeThemeMode extends StatefulWidget {
   const ChangeThemeMode({super.key});
   
   @override
-  _ChangeThemeModeState createState() => _ChangeThemeModeState();
+  ChangeThemeModeState createState() => ChangeThemeModeState();
 }
 
-class _ChangeThemeModeState extends State<ChangeThemeMode> {
+class ChangeThemeModeState extends State<ChangeThemeMode> {
   late String _themeMode;
 
   @override

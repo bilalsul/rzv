@@ -147,7 +147,7 @@ Screen get lastKnownScreen {
     case '/terminal':
       return Screen.terminal;
     case '/ai':
-      return Screen.AI;
+      return Screen.ai;
     case '/git_history':
       return Screen.gitHistory;
      case '/file_explorer':
@@ -303,7 +303,7 @@ void resetThemeCustomizerColors() {
       final swatch = Colors.primaries[i];
       for (final shade in shades) {
         final col = swatch[shade] ?? swatch as Color;
-        map['${name}$shade'] = col;
+        map['$name$shade'] = col;
       }
       map[name] = swatch[500]!;
     }
@@ -863,7 +863,7 @@ bool featureSupported(String pluginId) {
     return prefs.getStringList('plugins_options')?.contains(pluginId) ?? false;
   }
 
-  /// Read a plugin-specific config value stored as 'plugin_<pluginId>_<configKey>'.
+  /// Read a plugin-specific config value stored as 'plugin_pluginId_configKey'.
   /// Returns null if not present.
   dynamic getPluginConfig(String pluginId, String configKey) {
     final key = 'plugin_${pluginId}_$configKey';
@@ -875,8 +875,8 @@ bool featureSupported(String pluginId) {
     return null;
   }
 
-  /// Write a plugin-specific config value using the key 'plugin_<pluginId>_<configKey>'.
-  /// Accepts String, int, double, bool, List<String>.
+  /// Write a plugin-specific config value using the key 'plugin_pluginId_configKey'.
+  /// Accepts String, int, double, bool, ListString.
   Future<void> setPluginConfig(String pluginId, String configKey, dynamic value) async {
     final key = 'plugin_${pluginId}_$configKey';
     if (value is String) {

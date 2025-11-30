@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+// import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 
 class TemplateScreen extends StatelessWidget {
   final String screen;
