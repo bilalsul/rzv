@@ -159,6 +159,12 @@
       "error": {}
     }
   },
+  "homeExtractImporting": "جاري استيراد المشروع...",
+  "homeExtractStarting": "بدء الاستخراج...",
+  "homeExtractInitializing": "جاري التهيئة...",
+  "homeExtractProgress": "معالجة الاستخراج",
+  "homeExtractCurrentFile": "الملف الحالي",
+  "homeExtractItemsExtracted": "الملفات المستخرجة",
   "homeRetry": "إعادة المحاولة",
   "tutorialProjectName": "مشروع تعليمي",
   "tutorialProjectReadmeTitle": "# مرحبًا بك في البرنامج التعليمي لمستكشف Git",

@@ -161,6 +161,12 @@
     "description": "Error message when import fails, with the error detail",
     "placeholders": { "error": {} }
   },
+  "homeExtractImporting": "Importando projeto...",
+  "homeExtractStarting": "Iniciando extração...",
+  "homeExtractInitializing": "inicializando...",
+  "homeExtractProgress": "Processamento da extração",
+  "homeExtractCurrentFile": "Arquivo atual",
+  "homeExtractItemsExtracted": "Arquivos extraídos",
   "homeRetry": "Tentar novamente",
   "tutorialProjectName": "Projeto Tutorial",
   "tutorialProjectReadmeTitle": "# Bem-vindo ao Tutorial do Git Explorer",

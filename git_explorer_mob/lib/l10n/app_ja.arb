@@ -160,6 +160,12 @@
     "description": "Error message when import fails, with the error detail",
     "placeholders": { "error": {} }
   },
+  "homeExtractImporting": "プロジェクトをインポート中...",
+  "homeExtractStarting": "解凍を開始しています...",
+  "homeExtractInitializing": "初期化中...",
+  "homeExtractProgress": "解凍処理中",
+  "homeExtractCurrentFile": "現在のファイル",
+  "homeExtractItemsExtracted": "解凍済みファイル",
   "homeRetry": "再試行",
   "tutorialProjectName": "チュートリアルプロジェクト",
   "tutorialProjectReadmeTitle": "# Git Explorer チュートリアルへようこそ",

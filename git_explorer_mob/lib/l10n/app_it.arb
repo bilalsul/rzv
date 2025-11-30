@@ -165,6 +165,12 @@
       "error": {}
     }
   },
+  "homeExtractImporting": "Importazione progetto in corso...",
+  "homeExtractStarting": "Avvio estrazione...",
+  "homeExtractInitializing": "inizializzazione in corso...",
+  "homeExtractProgress": "Elaborazione estrazione",
+  "homeExtractCurrentFile": "File corrente",
+  "homeExtractItemsExtracted": "File estratti",
   "homeRetry": "Riprova",
   "tutorialProjectName": "Progetto Tutorial",
   "tutorialProjectReadmeTitle": "# Benvenuto nel Tutorial di Git Explorer",

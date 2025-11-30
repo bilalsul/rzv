@@ -269,7 +269,7 @@ Future<void> _importZipProject(BuildContext context) async {
     // === PROGRESS DIALOG SETUP ===
     bool isCancelled = false;
     int processed = 0;
-    String currentItem = 'Initializing...';
+    String currentItem = L10n.of(context).homeExtractInitializing;//'Initializing...'
     // StateSetter? dialogSetState;
     // BuildContext? dialogContext;
 
@@ -283,24 +283,24 @@ Future<void> _importZipProject(BuildContext context) async {
           builder: (context, StateSetter setState) {
             dialogSetState = setState;
             return AlertDialog(
-              title: Text(L10n.of(context).homeImportProject), // importing.........
+              title: Text(L10n.of(context).homeExtractImporting), // importing.........
               content: SizedBox(
                 width: 400,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Project: $baseName', style: Theme.of(context).textTheme.titleMedium),
+                    Text('${L10n.of(context).homeProjectsTitle}: $baseName', style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 20),
                     LinearProgressIndicator(
                       value: archive!.isEmpty ? null : processed / archive.length,
-                      semanticsLabel: 'Extraction progress',
+                      semanticsLabel: L10n.of(context).homeExtractProgress,// extraction progress
                     ),
                     const SizedBox(height: 12),
-                    Text('$processed / ${archive.length} items processed'),
+                    Text('$processed / ${archive.length} ${L10n.of(context).homeExtractItemsExtracted}'), //items extracted
                     const SizedBox(height: 12),
                     Text(
-                      'Current: $currentItem',
+                      '${L10n.of(context).homeExtractCurrentFile}: $currentItem',//current
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
@@ -324,7 +324,8 @@ Future<void> _importZipProject(BuildContext context) async {
     );
 
     // Force initial dialog update
-    currentItem = 'Starting extraction...';
+    currentItem = L10n.of(context).homeExtractStarting; //'Starting extraction...'
+
     dialogSetState?.call(() {});
 
     // === EXTRACTION LOOP ===

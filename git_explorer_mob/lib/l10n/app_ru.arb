@@ -166,6 +166,12 @@
       "error": {}
     }
   },
+  "homeExtractImporting": "Импорт проекта...",
+  "homeExtractStarting": "Запуск распаковки...",
+  "homeExtractInitializing": "инициализация...",
+  "homeExtractProgress": "Обработка распаковки",
+  "homeExtractCurrentFile": "Текущий файл",
+  "homeExtractItemsExtracted": "Распакованные файлы",
   "homeRetry": "Повторить",
   "tutorialProjectName": "Учебный проект",
   "tutorialProjectReadmeTitle": "# Добро пожаловать в урок Git Explorer",

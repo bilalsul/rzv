@@ -159,6 +159,12 @@
       "error": {}
     }
   },
+  "homeExtractImporting": "Proje içe aktarılıyor...",
+  "homeExtractStarting": "Çıkarma başlatılıyor...",
+  "homeExtractInitializing": "başlatılıyor...",
+  "homeExtractProgress": "Çıkarma işlemi devam ediyor",
+  "homeExtractCurrentFile": "Geçerli dosya",
+  "homeExtractItemsExtracted": "Çıkarılan dosyalar",
   "homeRetry": "Tekrar Dene",
   "tutorialProjectName": "Eğitim Projesi",
   "tutorialProjectReadmeTitle": "# Git Explorer Eğitimi’ne Hoş Geldiniz",

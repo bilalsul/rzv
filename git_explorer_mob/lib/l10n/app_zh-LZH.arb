@@ -155,6 +155,12 @@
     "description": "Error message when import fails, with the error detail",
     "placeholders": { "error": {} }
   },
+  "homeExtractImporting": "專案匯入中...",
+  "homeExtractStarting": "開始解壓...",
+  "homeExtractInitializing": "初始化中...",
+  "homeExtractProgress": "解壓進行中",
+  "homeExtractCurrentFile": "目前檔案",
+  "homeExtractItemsExtracted": "已解壓檔案",
   "homeRetry": "再試",
   "tutorialProjectName": "教導專案",
   "tutorialProjectReadmeTitle": "# 《Git Explorer》教導篇",

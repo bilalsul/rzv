@@ -162,6 +162,12 @@
     "description": "Error message when import fails, with the error detail",
     "placeholders": { "error": {} }
   },
+  "homeExtractImporting": "프로젝트 가져오는 중...",
+  "homeExtractStarting": "압축 해제 시작 중...",
+  "homeExtractInitializing": "초기화 중...",
+  "homeExtractProgress": "압축 해제 처리 중",
+  "homeExtractCurrentFile": "현재 파일",
+  "homeExtractItemsExtracted": "해제된 파일",
   "homeRetry": "재시도",
   "tutorialProjectName": "튜토리얼 프로젝트",
   "tutorialProjectReadmeTitle": "# Git Explorer 튜토리얼에 오신 것을 환영합니다",
