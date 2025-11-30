@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:io';
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -172,63 +173,238 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)));
   }
 
-  Future<void> _importZipProject() async {
-    // Let user pick a zip file using the native picker, then extract into projects dir
-    final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['zip']);
-    if (result == null || result.files.isEmpty) return;
-    final path = result.files.single.path;
-    if (path == null) return;
-    final f = File(path);
-    if (!await f.exists()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportedZipNotFound)));
-      return;
-    }
-    try {
-      final bytes = await f.readAsBytes();
-      final archive = ZipDecoder().decodeBytes(bytes);
-      final projRoot = await Prefs().projectsRoot();
-      final pickedPath = path;
-      final baseName = p.basenameWithoutExtension(pickedPath);
-      // Create a safe slug for the project directory
-      var slug = baseName.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_');
-      var id = slug;
-      final candidate = Directory('${projRoot.path}/$id');
-      if (await candidate.exists()) {
-        id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
-      }
-      final dir = Directory('${projRoot.path}/$id');
-      await dir.create(recursive: true);
-  // fileCount was intentionally omitted (not used) but kept for future use
-      for (final file in archive) {
-        final name = file.name;
-        final outPath = '${dir.path}/$name';
-        if (file.isFile) {
-          final outFile = File(outPath);
-          await outFile.create(recursive: true);
-          if (file.content is List<int>) {
-            await outFile.writeAsBytes(file.content as List<int>);
-          } else {
-            // Fallback to text
-            await outFile.writeAsString(utf8.decode(file.content as List<int>));
-          }
-        } else {
-          final d = Directory(outPath);
-          if (!await d.exists()) await d.create(recursive: true);
-        }
-      }
-      // Reload disk projects and refresh UI so the imported project appears immediately
-      await _loadProjectsFromDisk();
-      if (!mounted) return;
-      setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportZipAsProject)));
-    } catch (e) {
-      final msg = L10n.of(context).importFailed(e.toString());
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
-    }
-  }
+  // Future<void> _importZipProject() async {
+  //   // Let user pick a zip file using the native picker, then extract into projects dir
+  //   final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['zip']);
+  //   if (result == null || result.files.isEmpty) return;
+  //   final path = result.files.single.path;
+  //   if (path == null) return;
+  //   final f = File(path);
+  //   if (!await f.exists()) {
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportedZipNotFound)));
+  //     return;
+  //   }
+  //   try {
+  //     final bytes = await f.readAsBytes();
+  //     final archive = ZipDecoder().decodeBytes(bytes);
+  //     final projRoot = await Prefs().projectsRoot();
+  //     final pickedPath = path;
+  //     final baseName = p.basenameWithoutExtension(pickedPath);
+  //     // Create a safe slug for the project directory
+  //     var slug = baseName.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_');
+  //     var id = slug;
+  //     final candidate = Directory('${projRoot.path}/$id');
+  //     if (await candidate.exists()) {
+  //       id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
+  //     }
+  //     final dir = Directory('${projRoot.path}/$id');
+  //     await dir.create(recursive: true);
+  // // fileCount was intentionally omitted (not used) but kept for future use
+  //     for (final file in archive) {
+  //       final name = file.name;
+  //       final outPath = '${dir.path}/$name';
+  //       if (file.isFile) {
+  //         final outFile = File(outPath);
+  //         await outFile.create(recursive: true);
+  //         if (file.content is List<int>) {
+  //           await outFile.writeAsBytes(file.content as List<int>);
+  //         } else {
+  //           // Fallback to text
+  //           await outFile.writeAsString(utf8.decode(file.content as List<int>));
+  //         }
+  //       } else {
+  //         final d = Directory(outPath);
+  //         if (!await d.exists()) await d.create(recursive: true);
+  //       }
+  //     }
+  //     // Reload disk projects and refresh UI so the imported project appears immediately
+  //     await _loadProjectsFromDisk();
+  //     if (!mounted) return;
+  //     setState(() {});
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportZipAsProject)));
+  //   } catch (e) {
+  //     final msg = L10n.of(context).importFailed(e.toString());
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  //   }
+  // }
 
   // _insertIntoFsMap was removed because the function wasn't referenced anywhere.
+Future<void> _importZipProject(BuildContext context) async {
+  // Let user pick a zip file using the native picker, then extract into projects dir
+  final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['zip']);
+  if (result == null || result.files.isEmpty) return;
+  final path = result.files.single.path;
+  if (path == null) return;
+  final f = File(path);
+  if (!await f.exists()) {
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L10n.of(context).homeImportedZipNotFound)));
+    return;
+  }
 
+  Uint8List? bytes;
+  Archive? archive;
+    StateSetter? dialogSetState;
+    BuildContext? dialogContext;
+
+  try {
+    bytes = await f.readAsBytes();
+    archive = ZipDecoder().decodeBytes(bytes);
+
+    final projRoot = await Prefs().projectsRoot();
+    final pickedPath = path;
+    final baseName = p.basenameWithoutExtension(pickedPath);
+
+    // Create a safe slug for the project directory
+    var slug = baseName.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_').trim();
+    if (slug.isEmpty) slug = 'project';
+    var id = slug;
+    final candidate = Directory('${projRoot.path}/$id');
+    if (await candidate.exists()) {
+      id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
+    }
+    final dir = Directory('${projRoot.path}/$id');
+    await dir.create(recursive: true);
+
+    // === PROGRESS DIALOG SETUP ===
+    bool isCancelled = false;
+    int processed = 0;
+    String currentItem = 'Initializing...';
+    // StateSetter? dialogSetState;
+    // BuildContext? dialogContext;
+
+    // Show non-dismissible progress dialog with live updates and cancel button
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dc) {
+        dialogContext = dc;
+        return StatefulBuilder(
+          builder: (context, StateSetter setState) {
+            dialogSetState = setState;
+            return AlertDialog(
+              title: Text(L10n.of(context).homeImportProject), // importing.........
+              content: SizedBox(
+                width: 400,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Project: $baseName', style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: 20),
+                    LinearProgressIndicator(
+                      value: archive!.isEmpty ? null : processed / archive.length,
+                      semanticsLabel: 'Extraction progress',
+                    ),
+                    const SizedBox(height: 12),
+                    Text('$processed / ${archive.length} items processed'),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Current: $currentItem',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    isCancelled = true;
+                    Navigator.of(dc).pop();
+                  },
+                  child: Text(L10n.of(context).commonCancel),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+
+    // Force initial dialog update
+    currentItem = 'Starting extraction...';
+    dialogSetState?.call(() {});
+
+    // === EXTRACTION LOOP ===
+    for (final ArchiveFile file in archive) {
+      if (isCancelled) break;
+
+      currentItem = file.name.isEmpty ? '/' : file.name;
+      dialogSetState?.call(() {});
+
+      // Safely build output path (handles leading slashes, empty parts, etc.)
+      final parts = file.name.split('/')..removeWhere((part) => part.isEmpty);
+      // final outPath = p.join(dir.path, ...parts);
+      final outPath = p.join(dir.path, parts.join(p.separator));
+
+
+      if (file.isFile) {
+        final outFile = File(outPath);
+        await outFile.parent.create(recursive: true);
+        await outFile.writeAsBytes(file.content as List<int>);
+      } else {
+        final outDir = Directory(outPath);
+        await outDir.create(recursive: true);
+      }
+
+      processed++;
+      dialogSetState?.call(() {}); // Live progress update after every item
+    }
+
+    // === COMPLETION / CANCELLATION HANDLING ===
+    final bool success = !isCancelled;
+
+    if (isCancelled || !success) {
+      // Delete everything if cancelled or failed part-way
+      if (await dir.exists()) {
+        await dir.delete(recursive: true);
+      }
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(L10n.of(context).commonCanceled)), // import canceled
+        );
+      }
+    } else {
+      // Success path
+      await _loadProjectsFromDisk();
+      if (context.mounted) {
+        setState(() {});
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(L10n.of(context).homeImportZipAsProject)),// 'Project imported successfully'
+        );
+      }
+    }
+  } catch (e) {
+    // Any exception → clean up partial project and show error
+    final projRoot = await Prefs().projectsRoot();
+    final baseName = p.basenameWithoutExtension(path);
+    var slug = baseName.replaceAll(RegExp(r'[^A-Za-z0-9 _-]'), '').replaceAll(' ', '_').trim();
+    if (slug.isEmpty) slug = 'project';
+    var id = slug;
+    final candidate = Directory('${projRoot.path}/$id');
+    if (await candidate.exists()) {
+      id = '${slug}_${DateTime.now().millisecondsSinceEpoch}';
+    }
+    final dir = Directory('${projRoot.path}/$id');
+
+    if (await dir.exists()) {
+      await dir.delete(recursive: true);
+    }
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(L10n.of(context).importFailed(e.toString()))),
+      );
+    }
+  } finally {
+    // Always ensure dialog is closed
+    if (dialogContext != null && Navigator.of(dialogContext!).canPop()) {
+      Navigator.of(dialogContext!).pop();
+    }
+  }
+}
 
   Future<void> _openProject(_Project p) async {
     // Open project inside HomeScreen: set as opened project and reset navigation stack
@@ -320,7 +496,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               if (!_diskLoaded) {
                 return const Center(child: CircularProgressIndicator());
               }
-              if (_projects.isEmpty) return _EmptyState(onCreate: _createProjectWithDetails, onImport: _importZipProject);
+              if (_projects.isEmpty) return EmptyState(onCreate: _createProjectWithDetails, onImport: _importZipProject(context));
 
               // If a project is opened, show ProjectBrowser inside HomeScreen
               if (_openedProject != null) {
@@ -422,7 +598,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const SizedBox(height: 8),
                   FloatingActionButton(
                     heroTag: 'sample_zip',
-                    onPressed: _importZipProject,
+                    onPressed: () => _importZipProject(context),
                     tooltip: L10n.of(context).homeTooltipCreateSampleZip,
                     backgroundColor: prefs.secondaryColor,
                     child: Icon(Icons.archive, 
@@ -595,11 +771,11 @@ class _ProjectCard extends StatelessWidget {
   }
 }
 
-class _EmptyState extends StatelessWidget {
+class EmptyState extends StatelessWidget {
   final VoidCallback onCreate;
-  final VoidCallback onImport;
+  final Future<void> onImport;
 
-  const _EmptyState({Key? key, required this.onCreate, required this.onImport}) : super(key: key);
+  const EmptyState({super.key, required this.onCreate, required this.onImport});
 
   @override
   Widget build(BuildContext context) {
@@ -614,7 +790,7 @@ class _EmptyState extends StatelessWidget {
         Row(mainAxisSize: MainAxisSize.min, children: [
           ElevatedButton.icon(onPressed: onCreate, icon: Icon(Icons.add, color: Prefs().accentColor), label: Text(L10n.of(context).homeCreateProject, style: TextStyle(color: Prefs().accentColor))),
           const SizedBox(width: 8),
-          ElevatedButton.icon(onPressed: onImport, icon: Icon(Icons.archive, color: Prefs().accentColor), label: Text(L10n.of(context).homeImportProject, style: TextStyle(color: Prefs().accentColor))),
+          ElevatedButton.icon(onPressed:()=> onImport, icon: Icon(Icons.archive, color: Prefs().accentColor), label: Text(L10n.of(context).homeImportProject, style: TextStyle(color: Prefs().accentColor))),
         ])
       ]),
     );
