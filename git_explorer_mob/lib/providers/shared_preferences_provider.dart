@@ -271,17 +271,10 @@ Future<void> saveThemeMode(String themeMode) async {
   notifyListeners();
 }
 
-void resetThemeCustomizerColors(BuildContext context) {
+void resetThemeCustomizerColors() {
     // prefs.remove('theme_primary_color');
-    if(Theme.of(context).brightness == Brightness.light) {
-      Prefs().saveSecondaryColor(Colors.black87);
-      Prefs().saveAccentColor(Colors.black54);
-    } else if (Theme.of(context).brightness == Brightness.dark){
-      Prefs().saveSecondaryColor(Colors.white);
-      Prefs().saveAccentColor(Colors.white70);
-    }
-    // prefs.remove('theme_secondary_color');
-    // prefs.remove('theme_accent_color');
+    prefs.remove('theme_secondary_color');
+    prefs.remove('theme_accent_color');
     notifyListeners();
   }
 
@@ -366,7 +359,7 @@ void resetThemeCustomizerColors(BuildContext context) {
   // Getter and setter for secondary color
   Color get secondaryColor {
     final stored = prefs.getString('theme_secondary_color');
-    if (stored != null) return _colorFromName(stored, fallback: Colors.primaries[4]);
+    if (stored != null) return _colorFromName(stored, fallback: Colors.primaries[2]);
     if (prefs.containsKey('theme_secondary_color')) {
       final intValue = prefs.getInt('theme_secondary_color');
       if (intValue != null) {
@@ -376,7 +369,7 @@ void resetThemeCustomizerColors(BuildContext context) {
         return col;
       }
     }
-    return Colors.primaries[4];
+    return Colors.primaries[2];
   }
 
   Future<void> saveSecondaryColor(Color color) async {
@@ -389,7 +382,7 @@ void resetThemeCustomizerColors(BuildContext context) {
   Color get accentColor {
     final stored = prefs.getString('theme_accent_color');
     if (stored != null) {
-      return _colorFromName(stored, fallback: Colors.white);
+      return _colorFromName(stored, fallback: Colors.accents[2]);
     }
     if (prefs.containsKey('theme_accent_color')) {
       final intValue = prefs.getInt('theme_accent_color');
@@ -400,7 +393,7 @@ void resetThemeCustomizerColors(BuildContext context) {
         return col;
       }
     }
-    return Colors.white;
+    return Colors.accents[2];
   }
 
   // Color accentColorWithContext(BuildContext context){
