@@ -115,7 +115,7 @@ class _AppShellState extends ConsumerState<AppShell> {
             ? HomeScreen(controller: controller)
             :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
       case Screen.editor:
-        return const EditorScreen();
+        return EditorScreen(controller: controller);
       case Screen.fileExplorer:
         return plugins.contains('file_explorer')
             ?  HomeScreen(controller: controller)

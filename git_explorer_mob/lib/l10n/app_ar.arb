@@ -1,6 +1,5 @@
 {
   "@@locale": "ar",
-
   "appName": "مستكشف Git",
   "appAbout": "استعرض مشاريع git وعاين الملفات في محرر الأكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
@@ -8,7 +7,6 @@
   "appAuthor": "المؤلف",
   "appDonate": "تبرع",
   "appDonateTips": "مستكشف Git هو برنامج مفتوح المصدر مجاني الاستخدام. إذا وجدته مفيدًا، يرجى التبرع لدعمنا لمواصلة تحسينه.",
-  
   "navBarHome": "المشاريع",
   "navBarFileExplorer": "مستكشف الملفات",
   "navBarEditor": "المحرر",
@@ -16,13 +14,10 @@
   "navBarGitHistory": "سجل Git",
   "navBarTerminal": "الطرفية",
   "navBarSettings": "الإعدادات",
-
   "settingsDarkMode": "مظلم",
   "settingsLightMode": "فاتح",
   "settingsSystemMode": "النظام",
-  
   "settingsMoreSettings": "إعدادات إضافية",
-  
   "settingsAppearance": "المظهر",
   "settingsAppearanceTheme": "السمة",
   "settingsAppearanceThemeColor": "لون السمة",
@@ -33,7 +28,6 @@
   "settingsAppearanceSecondaryColor": "اللون الثانوي",
   "settingsAppearanceAccentColor": "لون التمييز",
   "settingsRevertThemeColors": "تراجع",
-  
   "settingsEditorSettings": "إعدادات المحرر",
   "settingsEditorTabSize": "حجم علامة التبويب",
   "settingsEditorShowLineNumbers": "إظهار أرقام الأسطر",
@@ -42,7 +36,6 @@
   "settingsEditorFontFamily": "عائلة الخط",
   "settingsEditorZoomInOut": "تفعيل التكبير/التصغير",
   "settingsEditorRenderUnsupportedCharacters": "عرض الأحرف غير المدعومة مع تحذير 🔔",
-  
   "settingsAiSettings": "إعدادات الذكاء الاصطناعي",
   "settingsAiModelProvider": "مزود النموذج",
   "settingsAiMaxTokens": "الحد الأقصى للرموز",
@@ -52,12 +45,16 @@
   "settingsConfigureProvider": "إعداد {provider}",
   "@settingsConfigureProvider": {
     "description": "عنوان نافذة الإعداد عند تهيئة مزود",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "تم حفظ إعدادات {provider}",
   "@settingsProviderSaved": {
     "description": "رسالة الـ Snackbar بعد حفظ إعدادات المزود",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "إعادة تعيين إعدادات الذكاء الاصطناعي",
   "settingsResetAiConfirm": "هل أنت متأكد أنك تريد حذف روابط الذكاء الاصطناعي ومفاتيح API نهائياً؟",
@@ -70,14 +67,11 @@
   "settingsSetApiKey": "تعيين مفتاح API",
   "connectionFailed": "فشل الاتصال",
   "connectionSuccessful": "تم الاتصال بنجاح",
-  
   "settingsFileExplorerSettings": "إعدادات مستكشف الملفات",
   "settingsFileExplorerShowHidden": "إظهار الملفات المخفية",
   "settingsFileExplorerPreviewMarkdown": "معاينة ملفات markdown",
-  
   "settingsResetPluginDefaults": "إعادة تعيين إعدادات الإضافات",
   "settingsThemeApplied": "تم تطبيق ألوان السمة",
-  
   "commonDelete": "حذف",
   "commonCreate": "إنشاء",
   "commonSave": "حفظ",
@@ -110,7 +104,6 @@
   "commonNotSupported": "غير مدعوم",
   "featureNotSupported": "الميزة غير مدعومة في الوقت الحالي. تحقق من الإصدارات المستقبلية",
   "enableFeatureFromPlugins": "فعّل هذه الميزة من الإضافات",
-  
   "homeProjectsTitle": "المشاريع المستوردة/المنشأة",
   "homeDefaultProjectName": "مشروع",
   "homeNoProjects": "لا توجد مشاريع بعد",
@@ -119,6 +112,13 @@
   "homeImportProject": "استيراد مشروع",
   "homeDeleteProjectConfirm": "حذف المشروع؟",
   "homeDeleteProjectDialogContent": "حذف المشروع وجميع الملفات نهائيًا؟ لا يمكن التراجع عن هذا الإجراء.",
+  "homeDeleteAllProjects": "حذف جميع المشاريع",
+  "homeRefreshProjects": "تحديث المشاريع",
+  "homeRefreshedProjects": "تم تحديث المشاريع",
+  "homeRefreshProjectsFailed": "فشل تحديث المشاريع",
+  "homeDeleteAllProjectsPrompt": "أنت على وشك حذف جميع المشاريع. هذا الإجراء لا يمكن التراجع عنه. هل تريد المتابعة؟",
+  "homeDeletedAllProjects": "تم حذف جميع المشاريع",
+  "homeDeleteAllProjectsFailed": "فشل حذف المشاريع",
   "homeUnknown": "غير معروف",
   "homeModified": "تم التعديل",
   "homeFiles": "الملفات",
@@ -169,13 +169,14 @@
   "tutorialProjectName": "مشروع تعليمي",
   "tutorialProjectReadmeTitle": "# مرحبًا بك في البرنامج التعليمي لمستكشف Git",
   "tutorialProjectReadmeBody": "يأخذك ملف README هذا عبر ميزات شاشة الرئيسية وكيفية فتح الملفات وتحريرها وحفظها وحذفها.\n\n- انقر على مشروع لفتحه\n- انقر على ملف لمعاينته أو فتحه في المحرر\n- استخدم الدرج لتبديل الميزات مثل مستكشف الملفات\n- أنشئ أو استورد (.zip) أو أزل المشاريع من هنا\n\nاستمتع باستكشاف التطبيق!",
-  
   "drawerCurrentProject": "المشروع الحالي",
   "drawerNoProjectOpen": "لا يوجد مشروع مفتوح",
   "drawerLastOpened": "آخر فتح: {time}",
   "@drawerLastOpened": {
     "description": "تسمية توضح وقت فتح المشروع آخر مرة، الوقت مُنسق مسبقًا",
-    "placeholders": {"time": {}}
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "أبدًا",
   "drawerPluginsAndFeatures": "الإضافات والميزات",
@@ -187,9 +188,17 @@
   "drawerFeedback": "ملاحظات",
   "drawerAbout": "حول",
   "drawerPluginId": "معرف الإضافة: {id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "الفئة: {category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "إنشاء مجلد جديد",
   "drawerFolderNameHint": "اسم المجلد",
   "drawerEditorTheme": "سمة المحرر",
@@ -197,20 +206,39 @@
   "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول Git Explorer",
   "drawerSendFeedback": "إرسال ملاحظات",
   "drawerFirstInstalled": "أول تثبيت: {date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "ميزة الملاحظات قريبًا!",
   "commonJustNow": "الآن",
   "commonMinutes": "منذ {count, plural, other{{count} د}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "منذ {count, plural, other{{count} س}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "أمس",
   "commonDays": "منذ {count, plural, other{{count} ي}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "إغلاق",
   "drawerPluginDetailsPluginId": "معرف الإضافة: {id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "وضع القراءة فقط",
   "readonlyModeDescription": "يمنع التعديلات العرضية على الملفات",
   "syntaxHighlightingName": "تمييز الصيغة",
@@ -221,17 +249,14 @@
   "bracketMatchingDescription": "تمييز الأقواس والأقواس المعقوفة المتطابقة",
   "advancedEditorName": "خيارات متقدمة",
   "advancedEditorDescription": "خيارات المحرر المتقدمة في الإعدادات",
-
   "gitHistoryName": "سجل Git",
   "gitHistoryDescription": "عرض سجل التسجيلات والاختلافات",
-
   "fileExplorerName": "مستكشف الملفات",
   "fileExplorerDescription": "تصفح وإدارة ملفات المشروع",
   "terminalName": "طرفية مدمجة",
   "terminalDescription": "تشغيل الأوامر دون مغادرة المحرر",
   "themeCustomizerName": "مخصص السمة",
   "themeCustomizerDescription": "تخصيص مظهر المحرر والتطبيق",
-
   "aiAssistName": "مساعد الذكاء الاصطناعي للكود",
   "aiAssistDescription": "احصل على اقتراحات كود مدعومة بالذكاء الاصطناعي"
 }

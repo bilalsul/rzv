@@ -1,6 +1,5 @@
 {
   "@@locale": "en",
-
   "appName": "Git Explorer",
   "appAbout": "Explore git projects and view files in code editor read-only mode.",
   "appVersion": "Version",
@@ -8,21 +7,17 @@
   "appAuthor": "Author",
   "appDonate": "Donate",
   "appDonateTips": "Git Explorer is an open-source software that is free to use. If you find it helpful, please donate to support us to continue improving it.",
-  
-  "navBarHome":"Projects",
-  "navBarFileExplorer":"File Explorer",
-  "navBarEditor":"Editor",
+  "navBarHome": "Projects",
+  "navBarFileExplorer": "File Explorer",
+  "navBarEditor": "Editor",
   "navBarAI": "AI",
-  "navBarGitHistory":"Git History",
-  "navBarTerminal":"Terminal",
+  "navBarGitHistory": "Git History",
+  "navBarTerminal": "Terminal",
   "navBarSettings": "Settings",
-
   "settingsDarkMode": "Dark",
   "settingsLightMode": "Light",
   "settingsSystemMode": "System",
-  
   "settingsMoreSettings": "More Settings",
-  
   "settingsAppearance": "Appearance",
   "settingsAppearanceTheme": "Theme",
   "settingsAppearanceThemeColor": "Theme Color",
@@ -33,7 +28,6 @@
   "settingsAppearanceSecondaryColor": "Secondary color",
   "settingsAppearanceAccentColor": "Accent color",
   "settingsRevertThemeColors": "Revert",
-  
   "settingsEditorSettings": "Editor Settings",
   "settingsEditorTabSize": "Tab size",
   "settingsEditorShowLineNumbers": "Show line numbers",
@@ -42,7 +36,6 @@
   "settingsEditorFontFamily": "Font Family",
   "settingsEditorZoomInOut": "Enable Zoom In/Out",
   "settingsEditorRenderUnsupportedCharacters": "View Unsupported Characters with Warning 🔔",
-  
   "settingsAiSettings": "AI Settings",
   "settingsAiModelProvider": "Model provider",
   "settingsAiMaxTokens": "Max tokens",
@@ -52,12 +45,16 @@
   "settingsConfigureProvider": "Configure {provider}",
   "@settingsConfigureProvider": {
     "description": "Dialog title when configuring a provider",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "{provider} settings saved",
   "@settingsProviderSaved": {
     "description": "Snackbar after saving provider configuration",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "Reset AI settings",
   "settingsResetAiConfirm": "Are you sure you want to delete AI URLs and API keys permanently?",
@@ -70,14 +67,11 @@
   "settingsSetApiKey": "Set API Key",
   "connectionFailed": "Connection failed",
   "connectionSuccessful": "Connection successful",
-  
   "settingsFileExplorerSettings": "File Explorer Settings",
   "settingsFileExplorerShowHidden": "Show hidden files",
   "settingsFileExplorerPreviewMarkdown": "Preview markdown files",
-  
   "settingsResetPluginDefaults": "Reset plugin settings to defaults",
   "settingsThemeApplied": "Theme colors applied",
-  
   "commonDelete": "Delete",
   "commonCreate": "Create",
   "commonSave": "Save",
@@ -108,26 +102,32 @@
   "commonRetry": "Retry",
   "commonDisabled": "Disabled",
   "commonNotSupported": "Not Supported",
-  "featureNotSupported":"Feature Not Supported At The Moment. Check Future Releases",
+  "featureNotSupported": "Feature Not Supported At The Moment. Check Future Releases",
   "enableFeatureFromPlugins": "Enable this feature from the Plugins",
-  
   "homeProjectsTitle": "Imported/Created Projects",
-  "homeDefaultProjectName":"Project",
+  "homeDefaultProjectName": "Project",
   "homeNoProjects": "No projects yet",
   "homeGetStarted": "Create or import a project to get started",
   "homeCreateProject": "Create Project",
   "homeImportProject": "Import Project",
   "homeDeleteProjectConfirm": "Delete project?",
   "homeDeleteProjectDialogContent": "Delete project and all files permanently? This cannot be undone.",
-  "homeUnknown" :"Unknown",
-  "homeModified" :"Modified",
+  "homeDeleteAllProjects": "Delete All Projects",
+  "homeRefreshProjects": "Refresh Projects",
+  "homeRefreshedProjects": "Projects refreshed",
+  "homeRefreshProjectsFailed": "Failed to refresh projects",
+  "homeDeleteAllProjectsPrompt": "You are going to delete ALL projects. This action cannot be undone. Do you want to proceed?",
+  "homeDeletedAllProjects": "All projects deleted",
+  "homeDeleteAllProjectsFailed": "Failed to delete projects",
+  "homeUnknown": "Unknown",
+  "homeModified": "Modified",
   "homeFiles": "Files",
   "homeFolders": "Folders",
   "homeReadmeNotFound": "No README found",
   "homeOpenFileEditorNotice": "This file will open in editor later",
   "homeBack": "Back",
-  "homeAddProjectName" : "Project Name",
-  "homeCreatedNewProject" : "Project Created",
+  "homeAddProjectName": "Project Name",
+  "homeCreatedNewProject": "Project Created",
   "homeImportZipProject": "Import project (zip)",
   "homeImportedZipNotFound": "Imported Zip file not found",
   "homeImportZipAsProject": "Imported zip as Project",
@@ -147,10 +147,10 @@
   "homeNoModificationInfo": "No modification info",
   "homeSampleImportFailed": "Sample import failed: {error}",
   "@homeSampleImportFailed": {
-  "description": "Error message when sample project import fails",
-  "placeholders": {
-    "error": {}
-  }
+    "description": "Error message when sample project import fails",
+    "placeholders": {
+      "error": {}
+    }
   },
   "importFailed": "Import failed: {error}",
   "@importFailed": {
@@ -159,23 +159,24 @@
       "error": {}
     }
   },
-  "homeExtractImporting" : "Importing project...",
+  "homeExtractImporting": "Importing project...",
   "homeExtractStarting": "Starting extraction...",
-  "homeExtractInitializing" : "initializing...",
-  "homeExtractProgress" : "Extract processing",
-  "homeExtractCurrentFile" : "Current file",
-  "homeExtractItemsExtracted" : "Files extracted",
+  "homeExtractInitializing": "initializing...",
+  "homeExtractProgress": "Extract processing",
+  "homeExtractCurrentFile": "Current file",
+  "homeExtractItemsExtracted": "Files extracted",
   "homeRetry": "Retry",
   "tutorialProjectName": "Tutorial Project",
   "tutorialProjectReadmeTitle": "# Welcome to the Git Explorer Tutorial",
   "tutorialProjectReadmeBody": "This README walks you through the Home screen features and how to open, edit, save and delete files.\n\n- Tap a project to open it\n- Tap a file to preview or open it in the editor\n- Use the drawer to toggle features like File Explorer\n- Create, import (.zip) or remove projects from here\n\nEnjoy exploring the app!",
-  
   "drawerCurrentProject": "Current Project",
   "drawerNoProjectOpen": "No project open",
   "drawerLastOpened": "Last opened: {time}",
   "@drawerLastOpened": {
     "description": "Label showing when the project was last opened, time is pre-formatted",
-    "placeholders": {"time": {}}
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "Never",
   "drawerPluginsAndFeatures": "PLUGINS & FEATURES",
@@ -187,9 +188,17 @@
   "drawerFeedback": "Feedback",
   "drawerAbout": "About",
   "drawerPluginId": "Plugin ID: {id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "Category: {category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "Create New Folder",
   "drawerFolderNameHint": "Folder name",
   "drawerEditorTheme": "Editor Theme",
@@ -197,20 +206,39 @@
   "drawerFeedbackBody": "We'd love to hear your feedback about Git Explorer!",
   "drawerSendFeedback": "Send Feedback",
   "drawerFirstInstalled": "First installed: {date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "Feedback feature coming soon!",
   "commonJustNow": "Just now",
   "commonMinutes": "{count, plural, other{{count}m ago}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "{count, plural, other{{count}h ago}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "Yesterday",
   "commonDays": "{count, plural, other{{count}d ago}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "Close",
   "drawerPluginDetailsPluginId": "Plugin ID: {id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "Read-Only Mode",
   "readonlyModeDescription": "Prevent accidental edits to files",
   "syntaxHighlightingName": "Syntax Highlighting",
@@ -219,19 +247,16 @@
   "codeFoldingDescription": "Collapse and expand code blocks",
   "bracketMatchingName": "Bracket Matching",
   "bracketMatchingDescription": "Highlight matching brackets and parentheses",
-  "advancedEditorName" : "Advanced Options",
-  "advancedEditorDescription" :"Editor advanced options in Settings",
-
+  "advancedEditorName": "Advanced Options",
+  "advancedEditorDescription": "Editor advanced options in Settings",
   "gitHistoryName": "Git History",
   "gitHistoryDescription": "View commit history and differences",
-
   "fileExplorerName": "File Explorer",
   "fileExplorerDescription": "Browse and manage project files",
   "terminalName": "Integrated Terminal",
   "terminalDescription": "Run commands without leaving the editor",
   "themeCustomizerName": "Theme Customizer",
   "themeCustomizerDescription": "Customize editor and app appearance",
-
   "aiAssistName": "AI Code Assistant",
   "aiAssistDescription": "Get AI-powered code suggestions"
 }
