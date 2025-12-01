@@ -513,13 +513,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       await _loadProjectsFromDisk();
       if (!mounted) return;
       setState(() {});
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Projects refreshed')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(L10n.of(context).homeRefreshedProjects)),
+      ); // 'Projects refreshed'
     } catch (e) {
       if (context.mounted)
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to refresh projects: $e')),
+          SnackBar(
+            content: Text('${L10n.of(context).homeRefreshProjectsFailed}: $e'),
+          ), // 'Failed to refresh projects'
         );
     }
   }
@@ -528,18 +530,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete all projects'),
-        content: const Text(
-          'You are going to delete ALL projects. This action cannot be undone. Do you want to proceed?',
-        ),
+        title: Text(
+          L10n.of(context).homeDeleteAllProjects,
+        ), //'Delete all projects'
+        content: Text(
+          L10n.of(context).homeDeleteAllProjectsPrompt,
+        ), // 'You are going to delete ALL projects. This action cannot be undone. Do you want to proceed?'
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: Text(
+              L10n.of(context).commonCancel,
+              style: TextStyle(color: Prefs().accentColor),
+            ),
           ),
-          TextButton(
+          FilledButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Prefs().accentColor),
+            ),
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text('Delete', style: TextStyle(color: Prefs().accentColor)),
+            child: Text(
+              L10n.of(context).commonDelete,
+              // style: TextStyle(backgroundColor: Prefs().accentColor),
+            ),
           ),
         ],
       ),
@@ -568,13 +581,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       await _loadProjectsFromDisk();
       if (!mounted) return;
       setState(() {});
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('All projects deleted')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(L10n.of(context).homeDeletedAllProjects)),
+      ); // 'All projects are deleted'
     } catch (e) {
       if (context.mounted)
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete projects: $e')),
+          SnackBar(
+            content: Text(
+              '${L10n.of(context).homeDeleteAllProjectsFailed}: $e',
+            ),
+          ), // 'Failed to delete projects'
         );
     }
   }
@@ -610,12 +627,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               title: Text(L10n.of(context).homeProjectsTitle),
               actions: [
                 IconButton(
-                  tooltip: 'Refresh projects',
+                  tooltip: L10n.of(context).homeRefreshProjects,
                   icon: const Icon(Icons.refresh),
                   onPressed: () async => await _refreshProjects(context),
                 ),
                 IconButton(
-                  tooltip: 'Delete all projects',
+                  tooltip: L10n.of(context).homeDeleteAllProjects,
                   icon: const Icon(Icons.delete_forever),
                   onPressed: () => _deleteAllProjects(context),
                 ),
@@ -627,12 +644,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               actions: [
                 IconButton(
-                  tooltip: 'Refresh projects',
+                  tooltip: L10n.of(context).homeRefreshProjects,
                   icon: const Icon(Icons.refresh),
                   onPressed: () async => await _refreshProjects(context),
                 ),
                 IconButton(
-                  tooltip: 'Delete all projects',
+                  tooltip: L10n.of(context).homeDeleteAllProjects,
                   icon: const Icon(Icons.delete_forever),
                   onPressed: () => _deleteAllProjects(context),
                 ),
@@ -764,7 +781,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ? Padding(
               padding: EdgeInsets.only(bottom: 70),
               child: FloatingActionButton.extended(
-                heroTag: 'create_file',
+                // heroTag: 'create_file',
                 icon: Icon(Icons.note_add, color: prefs.accentColor),
                 backgroundColor: prefs.secondaryColor,
                 label: Text(L10n.of(context).commonCreate),
@@ -778,7 +795,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   const SizedBox(height: 8),
                   FloatingActionButton.small(
-                    heroTag: 'create_details',
+                    // heroTag: 'create_details',
                     onPressed: _createProjectWithDetails,
                     tooltip: L10n.of(context).homeTooltipCreateDetails,
                     backgroundColor: prefs.secondaryColor,
@@ -786,7 +803,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                   const SizedBox(height: 8),
                   FloatingActionButton(
-                    heroTag: 'sample_zip',
+                    // heroTag: 'sample_zip',
                     onPressed: () => _importZipProject(context),
                     tooltip: L10n.of(context).homeTooltipCreateSampleZip,
                     backgroundColor: prefs.secondaryColor,
