@@ -671,7 +671,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 if (_projects.isEmpty)
                   return EmptyState(
                     onCreate: _createProjectWithDetails,
-                    onImport: _importZipProject(context),
+                    onImport: () => _importZipProject(context),
                   );
 
                 // If a project is opened, show ProjectBrowser inside HomeScreen
@@ -988,10 +988,7 @@ class _ProjectCard extends StatelessWidget {
                   (project.name?.trim().isNotEmpty == true
                       ? project.name!.trim()[0].toUpperCase()
                       : 'P'),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(width: 12),
@@ -1046,7 +1043,7 @@ class _ProjectCard extends StatelessWidget {
 
 class EmptyState extends StatelessWidget {
   final VoidCallback onCreate;
-  final Future<void> onImport;
+  final Future<void> Function() onImport;
 
   const EmptyState({super.key, required this.onCreate, required this.onImport});
 
@@ -1063,10 +1060,7 @@ class EmptyState extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
-          Text(
-            L10n.of(context).homeGetStarted,
-            style: TextStyle(color: Colors.black54),
-          ),
+          Text(L10n.of(context).homeGetStarted),
           const SizedBox(height: 16),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -1081,7 +1075,9 @@ class EmptyState extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               ElevatedButton.icon(
-                onPressed: () => onImport,
+                onPressed: () async {
+                  await onImport();
+                },
                 icon: Icon(Icons.archive, color: Prefs().accentColor),
                 label: Text(
                   L10n.of(context).homeImportProject,
