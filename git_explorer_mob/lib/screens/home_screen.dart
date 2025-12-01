@@ -290,7 +290,7 @@ Future<void> _importZipProject(BuildContext context) async {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${L10n.of(context).homeProjectsTitle}: $baseName', style: Theme.of(context).textTheme.titleMedium),
+                    Text('${L10n.of(context).homeDefaultProjectName}: $baseName', style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 20),
                     LinearProgressIndicator(
                       value: archive!.isEmpty ? null : processed / archive.length,
