@@ -1,6 +1,5 @@
 {
   "@@locale": "ko",
-
   "appName": "Git Explorer",
   "appAbout": "git 프로젝트를 탐색하고 코드 편집기에서 파일을 읽기 전용 모드로 확인하세요.",
   "appVersion": "버전",
@@ -8,21 +7,17 @@
   "appAuthor": "제작자",
   "appDonate": "후원하기",
   "appDonateTips": "Git Explorer는 무료 오픈소스 소프트웨어입니다. 유용하게 사용하고 계시다면 지속적인 개발을 위해 후원 부탁드립니다.",
-  
-  "navBarHome":"프로젝트",
-  "navBarFileExplorer":"파일 탐색기",
-  "navBarEditor":"편집기",
+  "navBarHome": "프로젝트",
+  "navBarFileExplorer": "파일 탐색기",
+  "navBarEditor": "편집기",
   "navBarAI": "AI",
-  "navBarGitHistory":"Git 기록",
-  "navBarTerminal":"터미널",
+  "navBarGitHistory": "Git 기록",
+  "navBarTerminal": "터미널",
   "navBarSettings": "설정",
-
   "settingsDarkMode": "다크",
   "settingsLightMode": "라이트",
   "settingsSystemMode": "시스템",
-  
   "settingsMoreSettings": "추가 설정",
-  
   "settingsAppearance": "외관",
   "settingsAppearanceTheme": "테마",
   "settingsAppearanceThemeColor": "테마 색상",
@@ -32,7 +27,6 @@
   "settingsAppearancePrimaryColor": "기본 색상",
   "settingsAppearanceSecondaryColor": "보조 색상",
   "settingsAppearanceAccentColor": "강조 색상",
-  
   "settingsApplyThemeColors": "테마 색상 적용",
   "settingsRevertThemeColors": "되돌리기",
   "settingsBorderRadius": "모서리 둥글기",
@@ -40,7 +34,6 @@
   "settingsAppFontSize": "앱 글꼴 크기",
   "settingsButtonStyle": "버튼 스타일",
   "settingsReduceAnimations": "애니메이션 줄이기",
-  
   "settingsEditorSettings": "편집기 설정",
   "settingsEditorTabSize": "탭 크기",
   "settingsEditorShowLineNumbers": "줄 번호 표시",
@@ -49,7 +42,6 @@
   "settingsEditorFontFamily": "글꼴 계열",
   "settingsEditorZoomInOut": "확대/축소 활성화",
   "settingsEditorRenderUnsupportedCharacters": "지원되지 않는 문자를 경고와 함께 표시 🔔",
-  
   "settingsAiSettings": "AI 설정",
   "settingsAiModelProvider": "모델 제공자",
   "settingsAiMaxTokens": "최대 토큰 수",
@@ -59,12 +51,16 @@
   "settingsConfigureProvider": "{provider} 설정",
   "@settingsConfigureProvider": {
     "description": "Dialog title when configuring a provider",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "{provider} 설정이 저장되었습니다",
   "@settingsProviderSaved": {
     "description": "Snackbar after saving provider configuration",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "AI 설정 초기화",
   "settingsResetAiConfirm": "AI URL과 API 키를 영구적으로 삭제하시겠습니까?",
@@ -77,14 +73,11 @@
   "settingsSetApiKey": "API 키 설정",
   "connectionFailed": "연결 실패",
   "connectionSuccessful": "연결 성공",
-  
   "settingsFileExplorerSettings": "파일 탐색기 설정",
   "settingsFileExplorerShowHidden": "숨김 파일 표시",
   "settingsFileExplorerPreviewMarkdown": "마크다운 미리보기",
-  
   "settingsResetPluginDefaults": "플러그인 설정 기본값으로 복원",
   "settingsThemeApplied": "테마 색상이 적용되었습니다",
-  
   "commonDelete": "삭제",
   "commonCreate": "만들기",
   "commonSave": "저장",
@@ -117,24 +110,30 @@
   "commonNotSupported": "지원되지 않음",
   "featureNotSupported": "현재 해당 기능은 지원되지 않습니다. 향후 릴리스에서 확인해 주세요",
   "enableFeatureFromPlugins": "플러그인에서 이 기능을 활성화하세요",
-  
   "homeProjectsTitle": "가져온/생성한 프로젝트",
-  "homeDefaultProjectName":"프로젝트",
+  "homeDefaultProjectName": "프로젝트",
   "homeNoProjects": "아직 프로젝트가 없습니다",
   "homeGetStarted": "프로젝트를 만들거나 가져와서 시작하세요",
   "homeCreateProject": "프로젝트 만들기",
   "homeImportProject": "프로젝트 가져오기",
   "homeDeleteProjectConfirm": "프로젝트를 삭제하시겠습니까?",
   "homeDeleteProjectDialogContent": "프로젝트와 모든 파일을 영구적으로 삭제합니다. 되돌릴 수 없습니다.",
-  "homeUnknown" :"알 수 없음",
-  "homeModified" :"수정됨",
+  "homeDeleteAllProjects": "모든 프로젝트 삭제",
+  "homeRefreshProjects": "프로젝트 새로 고침",
+  "homeRefreshedProjects": "프로젝트가 새로 고쳐졌습니다",
+  "homeRefreshProjectsFailed": "프로젝트 새로 고침 실패",
+  "homeDeleteAllProjectsPrompt": "모든 프로젝트를 삭제하려고 합니다. 이 작업은 취소할 수 없습니다. 계속하시겠습니까?",
+  "homeDeletedAllProjects": "모든 프로젝트가 삭제되었습니다",
+  "homeDeleteAllProjectsFailed": "프로젝트 삭제 실패",
+  "homeUnknown": "알 수 없음",
+  "homeModified": "수정됨",
   "homeFiles": "파일",
   "homeFolders": "폴더",
   "homeReadmeNotFound": "README를 찾을 수 없음",
   "homeOpenFileEditorNotice": "이 파일은 나중에 편집기에서 열립니다",
   "homeBack": "뒤로",
-  "homeAddProjectName" : "프로젝트 이름",
-  "homeCreatedNewProject" : "프로젝트가 생성되었습니다",
+  "homeAddProjectName": "프로젝트 이름",
+  "homeCreatedNewProject": "프로젝트가 생성되었습니다",
   "homeImportZipProject": "프로젝트 가져오기 (zip)",
   "homeImportedZipNotFound": "가져온 zip 파일을 찾을 수 없음",
   "homeImportZipAsProject": "zip을 프로젝트로 가져옴",
@@ -155,12 +154,16 @@
   "homeSampleImportFailed": "예제 가져오기 실패: {error}",
   "@homeSampleImportFailed": {
     "description": "Error message when sample project import fails",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
   "importFailed": "가져오기 실패: {error}",
   "@importFailed": {
     "description": "Error message when import fails, with the error detail",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
   "homeExtractImporting": "프로젝트 가져오는 중...",
   "homeExtractStarting": "압축 해제 시작 중...",
@@ -172,13 +175,14 @@
   "tutorialProjectName": "튜토리얼 프로젝트",
   "tutorialProjectReadmeTitle": "# Git Explorer 튜토리얼에 오신 것을 환영합니다",
   "tutorialProjectReadmeBody": "이 README는 홈 화면 기능과 파일 열기·편집·저장·삭제 방법을 안내합니다.\n\n- 프로젝트를 탭하면 열립니다\n- 파일을 탭하면 미리보기 또는 편집기에서 열립니다\n- 좌측 서랍 메뉴로 파일 탐색기 등 기능을 켜고 끌 수 있습니다\n- 여기서 프로젝트를 만들고, zip으로 가져오고, 삭제할 수 있습니다\n\n즐거운 탐험 되세요!",
-  
   "drawerCurrentProject": "현재 프로젝트",
   "drawerNoProjectOpen": "열린 프로젝트 없음",
   "drawerLastOpened": "마지막 열기: {time}",
   "@drawerLastOpened": {
     "description": "Label showing when the project was last opened, time is pre-formatted",
-    "placeholders": {"time": {}}
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "없음",
   "drawerPluginsAndFeatures": "플러그인 및 기능",
@@ -190,9 +194,17 @@
   "drawerFeedback": "피드백",
   "drawerAbout": "정보",
   "drawerPluginId": "플러그인 ID: {id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "카테고리: {category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "새 폴더 만들기",
   "drawerFolderNameHint": "폴더 이름",
   "drawerEditorTheme": "편집기 테마",
@@ -200,20 +212,39 @@
   "drawerFeedbackBody": "Git Explorer에 대한 소중한 의견을 보내주세요!",
   "drawerSendFeedback": "피드백 보내기",
   "drawerFirstInstalled": "최초 설치: {date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "피드백 기능 곧 제공됩니다!",
   "commonJustNow": "방금",
   "commonMinutes": "{count, plural, other{{count}분 전}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "{count, plural, other{{count}시간 전}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "어제",
   "commonDays": "{count, plural, other{{count}일 전}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "닫기",
   "drawerPluginDetailsPluginId": "플러그인 ID: {id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "읽기 전용 모드",
   "readonlyModeDescription": "파일 실수로 수정되는 것을 방지",
   "syntaxHighlightingName": "구문 강조",
@@ -224,17 +255,14 @@
   "bracketMatchingDescription": "짝이 되는 괄호 강조",
   "advancedEditorName": "고급 옵션",
   "advancedEditorDescription": "설정에서 편집기 고급 옵션",
-
   "gitHistoryName": "Git 기록",
   "gitHistoryDescription": "커밋 히스토리 및 차이 보기",
-
   "fileExplorerName": "파일 탐색기",
   "fileExplorerDescription": "프로젝트 파일 탐색 및 관리",
   "terminalName": "내장 터미널",
   "terminalDescription": "편집기를 벗어나지 않고 명령 실행",
   "themeCustomizerName": "테마 커스터마이저",
   "themeCustomizerDescription": "편집기와 앱 외관 자유롭게 꾸미기",
-
   "aiAssistName": "AI 코드 어시스턴트",
   "aiAssistDescription": "AI 기반 코드 추천 받기"
 }

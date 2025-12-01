@@ -1,6 +1,5 @@
 {
   "@@locale": "zh_TW",
-
   "appName": "Git Explorer",
   "appAbout": "瀏覽 git 專案，並在程式碼編輯器中以唯讀模式檢視檔案。",
   "appVersion": "版本",
@@ -8,21 +7,17 @@
   "appAuthor": "作者",
   "appDonate": "捐款支持",
   "appDonateTips": "Git Explorer 是免費的開源軟體。如果您覺得好用，歡迎捐款支持我們持續改進。",
-  
-  "navBarHome":"專案",
-  "navBarFileExplorer":"檔案總管",
-  "navBarEditor":"編輯器",
+  "navBarHome": "專案",
+  "navBarFileExplorer": "檔案總管",
+  "navBarEditor": "編輯器",
   "navBarAI": "AI",
-  "navBarGitHistory":"Git 歷史",
-  "navBarTerminal":"終端機",
+  "navBarGitHistory": "Git 歷史",
+  "navBarTerminal": "終端機",
   "navBarSettings": "設定",
-
   "settingsDarkMode": "深色",
   "settingsLightMode": "淺色",
   "settingsSystemMode": "隨系統",
-  
   "settingsMoreSettings": "更多設定",
-  
   "settingsAppearance": "外觀",
   "settingsAppearanceTheme": "主題",
   "settingsAppearanceThemeColor": "主題配色",
@@ -33,7 +28,6 @@
   "settingsAppearanceSecondaryColor": "次要顏色",
   "settingsAppearanceAccentColor": "強調色",
   "settingsRevertThemeColors": "還原",
-  
   "settingsEditorSettings": "編輯器設定",
   "settingsEditorTabSize": "Tab 寬度",
   "settingsEditorShowLineNumbers": "顯示行號",
@@ -42,7 +36,6 @@
   "settingsEditorFontFamily": "字型系列",
   "settingsEditorZoomInOut": "啟用放大/縮小",
   "settingsEditorRenderUnsupportedCharacters": "以警告形式顯示不支援的字元 🔔",
-  
   "settingsAiSettings": "AI 設定",
   "settingsAiModelProvider": "模型提供者",
   "settingsAiMaxTokens": "最大 Token 數",
@@ -52,12 +45,16 @@
   "settingsConfigureProvider": "設定 {provider}",
   "@settingsConfigureProvider": {
     "description": "Dialog title when configuring a provider",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "{provider} 設定已儲存",
   "@settingsProviderSaved": {
     "description": "Snackbar after saving provider configuration",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "重設 AI 設定",
   "settingsResetAiConfirm": "確定要永久刪除所有 AI URL 與 API 金鑰嗎？",
@@ -70,14 +67,11 @@
   "settingsSetApiKey": "設定 API 金鑰",
   "connectionFailed": "連線失敗",
   "connectionSuccessful": "連線成功",
-  
   "settingsFileExplorerSettings": "檔案總管設定",
   "settingsFileExplorerShowHidden": "顯示隱藏檔案",
   "settingsFileExplorerPreviewMarkdown": "預覽 Markdown 檔案",
-  
   "settingsResetPluginDefaults": "恢復外掛預設值",
   "settingsThemeApplied": "主題配色已套用",
-  
   "commonDelete": "刪除",
   "commonCreate": "建立",
   "commonSave": "儲存",
@@ -110,24 +104,30 @@
   "commonNotSupported": "不支援",
   "featureNotSupported": "此功能目前不支援。請留意未來版本",
   "enableFeatureFromPlugins": "從插件中啟用此功能",
-  
   "homeProjectsTitle": "已匯入／建立的專案",
-  "homeDefaultProjectName":"專案",
+  "homeDefaultProjectName": "專案",
   "homeNoProjects": "尚無專案",
   "homeGetStarted": "建立或匯入專案以開始使用",
   "homeCreateProject": "建立專案",
   "homeImportProject": "匯入專案",
   "homeDeleteProjectConfirm": "刪除專案？",
   "homeDeleteProjectDialogContent": "將永久刪除專案及其所有檔案，此動作無法復原。",
-  "homeUnknown" :"未知",
-  "homeModified" :"已修改",
+  "homeDeleteAllProjects": "刪除所有專案",
+  "homeRefreshProjects": "重新整理專案",
+  "homeRefreshedProjects": "專案已重新整理",
+  "homeRefreshProjectsFailed": "重新整理專案失敗",
+  "homeDeleteAllProjectsPrompt": "您即將刪除所有專案。此動作無法復原。您確定要繼續嗎？",
+  "homeDeletedAllProjects": "所有專案已刪除",
+  "homeDeleteAllProjectsFailed": "刪除專案失敗",
+  "homeUnknown": "未知",
+  "homeModified": "已修改",
   "homeFiles": "檔案",
   "homeFolders": "資料夾",
   "homeReadmeNotFound": "找不到 README",
   "homeOpenFileEditorNotice": "此檔案稍後會在編輯器中開啟",
   "homeBack": "返回",
-  "homeAddProjectName" : "專案名稱",
-  "homeCreatedNewProject" : "專案已建立",
+  "homeAddProjectName": "專案名稱",
+  "homeCreatedNewProject": "專案已建立",
   "homeImportZipProject": "匯入專案（zip）",
   "homeImportedZipNotFound": "找不到匯入的 zip 檔案",
   "homeImportZipAsProject": "已將 zip 匯入為專案",
@@ -148,12 +148,16 @@
   "homeSampleImportFailed": "範例匯入失敗：{error}",
   "@homeSampleImportFailed": {
     "description": "Error message when sample project import fails",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
   "importFailed": "匯入失敗：{error}",
   "@importFailed": {
     "description": "Error message when import fails, with the error detail",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
   "homeExtractImporting": "正在匯入專案...",
   "homeExtractStarting": "開始解壓...",
@@ -165,13 +169,14 @@
   "tutorialProjectName": "教學專案",
   "tutorialProjectReadmeTitle": "# 歡迎使用 Git Explorer 教學",
   "tutorialProjectReadmeBody": "本 README 將帶您認識首頁功能，以及如何開啟、編輯、儲存與刪除檔案。\n\n- 點擊專案即可開啟\n- 點擊檔案可預覽或在編輯器中開啟\n- 使用側邊選單開關檔案總管等功能\n- 在此建立、匯入（.zip）或刪除專案\n\n祝您使用愉快！",
-  
   "drawerCurrentProject": "目前專案",
   "drawerNoProjectOpen": "尚未開啟任何專案",
   "drawerLastOpened": "最後開啟：{time}",
   "@drawerLastOpened": {
     "description": "Label showing when the project was last opened, time is pre-formatted",
-    "placeholders": {"time": {}}
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "從未",
   "drawerPluginsAndFeatures": "外掛與功能",
@@ -183,9 +188,17 @@
   "drawerFeedback": "意見反饋",
   "drawerAbout": "關於",
   "drawerPluginId": "外掛 ID：{id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "分類：{category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "新增資料夾",
   "drawerFolderNameHint": "資料夾名稱",
   "drawerEditorTheme": "編輯器主題",
@@ -193,20 +206,39 @@
   "drawerFeedbackBody": "我們非常期待您對 Git Explorer 的寶貴意見！",
   "drawerSendFeedback": "送出意見",
   "drawerFirstInstalled": "首次安裝：{date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "意見反饋功能即將推出！",
   "commonJustNow": "剛剛",
   "commonMinutes": "{count, plural, other{{count} 分鐘前}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "{count, plural, other{{count} 小時前}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "昨天",
   "commonDays": "{count, plural, other{{count} 天前}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "關閉",
   "drawerPluginDetailsPluginId": "外掛 ID：{id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "唯讀模式",
   "readonlyModeDescription": "防止意外修改檔案",
   "syntaxHighlightingName": "語法高亮",
@@ -217,17 +249,14 @@
   "bracketMatchingDescription": "高亮對應的括號",
   "advancedEditorName": "進階選項",
   "advancedEditorDescription": "編輯器進階選項位於設定中",
-
   "gitHistoryName": "Git 歷史",
   "gitHistoryDescription": "檢視提交歷史與差異",
-
   "fileExplorerName": "檔案總管",
   "fileExplorerDescription": "瀏覽與管理專案檔案",
   "terminalName": "內建終端機",
   "terminalDescription": "不離開編輯器即可執行指令",
   "themeCustomizerName": "主題自訂器",
   "themeCustomizerDescription": "自由調整編輯器與應用外觀",
-
   "aiAssistName": "AI 程式碼助手",
   "aiAssistDescription": "取得 AI 驅動的程式碼建議"
 }

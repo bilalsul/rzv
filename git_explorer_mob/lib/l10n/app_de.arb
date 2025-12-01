@@ -1,6 +1,5 @@
 {
   "@@locale": "de",
-
   "appName": "Git Explorer",
   "appAbout": "Git-Projekte durchsuchen und Dateien im Code-Editor im schreibgeschützten Modus anzeigen.",
   "appVersion": "Version",
@@ -8,7 +7,6 @@
   "appAuthor": "Autor",
   "appDonate": "Spenden",
   "appDonateTips": "Git Explorer ist eine Open-Source-Software, die kostenlos genutzt werden kann. Wenn Sie sie hilfreich finden, spenden Sie bitte, um uns bei der weiteren Verbesserung zu unterstützen.",
-  
   "navBarHome": "Projekte",
   "navBarFileExplorer": "Datei-Explorer",
   "navBarEditor": "Editor",
@@ -16,13 +14,10 @@
   "navBarGitHistory": "Git-Verlauf",
   "navBarTerminal": "Terminal",
   "navBarSettings": "Einstellungen",
-
   "settingsDarkMode": "Dunkel",
   "settingsLightMode": "Hell",
   "settingsSystemMode": "System",
-  
   "settingsMoreSettings": "Weitere Einstellungen",
-  
   "settingsAppearance": "Erscheinungsbild",
   "settingsAppearanceTheme": "Theme",
   "settingsAppearanceThemeColor": "Theme-Farbe",
@@ -33,7 +28,6 @@
   "settingsAppearanceSecondaryColor": "Sekundärfarbe",
   "settingsAppearanceAccentColor": "Akzentfarbe",
   "settingsRevertThemeColors": "Zurücksetzen",
-  
   "settingsEditorSettings": "Editor-Einstellungen",
   "settingsEditorTabSize": "Tab-Größe",
   "settingsEditorShowLineNumbers": "Zeilennummern anzeigen",
@@ -42,7 +36,6 @@
   "settingsEditorFontFamily": "Schriftart",
   "settingsEditorZoomInOut": "Zoom In/Out aktivieren",
   "settingsEditorRenderUnsupportedCharacters": "Nicht unterstützte Zeichen mit Warnung anzeigen 🔔",
-  
   "settingsAiSettings": "KI-Einstellungen",
   "settingsAiModelProvider": "Modell-Anbieter",
   "settingsAiMaxTokens": "Maximale Tokens",
@@ -52,12 +45,16 @@
   "settingsConfigureProvider": "{provider} konfigurieren",
   "@settingsConfigureProvider": {
     "description": "Titel des Dialogs beim Konfigurieren eines Anbieters",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "{provider}-Einstellungen gespeichert",
   "@settingsProviderSaved": {
     "description": "Snackbar-Meldung nach dem Speichern der Anbieterkonfiguration",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "KI-Einstellungen zurücksetzen",
   "settingsResetAiConfirm": "Möchtest du die KI-URLs und API-Schlüssel wirklich dauerhaft löschen?",
@@ -70,14 +67,11 @@
   "settingsSetApiKey": "API-Schlüssel setzen",
   "connectionFailed": "Verbindung fehlgeschlagen",
   "connectionSuccessful": "Verbindung erfolgreich",
-  
   "settingsFileExplorerSettings": "Datei-Explorer-Einstellungen",
   "settingsFileExplorerShowHidden": "Versteckte Dateien anzeigen",
   "settingsFileExplorerPreviewMarkdown": "Markdown-Dateien vorschauen",
-  
   "settingsResetPluginDefaults": "Plugin-Einstellungen zurücksetzen",
   "settingsThemeApplied": "Theme-Farben angewendet",
-  
   "commonDelete": "Löschen",
   "commonCreate": "Erstellen",
   "commonSave": "Speichern",
@@ -110,7 +104,6 @@
   "commonNotSupported": "Nicht unterstützt",
   "featureNotSupported": "Funktion derzeit nicht unterstützt. Prüfen Sie zukünftige Versionen",
   "enableFeatureFromPlugins": "Diese Funktion über die Plugins aktivieren",
-  
   "homeProjectsTitle": "Importierte/Erstellte Projekte",
   "homeDefaultProjectName": "Projekt",
   "homeNoProjects": "Noch keine Projekte",
@@ -119,6 +112,13 @@
   "homeImportProject": "Projekt importieren",
   "homeDeleteProjectConfirm": "Projekt löschen?",
   "homeDeleteProjectDialogContent": "Projekt und alle Dateien endgültig löschen? Dies kann nicht rückgängig gemacht werden.",
+  "homeDeleteAllProjects": "Alle Projekte löschen",
+  "homeRefreshProjects": "Projekte aktualisieren",
+  "homeRefreshedProjects": "Projekte aktualisiert",
+  "homeRefreshProjectsFailed": "Projekte konnten nicht aktualisiert werden",
+  "homeDeleteAllProjectsPrompt": "Sie sind dabei, ALLE Projekte zu löschen. Diese Aktion kann nicht rückgängig gemacht werden. Möchten Sie fortfahren?",
+  "homeDeletedAllProjects": "Alle Projekte gelöscht",
+  "homeDeleteAllProjectsFailed": "Projekte konnten nicht gelöscht werden",
   "homeUnknown": "Unbekannt",
   "homeModified": "Geändert",
   "homeFiles": "Dateien",
@@ -169,13 +169,14 @@
   "tutorialProjectName": "Tutorial-Projekt",
   "tutorialProjectReadmeTitle": "# Willkommen beim Git Explorer Tutorial",
   "tutorialProjectReadmeBody": "Diese README führt Sie durch die Funktionen des Home-Bildschirms und zeigt, wie Sie Dateien öffnen, bearbeiten, speichern und löschen.\n\n- Tippen Sie auf ein Projekt, um es zu öffnen\n- Tippen Sie auf eine Datei, um sie in der Vorschau anzuzeigen oder im Editor zu öffnen\n- Verwenden Sie die Schublade, um Funktionen wie den Datei-Explorer umzuschalten\n- Erstellen, importieren (.zip) oder entfernen Sie Projekte von hier\n\nViel Spaß beim Erkunden der App!",
-  
   "drawerCurrentProject": "Aktuelles Projekt",
   "drawerNoProjectOpen": "Kein Projekt geöffnet",
   "drawerLastOpened": "Zuletzt geöffnet: {time}",
   "@drawerLastOpened": {
     "description": "Label das anzeigt, wann das Projekt zuletzt geöffnet wurde, Zeit ist vorformatiert",
-    "placeholders": {"time": {}}
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "Nie",
   "drawerPluginsAndFeatures": "PLUGINS & FUNKTIONEN",
@@ -187,9 +188,17 @@
   "drawerFeedback": "Feedback",
   "drawerAbout": "Über",
   "drawerPluginId": "Plugin-ID: {id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "Kategorie: {category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "Neuen Ordner erstellen",
   "drawerFolderNameHint": "Ordnername",
   "drawerEditorTheme": "Editor-Theme",
@@ -197,20 +206,39 @@
   "drawerFeedbackBody": "Wir würden uns über Ihr Feedback zum Git Explorer freuen!",
   "drawerSendFeedback": "Feedback senden",
   "drawerFirstInstalled": "Erstinstallation: {date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "Feedback-Funktion kommt bald!",
   "commonJustNow": "Gerade eben",
   "commonMinutes": "vor {count, plural, other{{count} Min}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "vor {count, plural, other{{count} Std}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "Gestern",
   "commonDays": "vor {count, plural, other{{count} T}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "Schließen",
   "drawerPluginDetailsPluginId": "Plugin-ID: {id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "Nur-Lese-Modus",
   "readonlyModeDescription": "Verhindert versehentliches Bearbeiten von Dateien",
   "syntaxHighlightingName": "Syntax-Hervorhebung",
@@ -221,17 +249,14 @@
   "bracketMatchingDescription": "Passende Klammern und Klammerpaare hervorheben",
   "advancedEditorName": "Erweiterte Optionen",
   "advancedEditorDescription": "Erweiterte Editor-Optionen in den Einstellungen",
-
   "gitHistoryName": "Git-Verlauf",
   "gitHistoryDescription": "Commit-Verlauf und Unterschiede anzeigen",
-
   "fileExplorerName": "Datei-Explorer",
   "fileExplorerDescription": "Projektdateien durchsuchen und verwalten",
   "terminalName": "Integriertes Terminal",
   "terminalDescription": "Befehle ausführen ohne den Editor zu verlassen",
   "themeCustomizerName": "Theme-Anpasser",
   "themeCustomizerDescription": "Editor- und App-Erscheinungsbild anpassen",
-
   "aiAssistName": "KI-Code-Assistent",
   "aiAssistDescription": "KI-gestützte Code-Vorschläge erhalten"
 }
