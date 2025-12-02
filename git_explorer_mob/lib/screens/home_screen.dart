@@ -642,18 +642,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               title: Text(
                 _openedProject?.name ?? L10n.of(context).homeDefaultProjectName,
               ),
-              actions: [
-                IconButton(
-                  tooltip: L10n.of(context).homeRefreshProjects,
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () async => await _refreshProjects(context),
-                ),
-                IconButton(
-                  tooltip: L10n.of(context).homeDeleteAllProjects,
-                  icon: const Icon(Icons.delete_forever),
-                  onPressed: () => _deleteAllProjects(context),
-                ),
-              ],
+              // actions: [
+              //   IconButton(
+              //     tooltip: L10n.of(context).homeRefreshProjects,
+              //     icon: const Icon(Icons.refresh),
+              //     onPressed: () async => await _refreshProjects(context),
+              //   ),
+              //   IconButton(
+              //     tooltip: L10n.of(context).homeDeleteAllProjects,
+              //     icon: const Icon(Icons.delete_forever),
+              //     onPressed: () => _deleteAllProjects(context),
+              //   ),
+              // ],
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
