@@ -25,6 +25,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   _Project? _openedProject;
   List<String> _pathStack = <String>[];
   String? _selectedFileContent;
+  String? _selectedFilePath;
   bool _diskLoaded = false;
 
   @override
@@ -477,15 +478,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> _openProject(_Project p) async {
     // Open project inside HomeScreen: set as opened project and reset navigation stack
+    String? readmeContent;
+    String? readmePath;
+    final node = _getNodeAtPath(p, <String>[]);
+    final readme = _findReadmeInNode(node);
+    if (p.fileCount == 1 && readme != null) {
+      readmeContent = readme;
+      try {
+        final projRoot = await Prefs().projectsRoot();
+        readmePath = '${projRoot.path}/${p.id}/README.md';
+      } catch (_) {}
+    }
     setState(() {
       _openedProject = p;
       _pathStack = <String>[];
-      _selectedFileContent = null;
-      final node = _getNodeAtPath(p, _pathStack);
-      // Try load README at root
-      final readme = _findReadmeInNode(node);
-      // if only one file exists in the directory and is readme
-      if (p.fileCount == 1 && readme != null) _selectedFileContent = readme;
+      _selectedFileContent = readmeContent;
+      _selectedFilePath = readmePath;
     });
     // Persist current project to Prefs so AppDrawer shows it
     try {
@@ -707,12 +715,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         );
                         if (node is Map<String, dynamic> && node.length == 1) {
                           _selectedFileContent = _findReadmeInNode(node);
+                          _selectedFilePath = null;
+                          // compute path async
+                          Future.microtask(() async {
+                            final readmeName = 'README.md';
+                            try {
+                              final projRoot = await Prefs().projectsRoot();
+                              final abs =
+                                  '${projRoot.path}/${_openedProject!.id}/${_pathStack.join('/')}/$readmeName';
+                              if (mounted)
+                                setState(() => _selectedFilePath = abs);
+                            } catch (_) {}
+                          });
                         }
                       });
                     },
-                    onOpenFile: (content) {
+                    onOpenFile: (content, absPath) {
                       setState(() {
                         _selectedFileContent = content;
+                        _selectedFilePath = absPath;
                       });
                     },
                   );
@@ -780,12 +801,66 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       floatingActionButton: _openedProject != null
           ? Padding(
               padding: EdgeInsets.only(bottom: 70),
-              child: FloatingActionButton.extended(
-                // heroTag: 'create_file',
-                icon: Icon(Icons.note_add, color: prefs.accentColor),
-                backgroundColor: prefs.secondaryColor,
-                label: Text(L10n.of(context).commonCreate),
-                onPressed: _createFileInCurrentFolder,
+              child: Builder(
+                builder: (ctx) {
+                  final previewing =
+                      _selectedFileContent != null &&
+                      (_openedProject!.id == 'tutorial_project' ||
+                          Prefs().isPluginOptionEnabled('preview_markdown'));
+                  if (previewing) {
+                    return FloatingActionButton.extended(
+                      // heroTag: 'open_in_editor',
+                      icon: Icon(Icons.open_in_new, color: prefs.accentColor),
+                      backgroundColor: prefs.secondaryColor,
+                      label: Text(L10n.of(context).navBarEditor),
+                      tooltip: L10n.of(context).homeOpenFileEditorNotice,
+                      onPressed: () async {
+                        if (_openedProject == null) return;
+                        try {
+                          final projRoot = await Prefs().projectsRoot();
+                          String abs = _selectedFilePath ?? '';
+                          if (abs.isEmpty) {
+                            // Try common README names in current folder
+                            final base =
+                                '${projRoot.path}/${_openedProject!.id}${_pathStack.isEmpty ? '' : '/' + _pathStack.join('/')}';
+                            final candidates = [
+                              'README.md',
+                              'Readme.md',
+                              'readme.md',
+                              'README.MD',
+                              'README',
+                            ];
+                            for (final c in candidates) {
+                              final f = File('$base/$c');
+                              if (await f.exists()) {
+                                abs = f.path;
+                                break;
+                              }
+                            }
+                          }
+                          await Prefs().saveCurrentOpenFile(
+                            _openedProject!.id,
+                            abs,
+                            _selectedFileContent ?? '',
+                          );
+                          await Prefs().saveCurrentProject(
+                            id: _openedProject!.id,
+                            name: _openedProject!.name ?? _openedProject!.id,
+                            path: projRoot.path + '/${_openedProject!.id}',
+                          );
+                          await Prefs().saveLastKnownRoute('editor');
+                        } catch (_) {}
+                      },
+                    );
+                  }
+                  return FloatingActionButton.extended(
+                    // heroTag: 'create_file',
+                    icon: Icon(Icons.note_add, color: prefs.accentColor),
+                    backgroundColor: prefs.secondaryColor,
+                    label: Text(L10n.of(context).commonCreate),
+                    onPressed: _createFileInCurrentFolder,
+                  );
+                },
               ),
             )
           : Padding(
@@ -1116,7 +1191,7 @@ class _ProjectBrowser extends StatelessWidget {
   final List<String> pathStack;
   final String? selectedFileContent;
   final void Function(String name) onEnterDirectory;
-  final void Function(String content) onOpenFile;
+  final void Function(String content, String absPath) onOpenFile;
   final ScrollController controller;
 
   const _ProjectBrowser({
@@ -1241,7 +1316,7 @@ class _ProjectBrowser extends StatelessWidget {
               if (isMarkdown &&
                   (project.id == 'tutorial_project' ||
                       Prefs().isPluginOptionEnabled('preview_markdown'))) {
-                onOpenFile(content);
+                onOpenFile(content, abs);
                 return;
               }
 
