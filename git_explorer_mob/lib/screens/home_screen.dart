@@ -1144,22 +1144,23 @@ class _ProjectBrowser extends StatelessWidget {
   Widget build(BuildContext context) {
     final node = _nodeAtPath();
     // by default show the tutorial readme
-    if (selectedFileContent != null) {
-      return Column(
-        children: [
-          Expanded(
-            child: Markdown(
-              data: L10n.of(context).tutorialProjectReadmeBody,
-              selectable: true,
-            ),
-          ),
-        ],
-      );
-    }
-
-    // If a markdown file is selected and is enabled, render it
-    if (Prefs().isPluginOptionEnabled('preview_markdown') &&
-        selectedFileContent != null) {
+    // if (selectedFileContent != null) {
+    //   return Column(
+    //     children: [
+    //       Expanded(
+    //         child: Markdown(
+    //           data: L10n.of(context).tutorialProjectReadmeBody,
+    //           selectable: true,
+    //         ),
+    //       ),
+    //     ],
+    //   );
+    // }
+    // If a file's content was selected and either this is the tutorial
+    // project or the user enabled markdown preview, render it as Markdown.
+    if (selectedFileContent != null &&
+        (project.id == 'tutorial_project' ||
+            Prefs().isPluginOptionEnabled('preview_markdown'))) {
       return Column(
         children: [
           Expanded(
@@ -1213,7 +1214,7 @@ class _ProjectBrowser extends StatelessWidget {
           title: Text(fileName),
           subtitle: isMarkdown ? Text(L10n.of(context).homeMarkdownFile) : null,
           onTap: () async {
-            // Compute absolute path and save as current open file, then open editor
+            // Compute absolute path and read file content (prefer disk, fallback to in-memory map)
             try {
               final base = await Prefs().projectsRoot();
               final projRoot = base;
@@ -1234,6 +1235,17 @@ class _ProjectBrowser extends StatelessWidget {
                 final node = _getNodeAtPath(project, [...pathStack, fileName]);
                 if (node is String) content = node;
               }
+
+              // If this is a markdown file and preview is enabled (or it's the tutorial project),
+              // show the content in-place via the provided callback. Otherwise, open in editor.
+              if (isMarkdown &&
+                  (project.id == 'tutorial_project' ||
+                      Prefs().isPluginOptionEnabled('preview_markdown'))) {
+                onOpenFile(content);
+                return;
+              }
+
+              // Fallback: persist current open file and route to editor
               await Prefs().saveCurrentOpenFile(project.id, abs, content);
               // Also save current project absolute path
               await Prefs().saveCurrentProject(
@@ -1241,7 +1253,6 @@ class _ProjectBrowser extends StatelessWidget {
                 name: project.name ?? project.id,
                 path: projRoot.path + '/${project.id}',
               );
-              // Navigate to editor
               await Prefs().saveLastKnownRoute('editor');
               // Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EditorScreen()));
             } catch (_) {}
