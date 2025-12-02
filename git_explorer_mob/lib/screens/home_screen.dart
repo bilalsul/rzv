@@ -544,10 +544,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Icon(Icons.refresh),
             Text(L10n.of(context).homeRefreshProjects),
           ],
-        ), //'Delete all projects'
+        ), //'Refresh projects'
         content: Text(
           L10n.of(context).homeRefreshProjectsPrompt,
-        ), // 'You are going to delete ALL projects. This action cannot be undone. Do you want to proceed?'
+        ), // 'This might take longer if you have extremely large projects. Click Refresh to Continue'
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
@@ -562,8 +562,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             onPressed: () => Navigator.of(ctx).pop(true),
             child: Text(
-              L10n.of(context).commonRefresh,
-              // style: TextStyle(backgroundColor: Prefs().accentColor),
+              L10n.of(context).commonRefresh, // Refresh
             ),
           ),
         ],
@@ -597,8 +596,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(
-          L10n.of(context).homeDeleteAllProjects,
+        title: Row(
+          spacing: 8,
+          children: [
+            Icon(Icons.delete_forever),
+            Text(L10n.of(context).homeDeleteAllProjects),
+          ],
         ), //'Delete all projects'
         content: Text(
           L10n.of(context).homeDeleteAllProjectsPrompt,
