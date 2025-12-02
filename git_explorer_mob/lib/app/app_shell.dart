@@ -32,7 +32,7 @@ class NavItem {
   final String label;
   final Icon icon;
   final Icon activeIcon;
-  final String? pluginKey;  // If null, always visible
+  final String? pluginKey; // If null, always visible
 
   NavItem({
     required this.screen,
@@ -55,11 +55,30 @@ class _AppShellState extends ConsumerState<AppShell> {
   // Navigation is driven by Prefs via prefsProvider
 
   final ScrollController scrollController = ScrollController();
+  // Cache heavy screens to avoid rebuilding (preserve state)
+  late final Widget _cachedHomeScreen;
+  late final List<Widget> _pages;
+  late final Map<Screen, int> _pageIndex;
 
   @override
   void initState() {
     super.initState();
     _initializeApp();
+    // Create and cache HomeScreen once to preserve its state between navigations
+    _cachedHomeScreen = HomeScreen(controller: scrollController);
+    // Build a stable pages list so widgets remain in the tree (preserve state)
+    _pages = [
+      _cachedHomeScreen,
+      EditorScreen(controller: scrollController),
+      SettingsScreen(controller: scrollController),
+      const AIScreen(),
+    ];
+    _pageIndex = {
+      Screen.home: 0,
+      Screen.editor: 1,
+      Screen.settings: 2,
+      Screen.ai: 3,
+    };
   }
 
   Future<void> _initializeApp() async {
@@ -94,7 +113,8 @@ class _AppShellState extends ConsumerState<AppShell> {
         ),
         drawer: const AppDrawer(),
         // body: _buildBody(currentScreen, plugins),
-        body: _buildFloatingNavigationBar(plugins,currentScreen),
+        body: _buildFloatingNavigationBar(plugins, currentScreen),
+
         // body: Expanded(
         //   child: Column(children: [
         //     _buildBody(currentScreen, plugins),
@@ -103,160 +123,170 @@ class _AppShellState extends ConsumerState<AppShell> {
         // ),
         // bottomNavigationBar: _buildBottomNavigationBar(plugins),
         // bottomNavigationBar: _buildFloatingNavigationBar(plugins,currentScreen),
-
-     ) 
+      ),
     );
   }
 
-  Widget _buildBody(Screen currentScreen, List<String> plugins, ScrollController controller) {
+  Widget _buildBody(
+    Screen currentScreen,
+    List<String> plugins,
+    ScrollController controller,
+  ) {
+    // Use an IndexedStack of cached pages for primary screens so they stay mounted
+    if (_pageIndex.containsKey(currentScreen)) {
+      final idx = _pageIndex[currentScreen]!;
+      return IndexedStack(index: idx, children: _pages);
+    }
+
+    // Fallback handling for other screens (plugin-dependent)
     switch (currentScreen) {
-      case Screen.home:
-        return plugins.contains('file_explorer')
-            ? HomeScreen(controller: controller)
-            :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
-      case Screen.editor:
-        return EditorScreen(controller: controller);
       case Screen.fileExplorer:
         return plugins.contains('file_explorer')
-            ?  HomeScreen(controller: controller)
-            :  FeatureDisabledScreen(feature: L10n.of(context).navBarFileExplorer);
+            ? _cachedHomeScreen
+            : FeatureDisabledScreen(
+                feature: L10n.of(context).navBarFileExplorer,
+              );
       case Screen.gitHistory:
         return plugins.contains('git_history')
-            ? (Prefs().featureSupported("git_history") ? SizedBox.shrink():
-            FeatureNotSupported(feature: L10n.of(context).navBarGitHistory))
+            ? (Prefs().featureSupported("git_history")
+                  ? const SizedBox.shrink()
+                  : FeatureNotSupported(
+                      feature: L10n.of(context).navBarGitHistory,
+                    ))
             : FeatureDisabledScreen(feature: L10n.of(context).navBarGitHistory);
       case Screen.terminal:
         return plugins.contains('terminal')
-            ? (Prefs().featureSupported("terminal") ? SizedBox.shrink():
-            FeatureNotSupported(feature: L10n.of(context).navBarTerminal))
+            ? (Prefs().featureSupported("terminal")
+                  ? const SizedBox.shrink()
+                  : FeatureNotSupported(
+                      feature: L10n.of(context).navBarTerminal,
+                    ))
             : FeatureDisabledScreen(feature: L10n.of(context).navBarTerminal);
-      case Screen.settings:
-        return SettingsScreen(controller: controller);
-      case Screen.ai:
-        // return const AIScreen();
-         return plugins.contains('ai_assist')
-            ? (Prefs().featureSupported("ai") ? const AIScreen():
-            FeatureNotSupported(feature: L10n.of(context).navBarAI))
-            : FeatureDisabledScreen(feature: L10n.of(context).navBarAI);
+      default:
+        return _cachedHomeScreen;
     }
   }
 
-//    Widget _buildBottomNavigationBar() {
-//     // initial value
-//     int currentIndex = 0;
+  //    Widget _buildBottomNavigationBar() {
+  //     // initial value
+  //     int currentIndex = 0;
 
-//     return BottomNavigationBar(
-//       currentIndex: currentIndex,
-//       onTap: (index) {
-//         setState(() {
-//           currentIndex = index;
-//           print(currentIndex);
-//           // print(Prefs().getFlag('plugin_readonly_mode'));
-//           // print(Prefs().setFlag('plugin_readonly_mode_enabled',true));
+  //     return BottomNavigationBar(
+  //       currentIndex: currentIndex,
+  //       onTap: (index) {
+  //         setState(() {
+  //           currentIndex = index;
+  //           print(currentIndex);
+  //           // print(Prefs().getFlag('plugin_readonly_mode'));
+  //           // print(Prefs().setFlag('plugin_readonly_mode_enabled',true));
 
-//           // print(Prefs().readonlyModeEnabled);
-//           // print(Prefs().getValueList('plugins_enabled'));
-//           // print(Prefs().getValueExistInList('plugins_enabled','readonly_mode'));
-//           // print(Prefs().getValueExistInList('plugins_enabled','readonly_mode'));
-//           // Prefs().clearPrefs();
-          
+  //           // print(Prefs().readonlyModeEnabled);
+  //           // print(Prefs().getValueList('plugins_enabled'));
+  //           // print(Prefs().getValueExistInList('plugins_enabled','readonly_mode'));
+  //           // print(Prefs().getValueExistInList('plugins_enabled','readonly_mode'));
+  //           // Prefs().clearPrefs();
 
-//         });
-//       },
-//       type: BottomNavigationBarType.fixed,
-//       items: getVisibleNavigationItems(),
-//     );
-//   }
+  //         });
+  //       },
+  //       type: BottomNavigationBarType.fixed,
+  //       items: getVisibleNavigationItems(),
+  //     );
+  //   }
 
-// }
+  // }
 
-// class FeatureDisabledScreen extends StatelessWidget {
-//   final String feature;
+  // class FeatureDisabledScreen extends StatelessWidget {
+  //   final String feature;
 
-//   const FeatureDisabledScreen({super.key, required this.feature});
+  //   const FeatureDisabledScreen({super.key, required this.feature});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           const Icon(Icons.extension_off, size: 64, color: Colors.grey),
-//           const SizedBox(height: 16),
-//           Text(
-//             '$feature Disabled',
-//             style: Theme.of(context).textTheme.headlineSmall,
-//           ),
-//           const SizedBox(height: 8),
-//           Text(
-//             'Enable this feature from the drawer or settings',
-//             style: Theme.of(context).textTheme.bodyMedium,
-//             textAlign: TextAlign.center,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  //   @override
+  //   Widget build(BuildContext context) {
+  //     return Center(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           const Icon(Icons.extension_off, size: 64, color: Colors.grey),
+  //           const SizedBox(height: 16),
+  //           Text(
+  //             '$feature Disabled',
+  //             style: Theme.of(context).textTheme.headlineSmall,
+  //           ),
+  //           const SizedBox(height: 8),
+  //           Text(
+  //             'Enable this feature from the drawer or settings',
+  //             style: Theme.of(context).textTheme.bodyMedium,
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
+  // }
 
-// List<BottomNavigationBarItem> getVisibleNavigationItems() {
-//   // Define the full list of navigation items
-//   const allItems = [
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.folder_shared),
-//       activeIcon: Icon(Icons.folder_shared),
-//       label: 'Projects',
-//     ),
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.edit_outlined),
-//       activeIcon: Icon(Icons.edit),
-//       label: 'Editor',
-//     ),
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.chat_rounded),
-//       activeIcon: Icon(Icons.chat_rounded),
-//       label: 'AI',
-//     ),
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.history_outlined),
-//       activeIcon: Icon(Icons.history),
-//       label: 'Git History',
-//     ),
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.terminal_outlined),
-//       activeIcon: Icon(Icons.terminal),
-//       label: 'Terminal',
-//     ),
-//     BottomNavigationBarItem(
-//       icon: Icon(Icons.settings_rounded),
-//       activeIcon: Icon(Icons.settings),
-//       label: 'Settings',
-//     ),
-//   ];
-//   final flagMap = {
-//     'AI': 'ai_assist',
-//     'Git History': 'git_history',
-//     'Terminal': 'terminal',
-//   };
+  // List<BottomNavigationBarItem> getVisibleNavigationItems() {
+  //   // Define the full list of navigation items
+  //   const allItems = [
+  //     BottomNavigationBarItem(
+  //       icon: Icon(Icons.folder_shared),
+  //       activeIcon: Icon(Icons.folder_shared),
+  //       label: 'Projects',
+  //     ),
+  //     BottomNavigationBarItem(
+  //       icon: Icon(Icons.edit_outlined),
+  //       activeIcon: Icon(Icons.edit),
+  //       label: 'Editor',
+  //     ),
+  //     BottomNavigationBarItem(
+  //       icon: Icon(Icons.chat_rounded),
+  //       activeIcon: Icon(Icons.chat_rounded),
+  //       label: 'AI',
+  //     ),
+  //     BottomNavigationBarItem(
+  //       icon: Icon(Icons.history_outlined),
+  //       activeIcon: Icon(Icons.history),
+  //       label: 'Git History',
+  //     ),
+  //     BottomNavigationBarItem(
+  //       icon: Icon(Icons.terminal_outlined),
+  //       activeIcon: Icon(Icons.terminal),
+  //       label: 'Terminal',
+  //     ),
+  //     BottomNavigationBarItem(
+  //       icon: Icon(Icons.settings_rounded),
+  //       activeIcon: Icon(Icons.settings),
+  //       label: 'Settings',
+  //     ),
+  //   ];
+  //   final flagMap = {
+  //     'AI': 'ai_assist',
+  //     'Git History': 'git_history',
+  //     'Terminal': 'terminal',
+  //   };
 
-//   // Filter items based on their flag status
-//   return allItems.where((item) {
-//     final flagKey = flagMap[item.label];
-//     if (flagKey == null) {
-//       // No flag associated (e.g., Projects, Editor, Settings), always visible
-//       return true;
-//     }
-//     // Check if the plugin flag is enabled (defaults from previous plugin getters)
-//     return Prefs().getValueExistInList('plugins_enabled',flagKey);
-//   }).toList();
-// }
-Widget _buildFloatingNavigationBar(List<String> plugins, Screen currentScreen,){
-  final visibleNavItems = getVisibleNavItems(plugins);
+  //   // Filter items based on their flag status
+  //   return allItems.where((item) {
+  //     final flagKey = flagMap[item.label];
+  //     if (flagKey == null) {
+  //       // No flag associated (e.g., Projects, Editor, Settings), always visible
+  //       return true;
+  //     }
+  //     // Check if the plugin flag is enabled (defaults from previous plugin getters)
+  //     return Prefs().getValueExistInList('plugins_enabled',flagKey);
+  //   }).toList();
+  // }
+  Widget _buildFloatingNavigationBar(
+    List<String> plugins,
+    Screen currentScreen,
+  ) {
+    final visibleNavItems = getVisibleNavItems(plugins);
 
     // Compute current index based on currentScreen
-    int currentIndex = visibleNavItems.indexWhere((item) => item.screen == Prefs().lastKnownScreen);
+    int currentIndex = visibleNavItems.indexWhere(
+      (item) => item.screen == Prefs().lastKnownScreen,
+    );
     if (currentIndex == -1) {
-      currentIndex = 0;  // Fallback to first item
+      currentIndex = 0; // Fallback to first item
     }
 
     List<BottomNavigationBarItem> bottomBarItems = visibleNavItems.map((item) {
@@ -269,116 +299,114 @@ Widget _buildFloatingNavigationBar(List<String> plugins, Screen currentScreen,){
 
     // final currentScreen = Prefs().lastKnownScreen;
 
-  return //Scaffold(
-            // extendBody: true,
-            // body:
-             BottomBar(
-              body: (context, _) =>
-                // controller: scrollController,
-                _buildBody(currentScreen, plugins, scrollController),
-              // body: (context, _) => SizedBox.shrink(),
+    return //Scaffold(
+    // extendBody: true,
+    // body:
+    BottomBar(
+      body: (context, _) =>
+          // controller: scrollController,
+          _buildBody(currentScreen, plugins, scrollController),
+      // body: (context, _) => SizedBox.shrink(),
 
-              // body: (_, controller) =>
-              //     pages(currentIndex, constraints, controller),
-              hideOnScroll: true,
-              scrollOpposite: false,
-              curve: Curves.easeIn,
-              barColor: Colors.transparent,
-              iconDecoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(500),
+      // body: (_, controller) =>
+      //     pages(currentIndex, constraints, controller),
+      hideOnScroll: true,
+      scrollOpposite: false,
+      curve: Curves.easeIn,
+      barColor: Colors.transparent,
+      iconDecoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(500),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: Container(
+            height: 64,
+            decoration: BoxDecoration(
+              // color: Theme.of(context)
+              //     .colorScheme
+              //     .surfaceContainer
+              //     .withAlpha(123),
+              borderRadius: BorderRadius.circular(32),
+              border: Border.all(
+                // color: Theme.of(context).colorScheme.outline,
+                width: 0.5,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(32),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                  child: Container(
-                    height: 64,
-                    decoration: BoxDecoration(
-                      // color: Theme.of(context)
-                      //     .colorScheme
-                      //     .surfaceContainer
-                      //     .withAlpha(123),
-                      borderRadius: BorderRadius.circular(32),
-                      border: Border.all(
-                        // color: Theme.of(context).colorScheme.outline,
-                        width: 0.5,
-                      ),
-                    ),
-                    child: Hidable(
-                      controller:  scrollController,
-                      preferredWidgetSize:Size.fromHeight(60),
-                      child: BottomNavigationBar(
-                        selectedFontSize: 14,
-                        // selectedItemColor: Prefs().secondaryColor,
-                        // selectedLabelStyle: TextStyle(color: Prefs().accentColor),
-                        // selectedIconTheme: IconThemeData(color: Prefs().secondaryColor),
-                        // showSelectedLabels: true,
-                        enableFeedback: true,
-                        type: BottomNavigationBarType.fixed,
-                        landscapeLayout:
-                            BottomNavigationBarLandscapeLayout.linear,
-                        currentIndex: currentIndex,
-                        // onTap: (int index) => onBottomTap(index, false),
-                        onTap: (index) {
-                                  final selectedItem = visibleNavItems[index];
-                                  final selectedScreen = selectedItem.screen;
-                                  // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
-                                  Prefs().saveLastKnownRoute(screenToString(selectedScreen));
-                                  
-                                  // For debugging: Get/print the value of the current selected item
-                                  // print('Selected index: $index');
-                                  // print('Selected screen: $selectedScreen');
-                                  // print('Selected label: ${selectedItem.label}');
-                      
-                        },
-                        items: bottomBarItems,
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        // height: 64,
-                      ),
-                    ),
-                  ),
-                ),
+            ),
+            child: Hidable(
+              controller: scrollController,
+              preferredWidgetSize: Size.fromHeight(60),
+              child: BottomNavigationBar(
+                selectedFontSize: 14,
+                // selectedItemColor: Prefs().secondaryColor,
+                // selectedLabelStyle: TextStyle(color: Prefs().accentColor),
+                // selectedIconTheme: IconThemeData(color: Prefs().secondaryColor),
+                // showSelectedLabels: true,
+                enableFeedback: true,
+                type: BottomNavigationBarType.fixed,
+                landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
+                currentIndex: currentIndex,
+                // onTap: (int index) => onBottomTap(index, false),
+                onTap: (index) {
+                  final selectedItem = visibleNavItems[index];
+                  final selectedScreen = selectedItem.screen;
+                  // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
+                  Prefs().saveLastKnownRoute(screenToString(selectedScreen));
+
+                  // For debugging: Get/print the value of the current selected item
+                  // print('Selected index: $index');
+                  // print('Selected screen: $selectedScreen');
+                  // print('Selected label: ${selectedItem.label}');
+                },
+                items: bottomBarItems,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                // height: 64,
               ),
-            // ),
-          );
-}
+            ),
+          ),
+        ),
+      ),
+      // ),
+    );
+  }
 
-// Widget _buildBottomNavigationBar(List<String> plugins) {
-//     final visibleNavItems = getVisibleNavItems(plugins);
+  // Widget _buildBottomNavigationBar(List<String> plugins) {
+  //     final visibleNavItems = getVisibleNavItems(plugins);
 
-//     // Compute current index based on currentScreen
-//     int currentIndex = visibleNavItems.indexWhere((item) => item.screen == Prefs().lastKnownScreen);
-//     if (currentIndex == -1) {
-//       currentIndex = 0;  // Fallback to first item
-//     }
+  //     // Compute current index based on currentScreen
+  //     int currentIndex = visibleNavItems.indexWhere((item) => item.screen == Prefs().lastKnownScreen);
+  //     if (currentIndex == -1) {
+  //       currentIndex = 0;  // Fallback to first item
+  //     }
 
-//     return BottomNavigationBar(
-//       currentIndex: currentIndex,
-//       onTap: (index) {
-//   final selectedItem = visibleNavItems[index];
-//   final selectedScreen = selectedItem.screen;
-//   // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
-//   Prefs().saveLastKnownRoute(screenToString(selectedScreen));
-//   // Also trigger a local rebuild for immediate feedback
-//   // setState(() {});
+  //     return BottomNavigationBar(
+  //       currentIndex: currentIndex,
+  //       onTap: (index) {
+  //   final selectedItem = visibleNavItems[index];
+  //   final selectedScreen = selectedItem.screen;
+  //   // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
+  //   Prefs().saveLastKnownRoute(screenToString(selectedScreen));
+  //   // Also trigger a local rebuild for immediate feedback
+  //   // setState(() {});
 
-//         // For debugging: Get/print the value of the current selected item
-//         print('Selected index: $index');
-//         print('Selected screen: $selectedScreen');
-//         print('Selected label: ${selectedItem.label}');
-//       },
-//       type: BottomNavigationBarType.fixed,
-//       items: visibleNavItems.map((item) {
-//         return BottomNavigationBarItem(
-//           icon: item.icon,
-//           activeIcon: item.activeIcon,
-//           label: item.label,
-//         );
-//       }).toList(),
-//     );
-//   }
+  //         // For debugging: Get/print the value of the current selected item
+  //         print('Selected index: $index');
+  //         print('Selected screen: $selectedScreen');
+  //         print('Selected label: ${selectedItem.label}');
+  //       },
+  //       type: BottomNavigationBarType.fixed,
+  //       items: visibleNavItems.map((item) {
+  //         return BottomNavigationBarItem(
+  //           icon: item.icon,
+  //           activeIcon: item.activeIcon,
+  //           label: item.label,
+  //         );
+  //       }).toList(),
+  //     );
+  //   }
 
   List<NavItem> getVisibleNavItems(List<String> enabledPlugins) {
     final prefs = ref.watch(prefsProvider);
@@ -388,13 +416,13 @@ Widget _buildFloatingNavigationBar(List<String> plugins, Screen currentScreen,){
         label: L10n.of(context).navBarHome,
         icon: const Icon(Icons.folder_shared_outlined),
         activeIcon: Icon(Icons.folder_shared, color: prefs.accentColor),
-        pluginKey: null,  // Always visible (but body may disable content)
+        pluginKey: null, // Always visible (but body may disable content)
       ),
       NavItem(
         screen: Screen.editor,
         label: L10n.of(context).navBarEditor,
         icon: const Icon(Icons.edit_outlined),
-        activeIcon: Icon(Icons.edit, color:  prefs.accentColor),
+        activeIcon: Icon(Icons.edit, color: prefs.accentColor),
         pluginKey: null,
       ),
       NavItem(
@@ -432,7 +460,6 @@ Widget _buildFloatingNavigationBar(List<String> plugins, Screen currentScreen,){
       return enabledPlugins.contains(item.pluginKey);
     }).toList();
   }
-
 }
 
 class FeatureDisabledScreen extends StatelessWidget {
