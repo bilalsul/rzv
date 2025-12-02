@@ -37,32 +37,29 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
     return Drawer(
       width: 320,
-      child: Column( 
-          children: [
+      child: Column(
+        children: [
           // Header Section
           _buildDrawerHeader(theme, prefs),
-          
+
           // Navigation Section
           // _buildNavigationSection(currentScreen, theme),
-                    
+
           // Plugin Toggles Section
-          Expanded(
-            child: _buildPluginTogglesSection(prefs, theme),
-          ),
+          Expanded(child: _buildPluginTogglesSection(prefs, theme)),
           // Footer is rendered as the last sliver inside the scrollable plugin section
         ],
-    ),
+      ),
     );
   }
 
- @override
+  @override
   void initState() {
     super.initState();
     // make sure initialized Mobile Ads in main then load native ad for this screen
     _loadNativeAd();
-
   }
-  
+
   void _loadNativeAd() {
     _nativeAd = NativeAd(
       adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
@@ -87,8 +84,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     super.dispose();
   }
 
- 
-
   // =============================================
   // Drawer Header
   // =============================================
@@ -110,30 +105,32 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           // App Logo and Name
           Row(
             children: [
-              // Icon(
-              //   Icons.code,
-              //   size: 32,
-              //   // color: theme.colorScheme.primary,
-              //   color: prefs.accentColor,
-              // ),
               ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Image.asset('assets/icons/git-explorer-icon.png', height: 35, width: 35)),
-               
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.asset(
+                  'assets/icons/git-explorer-icon.png',
+                  height: 35,
+                  width: 35,
+                ),
+              ),
               const SizedBox(width: 12),
-              Text(
-                L10n.of(context).appName,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                  // color: theme.colorScheme.primary,
-                  color: prefs.accentColor,
+              // Ensure the app title cannot overflow the header horizontally
+              Expanded(
+                child: Text(
+                  L10n.of(context).appName,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    color: prefs.accentColor,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 6),
-          
+          const SizedBox(height: 3),
+
           // Current Project Info (sourced from Prefs)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -146,39 +143,73 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                     color: theme.colorScheme.onSurface.withOpacity(0.6),
                   ),
                 ),
-                const SizedBox(height: 6),
-                // Prefer explicit currentProjectName, otherwise fall back to lastOpenedProject basename
-                Text(
-                  prefs.currentProjectName.isNotEmpty
-                      ? prefs.currentProjectName
-                      : (prefs.lastOpenedProject.isNotEmpty ? prefs.lastOpenedProject.split('/').last : L10n.of(context).drawerNoProjectOpen),
-                  style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                const SizedBox(height: 3),
+                // Use Flexible/Row to prevent overflow and allow ellipsis for long names
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        prefs.currentProjectName.isNotEmpty
+                            ? prefs.currentProjectName
+                            : (prefs.lastOpenedProject.isNotEmpty
+                                  ? prefs.lastOpenedProject.split('/').last
+                                  : L10n.of(context).drawerNoProjectOpen),
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 1),
                 // Show the filename currently open in the editor (if any)
-                Builder(builder: (_) {
-                  final openFile = prefs.currentOpenFile;
-                  final openFileName = openFile.isNotEmpty ? openFile.split('/').last : '';
-                  return openFileName.isNotEmpty
-                      ? Text(
-                          openFileName,
-                          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.65)),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : const SizedBox.shrink();
-                }),
+                Builder(
+                  builder: (_) {
+                    final openFile = prefs.currentOpenFile;
+                    final openFileName = openFile.isNotEmpty
+                        ? openFile.split('/').last
+                        : '';
+                    return openFileName.isNotEmpty
+                        ? Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  openFileName,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(0.65),
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink();
+                  },
+                ),
                 // Last opened time for the project (relative, no seconds)
-                Builder(builder: (_) {
-                  final lastOpened = prefs.lastOpenedProjectTime;
-                  final lastText = lastOpened.millisecondsSinceEpoch > 0 ? _formatDate(lastOpened, context) : L10n.of(context).drawerNever;
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 6.0),
-                    child: Text(L10n.of(context).drawerLastOpened(lastText), style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurface.withOpacity(0.5))),
-                  );
-                }),
+                Builder(
+                  builder: (_) {
+                    final lastOpened = prefs.lastOpenedProjectTime;
+                    final lastText = lastOpened.millisecondsSinceEpoch > 0
+                        ? _formatDate(lastOpened, context)
+                        : L10n.of(context).drawerNever;
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 6.0),
+                      child: Text(
+                        L10n.of(context).drawerLastOpened(lastText),
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onSurface.withOpacity(0.5),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -227,7 +258,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           title: L10n.of(context).drawerEditorPlugins,
           plugins: plugin_defs.editorPlugins,
           isExpanded: _expandedEditorPlugins,
-          onToggle: () => setState(() => _expandedEditorPlugins = !_expandedEditorPlugins),
+          onToggle: () =>
+              setState(() => _expandedEditorPlugins = !_expandedEditorPlugins),
           theme: theme,
         ),
 
@@ -252,7 +284,9 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           title: L10n.of(context).drawerUtilityPlugins,
           plugins: plugin_defs.utilityPlugins,
           isExpanded: _expandedUtilityPlugins,
-          onToggle: () => setState(() => _expandedUtilityPlugins = !_expandedUtilityPlugins),
+          onToggle: () => setState(
+            () => _expandedUtilityPlugins = !_expandedUtilityPlugins,
+          ),
           theme: theme,
         ),
 
@@ -261,12 +295,14 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           title: L10n.of(context).drawerExperimental,
           plugins: plugin_defs.experimentalPlugins,
           isExpanded: _expandedExperimentalPlugins,
-          onToggle: () => setState(() => _expandedExperimentalPlugins = !_expandedExperimentalPlugins),
+          onToggle: () => setState(
+            () => _expandedExperimentalPlugins = !_expandedExperimentalPlugins,
+          ),
           theme: theme,
           showExperimentalBadge: true,
         ),
 
-        // SliverToBoxAdapter(child: 
+        // SliverToBoxAdapter(child:
         // _isNativeAdLoaded && _nativeAd != null
         //       ? SizedBox(
         //           height: 250,
@@ -275,7 +311,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         //       : const SizedBox.shrink(),
         // // SizedBox(height: 16)
         // ),
-        
         // _isNativeAdLoaded && _nativeAd != null
         //       ? SizedBox(
         //           height: 120,
@@ -286,16 +321,37 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         // Footer placed as a sliver so it only becomes visible when the user scrolls to the end
         SliverToBoxAdapter(child: _buildDrawerFooter(theme)),
 
-        SliverToBoxAdapter(child: 
-        _isNativeAdLoaded && _nativeAd != null
-              ? SizedBox(
-                  height: 250,
-                  child: AdWidget(ad: _nativeAd!),
-                )
+        SliverToBoxAdapter(
+          child: _isNativeAdLoaded && _nativeAd != null
+              ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
               : const SizedBox.shrink(),
         ),
-
-        SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(child: SizedBox(height: 60)),
+        SliverToBoxAdapter(
+          child: Consumer(
+            builder: (context, ref, child) {
+              final appState = ref.watch(appStateProvider);
+              return Column(
+                children: [
+                  Text(
+                    'v${appState.appVersion}',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.onSurface.withOpacity(0.5),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    L10n.of(context).appName,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.onSurface.withOpacity(0.4),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        SliverToBoxAdapter(child: SizedBox(height: 80)),
       ],
     );
   }
@@ -329,7 +385,10 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               if (showExperimentalBadge) ...[
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.tertiaryContainer,
                     borderRadius: BorderRadius.circular(8),
@@ -426,7 +485,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               //       return;
               //     }
               // }
-      
+
               await Prefs().setPluginEnabled(plugin.id, enabled);
               // Trigger a rebuild so changes are visible immediately
               setState(() {});
@@ -438,7 +497,10 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             // Optional: Show plugin details or settings
             _showPluginDetails(plugin);
           },
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 0,
+          ),
           visualDensity: const VisualDensity(vertical: -3),
         ),
       ),
@@ -456,10 +518,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(
-            color: theme.dividerColor.withOpacity(0.1),
-            width: 1,
-          ),
+          top: BorderSide(color: theme.dividerColor.withOpacity(0.1), width: 1),
         ),
       ),
       child: Column(
@@ -471,14 +530,23 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           //         child: AdWidget(ad: _nativeAd!),
           //       )
           //     : const SizedBox.shrink(),
+          const SizedBox(height: 60),
+
           // Quick Actions
           Row(
             children: [
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => _showFeedbackDialog(prefs),
-                  icon: Icon(Icons.feedback_outlined, size: 16, color: prefs.accentColor),
-                  label: Text(L10n.of(context).drawerFeedback, style: TextStyle(color: prefs.accentColor),),
+                  icon: Icon(
+                    Icons.feedback_outlined,
+                    size: 16,
+                    color: prefs.accentColor,
+                  ),
+                  label: Text(
+                    L10n.of(context).drawerFeedback,
+                    style: TextStyle(color: prefs.accentColor),
+                  ),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
@@ -488,8 +556,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => _showAboutDialogDonate(appState, prefs),
-                  icon: Icon(Icons.info_outlined, size: 16, color: prefs.accentColor,),
-                  label: Text(L10n.of(context).drawerAbout, style: TextStyle(color: prefs.accentColor)),
+                  icon: Icon(
+                    Icons.info_outlined,
+                    size: 16,
+                    color: prefs.accentColor,
+                  ),
+                  label: Text(
+                    L10n.of(context).drawerAbout,
+                    style: TextStyle(color: prefs.accentColor),
+                  ),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
@@ -497,31 +572,31 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          
+          const SizedBox(height: 50),
+
           // App Version and Info
-          Consumer(
-            builder: (context, ref, child) {
-              final appState = ref.watch(appStateProvider);
-              return Column(
-                children: [
-                  Text(
-                    'v${appState.appVersion}',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.5),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    L10n.of(context).appName,
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.4),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
+          // Consumer(
+          //   builder: (context, ref, child) {
+          //     final appState = ref.watch(appStateProvider);
+          //     return Column(
+          //       children: [
+          //         Text(
+          //           'v${appState.appVersion}',
+          //           style: theme.textTheme.labelSmall?.copyWith(
+          //             color: theme.colorScheme.onSurface.withOpacity(0.5),
+          //           ),
+          //         ),
+          //         const SizedBox(height: 4),
+          //         Text(
+          //           L10n.of(context).appName,
+          //           style: theme.textTheme.labelSmall?.copyWith(
+          //             color: theme.colorScheme.onSurface.withOpacity(0.4),
+          //           ),
+          //         ),
+          //       ],
+          //     );
+          //   },
+          // ),
         ],
       ),
     );
@@ -540,10 +615,13 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     final difference = now.difference(date);
 
     if (difference.inMinutes < 1) return L10n.of(context).commonJustNow;
-    if (difference.inHours < 1) return L10n.of(context).commonMinutes(difference.inMinutes);
-    if (difference.inDays < 1) return L10n.of(context).commonHours(difference.inHours);
+    if (difference.inHours < 1)
+      return L10n.of(context).commonMinutes(difference.inMinutes);
+    if (difference.inDays < 1)
+      return L10n.of(context).commonHours(difference.inHours);
     if (difference.inDays == 1) return L10n.of(context).commonYesterday;
-    if (difference.inDays < 7) return L10n.of(context).commonDays(difference.inDays);
+    if (difference.inDays < 7)
+      return L10n.of(context).commonDays(difference.inDays);
 
     return '${date.day}/${date.month}/${date.year}';
   }
@@ -598,30 +676,43 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(L10n.of(context).commonCancel, style: TextStyle(color: prefs.accentColor)),
+            child: Text(
+              L10n.of(context).commonCancel,
+              style: TextStyle(color: prefs.accentColor),
+            ),
           ),
           AbsorbPointer(
             absorbing: true,
             child: FilledButton(
-              style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.grey[400]),
-              textStyle: WidgetStatePropertyAll(TextStyle(color: Colors.grey[500]))),
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(Colors.grey[400]),
+                textStyle: WidgetStatePropertyAll(
+                  TextStyle(color: Colors.grey[500]),
+                ),
+              ),
               onPressed: () async {
                 // TODO: Implement feedback submission
                 Navigator.of(context).pop();
-                final Uri donateUrl = Uri.parse('https://github.com/uncrr/git-explorer/issues'); // Replace with your actual PLAYSTORE link after publish
+                final Uri donateUrl = Uri.parse(
+                  'https://github.com/uncrr/git-explorer/issues',
+                ); // Replace with your actual PLAYSTORE link after publish
                 if (await canLaunchUrl(donateUrl)) {
                   await launchUrl(donateUrl);
                 } else {
                   // Handle the case where the URL cannot be launched (e.g., no browser installed)
                   // You might display a SnackBar or an AlertDialog to inform the user.
-                print('Could not launch $donateUrl');
-                
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(L10n.of(context).drawerFeedbackComingSoon)),
-                );
-              }
+                  print('Could not launch $donateUrl');
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(L10n.of(context).drawerFeedbackComingSoon),
+                    ),
+                  );
+                }
               },
-              child: Text(L10n.of(context).drawerSendFeedback,), // change when added
+              child: Text(
+                L10n.of(context).drawerSendFeedback,
+              ), // change when added
             ),
           ),
         ],
@@ -629,12 +720,12 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-    void _showAboutDialogDonate(AppState appState, Prefs prefs) {
+  void _showAboutDialogDonate(AppState appState, Prefs prefs) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-      // title: Text(L10n.of(context).appName),
-      content: Column(
+        // title: Text(L10n.of(context).appName),
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
@@ -642,44 +733,66 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(40.0),
-                  child: Image.asset('assets/icons/git-explorer-icon.png', height: 60, width: 60)),
-                  Expanded(
-                    child: Column(
+                  child: Image.asset(
+                    'assets/icons/git-explorer-icon.png',
+                    height: 60,
+                    width: 60,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(L10n.of(context).appName, style: TextStyle(fontSize: 18)),
-                      Text('v${appState.appVersion}', style: TextStyle(fontSize: 10),)
-                  ],
-                    ),
-                  )
-          ]),
-          const SizedBox(height: 25),
-          Text(L10n.of(context).appAbout, style: TextStyle(fontSize: 15)),
-          const SizedBox(height: 25),
-          Text(L10n.of(context).appDonateTips, style: TextStyle(fontSize: 12)),
+                      Text(
+                        L10n.of(context).appName,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Text(
+                        'v${appState.appVersion}',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 25),
+            Text(L10n.of(context).appAbout, style: TextStyle(fontSize: 15)),
+            const SizedBox(height: 25),
+            Text(
+              L10n.of(context).appDonateTips,
+              style: TextStyle(fontSize: 12),
+            ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(L10n.of(context).commonClose, style: TextStyle(color: prefs.accentColor)),
+            child: Text(
+              L10n.of(context).commonClose,
+              style: TextStyle(color: prefs.accentColor),
+            ),
           ),
           FilledButton(
-            style: ButtonStyle(backgroundColor: WidgetStateProperty.all(prefs.accentColor)),
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(prefs.accentColor),
+            ),
             onPressed: () async {
               // TODO: Implement donate submission
-              final Uri donateUrl = Uri.parse('https://github.com/uncrr'); // Replace with your actual donation link
+              final Uri donateUrl = Uri.parse(
+                'https://github.com/uncrr',
+              ); // Replace with your actual donation link
               if (await canLaunchUrl(donateUrl)) {
                 await launchUrl(donateUrl);
               } else {
                 // Handle the case where the URL cannot be launched (e.g., no browser installed)
                 // You might display a SnackBar or an AlertDialog to inform the user.
-              print('Could not launch $donateUrl');
-              
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(L10n.of(context).commonFailed,)),
-              );
+                print('Could not launch $donateUrl');
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(L10n.of(context).commonFailed)),
+                );
               }
               Navigator.of(context).pop();
             },
@@ -692,7 +805,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   // void _showAboutDialogLicenses() {
   //   final appState = ref.read(appStateProvider);
-    
+
   //   showAboutDialog(
   //     context: context,
   //     applicationName: L10n.of(context).appName,
@@ -761,7 +874,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.codeFoldingDescription;
       // case 'bracket_matching':
       //   return l.bracketMatchingDescription;
-         case 'advanced_editor_options':
+      case 'advanced_editor_options':
         return l.advancedEditorDescription;
       case 'git_history':
         return l.gitHistoryDescription;
@@ -790,15 +903,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 }
 
 String _localizedPluginCategory(PluginCategory category, BuildContext context) {
-    final l = L10n.of(context);
-    switch (category) {
-      case PluginCategory.editor:
-        return l.drawerEditorPlugins;
-      case PluginCategory.utility:
-        return l.drawerUtilityPlugins;
-      case PluginCategory.git:
-        return l.drawerGitIntegration;
-      case PluginCategory.experimental:
-        return l.drawerExperimental;
-    }
+  final l = L10n.of(context);
+  switch (category) {
+    case PluginCategory.editor:
+      return l.drawerEditorPlugins;
+    case PluginCategory.utility:
+      return l.drawerUtilityPlugins;
+    case PluginCategory.git:
+      return l.drawerGitIntegration;
+    case PluginCategory.experimental:
+      return l.drawerExperimental;
+  }
 }
