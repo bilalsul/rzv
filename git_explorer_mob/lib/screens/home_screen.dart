@@ -516,11 +516,70 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
-  Future<void> _refreshProjects(BuildContext context) async {
+  // Future<void> _refreshProjects(BuildContext context) async {
+  //   try {
+  //     await _loadProjectsFromDisk();
+  //     if (!mounted) return;
+  //     setState(() {});
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text(L10n.of(context).homeRefreshedProjects)),
+  //     ); // 'Projects refreshed'
+  //   } catch (e) {
+  //     if (context.mounted)
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('${L10n.of(context).homeRefreshProjectsFailed}: $e'),
+  //         ), // 'Failed to refresh projects'
+  //       );
+  //   }
+  // }
+
+  Future<void> _refreshProjectsWithWarning(BuildContext context) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          spacing: 8,
+          children: [
+            Icon(Icons.refresh),
+            Text(L10n.of(context).homeRefreshProjects),
+          ],
+        ), //'Delete all projects'
+        content: Text(
+          L10n.of(context).homeRefreshProjectsPrompt,
+        ), // 'You are going to delete ALL projects. This action cannot be undone. Do you want to proceed?'
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(
+              L10n.of(context).commonCancel,
+              style: TextStyle(color: Prefs().accentColor),
+            ),
+          ),
+          FilledButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Prefs().accentColor),
+            ),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(
+              L10n.of(context).commonRefresh,
+              // style: TextStyle(backgroundColor: Prefs().accentColor),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirm != true) return;
+
+    setState(() {
+      _diskLoaded = false;
+    });
     try {
       await _loadProjectsFromDisk();
-      if (!mounted) return;
-      setState(() {});
+      // if (!mounted) return;
+      setState(() {
+        _diskLoaded = true;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(L10n.of(context).homeRefreshedProjects)),
       ); // 'Projects refreshed'
@@ -637,7 +696,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 IconButton(
                   tooltip: L10n.of(context).homeRefreshProjects,
                   icon: const Icon(Icons.refresh),
-                  onPressed: () async => await _refreshProjects(context),
+                  onPressed: () async =>
+                      await _refreshProjectsWithWarning(context),
                 ),
                 IconButton(
                   tooltip: L10n.of(context).homeDeleteAllProjects,
@@ -691,7 +751,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 // This avoids a flash where the UI shows "no projects" before the background
                 // disk scan completes and populates `_projects`.
                 if (!_diskLoaded) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: CircularProgressIndicator(color: prefs.accentColor),
+                  );
                 }
                 if (_projects.isEmpty)
                   return EmptyState(
