@@ -37,18 +37,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       // await ref.read(sharedPreferencesProvider.future);
 
       // If file explorer is enabled at startup, ensure projects root and load projects.
-      if (Prefs().isPluginEnabled('file_explorer')) {
-        await _prepareProjectsDir();
-        if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
-        await _loadProjectsFromDisk();
-        setState(() {
-          _diskLoaded = true;
-        });
-      } else {
-        // Not enabled: show in-memory samples so the UI is not empty.
-        _projects.clear();
-        setState(() {});
-      }
+      // if (Prefs().isPluginEnabled('file_explorer')) {
+      await _prepareProjectsDir();
+      if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
+      await _loadProjectsFromDisk();
+      setState(() {
+        _diskLoaded = true;
+      });
+      // }
+      //  else {
+      //   // Not enabled: show in-memory samples so the UI is not empty.
+      //   _projects.clear();
+      setState(() {});
+      // }
     });
 
     // Listen for changes to prefs so we can react to toggles (e.g., enabling File Explorer)
@@ -1334,6 +1335,7 @@ class _ProjectBrowser extends StatelessWidget {
     }
 
     return ListView.builder(
+      padding: EdgeInsetsDirectional.only(bottom: 80),
       controller: controller,
       itemCount: dirs.length + files.length,
       itemBuilder: (context, index) {
