@@ -57,6 +57,10 @@ class _AppShellState extends ConsumerState<AppShell> {
   final ScrollController scrollController = ScrollController();
   // Cache heavy screens to avoid rebuilding (preserve state)
   late final Widget _cachedHomeScreen;
+  // Cache editor so it doesn't rebuild on simple navigation; only recreate
+  // when a new file is opened (prefs.currentOpenFile changes).
+  late Widget _cachedEditorScreen;
+  late String _cachedEditorKey;
   // NOTE: other pages are created dynamically to allow recreation when needed.
 
   @override
@@ -65,6 +69,8 @@ class _AppShellState extends ConsumerState<AppShell> {
     _initializeApp();
     // Create and cache HomeScreen once to preserve its state between navigations
     _cachedHomeScreen = HomeScreen(controller: scrollController);
+    _cachedEditorKey = '';
+    _cachedEditorScreen = EditorScreen(controller: scrollController);
     // Other screens (Editor/Settings/AI) will be created on demand so they
     // reinitialize when their keys or prefs change.
   }
@@ -131,11 +137,20 @@ class _AppShellState extends ConsumerState<AppShell> {
         activePage = const SizedBox.shrink();
         break;
       case Screen.editor:
-        // Key the editor by the currently open file so it recreates when file changes
-        activePage = EditorScreen(
-          key: ValueKey(prefs.currentOpenFile),
-          controller: controller,
-        );
+        // Use cached editor instance unless a new file was opened. When
+        // `prefs.currentOpenFile` changes to a non-empty path, recreate the
+        // editor and update the cache so Monaco re-initializes for the new
+        // file. Navigating to Editor without opening a file reuses the
+        // cached instance.
+        final currentFile = prefs.currentOpenFile;
+        if (currentFile.isNotEmpty && currentFile != _cachedEditorKey) {
+          _cachedEditorKey = currentFile;
+          _cachedEditorScreen = EditorScreen(
+            key: ValueKey(_cachedEditorKey),
+            controller: controller,
+          );
+        }
+        activePage = _cachedEditorScreen;
         break;
       case Screen.settings:
         activePage = SettingsScreen(
