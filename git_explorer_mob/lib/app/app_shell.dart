@@ -57,8 +57,7 @@ class _AppShellState extends ConsumerState<AppShell> {
   final ScrollController scrollController = ScrollController();
   // Cache heavy screens to avoid rebuilding (preserve state)
   late final Widget _cachedHomeScreen;
-  late final List<Widget> _pages;
-  late final Map<Screen, int> _pageIndex;
+  // NOTE: other pages are created dynamically to allow recreation when needed.
 
   @override
   void initState() {
@@ -66,19 +65,8 @@ class _AppShellState extends ConsumerState<AppShell> {
     _initializeApp();
     // Create and cache HomeScreen once to preserve its state between navigations
     _cachedHomeScreen = HomeScreen(controller: scrollController);
-    // Build a stable pages list so widgets remain in the tree (preserve state)
-    _pages = [
-      _cachedHomeScreen,
-      EditorScreen(controller: scrollController),
-      SettingsScreen(controller: scrollController),
-      const AIScreen(),
-    ];
-    _pageIndex = {
-      Screen.home: 0,
-      Screen.editor: 1,
-      Screen.settings: 2,
-      Screen.ai: 3,
-    };
+    // Other screens (Editor/Settings/AI) will be created on demand so they
+    // reinitialize when their keys or prefs change.
   }
 
   Future<void> _initializeApp() async {
@@ -113,7 +101,7 @@ class _AppShellState extends ConsumerState<AppShell> {
         ),
         drawer: const AppDrawer(),
         // body: _buildBody(currentScreen, plugins),
-        body: _buildFloatingNavigationBar(plugins, currentScreen),
+        body: _buildFloatingNavigationBar(plugins, currentScreen, prefs),
 
         // body: Expanded(
         //   child: Column(children: [
@@ -131,40 +119,52 @@ class _AppShellState extends ConsumerState<AppShell> {
     Screen currentScreen,
     List<String> plugins,
     ScrollController controller,
+    Prefs prefs,
   ) {
-    // Use an IndexedStack of cached pages for primary screens so they stay mounted
-    if (_pageIndex.containsKey(currentScreen)) {
-      final idx = _pageIndex[currentScreen]!;
-      return IndexedStack(index: idx, children: _pages);
+    // Keep HomeScreen mounted forever by placing it in a Stack and
+    // toggling visibility with Offstage/TickerMode. Other pages (Editor,
+    // Settings, AI) are created dynamically so they rebuild when needed.
+
+    Widget activePage;
+    switch (currentScreen) {
+      case Screen.home:
+        activePage = const SizedBox.shrink();
+        break;
+      case Screen.editor:
+        // Key the editor by the currently open file so it recreates when file changes
+        activePage = EditorScreen(
+          key: ValueKey(prefs.currentOpenFile),
+          controller: controller,
+        );
+        break;
+      case Screen.settings:
+        activePage = SettingsScreen(
+          key: ValueKey(prefs.themeMode.toString()),
+          controller: controller,
+        );
+        break;
+      case Screen.ai:
+        activePage = const AIScreen();
+        break;
+      default:
+        activePage = const SizedBox.shrink();
     }
 
-    // Fallback handling for other screens (plugin-dependent)
-    switch (currentScreen) {
-      case Screen.fileExplorer:
-        return plugins.contains('file_explorer')
-            ? _cachedHomeScreen
-            : FeatureDisabledScreen(
-                feature: L10n.of(context).navBarFileExplorer,
-              );
-      case Screen.gitHistory:
-        return plugins.contains('git_history')
-            ? (Prefs().featureSupported("git_history")
-                  ? const SizedBox.shrink()
-                  : FeatureNotSupported(
-                      feature: L10n.of(context).navBarGitHistory,
-                    ))
-            : FeatureDisabledScreen(feature: L10n.of(context).navBarGitHistory);
-      case Screen.terminal:
-        return plugins.contains('terminal')
-            ? (Prefs().featureSupported("terminal")
-                  ? const SizedBox.shrink()
-                  : FeatureNotSupported(
-                      feature: L10n.of(context).navBarTerminal,
-                    ))
-            : FeatureDisabledScreen(feature: L10n.of(context).navBarTerminal);
-      default:
-        return _cachedHomeScreen;
-    }
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Home is always mounted but hidden when not active.
+        Offstage(
+          offstage: currentScreen != Screen.home,
+          child: TickerMode(
+            enabled: currentScreen == Screen.home,
+            child: _cachedHomeScreen,
+          ),
+        ),
+        // Active page overlays the home when it's not the home screen.
+        if (currentScreen != Screen.home) Positioned.fill(child: activePage),
+      ],
+    );
   }
 
   //    Widget _buildBottomNavigationBar() {
@@ -278,6 +278,7 @@ class _AppShellState extends ConsumerState<AppShell> {
   Widget _buildFloatingNavigationBar(
     List<String> plugins,
     Screen currentScreen,
+    Prefs prefs,
   ) {
     final visibleNavItems = getVisibleNavItems(plugins);
 
@@ -305,7 +306,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     BottomBar(
       body: (context, _) =>
           // controller: scrollController,
-          _buildBody(currentScreen, plugins, scrollController),
+          _buildBody(currentScreen, plugins, scrollController, prefs),
       // body: (context, _) => SizedBox.shrink(),
 
       // body: (_, controller) =>
