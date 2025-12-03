@@ -68,9 +68,9 @@ class _AppShellState extends ConsumerState<AppShell> {
     super.initState();
     _initializeApp();
     // Create and cache HomeScreen once to preserve its state between navigations
-    _cachedHomeScreen = HomeScreen(controller: scrollController);
+    _cachedHomeScreen = HomeScreen();
     _cachedEditorKey = '';
-    _cachedEditorScreen = EditorScreen(controller: scrollController);
+    _cachedEditorScreen = EditorScreen();
     // Other screens (Editor/Settings/AI) will be created on demand so they
     // reinitialize when their keys or prefs change.
   }
@@ -107,7 +107,12 @@ class _AppShellState extends ConsumerState<AppShell> {
         ),
         drawer: const AppDrawer(),
         // body: _buildBody(currentScreen, plugins),
-        body: _buildFloatingNavigationBar(plugins, currentScreen, prefs),
+        body: _buildFloatingNavigationBar(
+          plugins,
+          currentScreen,
+          prefs,
+          // scrollController,
+        ),
 
         // body: Expanded(
         //   child: Column(children: [
@@ -124,8 +129,8 @@ class _AppShellState extends ConsumerState<AppShell> {
   Widget _buildBody(
     Screen currentScreen,
     List<String> plugins,
-    ScrollController controller,
     Prefs prefs,
+    ScrollController controller,
   ) {
     // Keep HomeScreen mounted forever by placing it in a Stack and
     // toggling visibility with Offstage/TickerMode. Other pages (Editor,
@@ -145,10 +150,7 @@ class _AppShellState extends ConsumerState<AppShell> {
         final currentFile = prefs.currentOpenFile;
         if (currentFile.isNotEmpty && currentFile != _cachedEditorKey) {
           _cachedEditorKey = currentFile;
-          _cachedEditorScreen = EditorScreen(
-            key: ValueKey(_cachedEditorKey),
-            controller: controller,
-          );
+          _cachedEditorScreen = EditorScreen(key: ValueKey(_cachedEditorKey));
         }
         activePage = _cachedEditorScreen;
         break;
@@ -321,7 +323,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     BottomBar(
       body: (context, _) =>
           // controller: scrollController,
-          _buildBody(currentScreen, plugins, scrollController, prefs),
+          _buildBody(currentScreen, plugins, prefs, scrollController),
       // body: (context, _) => SizedBox.shrink(),
 
       // body: (_, controller) =>

@@ -12,9 +12,12 @@ import 'package:git_explorer_mob/utils/extension/monaco_language_helper.dart';
 /// When you want to switch to the real `flutter_monaco` widget, replace the
 /// [_buildFallbackEditor] with the package widget and map the options.
 class MonacoWrapper extends ConsumerStatefulWidget {
-  const MonacoWrapper({super.key, required this.controller});
+  const MonacoWrapper({
+    super.key,
+    // required this.controller
+  });
 
-  final ScrollController controller;
+  // final ScrollController controller;
   @override
   ConsumerState<MonacoWrapper> createState() => _MonacoWrapperState();
 }
@@ -61,7 +64,7 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
     return Column(
       children: [
         SingleChildScrollView(
-          controller: widget.controller,
+          // controller: widget.controller,
           physics: ClampingScrollPhysics(),
           child: Container(
             color: Theme.of(

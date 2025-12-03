@@ -5,9 +5,12 @@ import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
 
 class EditorScreen extends ConsumerStatefulWidget {
-  const EditorScreen({super.key, required this.controller});
+  const EditorScreen({
+    super.key,
+    // required this.controller
+  });
 
-  final ScrollController controller;
+  // final ScrollController controller;
 
   @override
   ConsumerState<EditorScreen> createState() => _EditorScreenState();
@@ -184,7 +187,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
           ],
         ),
       ),
-      body: SafeArea(child: MonacoWrapper(controller: widget.controller)),
+      body: SafeArea(child: MonacoWrapper()),
     );
   }
 }
