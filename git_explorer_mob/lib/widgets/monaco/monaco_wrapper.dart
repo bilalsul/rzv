@@ -12,8 +12,12 @@ import 'package:git_explorer_mob/utils/extension/monaco_language_helper.dart';
 /// When you want to switch to the real `flutter_monaco` widget, replace the
 /// [_buildFallbackEditor] with the package widget and map the options.
 class MonacoWrapper extends ConsumerStatefulWidget {
-  const MonacoWrapper({super.key});
+  const MonacoWrapper({
+    super.key,
+    // required this.controller
+  });
 
+  // final ScrollController controller;
   @override
   ConsumerState<MonacoWrapper> createState() => _MonacoWrapperState();
 }
@@ -34,12 +38,18 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
     super.dispose();
   }
 
-  Widget _buildFallbackEditor(Prefs prefs ) {
+  Widget _buildFallbackEditor(Prefs prefs) {
     return TextField(
       controller: _controller,
       maxLines: null,
-      style: TextStyle(fontFamily: prefs.editorFontFamily, fontSize: prefs.editorFontSize),
-      decoration: const InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.all(12)),
+      style: TextStyle(
+        fontFamily: prefs.editorFontFamily,
+        fontSize: prefs.editorFontSize,
+      ),
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.all(12),
+      ),
       onChanged: (v) async {
         await Prefs().saveCurrentOpenFileContent(v);
       },
@@ -51,57 +61,77 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
     final prefs = ref.watch(prefsProvider);
 
     // top bar with a few quick toggles (maps to Prefs flags)
-    return Column(children: [
-      Container(
-        color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.04),
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
-        // child: Row(children: [
-        //   const SizedBox(width: 8),
-        //   const Icon(Icons.code, size: 18),
-        //   const SizedBox(width: 8),
-        //   Text('Editor', style: Theme.of(context).textTheme.titleMedium),
-        //   const Spacer(),
-        //   // line numbers
-        //   Row(children: [
-        //     const Text('Line numbers'),
-        //     const SizedBox(width: 6),
-        //     DropdownButton<String>(
-        //       value: prefs.editorLineNumbers,
-        //       items: const [
-        //         DropdownMenuItem(value: 'on', child: Text('On')),
-        //         DropdownMenuItem(value: 'off', child: Text('Off')),
-        //         DropdownMenuItem(value: 'relative', child: Text('Relative')),
-        //       ],
-        //       onChanged: (v) async { if (v != null) await prefs.saveEditorLineNumbers(v); setState(() {}); },
-        //     ),
-        //   ]),
-        //   const SizedBox(width: 12),
-        //   // minimap
-        //   Row(children: [
-        //     const Text('Minimap'),
-        //     Switch(value: prefs.editorMinimapEnabled, onChanged: (v) async { await prefs.saveEditorMinimapEnabled(v); setState(() {}); }),
-        //   ]),
-        //   const SizedBox(width: 8),
-        // ]),
-      ),
-      Expanded(child: Platform.isAndroid || Platform.isIOS ? 
-      MonacoEditor(
-        initialValue: prefs.currentOpenFile.isEmpty ? prefs.filePlaceholder(context) : prefs.currentOpenFileContent,
-        backgroundColor: prefs.backgroundColor,
-        onContentChanged: (value) => prefs.saveCurrentOpenFileContent(value),
-        options: EditorOptions(
-          language: prefs.syntaxHighlightingEnabled ? prefs.currentOpenFile.toMonacoLanguage() : MonacoLanguage.plaintext,
-          lineNumbers: prefs.editorLineNumbers,
-          minimap: prefs.editorMinimapEnabled,
-          readOnly: prefs.readonlyModeEnabled,
-          fontFamily: prefs.editorFontFamily,
-          fontSize: prefs.editorFontSize,
-          wordWrap: prefs.editorWordWrap,
-          renderControlCharacters: prefs.editorRenderControlCharacters
+    return Column(
+      children: [
+        SingleChildScrollView(
+          // controller: widget.controller,
+          physics: ClampingScrollPhysics(),
+          child: Container(
+            color: Theme.of(
+              context,
+            ).colorScheme.surfaceVariant.withOpacity(0.04),
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+            // child: Row(children: [
+            //   const SizedBox(width: 8),
+            //   const Icon(Icons.code, size: 18),
+            //   const SizedBox(width: 8),
+            //   Text('Editor', style: Theme.of(context).textTheme.titleMedium),
+            //   const Spacer(),
+            //   // line numbers
+            //   Row(children: [
+            //     const Text('Line numbers'),
+            //     const SizedBox(width: 6),
+            //     DropdownButton<String>(
+            //       value: prefs.editorLineNumbers,
+            //       items: const [
+            //         DropdownMenuItem(value: 'on', child: Text('On')),
+            //         DropdownMenuItem(value: 'off', child: Text('Off')),
+            //         DropdownMenuItem(value: 'relative', child: Text('Relative')),
+            //       ],
+            //       onChanged: (v) async { if (v != null) await prefs.saveEditorLineNumbers(v); setState(() {}); },
+            //     ),
+            //   ]),
+            //   const SizedBox(width: 12),
+            //   // minimap
+            //   Row(children: [
+            //     const Text('Minimap'),
+            //     Switch(value: prefs.editorMinimapEnabled, onChanged: (v) async { await prefs.saveEditorMinimapEnabled(v); setState(() {}); }),
+            //   ]),
+            //   const SizedBox(width: 8),
+            // ]),
+          ),
         ),
-
-      ) : _buildFallbackEditor(prefs)),
-    ]);
+        Expanded(
+          child: Platform.isAndroid || Platform.isIOS
+              ? MonacoEditor(
+                  onFocus: () {
+                    // Hide keyboard on focus to avoid showing it on mobile
+                    FocusScope.of(context).unfocus();
+                  },
+                  initialValue: prefs.currentOpenFile.isEmpty
+                      ? prefs.filePlaceholder(context)
+                      : prefs.currentOpenFileContent,
+                  // backgroundColor: prefs.backgroundColor,
+                  onContentChanged: (value) =>
+                      prefs.saveCurrentOpenFileContent(value),
+                  options: EditorOptions(
+                    language: prefs.syntaxHighlightingEnabled
+                        ? prefs.currentOpenFile.toMonacoLanguage()
+                        : MonacoLanguage.plaintext,
+                    lineNumbers: prefs.editorLineNumbers,
+                    minimap: prefs.editorMinimapEnabled,
+                    readOnly: prefs.readonlyModeEnabled,
+                    fontFamily: prefs.editorFontFamily,
+                    fontSize: prefs.editorFontSize,
+                    wordWrap: prefs.editorWordWrap,
+                    renderControlCharacters:
+                        prefs.editorRenderControlCharacters,
+                  ),
+                )
+              : _buildFallbackEditor(prefs),
+        ),
+      ],
+    );
   }
 }
 

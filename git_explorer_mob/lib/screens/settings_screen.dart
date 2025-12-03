@@ -375,7 +375,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   // style: ButtonStyle(maximumSize: WidgetStateProperty.all(Size.infinite)),
                   onPressed: () => setState(() {
                     // reset theme customizer colors from prefs
-                    Prefs().resetThemeCustomizerColors(context);
+                    Prefs().resetThemeCustomizerColors();
                   }),
                   child: Text(L10n.of(context).commonReset, style: TextStyle(color: prefs.accentColor)),
                 ),
@@ -703,7 +703,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               // await prefs.setPluginConfig('file_explorer', 'preview_markdown', null);
               // await prefs.setPluginConfig('ai', 'model', null);
               // await prefs.setPluginConfig('ai', 'maxTokens', null);
-              prefs.resetThemeCustomizerColors(context);
+              prefs.resetThemeCustomizerColors();
             },
             icon: Icon(Icons.restore, color: prefs.accentColor),
             label: Text(L10n.of(context).settingsResetPluginDefaults, style: TextStyle(color: prefs.accentColor)),

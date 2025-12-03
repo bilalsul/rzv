@@ -1,6 +1,5 @@
 {
   "@@locale": "pt",
-
   "appName": "Git Explorer",
   "appAbout": "Explore projetos git e visualize arquivos no editor de código em modo somente leitura.",
   "appVersion": "Versão",
@@ -8,7 +7,6 @@
   "appAuthor": "Autor",
   "appDonate": "Doar",
   "appDonateTips": "O Git Explorer é um software open-source e gratuito. Se o achar útil, considere fazer uma doação para nos ajudar a continuar a melhorá-lo.",
-  
   "navBarHome": "Projetos",
   "navBarFileExplorer": "Explorador de Ficheiros",
   "navBarEditor": "Editor",
@@ -16,13 +14,10 @@
   "navBarGitHistory": "Histórico Git",
   "navBarTerminal": "Terminal",
   "navBarSettings": "Definições",
-
   "settingsDarkMode": "Escuro",
   "settingsLightMode": "Claro",
   "settingsSystemMode": "Sistema",
-  
   "settingsMoreSettings": "Mais definições",
-  
   "settingsAppearance": "Aparência",
   "settingsAppearanceTheme": "Tema",
   "settingsAppearanceThemeColor": "Cor do tema",
@@ -33,8 +28,6 @@
   "settingsAppearanceSecondaryColor": "Cor secundária",
   "settingsAppearanceAccentColor": "Cor de destaque",
   "settingsRevertThemeColors": "Reverter",
-  
-  
   "settingsEditorSettings": "Definições do Editor",
   "settingsEditorTabSize": "Tamanho da tabulação",
   "settingsEditorShowLineNumbers": "Mostrar números de linha",
@@ -43,7 +36,6 @@
   "settingsEditorFontFamily": "Família da fonte",
   "settingsEditorZoomInOut": "Ativar Zoom In/Out",
   "settingsEditorRenderUnsupportedCharacters": "Exibir caracteres não suportados com aviso 🔔",
-    
   "settingsAiSettings": "Definições de IA",
   "settingsAiModelProvider": "Fornecedor do modelo",
   "settingsAiMaxTokens": "Máximo de tokens",
@@ -53,12 +45,16 @@
   "settingsConfigureProvider": "Configurar {provider}",
   "@settingsConfigureProvider": {
     "description": "Dialog title when configuring a provider",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "Definições de {provider} guardadas",
   "@settingsProviderSaved": {
     "description": "Snackbar after saving provider configuration",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "Repor definições de IA",
   "settingsResetAiConfirm": "Tem a certeza de que pretende eliminar permanentemente os URLs e chaves API da IA?",
@@ -71,22 +67,19 @@
   "settingsSetApiKey": "Definir chave API",
   "connectionFailed": "Ligação falhou",
   "connectionSuccessful": "Ligação bem-sucedida",
-  
   "settingsTerminalSettings": "Definições do Terminal",
   "settingsTerminalShellExecutable": "Executável da shell",
   "settingsTerminalFontSize": "Tamanho da letra",
   "settingsTerminalAudibleBell": "Sinal sonoro",
-  
   "settingsFileExplorerSettings": "Definições do Explorador de Ficheiros",
   "settingsFileExplorerShowHidden": "Mostrar ficheiros ocultos",
   "settingsFileExplorerPreviewMarkdown": "Pré-visualizar ficheiros Markdown",
-  
   "settingsResetPluginDefaults": "Repor definições dos plugins para os valores predefinidos",
   "settingsThemeApplied": "Cores do tema aplicadas",
-  
   "commonDelete": "Eliminar",
   "commonCreate": "Criar",
   "commonSave": "Guardar",
+  "commonRefresh": "Atualizar",
   "commonCancel": "Cancelar",
   "commonOk": "OK",
   "commonSuccess": "Sucesso",
@@ -116,7 +109,6 @@
   "commonNotSupported": "Não suportado",
   "featureNotSupported": "Recurso não suportado no momento. Verifique as versões futuras",
   "enableFeatureFromPlugins": "Ative este recurso a partir dos Plugins",
-  
   "homeProjectsTitle": "Projetos importados/criados",
   "homeDefaultProjectName": "Projeto",
   "homeNoProjects": "Ainda não existem projetos",
@@ -125,6 +117,14 @@
   "homeImportProject": "Importar Projeto",
   "homeDeleteProjectConfirm": "Eliminar o projeto?",
   "homeDeleteProjectDialogContent": "Eliminar permanentemente o projeto e todos os ficheiros? Esta ação não pode ser revertida.",
+  "homeDeleteAllProjects": "Excluir todos os projetos",
+  "homeRefreshProjects": "Atualizar projetos",
+  "homeRefreshProjectsPrompt": "Isso pode demorar mais se você tiver projetos extremamente grandes. Clique em Atualizar para continuar ",
+  "homeRefreshedProjects": "Projetos atualizados",
+  "homeRefreshProjectsFailed": "Falha ao atualizar projetos",
+  "homeDeleteAllProjectsPrompt": "Você está prestes a excluir TODOS os projetos. Esta ação não pode ser desfeita. Deseja prosseguir?",
+  "homeDeletedAllProjects": "Todos os projetos excluídos",
+  "homeDeleteAllProjectsFailed": "Falha ao excluir projetos",
   "homeUnknown": "Desconhecido",
   "homeModified": "Modificado",
   "homeFiles": "Ficheiros",
@@ -154,24 +154,35 @@
   "homeSampleImportFailed": "Importação do exemplo falhou: {error}",
   "@homeSampleImportFailed": {
     "description": "Error message when sample project import fails",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
   "importFailed": "Importação falhou: {error}",
   "@importFailed": {
     "description": "Error message when import fails, with the error detail",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
+  "homeExtractImporting": "Importando projeto...",
+  "homeExtractStarting": "Iniciando extração...",
+  "homeExtractInitializing": "inicializando...",
+  "homeExtractProgress": "Processamento da extração",
+  "homeExtractCurrentFile": "Arquivo atual",
+  "homeExtractItemsExtracted": "Arquivos extraídos",
   "homeRetry": "Tentar novamente",
   "tutorialProjectName": "Projeto Tutorial",
   "tutorialProjectReadmeTitle": "# Bem-vindo ao Tutorial do Git Explorer",
   "tutorialProjectReadmeBody": "Este README explica as funcionalidades do ecrã inicial e como abrir, editar, guardar e eliminar ficheiros.\n\n- Toque num projeto para o abrir\n- Toque num ficheiro para pré-visualizar ou abrir no editor\n- Use o menu lateral para ativar/desativar funcionalidades como o Explorador de Ficheiros\n- Crie, importe (.zip) ou elimine projetos a partir daqui\n\nDivirta-se a explorar a aplicação!",
-  
   "drawerCurrentProject": "Projeto Atual",
   "drawerNoProjectOpen": "Nenhum projeto aberto",
   "drawerLastOpened": "Última abertura: {time}",
   "@drawerLastOpened": {
     "description": "Label showing when the project was last opened, time is pre-formatted",
-    "placeholders": { "time": {} }
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "Nunca",
   "drawerPluginsAndFeatures": "PLUGINS E FUNCIONALIDADES",
@@ -183,9 +194,17 @@
   "drawerFeedback": "Feedback",
   "drawerAbout": "Sobre",
   "drawerPluginId": "ID do Plugin: {id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "Categoria: {category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "Criar Nova Pasta",
   "drawerFolderNameHint": "Nome da pasta",
   "drawerEditorTheme": "Tema do Editor",
@@ -193,20 +212,39 @@
   "drawerFeedbackBody": "Gostaríamos muito de receber o seu feedback sobre o Git Explorer!",
   "drawerSendFeedback": "Enviar Feedback",
   "drawerFirstInstalled": "Primeira instalação: {date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "Funcionalidade de feedback brevemente!",
   "commonJustNow": "Agora mesmo",
   "commonMinutes": "{count, plural, other{{count} min atrás}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "{count, plural, other{{count} h atrás}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "Ontem",
   "commonDays": "{count, plural, other{{count} dias atrás}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "Fechar",
   "drawerPluginDetailsPluginId": "ID do Plugin: {id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "Modo Só de Leitura",
   "readonlyModeDescription": "Evita edições acidentais nos ficheiros",
   "syntaxHighlightingName": "Realce de Sintaxe",
@@ -217,17 +255,14 @@
   "bracketMatchingDescription": "Destaca parênteses e chavetas correspondentes",
   "advancedEditorName": "Opções avançadas",
   "advancedEditorDescription": "Opções avançadas do editor nas Configurações",
-
   "gitHistoryName": "Histórico Git",
   "gitHistoryDescription": "Ver histórico de commits e diferenças",
-
   "fileExplorerName": "Explorador de Ficheiros",
   "fileExplorerDescription": "Navegar e gerir ficheiros do projeto",
   "terminalName": "Terminal Integrado",
   "terminalDescription": "Executar comandos sem sair do editor",
   "themeCustomizerName": "Personalizador de Tema",
   "themeCustomizerDescription": "Personalizar a aparência do editor e da aplicação",
-
   "aiAssistName": "Assistente de Código IA",
   "aiAssistDescription": "Obter sugestões de código com inteligência artificial"
 }

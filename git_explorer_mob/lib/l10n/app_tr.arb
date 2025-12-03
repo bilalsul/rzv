@@ -1,6 +1,5 @@
 {
   "@@locale": "tr",
-
   "appName": "Git Explorer",
   "appAbout": "Git projelerini keşfedin ve dosyaları kod editöründe salt okunur modda görüntüleyin.",
   "appVersion": "Sürüm",
@@ -8,21 +7,17 @@
   "appAuthor": "Geliştirici",
   "appDonate": "Bağış Yap",
   "appDonateTips": "Git Explorer ücretsiz ve açık kaynaklı bir yazılımdır. İşinize yarıyorsa, geliştirmeye devam edebilmemiz için bağış yaparak bize destek olabilirsiniz.",
-  
-  "navBarHome":"Projeler",
-  "navBarFileExplorer":"Dosya Gezgini",
-  "navBarEditor":"Editör",
+  "navBarHome": "Projeler",
+  "navBarFileExplorer": "Dosya Gezgini",
+  "navBarEditor": "Editör",
   "navBarAI": "AI",
-  "navBarGitHistory":"Git Geçmişi",
-  "navBarTerminal":"Terminal",
+  "navBarGitHistory": "Git Geçmişi",
+  "navBarTerminal": "Terminal",
   "navBarSettings": "Ayarlar",
-
   "settingsDarkMode": "Koyu",
   "settingsLightMode": "Açık",
   "settingsSystemMode": "Sistem",
-  
   "settingsMoreSettings": "Daha Fazla Ayar",
-  
   "settingsAppearance": "Görünüm",
   "settingsAppearanceTheme": "Tema",
   "settingsAppearanceThemeColor": "Tema Rengi",
@@ -33,7 +28,6 @@
   "settingsAppearanceSecondaryColor": "İkincil renk",
   "settingsAppearanceAccentColor": "Vurgu rengi",
   "settingsRevertThemeColors": "Geri al",
-    
   "settingsEditorSettings": "Editör Ayarları",
   "settingsEditorTabSize": "Sekme boyutu",
   "settingsEditorShowLineNumbers": "Satır numaralarını göster",
@@ -42,7 +36,6 @@
   "settingsEditorFontFamily": "Yazı Tipi Ailesi",
   "settingsEditorZoomInOut": "Yakınlaştırma/Uzaklaştırma'yı Etkinleştir",
   "settingsEditorRenderUnsupportedCharacters": "Desteklenmeyen karakterleri uyarıyla göster 🔔",
-  
   "settingsAiSettings": "AI Ayarları",
   "settingsAiModelProvider": "Model sağlayıcısı",
   "settingsAiMaxTokens": "Maksimum token",
@@ -52,12 +45,16 @@
   "settingsConfigureProvider": "{provider} Yapılandır",
   "@settingsConfigureProvider": {
     "description": "Dialog title when configuring a provider",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "{provider} ayarları kaydedildi",
   "@settingsProviderSaved": {
     "description": "Snackbar after saving provider configuration",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "AI ayarlarını sıfırla",
   "settingsResetAiConfirm": "AI URL'lerini ve API anahtarlarını kalıcı olarak silmek istediğinizden emin misiniz?",
@@ -70,17 +67,15 @@
   "settingsSetApiKey": "API Anahtarı Ayarla",
   "connectionFailed": "Bağlantı başarısız",
   "connectionSuccessful": "Bağlantı başarılı",
-  
   "settingsFileExplorerSettings": "Dosya Gezgini Ayarları",
   "settingsFileExplorerShowHidden": "Gizli dosyaları göster",
   "settingsFileExplorerPreviewMarkdown": "Markdown dosyalarını önizle",
-  
   "settingsResetPluginDefaults": "Eklenti ayarlarını varsayılanlara döndür",
   "settingsThemeApplied": "Tema renkleri uygulandı",
-  
   "commonDelete": "Sil",
   "commonCreate": "Oluştur",
   "commonSave": "Kaydet",
+  "commonRefresh": "Yenile",
   "commonCancel": "İptal",
   "commonOk": "Tamam",
   "commonSuccess": "Başarılı",
@@ -110,24 +105,31 @@
   "commonNotSupported": "Desteklenmiyor",
   "featureNotSupported": "Özellik şu anda desteklenmiyor. Gelecek sürümleri kontrol edin",
   "enableFeatureFromPlugins": "Bu özelliği Eklentiler bölümünden etkinleştirin",
-  
   "homeProjectsTitle": "İçe Aktarılan/Oluşturulan Projeler",
-  "homeDefaultProjectName":"Proje",
+  "homeDefaultProjectName": "Proje",
   "homeNoProjects": "Henüz proje yok",
   "homeGetStarted": "Başlamak için bir proje oluşturun veya içe aktarın",
   "homeCreateProject": "Proje Oluştur",
   "homeImportProject": "Proje İçe Aktar",
   "homeDeleteProjectConfirm": "Projeyi sil?",
   "homeDeleteProjectDialogContent": "Proje ve tüm dosyaları kalıcı olarak silinsin mi? Bu işlem geri alınamaz.",
-  "homeUnknown" :"Bilinmiyor",
-  "homeModified" :"Değiştirildi",
+  "homeDeleteAllProjects": "Tüm Projeleri Sil",
+  "homeRefreshProjects": "Projeleri Yenile",
+  "homeRefreshProjectsPrompt": "Son derece büyük projeleriniz varsa bu işlem daha uzun sürebilir. Devam etmek için Yenile'ye tıklayın ",
+  "homeRefreshedProjects": "Projeler yenilendi",
+  "homeRefreshProjectsFailed": "Projeler yenilenemedi",
+  "homeDeleteAllProjectsPrompt": "TÜM projeleri silmek üzeresiniz. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?",
+  "homeDeletedAllProjects": "Tüm projeler silindi",
+  "homeDeleteAllProjectsFailed": "Projeler silinemedi",
+  "homeUnknown": "Bilinmiyor",
+  "homeModified": "Değiştirildi",
   "homeFiles": "Dosyalar",
   "homeFolders": "Klasörler",
   "homeReadmeNotFound": "README bulunamadı",
   "homeOpenFileEditorNotice": "Bu dosya daha sonra editörde açılacak",
   "homeBack": "Geri",
-  "homeAddProjectName" : "Proje Adı",
-  "homeCreatedNewProject" : "Proje Oluşturuldu",
+  "homeAddProjectName": "Proje Adı",
+  "homeCreatedNewProject": "Proje Oluşturuldu",
   "homeImportZipProject": "Proje içe aktar (zip)",
   "homeImportedZipNotFound": "İçe aktarılan zip dosyası bulunamadı",
   "homeImportZipAsProject": "Zip proje olarak içe aktarıldı",
@@ -147,10 +149,10 @@
   "homeNoModificationInfo": "Değişiklik bilgisi yok",
   "homeSampleImportFailed": "Örnek içe aktarma başarısız: {error}",
   "@homeSampleImportFailed": {
-  "description": "Error message when sample project import fails",
-  "placeholders": {
-    "error": {}
-  }
+    "description": "Error message when sample project import fails",
+    "placeholders": {
+      "error": {}
+    }
   },
   "importFailed": "İçe aktarma başarısız: {error}",
   "@importFailed": {
@@ -159,17 +161,24 @@
       "error": {}
     }
   },
+  "homeExtractImporting": "Proje içe aktarılıyor...",
+  "homeExtractStarting": "Çıkarma başlatılıyor...",
+  "homeExtractInitializing": "başlatılıyor...",
+  "homeExtractProgress": "Çıkarma işlemi devam ediyor",
+  "homeExtractCurrentFile": "Geçerli dosya",
+  "homeExtractItemsExtracted": "Çıkarılan dosyalar",
   "homeRetry": "Tekrar Dene",
   "tutorialProjectName": "Eğitim Projesi",
   "tutorialProjectReadmeTitle": "# Git Explorer Eğitimi’ne Hoş Geldiniz",
   "tutorialProjectReadmeBody": "Bu README, Ana ekran özelliklerini ve dosyaları açma, düzenleme, kaydetme ve silme işlemlerini anlatır.\n\n- Projeye dokunarak açın\n- Dosyaya dokunarak önizleyin veya editörde açın\n- Dosya Gezgini gibi özellikleri açmak/kapatmak için yan menüyü kullanın\n- Projeleri buradan oluşturun, içe aktarın (.zip) veya kaldırın\n\nUygulamayı keşfetmeye başlayın!",
-  
   "drawerCurrentProject": "Geçerli Proje",
   "drawerNoProjectOpen": "Açık proje yok",
   "drawerLastOpened": "Son açılma: {time}",
   "@drawerLastOpened": {
     "description": "Label showing when the project was last opened, time is pre-formatted",
-    "placeholders": {"time": {}}
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "Asla",
   "drawerPluginsAndFeatures": "EKLENTİLER & ÖZELLİKLER",
@@ -181,9 +190,17 @@
   "drawerFeedback": "Geri Bildirim",
   "drawerAbout": "Hakkında",
   "drawerPluginId": "Eklenti ID: {id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "Kategori: {category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "Yeni Klasör Oluştur",
   "drawerFolderNameHint": "Klasör adı",
   "drawerEditorTheme": "Editör Teması",
@@ -191,20 +208,39 @@
   "drawerFeedbackBody": "Git Explorer hakkındaki görüşlerinizi duymak isteriz!",
   "drawerSendFeedback": "Geri Bildirim Gönder",
   "drawerFirstInstalled": "İlk kurulum: {date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "Geri bildirim özelliği yakında geliyor!",
   "commonJustNow": "Az önce",
   "commonMinutes": "{count, plural, other{{count} dk önce}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "{count, plural, other{{count} sa önce}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "Dün",
   "commonDays": "{count, plural, other{{count} gün önce}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "Kapat",
   "drawerPluginDetailsPluginId": "Eklenti ID: {id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "Salt Okunur Mod",
   "readonlyModeDescription": "Dosyalarda kazara değişiklik yapılmasını önler",
   "syntaxHighlightingName": "Sözdizimi Renklendirme",
@@ -215,17 +251,14 @@
   "bracketMatchingDescription": "Eşleşen parantezleri vurgular",
   "advancedEditorName": "Gelişmiş Seçenekler",
   "advancedEditorDescription": "Düzenleyici gelişmiş seçenekleri Ayarlar'da",
-
   "gitHistoryName": "Git Geçmişi",
   "gitHistoryDescription": "Commit geçmişini ve farkları görüntüleyin",
-
   "fileExplorerName": "Dosya Gezgini",
   "fileExplorerDescription": "Proje dosyalarını göz atın ve yönetin",
   "terminalName": "Entegre Terminal",
   "terminalDescription": "Editörden çıkmadan komut çalıştırın",
   "themeCustomizerName": "Tema Özelleştirici",
   "themeCustomizerDescription": "Editör ve uygulama görünümünü özelleştirin",
-
   "aiAssistName": "AI Kod Asistanı",
   "aiAssistDescription": "AI destekli kod önerileri alın"
 }

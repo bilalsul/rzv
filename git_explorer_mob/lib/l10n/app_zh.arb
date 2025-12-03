@@ -1,6 +1,5 @@
 {
   "@@locale": "zh",
-
   "appName": "Git Explorer",
   "appAbout": "浏览 git 项目，并在代码编辑器中以只读模式查看文件。",
   "appVersion": "版本",
@@ -8,21 +7,17 @@
   "appAuthor": "作者",
   "appDonate": "捐赠",
   "appDonateTips": "Git Explorer 是一款免费的开源软件。如果您觉得它好用，欢迎捐赠支持我们持续改进。",
-  
-  "navBarHome":"项目",
-  "navBarFileExplorer":"文件管理器",
-  "navBarEditor":"编辑器",
+  "navBarHome": "项目",
+  "navBarFileExplorer": "文件管理器",
+  "navBarEditor": "编辑器",
   "navBarAI": "AI",
-  "navBarGitHistory":"Git 历史",
-  "navBarTerminal":"终端",
+  "navBarGitHistory": "Git 历史",
+  "navBarTerminal": "终端",
   "navBarSettings": "设置",
-
   "settingsDarkMode": "深色",
   "settingsLightMode": "浅色",
   "settingsSystemMode": "跟随系统",
-  
   "settingsMoreSettings": "更多设置",
-  
   "settingsAppearance": "外观",
   "settingsAppearanceTheme": "主题",
   "settingsAppearanceThemeColor": "主题颜色",
@@ -33,7 +28,6 @@
   "settingsAppearanceSecondaryColor": "次色调",
   "settingsAppearanceAccentColor": "强调色",
   "settingsRevertThemeColors": "恢复默认",
-  
   "settingsEditorSettings": "编辑器设置",
   "settingsEditorTabSize": "Tab 宽度",
   "settingsEditorShowLineNumbers": "显示行号",
@@ -42,7 +36,6 @@
   "settingsEditorFontFamily": "字体系列",
   "settingsEditorZoomInOut": "启用放大/缩小",
   "settingsEditorRenderUnsupportedCharacters": "以警告形式显示不支持的字符 🔔",
-  
   "settingsAiSettings": "AI 设置",
   "settingsAiModelProvider": "模型提供商",
   "settingsAiMaxTokens": "最大 Token 数",
@@ -52,12 +45,16 @@
   "settingsConfigureProvider": "配置 {provider}",
   "@settingsConfigureProvider": {
     "description": "Dialog title when configuring a provider",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsProviderSaved": "{provider} 设置已保存",
   "@settingsProviderSaved": {
     "description": "Snackbar after saving provider configuration",
-    "placeholders": { "provider": {} }
+    "placeholders": {
+      "provider": {}
+    }
   },
   "settingsResetAiSettings": "重置 AI 设置",
   "settingsResetAiConfirm": "确定要永久删除所有 AI URL 和 API 密钥吗？",
@@ -70,17 +67,15 @@
   "settingsSetApiKey": "设置 API 密钥",
   "connectionFailed": "连接失败",
   "connectionSuccessful": "连接成功",
-  
   "settingsFileExplorerSettings": "文件管理器设置",
   "settingsFileExplorerShowHidden": "显示隐藏文件",
   "settingsFileExplorerPreviewMarkdown": "预览 Markdown 文件",
-  
   "settingsResetPluginDefaults": "恢复插件默认设置",
   "settingsThemeApplied": "主题颜色已应用",
-  
   "commonDelete": "删除",
   "commonCreate": "创建",
   "commonSave": "保存",
+  "commonRefresh": "刷新",
   "commonCancel": "取消",
   "commonOk": "确定",
   "commonSuccess": "成功",
@@ -110,24 +105,31 @@
   "commonNotSupported": "不支持",
   "featureNotSupported": "该功能目前不支持。请关注后续版本",
   "enableFeatureFromPlugins": "从插件中启用此功能",
-  
   "homeProjectsTitle": "已导入/创建的项目",
-  "homeDefaultProjectName":"项目",
+  "homeDefaultProjectName": "项目",
   "homeNoProjects": "暂无项目",
   "homeGetStarted": "创建或导入项目以开始使用",
   "homeCreateProject": "创建项目",
   "homeImportProject": "导入项目",
   "homeDeleteProjectConfirm": "删除项目？",
   "homeDeleteProjectDialogContent": "将永久删除项目及其所有文件，此操作不可恢复。",
-  "homeUnknown" :"未知",
-  "homeModified" :"已修改",
+  "homeDeleteAllProjects": "删除所有项目",
+  "homeRefreshProjects": "刷新项目",
+  "homeRefreshProjectsPrompt": "如果您有非常大的项目，这可能需要更长时间。点击刷新以继续 ",
+  "homeRefreshedProjects": "项目已刷新",
+  "homeRefreshProjectsFailed": "刷新项目失败",
+  "homeDeleteAllProjectsPrompt": "您将删除所有项目。此操作无法撤销。您确定要继续吗？",
+  "homeDeletedAllProjects": "所有项目已删除",
+  "homeDeleteAllProjectsFailed": "删除项目失败",
+  "homeUnknown": "未知",
+  "homeModified": "已修改",
   "homeFiles": "文件",
   "homeFolders": "文件夹",
   "homeReadmeNotFound": "未找到 README",
   "homeOpenFileEditorNotice": "此文件稍后将在编辑器中打开",
   "homeBack": "返回",
-  "homeAddProjectName" : "项目名称",
-  "homeCreatedNewProject" : "项目已创建",
+  "homeAddProjectName": "项目名称",
+  "homeCreatedNewProject": "项目已创建",
   "homeImportZipProject": "导入项目（zip）",
   "homeImportedZipNotFound": "导入的 zip 文件未找到",
   "homeImportZipAsProject": "已将 zip 作为项目导入",
@@ -148,24 +150,35 @@
   "homeSampleImportFailed": "示例导入失败：{error}",
   "@homeSampleImportFailed": {
     "description": "Error message when sample project import fails",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
   "importFailed": "导入失败：{error}",
   "@importFailed": {
     "description": "Error message when import fails, with the error detail",
-    "placeholders": { "error": {} }
+    "placeholders": {
+      "error": {}
+    }
   },
+  "homeExtractImporting": "正在导入项目...",
+  "homeExtractStarting": "开始解压...",
+  "homeExtractInitializing": "初始化中...",
+  "homeExtractProgress": "正在解压",
+  "homeExtractCurrentFile": "当前文件",
+  "homeExtractItemsExtracted": "已解压文件",
   "homeRetry": "重试",
   "tutorialProjectName": "教程项目",
   "tutorialProjectReadmeTitle": "# 欢迎使用 Git Explorer 教程",
   "tutorialProjectReadmeBody": "本 README 将带您了解首页功能以及如何打开、编辑、保存和删除文件。\n\n- 点击项目即可打开\n- 点击文件可预览或在编辑器中打开\n- 通过侧边栏切换文件管理器等功能\n- 在这里创建、导入（.zip）或删除项目\n\n祝您使用愉快！",
-  
   "drawerCurrentProject": "当前项目",
   "drawerNoProjectOpen": "未打开任何项目",
   "drawerLastOpened": "最后打开：{time}",
   "@drawerLastOpened": {
     "description": "Label showing when the project was last opened, time is pre-formatted",
-    "placeholders": {"time": {}}
+    "placeholders": {
+      "time": {}
+    }
   },
   "drawerNever": "从未",
   "drawerPluginsAndFeatures": "插件与功能",
@@ -177,9 +190,17 @@
   "drawerFeedback": "反馈",
   "drawerAbout": "关于",
   "drawerPluginId": "插件 ID：：{id}",
-  "@drawerPluginId": { "placeholders": { "id": {} } },
+  "@drawerPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "drawerPluginCategory": "分类：{category}",
-  "@drawerPluginCategory": { "placeholders": { "category": {} } },
+  "@drawerPluginCategory": {
+    "placeholders": {
+      "category": {}
+    }
+  },
   "drawerCreateNewFolderTitle": "新建文件夹",
   "drawerFolderNameHint": "文件夹名称",
   "drawerEditorTheme": "编辑器主题",
@@ -187,20 +208,39 @@
   "drawerFeedbackBody": "我们非常期待您对 Git Explorer 的宝贵意见！",
   "drawerSendFeedback": "发送反馈",
   "drawerFirstInstalled": "首次安装：{date}",
-  "@drawerFirstInstalled": { "placeholders": { "date": {} } },
+  "@drawerFirstInstalled": {
+    "placeholders": {
+      "date": {}
+    }
+  },
   "drawerFeedbackComingSoon": "反馈功能即将上线！",
   "commonJustNow": "刚刚",
   "commonMinutes": "{count, plural, other{{count} 分钟前}}",
-  "@commonMinutes": { "placeholders": { "count": {} } },
+  "@commonMinutes": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonHours": "{count, plural, other{{count} 小时前}}",
-  "@commonHours": { "placeholders": { "count": {} } },
+  "@commonHours": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonYesterday": "昨天",
   "commonDays": "{count, plural, other{{count} 天前}}",
-  "@commonDays": { "placeholders": { "count": {} } },
+  "@commonDays": {
+    "placeholders": {
+      "count": {}
+    }
+  },
   "commonClose": "关闭",
   "drawerPluginDetailsPluginId": "插件 ID：{id}",
-  "@drawerPluginDetailsPluginId": { "placeholders": { "id": {} } },
-  
+  "@drawerPluginDetailsPluginId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
   "readonlyModeName": "只读模式",
   "readonlyModeDescription": "防止意外修改文件",
   "syntaxHighlightingName": "语法高亮",
@@ -211,17 +251,14 @@
   "bracketMatchingDescription": "高亮匹配的括号",
   "advancedEditorName": "高级选项",
   "advancedEditorDescription": "编辑器高级选项位于设置中",
-
   "gitHistoryName": "Git 历史",
   "gitHistoryDescription": "查看提交历史与差异",
-
   "fileExplorerName": "文件管理器",
   "fileExplorerDescription": "浏览和管理项目文件",
   "terminalName": "集成终端",
   "terminalDescription": "无需离开编辑器即可运行命令",
   "themeCustomizerName": "主题定制器",
   "themeCustomizerDescription": "自定义编辑器与应用外观",
-
   "aiAssistName": "AI 代码助手",
   "aiAssistDescription": "获取 AI 驱动的代码建议"
 }
