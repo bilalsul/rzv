@@ -908,11 +908,114 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   final base =
                                       '${projRoot.path}/${_openedProject!.id}${_pathStack.isEmpty ? '' : '/' + _pathStack.join('/')}';
                                   final candidates = [
-                                    'README.md',
-                                    'Readme.md',
-                                    'readme.md',
-                                    'README.MD',
+                                    // Most common / standard
                                     'README',
+                                    'README.md',
+                                    'README.markdown',
+                                    'README.mdown',
+                                    'README.mkdn',
+                                    'README.mkd',
+                                    'README.txt',
+                                    'README.1st',
+                                    'README.first',
+
+                                    // Case variations of the most common ones
+                                    'readme',
+                                    'readme.md',
+                                    'Readme.md',
+                                    'readme.markdown',
+                                    'ReadMe.md',
+                                    'READme.md',
+                                    'README.MD',
+                                    'readme.MD',
+                                    'Readme.MD',
+
+                                    // Other markdown extensions
+                                    'README.mkd',
+                                    'readme.mkd',
+                                    'README.mkd',
+                                    'README.mkdn',
+                                    'readme.mkdn',
+                                    'README.markdown',
+                                    'readme.markdown',
+                                    'README.mdown',
+                                    'readme.mdown',
+
+                                    // Textile, reStructuredText, AsciiDoc, Org-mode, etc.
+                                    'README.txt',
+                                    'readme.txt',
+                                    'README.textile',
+                                    'readme.textile',
+                                    'README.rst',
+                                    'readme.rst',
+                                    'README.rest',
+                                    'readme.rest',
+                                    'README.adoc',
+                                    'readme.adoc',
+                                    'README.asc',
+                                    'readme.asc',
+                                    'README.org',
+                                    'readme.org',
+                                    'README.creole',
+                                    'readme.creole',
+
+                                    // Other common plain-text or unusual extensions
+                                    'README.htm',
+                                    'README.html',
+                                    'readme.html',
+                                    'README.rtfd', // Rich Text Format Directory (macOS)
+                                    'README.pdf', // Yes, some repos do this
+                                    'README.doc',
+                                    'README.docx',
+
+                                    // No extension at all (very common on Unix)
+                                    'readme',
+                                    'READme',
+                                    'readME',
+
+                                    // Hidden files (some projects use these)
+                                    '.README',
+                                    '.readme',
+                                    '.README.md',
+
+                                    // International / translated READMEs (GitHub supports these as fallback)
+                                    'README.ar.md', // Arabic
+                                    'README.de.md', // German
+                                    'README.es.md', // Spanish
+                                    'README.fr.md', // French
+                                    'README.it.md', // Italian
+                                    'README.ja.md', // Japanese
+                                    'README.ko.md', // Korean
+                                    'README.pt.md', // Portuguese
+                                    'README.ru.md', // Russian
+                                    'README.zh-CN.md', // Simplified Chinese
+                                    'README.zh-TW.md', // Traditional Chinese
+                                    'LIESMICH.md', // German "Read Me"
+                                    'LISEZMOI.md', // French "Read Me"
+                                    'LEIAME.md', // Portuguese "Read Me"
+                                    'LEAME.md', // Spanish "Read Me"
+                                    'PROCHITAI-MENYA.md', // Russian
+                                    'README.ckb.md', // Central Kurdish (Sorani)
+                                    // Legacy / very old conventions
+                                    '00README',
+                                    'README.1ST',
+                                    'README.FIRST',
+                                    'READ.ME',
+                                    'READ-ME',
+                                    'MANIFEST',
+
+                                    // Some projects use a folder with index file
+                                    'readme/index.html',
+                                    'README/index.html',
+                                    'docs/README.md',
+                                    'doc/README.md',
+
+                                    // Extremely rare but seen in the wild
+                                    'ReadMe.txt',
+                                    'Readme.txt',
+                                    'read-me.md',
+                                    'read_me.md',
+                                    'README-me',
                                   ];
                                   for (final c in candidates) {
                                     final f = File('$base/$c');
@@ -979,56 +1082,56 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         : FeatureDisabledScreen(feature: L10n.of(context).fileExplorerName);
   }
 
-  Future<void> _createFileInCurrentFolder() async {
-    if (_openedProject == null) return;
-    final nameTc = TextEditingController();
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(L10n.of(context).commonCreate),
-        content: TextField(
-          controller: nameTc,
-          decoration: InputDecoration(
-            hintText: L10n.of(context).drawerFolderNameHint,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(L10n.of(context).commonCancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(L10n.of(context).commonCreate),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true) return;
-    final filename = nameTc.text.trim();
-    if (filename.isEmpty) return;
-    try {
-      final base = await Prefs().projectsRoot();
-      final folderPath = (_pathStack.isEmpty)
-          ? '${base.path}/${_openedProject!.id}'
-          : '${base.path}/${_openedProject!.id}/${_pathStack.join('/')}';
-      final f = File('$folderPath/$filename');
-      await f.create(recursive: true);
-      await f.writeAsString('');
-      // reload disk projects and re-open this project
-      await _loadProjectsFromDisk();
-      setState(() {
-        _openedProject = _projects.firstWhere(
-          (p) => p.id == _openedProject!.id,
-          orElse: () => _openedProject!,
-        );
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(L10n.of(context).commonFailed)));
-    }
-  }
+  // Future<void> _createFileInCurrentFolder() async {
+  //   if (_openedProject == null) return;
+  //   final nameTc = TextEditingController();
+  //   final confirmed = await showDialog<bool>(
+  //     context: context,
+  //     builder: (ctx) => AlertDialog(
+  //       title: Text(L10n.of(context).commonCreate),
+  //       content: TextField(
+  //         controller: nameTc,
+  //         decoration: InputDecoration(
+  //           hintText: L10n.of(context).drawerFolderNameHint,
+  //         ),
+  //       ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.of(ctx).pop(false),
+  //           child: Text(L10n.of(context).commonCancel),
+  //         ),
+  //         TextButton(
+  //           onPressed: () => Navigator.of(ctx).pop(true),
+  //           child: Text(L10n.of(context).commonCreate),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  //   if (confirmed != true) return;
+  //   final filename = nameTc.text.trim();
+  //   if (filename.isEmpty) return;
+  //   try {
+  //     final base = await Prefs().projectsRoot();
+  //     final folderPath = (_pathStack.isEmpty)
+  //         ? '${base.path}/${_openedProject!.id}'
+  //         : '${base.path}/${_openedProject!.id}/${_pathStack.join('/')}';
+  //     final f = File('$folderPath/$filename');
+  //     await f.create(recursive: true);
+  //     await f.writeAsString('');
+  //     // reload disk projects and re-open this project
+  //     await _loadProjectsFromDisk();
+  //     setState(() {
+  //       _openedProject = _projects.firstWhere(
+  //         (p) => p.id == _openedProject!.id,
+  //         orElse: () => _openedProject!,
+  //       );
+  //     });
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text(L10n.of(context).commonFailed)));
+  //   }
+  // }
 
   Widget _safeProjectCard(_Project p) {
     final prefs = ref.watch(prefsProvider);
