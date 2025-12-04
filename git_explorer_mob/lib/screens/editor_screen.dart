@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 // import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
@@ -110,7 +111,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Marked as current open file/project')));
             //   },
             // ),
-            prefs.editorZoomInOut
+            prefs.isPluginEnabled(Plugin.editorZoomInOut.id)
                 ? IconButton(
                     icon: const Icon(Icons.zoom_in),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -122,7 +123,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                     },
                   )
                 : SizedBox.shrink(),
-            prefs.editorZoomInOut
+            prefs.isPluginEnabled(Plugin.editorZoomInOut.id)
                 ? IconButton(
                     icon: const Icon(Icons.zoom_out),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -134,19 +135,19 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                     },
                   )
                 : SizedBox.shrink(),
-            prefs.codeFoldingEnabled
+            prefs.isPluginEnabled(Plugin.codeFolding.id)
                 ? IconButton(
                     icon: const Icon(Icons.wrap_text),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     padding: EdgeInsets.zero,
                     style: ButtonStyle(iconSize: WidgetStateProperty.all(20)),
                     onPressed: () {
-                      if (prefs.editorWordWrap) {
-                        prefs.saveEditorWordWrap(false);
+                      if (prefs.isPluginEnabled(Plugin.editorWordWrap.id)) {
+                        prefs.setPluginEnabled(Plugin.editorWordWrap.id, false);
                         return;
                       }
-                      if (!prefs.editorWordWrap) {
-                        prefs.saveEditorWordWrap(true);
+                      if (!prefs.isPluginEnabled(Plugin.editorWordWrap.id)) {
+                        prefs.setPluginEnabled(Plugin.editorWordWrap.id, true);
                         return;
                       }
                     },
@@ -158,12 +159,12 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
               padding: EdgeInsets.zero,
               style: ButtonStyle(iconSize: WidgetStateProperty.all(20)),
               onPressed: () {
-                if (prefs.editorLineNumbers) {
-                  prefs.saveEditorLineNumbers(false);
+                if (prefs.isPluginEnabled(Plugin.editorLineNumbers.id)) {
+                  prefs.setPluginEnabled(Plugin.editorLineNumbers.id, false);
                   return;
                 }
-                if (!prefs.editorLineNumbers) {
-                  prefs.saveEditorLineNumbers(true);
+                if (!prefs.isPluginEnabled(Plugin.editorLineNumbers.id)) {
+                  prefs.setPluginEnabled(Plugin.editorLineNumbers.id, true);
                   return;
                 }
               },
@@ -174,12 +175,12 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
               padding: EdgeInsets.zero,
               style: ButtonStyle(iconSize: WidgetStateProperty.all(20)),
               onPressed: () {
-                if (prefs.editorMinimapEnabled) {
-                  prefs.saveEditorMinimapEnabled(false);
+                if (prefs.isPluginEnabled(Plugin.editorMinimap.id)) {
+                  prefs.setPluginEnabled(Plugin.editorMinimap.id, false);
                   return;
                 }
-                if (!prefs.editorMinimapEnabled) {
-                  prefs.saveEditorMinimapEnabled(true);
+                if (!prefs.isPluginEnabled(Plugin.editorMinimap.id)) {
+                  prefs.setPluginEnabled(Plugin.editorMinimap.id, true);
                   return;
                 }
               },

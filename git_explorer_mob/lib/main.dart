@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,9 +9,9 @@ import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
 import 'package:git_explorer_mob/utils/error/common.dart';
 import 'package:git_explorer_mob/utils/log/common.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:window_manager/window_manager.dart';
+// import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+// import 'package:window_manager/window_manager.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -43,95 +43,90 @@ Future<void> main() async {
   initBasePath();
   GitExpLog.init();
   GitExpError.init();
-  
-  SmartDialog.config.custom = SmartConfigCustom(
-    maskColor: Colors.black.withAlpha(35),
-    useAnimation: true,
-    animationType: SmartAnimationType.centerFade_otherSlide,
-  );
+
+  // SmartDialog.config.custom = SmartConfigCustom(
+  //   // maskColor: Colors.black.withAlpha(35),
+  //   // maskColor: prefs.secondaryColor,
+  //   useAnimation: true,
+  //   animationType: SmartAnimationType.centerFade_otherSlide,
+  // );
 
   // runApp(const MyApp());
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );  
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
-   @override
+  @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
 }
 
-class _MyAppState extends ConsumerState<MyApp>
-    with WidgetsBindingObserver, WindowListener {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    // windowManager.addListener(this);
-  }
+class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addObserver(this);
+  //   // windowManager.addListener(this);
+  // }
 
-@override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   WidgetsBinding.instance.removeObserver(this);
+  //   super.dispose();
+  // }
 
-  @override
-  Future<void> onWindowMoved() async {
-    await _updateWindowInfo();
-  }
+  // @override
+  // Future<void> onWindowMoved() async {
+  //   await _updateWindowInfo();
+  // }
 
-  @override
-  Future<void> onWindowResized() async {
-    await _updateWindowInfo();
-  }
+  // @override
+  // Future<void> onWindowResized() async {
+  //   await _updateWindowInfo();
+  // }
 
-Future<void> _updateWindowInfo() async {
-    if (!Platform.isWindows) {
-      return;
-    }
-    final windowOffset = await windowManager.getPosition();
-    final windowSize = await windowManager.getSize();
+  // Future<void> _updateWindowInfo() async {
+  //     if (!Platform.isWindows) {
+  //       return;
+  //     }
+  //     final windowOffset = await windowManager.getPosition();
+  //     final windowSize = await windowManager.getSize();
 
-    // Prefs().windowInfo = WindowInfo(
-    //   x: windowOffset.dx,
-    //   y: windowOffset.dy,
-    //   width: windowSize.width,
-    //   height: windowSize.height,
-    // );
-    GitExpLog.info('onWindowClose: Offset: $windowOffset, Size: $windowSize');
-  }
+  //     // Prefs().windowInfo = WindowInfo(
+  //     //   x: windowOffset.dx,
+  //     //   y: windowOffset.dy,
+  //     //   width: windowSize.width,
+  //     //   height: windowSize.height,
+  //     // );
+  //     GitExpLog.info('onWindowClose: Offset: $windowOffset, Size: $windowSize');
+  //   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final prefs = ref.watch(prefsProvider);
     return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            locale: prefs.locale,
-            localizationsDelegates: L10n.localizationsDelegates,
-            supportedLocales: L10n.supportedLocales,
-            // scrollBehavior: ScrollConfiguration.of(context).copyWith(
-            //   physics: const BouncingScrollPhysics(),
-            //   // dragDevices: {
-            //   //   PointerDeviceKind.touch,
-            //   //   PointerDeviceKind.mouse,
-            //   // },
-            // ),
-            navigatorObservers: [FlutterSmartDialog.observer],
-            builder: FlutterSmartDialog.init(),
-            navigatorKey: navigatorKey,
-            title: 'Git Explorer',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
-            home: const AppShell()
-          );
+      debugShowCheckedModeBanner: false,
+      locale: prefs.locale,
+      localizationsDelegates: L10n.localizationsDelegates,
+      supportedLocales: L10n.supportedLocales,
+      // scrollBehavior: ScrollConfiguration.of(context).copyWith(
+      //   physics: const BouncingScrollPhysics(),
+      //   // dragDevices: {
+      //   //   PointerDeviceKind.touch,
+      //   //   PointerDeviceKind.mouse,
+      //   // },
+      // ),
+      // navigatorObservers: [FlutterSmartDialog.observer],
+      // builder: FlutterSmartDialog.init(),
+      navigatorKey: navigatorKey,
+      title: 'Git Explorer',
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),
+      //   useMaterial3: true,
+      // ),
+      home: const AppShell(),
+    );
   }
 }
-

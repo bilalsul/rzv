@@ -5,6 +5,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:git_explorer_mob/app/app_shell.dart';
+import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
@@ -40,7 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       // await ref.read(sharedPreferencesProvider.future);
 
       // If file explorer is enabled at startup, ensure projects root and load projects.
-      // if (Prefs().isPluginEnabled('file_explorer')) {
+      // if (Prefs().isPluginEnabled(Plugin.fileExplorer.id)) {
       await _prepareProjectsDir();
       if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
       await _loadProjectsFromDisk();
@@ -166,7 +168,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final name = nameTc.text.trim();
     if (name.isEmpty) return;
     // If file explorer (disk-based projects) is enabled, create a real folder under projects root.
-    if (Prefs().isPluginEnabled('file_explorer')) {
+    if (Prefs().isPluginEnabled(Plugin.fileExplorer.id)) {
       try {
         final base = await Prefs().projectsRoot();
         final baseName = name;
@@ -673,290 +675,307 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final prefs = ref.watch(prefsProvider);
-    ref.listen<Prefs>(prefsProvider, (previous, next) {
-      final prevEnabled = previous?.isPluginEnabled('file_explorer') ?? false;
-      final nowEnabled = next.isPluginEnabled('file_explorer');
-      if (!prevEnabled && nowEnabled) {
-        // Just enabled: schedule async work to prepare and load projects
-        Future.microtask(() async {
-          await _prepareProjectsDir();
-          if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
-          await _loadProjectsFromDisk();
-          if (!mounted) return;
-          setState(() {
-            _diskLoaded = true;
-          });
-        });
-      } else if (prevEnabled && !nowEnabled) {
-        // Disabled: fall back to samples (synchronous)
-        if (!mounted) return;
-        setState(() {
-          _diskLoaded = false;
-        });
-      }
-    });
-    return Scaffold(
-      appBar: _openedProject == null
-          ? AppBar(
-              title: Text(L10n.of(context).homeProjectsTitle),
-              actions: [
-                IconButton(
-                  tooltip: L10n.of(context).homeRefreshProjects,
-                  icon: const Icon(Icons.refresh),
-                  onPressed: () async =>
-                      await _refreshProjectsWithWarning(context),
-                ),
-                IconButton(
-                  tooltip: L10n.of(context).homeDeleteAllProjects,
-                  icon: const Icon(Icons.delete_forever),
-                  onPressed: () => _deleteAllProjects(context),
-                ),
-              ],
-            )
-          : AppBar(
-              title: Text(
-                _openedProject?.name ?? L10n.of(context).homeDefaultProjectName,
-              ),
-              // actions: [
-              //   IconButton(
-              //     tooltip: L10n.of(context).homeRefreshProjects,
-              //     icon: const Icon(Icons.refresh),
-              //     onPressed: () async => await _refreshProjects(context),
-              //   ),
-              //   IconButton(
-              //     tooltip: L10n.of(context).homeDeleteAllProjects,
-              //     icon: const Icon(Icons.delete_forever),
-              //     onPressed: () => _deleteAllProjects(context),
-              //   ),
-              // ],
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  // navigate up one level or close project if at root
-                  if (_pathStack.isNotEmpty) {
-                    setState(() {
-                      _pathStack.removeLast();
-                      // if len==1
-                      final node = _getNodeAtPath(_openedProject!, _pathStack);
-                      if (node is Map<String, dynamic> && node.length == 1) {
-                        _selectedFileContent = _findReadmeInNode(node);
-                      }
-                    });
-                  } else {
-                    _closeProject();
-                  }
-                },
-              ),
-            ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Builder(
-            builder: (context) {
-              try {
-                // Only show empty state after we've finished loading projects from disk.
-                // This avoids a flash where the UI shows "no projects" before the background
-                // disk scan completes and populates `_projects`.
-                if (!_diskLoaded) {
-                  return Center(
-                    child: CircularProgressIndicator(color: prefs.accentColor),
-                  );
-                }
-                if (_projects.isEmpty)
-                  return EmptyState(
-                    onCreate: _createProjectWithDetails,
-                    onImport: () => _importZipProject(context),
-                  );
-
-                // If a project is opened, show ProjectBrowser inside HomeScreen
-                if (_openedProject != null) {
-                  return _ProjectBrowser(
-                    // controller: widget.controller,
-                    project: _openedProject!,
-                    pathStack: _pathStack,
-                    selectedFileContent: _selectedFileContent,
-                    onEnterDirectory: (name) {
-                      setState(() {
-                        _pathStack.add(name);
-                        final node = _getNodeAtPath(
-                          _openedProject!,
-                          _pathStack,
-                        );
-                        if (node is Map<String, dynamic> && node.length == 1) {
-                          _selectedFileContent = _findReadmeInNode(node);
-                          _selectedFilePath = null;
-                          // compute path async
-                          Future.microtask(() async {
-                            final readmeName = 'README.md';
-                            try {
-                              final projRoot = await Prefs().projectsRoot();
-                              final abs =
-                                  '${projRoot.path}/${_openedProject!.id}/${_pathStack.join('/')}/$readmeName';
-                              if (mounted)
-                                setState(() => _selectedFilePath = abs);
-                            } catch (_) {}
+    // ref.listen<Prefs>(prefsProvider, (previous, next) {
+    //   final prevEnabled = previous?.isPluginEnabled(Plugin.fileExplorer.id) ?? false;
+    //   final nowEnabled = next.isPluginEnabled(Plugin.fileExplorer.id);
+    //   if (!prevEnabled && nowEnabled) {
+    //     // Just enabled: schedule async work to prepare and load projects
+    //     Future.microtask(() async {
+    //       await _prepareProjectsDir();
+    //       if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
+    //       await _loadProjectsFromDisk();
+    //       if (!mounted) return;
+    //       setState(() {
+    //         _diskLoaded = true;
+    //       });
+    //     });
+    //   } else if (prevEnabled && !nowEnabled) {
+    //     // Disabled: fall back to samples (synchronous)
+    //     if (!mounted) return;
+    //     setState(() {
+    //       _diskLoaded = false;
+    //     });
+    //   }
+    // });
+    return prefs.isPluginEnabled(Plugin.fileExplorer.id)
+        ? Scaffold(
+            appBar: _openedProject == null
+                ? AppBar(
+                    title: Text(L10n.of(context).homeProjectsTitle),
+                    actions: [
+                      IconButton(
+                        tooltip: L10n.of(context).homeRefreshProjects,
+                        icon: const Icon(Icons.refresh),
+                        onPressed: () async =>
+                            await _refreshProjectsWithWarning(context),
+                      ),
+                      IconButton(
+                        tooltip: L10n.of(context).homeDeleteAllProjects,
+                        icon: const Icon(Icons.delete_forever),
+                        onPressed: () => _deleteAllProjects(context),
+                      ),
+                    ],
+                  )
+                : AppBar(
+                    title: Text(
+                      _openedProject?.name ??
+                          L10n.of(context).homeDefaultProjectName,
+                    ),
+                    // actions: [
+                    //   IconButton(
+                    //     tooltip: L10n.of(context).homeRefreshProjects,
+                    //     icon: const Icon(Icons.refresh),
+                    //     onPressed: () async => await _refreshProjects(context),
+                    //   ),
+                    //   IconButton(
+                    //     tooltip: L10n.of(context).homeDeleteAllProjects,
+                    //     icon: const Icon(Icons.delete_forever),
+                    //     onPressed: () => _deleteAllProjects(context),
+                    //   ),
+                    // ],
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        // navigate up one level or close project if at root
+                        if (_pathStack.isNotEmpty) {
+                          setState(() {
+                            _pathStack.removeLast();
+                            // if len==1
+                            final node = _getNodeAtPath(
+                              _openedProject!,
+                              _pathStack,
+                            );
+                            if (node is Map<String, dynamic> &&
+                                node.length == 1) {
+                              _selectedFileContent = _findReadmeInNode(node);
+                            }
                           });
+                        } else {
+                          _closeProject();
                         }
-                      });
-                    },
-                    onOpenFile: (content, absPath) {
-                      setState(() {
-                        _selectedFileContent = content;
-                        _selectedFilePath = absPath;
-                      });
-                    },
-                  );
-                }
+                      },
+                    ),
+                  ),
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Builder(
+                  builder: (context) {
+                    try {
+                      // Only show empty state after we've finished loading projects from disk.
+                      // This avoids a flash where the UI shows "no projects" before the background
+                      // disk scan completes and populates `_projects`.
+                      if (!_diskLoaded) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (_projects.isEmpty)
+                        return EmptyState(
+                          onCreate: _createProjectWithDetails,
+                          onImport: () => _importZipProject(context),
+                        );
 
-                // Responsive: show Grid on wide screens, List on narrow screens
-                return LayoutBuilder(
-                  builder: (context, constraints) {
-                    final isWide = constraints.maxWidth > 700;
-                    if (isWide) {
-                      final crossAxisCount = (constraints.maxWidth ~/ 280)
-                          .clamp(2, 5);
-                      return GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 1.4,
-                        ),
-                        itemCount: _projects.length,
-                        itemBuilder: (context, idx) {
-                          final p = _projects[idx];
-                          return _safeProjectCard(p);
+                      // If a project is opened, show ProjectBrowser inside HomeScreen
+                      if (_openedProject != null) {
+                        return _ProjectBrowser(
+                          // controller: widget.controller,
+                          project: _openedProject!,
+                          pathStack: _pathStack,
+                          selectedFileContent: _selectedFileContent,
+                          onEnterDirectory: (name) {
+                            setState(() {
+                              _pathStack.add(name);
+                              final node = _getNodeAtPath(
+                                _openedProject!,
+                                _pathStack,
+                              );
+                              if (node is Map<String, dynamic> &&
+                                  node.length == 1) {
+                                _selectedFileContent = _findReadmeInNode(node);
+                                _selectedFilePath = null;
+                                // compute path async
+                                Future.microtask(() async {
+                                  final readmeName = 'README.md';
+                                  try {
+                                    final projRoot = await Prefs()
+                                        .projectsRoot();
+                                    final abs =
+                                        '${projRoot.path}/${_openedProject!.id}/${_pathStack.join('/')}/$readmeName';
+                                    if (mounted)
+                                      setState(() => _selectedFilePath = abs);
+                                  } catch (_) {}
+                                });
+                              }
+                            });
+                          },
+                          onOpenFile: (content, absPath) {
+                            setState(() {
+                              _selectedFileContent = content;
+                              _selectedFilePath = absPath;
+                            });
+                          },
+                        );
+                      }
+
+                      // Responsive: show Grid on wide screens, List on narrow screens
+                      return LayoutBuilder(
+                        builder: (context, constraints) {
+                          final isWide = constraints.maxWidth > 700;
+                          if (isWide) {
+                            final crossAxisCount = (constraints.maxWidth ~/ 280)
+                                .clamp(2, 5);
+                            return GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: crossAxisCount,
+                                    crossAxisSpacing: 12,
+                                    mainAxisSpacing: 12,
+                                    childAspectRatio: 1.4,
+                                  ),
+                              itemCount: _projects.length,
+                              itemBuilder: (context, idx) {
+                                final p = _projects[idx];
+                                return _safeProjectCard(p);
+                              },
+                            );
+                          } else {
+                            return ListView.separated(
+                              // controller: widget.controller,
+                              itemCount: _projects.length,
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(height: 8),
+                              itemBuilder: (context, idx) {
+                                final p = _projects[idx];
+                                return _safeProjectCard(p);
+                              },
+                            );
+                          }
                         },
                       );
-                    } else {
-                      return ListView.separated(
-                        // controller: widget.controller,
-                        itemCount: _projects.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 8),
-                        itemBuilder: (context, idx) {
-                          final p = _projects[idx];
-                          return _safeProjectCard(p);
-                        },
+                    } catch (e) {
+                      // Defensive: if something in the build fails, show a recoverable error UI instead of letting the app crash.
+                      return Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.error_outline,
+                              size: 48,
+                              color: Colors.redAccent,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(L10n.of(context).commonFailed),
+                            const SizedBox(height: 8),
+                            ElevatedButton(
+                              onPressed: () => setState(() {}),
+                              child: Text(L10n.of(context).commonRetry),
+                            ),
+                          ],
+                        ),
                       );
                     }
                   },
-                );
-              } catch (e) {
-                // Defensive: if something in the build fails, show a recoverable error UI instead of letting the app crash.
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 48,
-                        color: Colors.redAccent,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(L10n.of(context).commonFailed),
-                      const SizedBox(height: 8),
-                      ElevatedButton(
-                        onPressed: () => setState(() {}),
-                        child: Text(L10n.of(context).commonRetry),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
-        ),
-      ),
-      floatingActionButton: _openedProject != null
-          ? Padding(
-              padding: EdgeInsets.only(bottom: 70),
-              child: Builder(
-                builder: (ctx) {
-                  final previewing =
-                      _selectedFileContent != null &&
-                      (_openedProject!.id == 'tutorial_project' ||
-                          Prefs().isPluginOptionEnabled('preview_markdown'));
-                  if (previewing) {
-                    return FloatingActionButton.extended(
-                      // heroTag: 'open_in_editor',
-                      icon: Icon(Icons.open_in_new, color: prefs.accentColor),
-                      backgroundColor: prefs.secondaryColor,
-                      label: Text(L10n.of(context).navBarEditor),
-                      tooltip: L10n.of(context).homeOpenFileEditorNotice,
-                      onPressed: () async {
-                        if (_openedProject == null) return;
-                        try {
-                          final projRoot = await Prefs().projectsRoot();
-                          String abs = _selectedFilePath ?? '';
-                          if (abs.isEmpty) {
-                            // Try common README names in current folder
-                            final base =
-                                '${projRoot.path}/${_openedProject!.id}${_pathStack.isEmpty ? '' : '/' + _pathStack.join('/')}';
-                            final candidates = [
-                              'README.md',
-                              'Readme.md',
-                              'readme.md',
-                              'README.MD',
-                              'README',
-                            ];
-                            for (final c in candidates) {
-                              final f = File('$base/$c');
-                              if (await f.exists()) {
-                                abs = f.path;
-                                break;
-                              }
-                            }
-                          }
-                          await Prefs().saveCurrentOpenFile(
-                            _openedProject!.id,
-                            abs,
-                            _selectedFileContent ?? '',
-                          );
-                          await Prefs().saveCurrentProject(
-                            id: _openedProject!.id,
-                            name: _openedProject!.name ?? _openedProject!.id,
-                            path: projRoot.path + '/${_openedProject!.id}',
-                          );
-                          await Prefs().saveLastKnownRoute('editor');
-                        } catch (_) {}
-                      },
-                    );
-                  }
-                  return FloatingActionButton.extended(
-                    // heroTag: 'create_file',
-                    icon: Icon(Icons.note_add, color: prefs.accentColor),
-                    backgroundColor: prefs.secondaryColor,
-                    label: Text(L10n.of(context).commonCreate),
-                    onPressed: _createFileInCurrentFolder,
-                  );
-                },
-              ),
-            )
-          : Padding(
-              padding: EdgeInsets.only(bottom: 70),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 8),
-                  FloatingActionButton.small(
-                    // heroTag: 'create_details',
-                    onPressed: _createProjectWithDetails,
-                    tooltip: L10n.of(context).homeTooltipCreateDetails,
-                    backgroundColor: prefs.secondaryColor,
-                    child: Icon(Icons.add, color: prefs.accentColor),
-                  ),
-                  const SizedBox(height: 8),
-                  FloatingActionButton(
-                    // heroTag: 'sample_zip',
-                    onPressed: () => _importZipProject(context),
-                    tooltip: L10n.of(context).homeTooltipCreateSampleZip,
-                    backgroundColor: prefs.secondaryColor,
-                    child: Icon(Icons.archive, color: prefs.accentColor),
-                  ),
-                ],
+                ),
               ),
             ),
-    );
+            floatingActionButton: _openedProject != null
+                ? Padding(
+                    padding: EdgeInsets.only(bottom: 70),
+                    child: Builder(
+                      builder: (ctx) {
+                        final previewing =
+                            _selectedFileContent != null &&
+                            (_openedProject!.id == 'tutorial_project' ||
+                                Prefs().isPluginEnabled(
+                                  Plugin.previewMarkdown.id,
+                                ));
+                        if (previewing) {
+                          return FloatingActionButton.extended(
+                            // heroTag: 'open_in_editor',
+                            icon: Icon(
+                              Icons.open_in_new,
+                              color: prefs.accentColor,
+                            ),
+                            backgroundColor: prefs.secondaryColor,
+                            label: Text(L10n.of(context).navBarEditor),
+                            tooltip: L10n.of(context).homeOpenFileEditorNotice,
+                            onPressed: () async {
+                              if (_openedProject == null) return;
+                              try {
+                                final projRoot = await Prefs().projectsRoot();
+                                String abs = _selectedFilePath ?? '';
+                                if (abs.isEmpty) {
+                                  // Try common README names in current folder
+                                  final base =
+                                      '${projRoot.path}/${_openedProject!.id}${_pathStack.isEmpty ? '' : '/' + _pathStack.join('/')}';
+                                  final candidates = [
+                                    'README.md',
+                                    'Readme.md',
+                                    'readme.md',
+                                    'README.MD',
+                                    'README',
+                                  ];
+                                  for (final c in candidates) {
+                                    final f = File('$base/$c');
+                                    if (await f.exists()) {
+                                      abs = f.path;
+                                      break;
+                                    }
+                                  }
+                                }
+                                await Prefs().saveCurrentOpenFile(
+                                  _openedProject!.id,
+                                  abs,
+                                  _selectedFileContent ?? '',
+                                );
+                                await Prefs().saveCurrentProject(
+                                  id: _openedProject!.id,
+                                  name:
+                                      _openedProject!.name ??
+                                      _openedProject!.id,
+                                  path:
+                                      projRoot.path + '/${_openedProject!.id}',
+                                );
+                                await Prefs().saveLastKnownRoute('editor');
+                              } catch (_) {}
+                            },
+                          );
+                        }
+                        return FloatingActionButton.extended(
+                          // heroTag: 'create_file',
+                          icon: Icon(Icons.note_add, color: prefs.accentColor),
+                          backgroundColor: prefs.secondaryColor,
+                          label: Text(L10n.of(context).commonCreate),
+                          onPressed: _createFileInCurrentFolder,
+                        );
+                      },
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(bottom: 70),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 8),
+                        FloatingActionButton.small(
+                          // heroTag: 'create_details',
+                          onPressed: _createProjectWithDetails,
+                          tooltip: L10n.of(context).homeTooltipCreateDetails,
+                          backgroundColor: prefs.secondaryColor,
+                          child: Icon(Icons.add, color: prefs.accentColor),
+                        ),
+                        const SizedBox(height: 8),
+                        FloatingActionButton(
+                          // heroTag: 'sample_zip',
+                          onPressed: () => _importZipProject(context),
+                          tooltip: L10n.of(context).homeTooltipCreateSampleZip,
+                          backgroundColor: prefs.secondaryColor,
+                          child: Icon(Icons.archive, color: prefs.accentColor),
+                        ),
+                      ],
+                    ),
+                  ),
+          )
+        : FeatureDisabledScreen(feature: L10n.of(context).fileExplorerName);
   }
 
   Future<void> _createFileInCurrentFolder() async {
@@ -1144,7 +1163,10 @@ class _ProjectCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 28,
-                backgroundColor: Colors.blueGrey.shade700,
+                backgroundColor:
+                    Theme.of(context).brightness == Brightness.light
+                    ? Colors.blueGrey.shade200
+                    : Colors.blueGrey.shade700,
                 child: Text(
                   (project.name?.trim().isNotEmpty == true
                       ? project.name!.trim()[0].toUpperCase()
@@ -1304,7 +1326,7 @@ class _ProjectBrowser extends StatelessWidget {
     // project or the user enabled markdown preview, render it as Markdown.
     if (selectedFileContent != null &&
         (project.id == 'tutorial_project' ||
-            Prefs().isPluginOptionEnabled('preview_markdown'))) {
+            Prefs().isPluginEnabled(Plugin.previewMarkdown.id))) {
       return Column(
         children: [
           Expanded(
@@ -1385,7 +1407,7 @@ class _ProjectBrowser extends StatelessWidget {
               // show the content in-place via the provided callback. Otherwise, open in editor.
               if (isMarkdown &&
                   (project.id == 'tutorial_project' ||
-                      Prefs().isPluginOptionEnabled('preview_markdown'))) {
+                      Prefs().isPluginEnabled(Plugin.previewMarkdown.id))) {
                 onOpenFile(content, abs);
                 return;
               }

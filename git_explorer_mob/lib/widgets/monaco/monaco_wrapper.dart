@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_monaco/flutter_monaco.dart';
@@ -115,17 +116,21 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
                   onContentChanged: (value) =>
                       prefs.saveCurrentOpenFileContent(value),
                   options: EditorOptions(
-                    language: prefs.syntaxHighlightingEnabled
+                    language:
+                        prefs.isPluginEnabled(Plugin.syntaxHighlighting.id)
                         ? prefs.currentOpenFile.toMonacoLanguage()
                         : MonacoLanguage.plaintext,
-                    lineNumbers: prefs.editorLineNumbers,
-                    minimap: prefs.editorMinimapEnabled,
-                    readOnly: prefs.readonlyModeEnabled,
+                    lineNumbers: prefs.isPluginEnabled(
+                      Plugin.editorLineNumbers.id,
+                    ),
+                    minimap: prefs.isPluginEnabled(Plugin.editorMinimap.id),
+                    readOnly: true,
                     fontFamily: prefs.editorFontFamily,
                     fontSize: prefs.editorFontSize,
-                    wordWrap: prefs.editorWordWrap,
-                    renderControlCharacters:
-                        prefs.editorRenderControlCharacters,
+                    wordWrap: prefs.isPluginEnabled(Plugin.editorWordWrap.id),
+                    renderControlCharacters: prefs.isPluginEnabled(
+                      Plugin.editorRenderControlCharacters.id,
+                    ),
                   ),
                 )
               : _buildFallbackEditor(prefs),
