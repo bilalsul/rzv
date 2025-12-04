@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:path_provider/path_provider.dart';
@@ -77,25 +78,25 @@ class Prefs extends ChangeNotifier {
   }
 
   // for testing purposes
-  String getValue(String value) {
-    return prefs.getString(value) ?? "whatt?";
-  }
+  // String getValue(String value) {
+  //   return prefs.getString(value) ?? "whatt?";
+  // }
 
-  List<String> getValueList(String listName) {
-    return prefs.getStringList(listName) ?? [];
-  }
+  // List<String> getValueList(String listName) {
+  //   return prefs.getStringList(listName) ?? [];
+  // }
 
-  bool getValueExistInList(String listName, String value) {
-    return prefs.getStringList(listName)?.contains(value) ?? false;
-  }
+  // bool getValueExistInList(String listName, String value) {
+  //   return prefs.getStringList(listName)?.contains(value) ?? false;
+  // }
 
-  bool getFlag(String flagKey) {
-    return prefs.getBool(flagKey) ?? false;
-  }
+  // bool getFlag(String flagKey) {
+  //   return prefs.getBool(flagKey) ?? false;
+  // }
 
-  setFlag(String key, bool value) {
-    prefs.setBool(key, value);
-  }
+  // setFlag(String key, bool value) {
+  //   prefs.setBool(key, value);
+  // }
 
   // App State
   // Getter and setter for last opened project
@@ -693,75 +694,75 @@ class Prefs extends ChangeNotifier {
   // }
 
   // Getter and setter for word wrap setting
-  bool get editorWordWrap {
-    return prefs.getBool('editor_word_wrap') ?? false;
-  }
+  // bool get editorWordWrap {
+  //   return prefs.getBool('editor_word_wrap') ?? false;
+  // }
 
-  Future<void> saveEditorWordWrap(bool wordWrap) async {
-    await prefs.setBool('editor_word_wrap', wordWrap);
-    notifyListeners();
-  }
+  // Future<void> saveEditorWordWrap(bool wordWrap) async {
+  //   await prefs.setBool('editor_word_wrap', wordWrap);
+  //   notifyListeners();
+  // }
 
   // Getter and setter for line numbers setting
-  bool get editorLineNumbers {
-    return prefs.getBool('editor_line_numbers') ?? false;
-  }
+  // bool get editorLineNumbers {
+  //   return prefs.getBool('editor_line_numbers') ?? false;
+  // }
 
-  Future<void> saveEditorLineNumbers(bool lineNumbers) async {
-    await prefs.setBool('editor_line_numbers', lineNumbers);
-    notifyListeners();
-  }
+  // Future<void> saveEditorLineNumbers(bool lineNumbers) async {
+  //   await prefs.setBool('editor_line_numbers', lineNumbers);
+  //   notifyListeners();
+  // }
 
   // zoom in and out, default true (visible)
-  bool get editorZoomInOut {
-    return prefs.getBool('editor_zoom_in_out') ?? true;
-  }
+  // bool get editorZoomInOut {
+  //   return prefs.getBool('editor_zoom_in_out') ?? true;
+  // }
 
-  Future<void> saveEditorZoomInOut(bool lineNumbers) async {
-    await prefs.setBool('editor_zoom_in_out', lineNumbers);
-    notifyListeners();
-  }
+  // Future<void> saveEditorZoomInOut(bool lineNumbers) async {
+  //   await prefs.setBool('editor_zoom_in_out', lineNumbers);
+  //   notifyListeners();
+  // }
 
   // Getter and setter for minimap enabled setting
-  bool get editorMinimapEnabled {
-    return prefs.getBool('editor_minimap_enabled') ?? false;
-  }
+  // bool get editorMinimapEnabled {
+  //   return prefs.getBool('editor_minimap_enabled') ?? false;
+  // }
 
-  Future<void> saveEditorMinimapEnabled(bool enabled) async {
-    await prefs.setBool('editor_minimap_enabled', enabled);
-    notifyListeners();
-  }
+  // Future<void> saveEditorMinimapEnabled(bool enabled) async {
+  //   await prefs.setBool('editor_minimap_enabled', enabled);
+  //   notifyListeners();
+  // }
 
-  bool get editorRenderControlCharacters {
-    return prefs.getBool('editor_render_control_characters') ?? false;
-  }
+  // bool get editorRenderControlCharacters {
+  //   return prefs.getBool('editor_render_control_characters') ?? false;
+  // }
 
-  Future<void> saveEditorRenderControlCharacters(bool enabled) async {
-    await prefs.setBool('editor_render_control_characters', enabled);
-    notifyListeners();
-  }
+  // Future<void> saveEditorRenderControlCharacters(bool enabled) async {
+  //   await prefs.setBool('editor_render_control_characters', enabled);
+  //   notifyListeners();
+  // }
 
   // Plugins pref
   // Getter and setter for Read-Only Mode plugin (editor)
-  bool get readonlyModeEnabled {
-    // return isPluginEnabled('readonly_mode');
-    return true;
-  }
+  // bool get readonlyModeEnabled {
+  //   // return isPluginEnabled('readonly_mode');
+  //   return true;
+  // }
 
   bool disabledByDefault(String feature) {
-    List<String> features = ["readonly_mode"];
+    List<String> features = [Plugin.readOnlyMode.id];
     return features.contains(feature);
   }
 
   // Getter and setter for Syntax Highlighting plugin (editor)
-  bool get syntaxHighlightingEnabled {
-    return isPluginEnabled('syntax_highlighting');
-  }
+  // bool get syntaxHighlightingEnabled {
+  //   return isPluginEnabled('syntax_highlighting');
+  // }
 
   // Getter and setter for Code Folding plugin (editor)
-  bool get codeFoldingEnabled {
-    return isPluginEnabled('code_folding');
-  }
+  // bool get codeFoldingEnabled {
+  //   return isPluginEnabled('code_folding');
+  // }
 
   // Getter and setter for Bracket Matching plugin (editor)
   // bool get bracketMatchingEnabled {
@@ -769,9 +770,9 @@ class Prefs extends ChangeNotifier {
   // }
 
   // Getter and setter for Git History plugin (git)
-  bool get gitHistoryEnabled {
-    return isPluginEnabled('git_history');
-  }
+  // bool get gitHistoryEnabled {
+  //   return isPluginEnabled('git_history');
+  // }
 
   // Getter and setter for GitLens plugin (git)
   // bool get gitLensEnabled {
@@ -784,9 +785,9 @@ class Prefs extends ChangeNotifier {
   // }
 
   // Getter and setter for File Explorer plugin (utility)
-  bool get fileExplorerEnabled {
-    return isPluginEnabled('file_explorer');
-  }
+  // bool get fileExplorerEnabled {
+  //   return isPluginEnabled('file_explorer');
+  // }
 
   // Getter and setter for Search & Replace plugin (utility)
   // bool get searchReplaceEnabled {
@@ -794,19 +795,19 @@ class Prefs extends ChangeNotifier {
   // }
 
   // Getter and setter for Integrated Terminal plugin (utility)
-  bool get terminalEnabled {
-    return isPluginEnabled('terminal');
-  }
+  // bool get terminalEnabled {
+  //   return isPluginEnabled('terminal');
+  // }
 
   // Getter and setter for Theme Customizer plugin (utility)
-  bool get themeCustomizerEnabled {
-    return isPluginEnabled('theme_customizer');
-  }
+  // bool get themeCustomizerEnabled {
+  //   return isPluginEnabled('theme_customizer');
+  // }
 
   // Getter and setter for AI Code Assistant plugin (experimental)
-  bool get aiAssistEnabled {
-    return isPluginEnabled('ai_assist');
-  }
+  // bool get aiAssistEnabled {
+  //   return isPluginEnabled('ai_assist');
+  // }
 
   // Getter and setter for Real-time Collaboration plugin (experimental)
   // bool get realTimeCollabEnabled {
@@ -851,8 +852,8 @@ class Prefs extends ChangeNotifier {
   // checks to see if a feature is supported
   bool featureSupported(String pluginId) {
     List<String> features = [
-      "theme_customizer",
-      "file_explorer",
+      Plugin.themeCustomizer.id,
+      Plugin.fileExplorer.id,
       // uncomment a feature below when it is supported
       // "ai",
       // "git_history",
@@ -879,21 +880,21 @@ class Prefs extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setPluginOptionEnabled(String pluginId, bool enabled) async {
-    final List<String> current = prefs.getStringList('plugins_options') ?? [];
-    final updated = List<String>.from(current);
-    if (enabled) {
-      if (!updated.contains(pluginId)) updated.add(pluginId);
-    } else {
-      updated.remove(pluginId);
-    }
-    await prefs.setStringList('plugins_options', updated);
-    notifyListeners();
-  }
+  // Future<void> setPluginOptionEnabled(String pluginId, bool enabled) async {
+  //   final List<String> current = prefs.getStringList('plugins_options') ?? [];
+  //   final updated = List<String>.from(current);
+  //   if (enabled) {
+  //     if (!updated.contains(pluginId)) updated.add(pluginId);
+  //   } else {
+  //     updated.remove(pluginId);
+  //   }
+  //   await prefs.setStringList('plugins_options', updated);
+  //   notifyListeners();
+  // }
 
-  bool isPluginOptionEnabled(String pluginId) {
-    return prefs.getStringList('plugins_options')?.contains(pluginId) ?? false;
-  }
+  // bool isPluginOptionEnabled(String pluginId) {
+  //   return prefs.getStringList('plugins_options')?.contains(pluginId) ?? false;
+  // }
 
   /// Read a plugin-specific config value stored as 'plugin_pluginId_configKey'.
   /// Returns null if not present.

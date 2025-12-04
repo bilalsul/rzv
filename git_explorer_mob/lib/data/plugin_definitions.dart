@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/models/plugin.dart';
 
 // This file centralizes the canonical plugin IDs, icons and categories.
 // Names/descriptions are localized at render time via `L10n.of(context)`.
 
-const List<PluginDefinition> editorPlugins = [
+List<PluginDefinition> editorPlugins = [
   PluginDefinition(
-    id: 'readonly_mode',
-    name: 'readonly_mode',
-    description: 'readonly_mode',
+    id: Plugin.readOnlyMode.id,
+    name: Plugin.readOnlyMode.id,
+    description: Plugin.readOnlyMode.id,
     icon: Icons.lock_outline,
     category: PluginCategory.editor,
   ),
   PluginDefinition(
-    id: 'syntax_highlighting',
-    name: 'syntax_highlighting',
-    description: 'syntax_highlighting',
+    id: Plugin.syntaxHighlighting.id,
+    name: Plugin.syntaxHighlighting.id,
+    description: Plugin.syntaxHighlighting.id,
     icon: Icons.color_lens_outlined,
     category: PluginCategory.editor,
   ),
   PluginDefinition(
-    id: 'code_folding',
-    name: 'code_folding',
-    description: 'code_folding',
+    id: Plugin.codeFolding.id,
+    name: Plugin.codeFolding.id,
+    description: Plugin.codeFolding.id,
     icon: Icons.wrap_text,
     category: PluginCategory.editor,
   ),
   PluginDefinition(
-    id: 'advanced_editor_options',
-    name: 'advanced_editor_options',
-    description: 'advanced_editor_options',
+    id: Plugin.advancedEditorOptions.id,
+    name: Plugin.advancedEditorOptions.id,
+    description: Plugin.advancedEditorOptions.id,
     icon: Icons.edit,
     category: PluginCategory.editor,
   ),
@@ -66,11 +67,11 @@ const List<PluginDefinition> gitPlugins = [
   // ),
 ];
 
-const List<PluginDefinition> utilityPlugins = [
+List<PluginDefinition> utilityPlugins = [
   PluginDefinition(
-    id: 'file_explorer',
-    name: 'file_explorer',
-    description: 'file_explorer',
+    id: Plugin.fileExplorer.id,
+    name: Plugin.fileExplorer.id,
+    description: Plugin.fileExplorer.id,
     icon: Icons.folder_outlined,
     category: PluginCategory.utility,
   ),
@@ -89,19 +90,19 @@ const List<PluginDefinition> utilityPlugins = [
   //   category: PluginCategory.utility,
   // ),
   PluginDefinition(
-    id: 'theme_customizer',
-    name: 'theme_customizer',
-    description: 'theme_customizer',
+    id: Plugin.themeCustomizer.id,
+    name: Plugin.themeCustomizer.id,
+    description: Plugin.themeCustomizer.id,
     icon: Icons.palette_outlined,
     category: PluginCategory.utility,
   ),
 ];
 
-const List<PluginDefinition> experimentalPlugins = [
+List<PluginDefinition> experimentalPlugins = [
   PluginDefinition(
-    id: 'ai_assist',
-    name: 'ai_assist',
-    description: 'ai_assist',
+    id: Plugin.ai.id,
+    name: Plugin.ai.id,
+    description: Plugin.ai.id,
     icon: Icons.auto_awesome_outlined,
     category: PluginCategory.experimental,
   ),
