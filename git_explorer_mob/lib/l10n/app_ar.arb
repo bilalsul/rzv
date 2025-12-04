@@ -109,6 +109,7 @@
   "homeDefaultProjectName": "مشروع",
   "homeNoProjects": "لا توجد مشاريع بعد",
   "homeGetStarted": "أنشئ أو استورد مشروعًا للبدء",
+  "homeImportGetStarted": "استورد مشروعًا بصيغة .zip للبدء",
   "homeCreateProject": "إنشاء مشروع",
   "homeImportProject": "استيراد مشروع",
   "homeDeleteProjectConfirm": "حذف المشروع؟",

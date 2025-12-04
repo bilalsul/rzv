@@ -113,6 +113,7 @@
   "homeDefaultProjectName": "プロジェクト",
   "homeNoProjects": "まだプロジェクトがありません",
   "homeGetStarted": "プロジェクトを作成またはインポートして始めましょう",
+  "homeImportGetStarted": "始めに .zip 形式のプロジェクトをインポートしてください",
   "homeCreateProject": "プロジェクトを作成",
   "homeImportProject": "プロジェクトをインポート",
   "homeDeleteProjectConfirm": "プロジェクトを削除しますか？",

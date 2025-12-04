@@ -113,6 +113,7 @@
   "homeDefaultProjectName": "Progetto",
   "homeNoProjects": "Nessun progetto presente",
   "homeGetStarted": "Crea o importa un progetto per iniziare",
+  "homeImportGetStarted": "Importa un progetto .zip per iniziare",
   "homeCreateProject": "Crea Progetto",
   "homeImportProject": "Importa Progetto",
   "homeDeleteProjectConfirm": "Eliminare il progetto?",

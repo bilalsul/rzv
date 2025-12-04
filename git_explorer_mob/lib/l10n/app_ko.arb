@@ -115,6 +115,7 @@
   "homeDefaultProjectName": "프로젝트",
   "homeNoProjects": "아직 프로젝트가 없습니다",
   "homeGetStarted": "프로젝트를 만들거나 가져와서 시작하세요",
+  "homeImportGetStarted": "시작하려면 .zip 프로젝트 파일을 가져오세요",
   "homeCreateProject": "프로젝트 만들기",
   "homeImportProject": "프로젝트 가져오기",
   "homeDeleteProjectConfirm": "프로젝트를 삭제하시겠습니까?",

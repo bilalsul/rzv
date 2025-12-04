@@ -115,6 +115,7 @@
   "homeDefaultProjectName": "Проект",
   "homeNoProjects": "Проектов пока нет",
   "homeGetStarted": "Создайте или импортируйте проект, чтобы начать",
+  "homeImportGetStarted": "Импортируйте проект в формате .zip, чтобы начать",
   "homeCreateProject": "Создать проект",
   "homeImportProject": "Импортировать проект",
   "homeDeleteProjectConfirm": "Удалить проект?",

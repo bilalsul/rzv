@@ -109,6 +109,7 @@
   "homeDefaultProjectName": "專案",
   "homeNoProjects": "尚無專案",
   "homeGetStarted": "建立或匯入專案以開始使用",
+  "homeImportGetStarted": "匯入一個 .zip 專案檔即可開始使用",
   "homeCreateProject": "建立專案",
   "homeImportProject": "匯入專案",
   "homeDeleteProjectConfirm": "刪除專案？",

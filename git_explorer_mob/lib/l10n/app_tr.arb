@@ -109,6 +109,7 @@
   "homeDefaultProjectName": "Proje",
   "homeNoProjects": "Henüz proje yok",
   "homeGetStarted": "Başlamak için bir proje oluşturun veya içe aktarın",
+  "homeImportGetStarted": "Başlamak için bir .zip proje dosyası içe aktarın",
   "homeCreateProject": "Proje Oluştur",
   "homeImportProject": "Proje İçe Aktar",
   "homeDeleteProjectConfirm": "Projeyi sil?",
