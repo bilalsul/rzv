@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/app/app_shell.dart';
+import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
@@ -41,7 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       // await ref.read(sharedPreferencesProvider.future);
 
       // If file explorer is enabled at startup, ensure projects root and load projects.
-      // if (Prefs().isPluginEnabled('file_explorer')) {
+      // if (Prefs().isPluginEnabled(Plugin.fileExplorer.id)) {
       await _prepareProjectsDir();
       if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
       await _loadProjectsFromDisk();
@@ -167,7 +168,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final name = nameTc.text.trim();
     if (name.isEmpty) return;
     // If file explorer (disk-based projects) is enabled, create a real folder under projects root.
-    if (Prefs().isPluginEnabled('file_explorer')) {
+    if (Prefs().isPluginEnabled(Plugin.fileExplorer.id)) {
       try {
         final base = await Prefs().projectsRoot();
         final baseName = name;
@@ -674,29 +675,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final prefs = ref.watch(prefsProvider);
-    ref.listen<Prefs>(prefsProvider, (previous, next) {
-      final prevEnabled = previous?.isPluginEnabled('file_explorer') ?? false;
-      final nowEnabled = next.isPluginEnabled('file_explorer');
-      if (!prevEnabled && nowEnabled) {
-        // Just enabled: schedule async work to prepare and load projects
-        Future.microtask(() async {
-          await _prepareProjectsDir();
-          if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
-          await _loadProjectsFromDisk();
-          if (!mounted) return;
-          setState(() {
-            _diskLoaded = true;
-          });
-        });
-      } else if (prevEnabled && !nowEnabled) {
-        // Disabled: fall back to samples (synchronous)
-        if (!mounted) return;
-        setState(() {
-          _diskLoaded = false;
-        });
-      }
-    });
-    return prefs.isPluginEnabled('file_explorer')
+    // ref.listen<Prefs>(prefsProvider, (previous, next) {
+    //   final prevEnabled = previous?.isPluginEnabled(Plugin.fileExplorer.id) ?? false;
+    //   final nowEnabled = next.isPluginEnabled(Plugin.fileExplorer.id);
+    //   if (!prevEnabled && nowEnabled) {
+    //     // Just enabled: schedule async work to prepare and load projects
+    //     Future.microtask(() async {
+    //       await _prepareProjectsDir();
+    //       if (Prefs().tutorialProject) await _ensureTutorialProjectExists();
+    //       await _loadProjectsFromDisk();
+    //       if (!mounted) return;
+    //       setState(() {
+    //         _diskLoaded = true;
+    //       });
+    //     });
+    //   } else if (prevEnabled && !nowEnabled) {
+    //     // Disabled: fall back to samples (synchronous)
+    //     if (!mounted) return;
+    //     setState(() {
+    //       _diskLoaded = false;
+    //     });
+    //   }
+    // });
+    return prefs.isPluginEnabled(Plugin.fileExplorer.id)
         ? Scaffold(
             appBar: _openedProject == null
                 ? AppBar(
@@ -884,8 +885,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         final previewing =
                             _selectedFileContent != null &&
                             (_openedProject!.id == 'tutorial_project' ||
-                                Prefs().isPluginOptionEnabled(
-                                  'preview_markdown',
+                                Prefs().isPluginEnabled(
+                                  Plugin.previewMarkdown.id,
                                 ));
                         if (previewing) {
                           return FloatingActionButton.extended(
@@ -1325,7 +1326,7 @@ class _ProjectBrowser extends StatelessWidget {
     // project or the user enabled markdown preview, render it as Markdown.
     if (selectedFileContent != null &&
         (project.id == 'tutorial_project' ||
-            Prefs().isPluginOptionEnabled('preview_markdown'))) {
+            Prefs().isPluginEnabled(Plugin.previewMarkdown.id))) {
       return Column(
         children: [
           Expanded(
@@ -1406,7 +1407,7 @@ class _ProjectBrowser extends StatelessWidget {
               // show the content in-place via the provided callback. Otherwise, open in editor.
               if (isMarkdown &&
                   (project.id == 'tutorial_project' ||
-                      Prefs().isPluginOptionEnabled('preview_markdown'))) {
+                      Prefs().isPluginEnabled(Plugin.previewMarkdown.id))) {
                 onOpenFile(content, abs);
                 return;
               }
