@@ -90,9 +90,9 @@ List<PluginDefinition> utilityPlugins = [
   //   category: PluginCategory.utility,
   // ),
   PluginDefinition(
-    id: Plugin.fileExplorer.id,
-    name: Plugin.fileExplorer.id,
-    description: Plugin.fileExplorer.id,
+    id: Plugin.themeCustomizer.id,
+    name: Plugin.themeCustomizer.id,
+    description: Plugin.themeCustomizer.id,
     icon: Icons.palette_outlined,
     category: PluginCategory.utility,
   ),
