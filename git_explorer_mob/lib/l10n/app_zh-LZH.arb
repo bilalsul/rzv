@@ -1,7 +1,7 @@
 {
   "@@locale": "zh_LZH",
   "appName": "Git Explorer",
-  "appAbout": "瀏覽 git 專案，並以唯讀模式於程式碼編輯器中觀覽檔案。",
+  "appAbout": "解壓 .zip 之 git 程式碼庫，以 Markdown 及唯讀編輯器觀覽檔案。",
   "appVersion": "版本",
   "appLicense": "授權",
   "appAuthor": "作者",

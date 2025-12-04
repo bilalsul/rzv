@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "appName": "Git Explorer",
-  "appAbout": "Explore git projects and view files in code editor read-only mode.",
+  "appAbout": "Extract .zip git codebases and view files in markdown and read-only mode code editor.",
   "appVersion": "Version",
   "appLicense": "License",
   "appAuthor": "Author",

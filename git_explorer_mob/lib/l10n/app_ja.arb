@@ -1,7 +1,7 @@
 {
   "@@locale": "ja",
   "appName": "Git Explorer",
-  "appAbout": "git プロジェクトを探索し、コードエディタでファイルを読み取り専用モードで表示します。",
+  "appAbout": ".zip 形式の git コードベースを展開し、Markdown および読み取り専用モードのコードエディタでファイルを表示します。",
   "appVersion": "バージョン",
   "appLicense": "ライセンス",
   "appAuthor": "作者",

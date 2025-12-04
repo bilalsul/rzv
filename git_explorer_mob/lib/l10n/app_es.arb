@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
   "appName": "Git Explorer",
-  "appAbout": "Explora proyectos git y visualiza archivos en el editor de código en modo solo lectura.",
+  "appAbout": "Extrae codebases git en formato .zip y visualiza archivos en markdown y en editor de código en modo solo lectura.",
   "appVersion": "Versión",
   "appLicense": "Licencia",
   "appAuthor": "Autor",

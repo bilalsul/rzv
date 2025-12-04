@@ -1,7 +1,7 @@
 {
   "@@locale": "zh_CN",
   "appName": "Git Explorer",
-  "appAbout": "浏览 git 项目，并在代码编辑器中以只读模式查看文件。",
+  "appAbout": "解压 .zip 格式的 git 代码库，以 Markdown 和只读模式代码编辑器查看文件。",
   "appVersion": "版本",
   "appLicense": "许可证",
   "appAuthor": "作者",
