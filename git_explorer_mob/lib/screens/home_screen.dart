@@ -940,13 +940,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             },
                           );
                         }
-                        return FloatingActionButton.extended(
-                          // heroTag: 'create_file',
-                          icon: Icon(Icons.note_add, color: prefs.accentColor),
-                          backgroundColor: prefs.secondaryColor,
-                          label: Text(L10n.of(context).commonCreate),
-                          onPressed: _createFileInCurrentFolder,
-                        );
+                        return SizedBox.shrink();
+                        // return FloatingActionButton.extended(
+                        //   // heroTag: 'create_file',
+                        //   icon: Icon(Icons.note_add, color: prefs.accentColor),
+                        //   backgroundColor: prefs.secondaryColor,
+                        //   label: Text(L10n.of(context).commonCreate),
+                        //   onPressed: _createFileInCurrentFolder,
+                        // );
                       },
                     ),
                   )
@@ -956,13 +957,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const SizedBox(height: 8),
-                        FloatingActionButton.small(
-                          // heroTag: 'create_details',
-                          onPressed: _createProjectWithDetails,
-                          tooltip: L10n.of(context).homeTooltipCreateDetails,
-                          backgroundColor: prefs.secondaryColor,
-                          child: Icon(Icons.add, color: prefs.accentColor),
-                        ),
+                        // FloatingActionButton.small(
+                        //   // heroTag: 'create_details',
+                        //   onPressed: _createProjectWithDetails,
+                        //   tooltip: L10n.of(context).homeTooltipCreateDetails,
+                        //   backgroundColor: prefs.secondaryColor,
+                        //   child: Icon(Icons.add, color: prefs.accentColor),
+                        // ),
                         const SizedBox(height: 8),
                         FloatingActionButton(
                           // heroTag: 'sample_zip',
@@ -1243,20 +1244,20 @@ class EmptyState extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
-          Text(L10n.of(context).homeGetStarted),
+          Text(L10n.of(context).homeImportGetStarted),
           const SizedBox(height: 16),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton.icon(
-                onPressed: onCreate,
-                icon: Icon(Icons.add, color: Prefs().accentColor),
-                label: Text(
-                  L10n.of(context).homeCreateProject,
-                  style: TextStyle(color: Prefs().accentColor),
-                ),
-              ),
-              const SizedBox(width: 8),
+              // ElevatedButton.icon(
+              //   onPressed: onCreate,
+              //   icon: Icon(Icons.add, color: Prefs().accentColor),
+              //   label: Text(
+              //     L10n.of(context).homeCreateProject,
+              //     style: TextStyle(color: Prefs().accentColor),
+              //   ),
+              // ),
+              // const SizedBox(width: 8),
               ElevatedButton.icon(
                 onPressed: () async {
                   await onImport();
