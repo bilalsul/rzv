@@ -78,25 +78,25 @@ class Prefs extends ChangeNotifier {
   }
 
   // for testing purposes
-  String getValue(String value) {
-    return prefs.getString(value) ?? "whatt?";
-  }
+  // String getValue(String value) {
+  //   return prefs.getString(value) ?? "whatt?";
+  // }
 
-  List<String> getValueList(String listName) {
-    return prefs.getStringList(listName) ?? [];
-  }
+  // List<String> getValueList(String listName) {
+  //   return prefs.getStringList(listName) ?? [];
+  // }
 
-  bool getValueExistInList(String listName, String value) {
-    return prefs.getStringList(listName)?.contains(value) ?? false;
-  }
+  // bool getValueExistInList(String listName, String value) {
+  //   return prefs.getStringList(listName)?.contains(value) ?? false;
+  // }
 
-  bool getFlag(String flagKey) {
-    return prefs.getBool(flagKey) ?? false;
-  }
+  // bool getFlag(String flagKey) {
+  //   return prefs.getBool(flagKey) ?? false;
+  // }
 
-  setFlag(String key, bool value) {
-    prefs.setBool(key, value);
-  }
+  // setFlag(String key, bool value) {
+  //   prefs.setBool(key, value);
+  // }
 
   // App State
   // Getter and setter for last opened project
