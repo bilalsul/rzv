@@ -171,7 +171,7 @@
   "homeRetry": "Wiederholen",
   "tutorialProjectName": "Tutorial-Projekt",
   "tutorialProjectReadmeTitle": "# Willkommen beim Git Explorer Tutorial",
-  "tutorialProjectReadmeBody": "Diese README führt Sie durch die Funktionen des Home-Bildschirms und zeigt, wie Sie Dateien öffnen, bearbeiten, speichern und löschen.\n\n- Tippen Sie auf ein Projekt, um es zu öffnen\n- Tippen Sie auf eine Datei, um sie in der Vorschau anzuzeigen oder im Editor zu öffnen\n- Verwenden Sie die Schublade, um Funktionen wie den Datei-Explorer umzuschalten\n- Erstellen, importieren (.zip) oder entfernen Sie Projekte von hier\n\nViel Spaß beim Erkunden der App!",
+  "tutorialProjectReadmeBody": "Dieses README führt dich durch die Projekt-Features und zeigt, wie du Dateien im reinen Lese-Modus öffnest – keine Änderungen möglich.\n\n- Tippe auf ein Projekt, um es zu öffnen\n- Tippe auf eine Markdown-Datei für die Vorschau (muss in Einstellungen → Datei-Explorer aktiviert sein, standardmäßig deaktiviert) oder öffne sie im Editor\n- Nutze den Bereich PLUGINS & FEATURES, um Funktionen wie den Datei-Explorer ein-/auszuschalten\n- Importiere .zip-Dateien oder lösche Projekte von hier aus\n\nViel Spaß mit der App! Hinterlasse eine Bewertung mit deinen Vorschlägen",
   "drawerCurrentProject": "Aktuelles Projekt",
   "drawerNoProjectOpen": "Kein Projekt geöffnet",
   "drawerLastOpened": "Zuletzt geöffnet: {time}",

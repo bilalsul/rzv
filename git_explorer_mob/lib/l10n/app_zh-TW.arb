@@ -171,7 +171,7 @@
   "homeRetry": "重試",
   "tutorialProjectName": "教學專案",
   "tutorialProjectReadmeTitle": "# 歡迎使用 Git Explorer 教學",
-  "tutorialProjectReadmeBody": "本 README 將帶您認識首頁功能，以及如何開啟、編輯、儲存與刪除檔案。\n\n- 點擊專案即可開啟\n- 點擊檔案可預覽或在編輯器中開啟\n- 使用側邊選單開關檔案總管等功能\n- 在此建立、匯入（.zip）或刪除專案\n\n祝您使用愉快！",
+  "tutorialProjectReadmeBody": "本 README 將帶您認識專案功能以及如何以唯讀模式開啟檔案（無法修改）。\n\n- 點擊專案即可開啟\n- 點擊 markdown 檔案可預覽（請確認已在「檔案總管設定」中開啟，預設關閉）或在編輯器開啟\n- 在 PLUGINS & FEATURES 區塊切換檔案總管等功能\n- 在此匯入 .zip 專案或刪除專案\n\n祝使用愉快！歡迎留下評論與建議",
   "drawerCurrentProject": "目前專案",
   "drawerNoProjectOpen": "尚未開啟任何專案",
   "drawerLastOpened": "最後開啟：{time}",

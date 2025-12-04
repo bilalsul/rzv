@@ -175,7 +175,7 @@
   "homeRetry": "Riprova",
   "tutorialProjectName": "Progetto Tutorial",
   "tutorialProjectReadmeTitle": "# Benvenuto nel Tutorial di Git Explorer",
-  "tutorialProjectReadmeBody": "Questo README ti guida attraverso le funzionalità della schermata Home e come aprire, modificare, salvare ed eliminare file.\n\n- Tocca un progetto per aprirlo\n- Tocca un file per visualizzarlo in anteprima o aprirlo nell'editor\n- Usa il drawer per attivare/disattare funzioni come Esplora File\n- Crea, importa (.zip) o rimuovi progetti da qui\n\nBuona esplorazione dell'app!",
+  "tutorialProjectReadmeBody": "Questo README ti guida tra le funzionalità dei Progetti e come aprire i file in modalità sola lettura, senza possibilità di modifica.\n\n- Tocca un progetto per aprirlo\n- Tocca un file markdown per anteprima (assicurati che sia abilitato in Impostazioni → Esplora File, disabilitato di default) oppure aprilo nell'Editor\n- Usa la sezione PLUGINS & FEATURES per attivare/disattivare funzioni come Esplora File\n- Importa file .zip o rimuovi progetti da qui\n\nBuon divertimento con l'app! Lascia una recensione con i tuoi suggerimenti",
   "drawerCurrentProject": "Progetto Corrente",
   "drawerNoProjectOpen": "Nessun progetto aperto",
   "drawerLastOpened": "Ultima apertura: {time}",

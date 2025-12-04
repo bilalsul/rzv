@@ -171,7 +171,7 @@
   "homeRetry": "Tekrar Dene",
   "tutorialProjectName": "Eğitim Projesi",
   "tutorialProjectReadmeTitle": "# Git Explorer Eğitimi’ne Hoş Geldiniz",
-  "tutorialProjectReadmeBody": "Bu README, Ana ekran özelliklerini ve dosyaları açma, düzenleme, kaydetme ve silme işlemlerini anlatır.\n\n- Projeye dokunarak açın\n- Dosyaya dokunarak önizleyin veya editörde açın\n- Dosya Gezgini gibi özellikleri açmak/kapatmak için yan menüyü kullanın\n- Projeleri buradan oluşturun, içe aktarın (.zip) veya kaldırın\n\nUygulamayı keşfetmeye başlayın!",
+  "tutorialProjectReadmeBody": "Bu README, Projeler özelliklerini ve dosyaları yalnızca okuma modunda (değiştirilemez) nasıl açacağınızı anlatır.\n\n- Bir projeye dokunarak açın\n- Markdown dosyasına dokunarak önizlemesini görün (Dosya Gezgini Ayarları'ndan etkinleştirin, varsayılan olarak kapalı) ya da Editör'de açın\n- Dosya Gezgini gibi özellikleri PLUGINS & FEATURES bölümünden açıp kapatın\n- .zip dosyası içe aktarın veya projeleri buradan silin\n\nUygulamayı keyifle kullanın! Önerileriniz için yorum bırakın",
   "drawerCurrentProject": "Geçerli Proje",
   "drawerNoProjectOpen": "Açık proje yok",
   "drawerLastOpened": "Son açılma: {time}",

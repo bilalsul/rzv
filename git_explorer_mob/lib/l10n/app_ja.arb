@@ -175,7 +175,7 @@
   "homeRetry": "再試行",
   "tutorialProjectName": "チュートリアルプロジェクト",
   "tutorialProjectReadmeTitle": "# Git Explorer チュートリアルへようこそ",
-  "tutorialProjectReadmeBody": "この README はホーム画面の機能と、ファイルの開き方・編集・保存・削除の方法をご案内します。\n\n- プロジェクトをタップで開く\n- ファイルをタップでプレビューまたはエディターで開く\n- サイドメニューでファイルエクスプローラーなどの機能をオン／オフ\n- ここからプロジェクトの作成・インポート（.zip）・削除が可能\n\nぜひアプリを探索してみてください！",
+  "tutorialProjectReadmeBody": "この README ではプロジェクト機能と、読み取り専用モード（編集不可）でファイルを開く方法を説明します。\n\n- プロジェクトをタップで開く\n- Markdown ファイルをタップでプレビュー（ファイルエクスプローラー設定で有効化が必要・デフォルト無効）またはエディタで開く\n- PLUGINS & FEATURES からファイルエクスプローラーなどの機能をオン/オフ\n- ここから .zip をインポートまたはプロジェクト削除\n\nアプリをお楽しみください！ご意見・要望はレビューでどうぞ",
   "drawerCurrentProject": "現在のプロジェクト",
   "drawerNoProjectOpen": "プロジェクトが開かれていません",
   "drawerLastOpened": "最終オープン: {time}",
