@@ -701,7 +701,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ? Scaffold(
             appBar: _openedProject == null
                 ? AppBar(
-                    title: Text(L10n.of(context).homeProjectsTitle),
+                    title: Text(L10n.of(context).homeGitProjectsTitle),
                     actions: [
                       IconButton(
                         tooltip: L10n.of(context).homeRefreshProjects,

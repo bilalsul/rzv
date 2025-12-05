@@ -110,6 +110,7 @@
   "featureNotSupported": "Recurso não suportado no momento. Verifique as versões futuras",
   "enableFeatureFromPlugins": "Ative este recurso a partir dos Plugins",
   "homeProjectsTitle": "Projetos importados/criados",
+  "homeGitProjectsTitle": "Projetos git importados",
   "homeDefaultProjectName": "Projeto",
   "homeNoProjects": "Ainda não existem projetos",
   "homeGetStarted": "Crie ou importe um projeto para começar",

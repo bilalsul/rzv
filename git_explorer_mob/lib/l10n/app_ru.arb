@@ -112,6 +112,7 @@
   "featureNotSupported": "Функция пока не поддерживается. Следите за будущими релизами",
   "enableFeatureFromPlugins": "Включите эту функцию в разделе Плагины",
   "homeProjectsTitle": "Импортированные/созданные проекты",
+  "homeGitProjectsTitle": "Импортированные git-проекты",
   "homeDefaultProjectName": "Проект",
   "homeNoProjects": "Проектов пока нет",
   "homeGetStarted": "Создайте или импортируйте проект, чтобы начать",
