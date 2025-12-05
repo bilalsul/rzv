@@ -106,6 +106,7 @@
   "featureNotSupported": "此功能目前不支援。請留意未來版本",
   "enableFeatureFromPlugins": "從插件中啟用此功能",
   "homeProjectsTitle": "已匯入／建立的專案",
+  "homeGitProjectsTitle": "已匯入的 git 專案",
   "homeDefaultProjectName": "專案",
   "homeNoProjects": "尚無專案",
   "homeGetStarted": "建立或匯入專案以開始使用",

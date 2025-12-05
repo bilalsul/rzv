@@ -110,6 +110,7 @@
   "featureNotSupported": "この機能は現時点でサポートされていません。今後のリリースをご確認ください",
   "enableFeatureFromPlugins": "プラグインからこの機能を有効にしてください",
   "homeProjectsTitle": "インポート／作成済みプロジェクト",
+  "homeGitProjectsTitle": "インポート済みの git プロジェクト",
   "homeDefaultProjectName": "プロジェクト",
   "homeNoProjects": "まだプロジェクトがありません",
   "homeGetStarted": "プロジェクトを作成またはインポートして始めましょう",
