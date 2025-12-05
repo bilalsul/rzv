@@ -11,7 +11,7 @@
     <application
     
         android:name="${applicationName}"
-        android:label="Gitr"
+        android:label="Gzip"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false">
         <activity

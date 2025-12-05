@@ -1,6 +1,6 @@
 {
   "@@locale": "ar",
-  "appName": "مستكشف Git",
+  "appName": "مستكشف gzip",
   "appAbout": "فك ضغط قواعد الكود من git بصيغة .zip وعرض الملفات كـ Markdown وفي محرر أكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
   "appLicense": "الترخيص",
@@ -207,7 +207,7 @@
   "drawerFolderNameHint": "اسم المجلد",
   "drawerEditorTheme": "سمة المحرر",
   "drawerEditorWordWrap": "التفاف النص",
-  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول Git Explorer",
+  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول gzip Explorer",
   "drawerSendFeedback": "إرسال ملاحظات",
   "drawerFirstInstalled": "أول تثبيت: {date}",
   "@drawerFirstInstalled": {

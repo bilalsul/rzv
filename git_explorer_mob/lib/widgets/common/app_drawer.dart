@@ -108,7 +108,9 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Image.asset(
-                  'assets/icons/git-explorer-icon.png',
+                  Theme.of(context).brightness == Brightness.light
+                      ? 'assets/icons/git-explorer-icon.png'
+                      : 'assets/icons/git-explorer-icon-light.png',
                   height: 35,
                   width: 35,
                 ),
@@ -121,7 +123,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
-                    color: prefs.accentColor,
+                    // color: prefs.accentColor,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
