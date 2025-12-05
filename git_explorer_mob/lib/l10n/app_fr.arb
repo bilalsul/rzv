@@ -106,6 +106,7 @@
   "featureNotSupported": "Fonctionnalité non prise en charge pour le moment. Vérifiez les futures versions",
   "enableFeatureFromPlugins": "Activer cette fonctionnalité depuis les Plugins",
   "homeProjectsTitle": "Projets importés/créés",
+  "homeGitProjectsTitle": "Projets git importés",
   "homeDefaultProjectName": "Projet",
   "homeNoProjects": "Aucun projet pour l'instant",
   "homeGetStarted": "Créez ou importez un projet pour commencer",

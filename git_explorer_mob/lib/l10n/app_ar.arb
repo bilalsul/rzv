@@ -106,6 +106,7 @@
   "featureNotSupported": "الميزة غير مدعومة في الوقت الحالي. تحقق من الإصدارات المستقبلية",
   "enableFeatureFromPlugins": "فعّل هذه الميزة من الإضافات",
   "homeProjectsTitle": "المشاريع المستوردة/المنشأة",
+  "homeGitProjectsTitle": "مشاريع git المستوردة",
   "homeDefaultProjectName": "مشروع",
   "homeNoProjects": "لا توجد مشاريع بعد",
   "homeGetStarted": "أنشئ أو استورد مشروعًا للبدء",

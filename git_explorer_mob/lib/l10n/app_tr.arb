@@ -106,6 +106,7 @@
   "featureNotSupported": "Özellik şu anda desteklenmiyor. Gelecek sürümleri kontrol edin",
   "enableFeatureFromPlugins": "Bu özelliği Eklentiler bölümünden etkinleştirin",
   "homeProjectsTitle": "İçe Aktarılan/Oluşturulan Projeler",
+  "homeGitProjectsTitle": "İçe Aktarılmış git Projeleri",
   "homeDefaultProjectName": "Proje",
   "homeNoProjects": "Henüz proje yok",
   "homeGetStarted": "Başlamak için bir proje oluşturun veya içe aktarın",

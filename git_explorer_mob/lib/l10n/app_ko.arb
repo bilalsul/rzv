@@ -112,6 +112,7 @@
   "featureNotSupported": "현재 해당 기능은 지원되지 않습니다. 향후 릴리스에서 확인해 주세요",
   "enableFeatureFromPlugins": "플러그인에서 이 기능을 활성화하세요",
   "homeProjectsTitle": "가져온/생성한 프로젝트",
+  "homeGitProjectsTitle": "가져온 git 프로젝트",
   "homeDefaultProjectName": "프로젝트",
   "homeNoProjects": "아직 프로젝트가 없습니다",
   "homeGetStarted": "프로젝트를 만들거나 가져와서 시작하세요",

@@ -96,8 +96,8 @@ class _AppShellState extends ConsumerState<AppShell> {
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
       title: 'Git Explorer',
-      // theme: ThemeData.light(),
-      // darkTheme: ThemeData.dark(),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
       themeMode: themeMode,
       home: Scaffold(
         key: _scaffoldKey,
