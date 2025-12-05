@@ -896,7 +896,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               color: prefs.accentColor,
                             ),
                             backgroundColor: prefs.secondaryColor,
-                            label: Text(L10n.of(context).navBarEditor),
+                            label: Text(
+                              L10n.of(context).navBarEditor,
+                              style: TextStyle(color: prefs.accentColor),
+                            ),
                             tooltip: L10n.of(context).homeOpenFileEditorNotice,
                             onPressed: () async {
                               if (_openedProject == null) return;
