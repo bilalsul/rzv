@@ -1,4 +1,4 @@
-package com.example.git_explorer_mob
+package com.bilalworku.gzip
 
 import android.content.Context
 import android.view.LayoutInflater

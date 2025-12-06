@@ -1,4 +1,4 @@
-package com.example.git_explorer_mob
+package com.bilalworku.gzip
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
