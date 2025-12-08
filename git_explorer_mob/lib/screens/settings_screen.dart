@@ -29,7 +29,7 @@ class SettingsScreen extends ConsumerStatefulWidget {
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // AdMob native ad
   NativeAd? _nativeAd;
-  bool _isNativeAdLoaded = false;
+  // bool _isNativeAdLoaded = false;
   // Temporary theme customizer state (apply button will persist)
   // late Color _tempPrimaryColor;
   late Color _tempSecondaryColor;
@@ -998,7 +998,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   void initState() {
     super.initState();
     // make sure initialized Mobile Ads in main then load native ad for this screen
-    _loadNativeAd();
+    // _loadNativeAd();
     // Read current persisted values from Prefs singleton into temporary state
     final p = Prefs();
     // _tempPrimaryColor = p.primaryColor;
@@ -1015,23 +1015,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // ScrollController get getController{
   //   return controller;
   // }
-  void _loadNativeAd() {
-    _nativeAd = NativeAd(
-      adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
-      factoryId: 'listTileMedium',
-      request: const AdRequest(),
-      listener: NativeAdListener(
-        onAdLoaded: (ad) {
-          if (!mounted) return;
-          setState(() => _isNativeAdLoaded = true);
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-          debugPrint('Native Ad failed: $error');
-        },
-      ),
-    )..load();
-  }
+  // void _loadNativeAd() {
+  //   _nativeAd = NativeAd(
+  //     adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
+  //     factoryId: 'listTileMedium',
+  //     request: const AdRequest(),
+  //     listener: NativeAdListener(
+  //       onAdLoaded: (ad) {
+  //         if (!mounted) return;
+  //         setState(() => _isNativeAdLoaded = true);
+  //       },
+  //       onAdFailedToLoad: (ad, error) {
+  //         ad.dispose();
+  //         debugPrint('Native Ad failed: $error');
+  //       },
+  //     ),
+  //   )..load();
+  // }
 
   @override
   void dispose() {
