@@ -14,7 +14,7 @@ Perfect for:
 - Quickly checking repos shared as zip downloads
 - Learning from famous projects without setting up git
 
-No cloning. No internet after import. Zero ads. Privacy-focused.
+No cloning. No internet after import. Privacy-focused.
 
 ## Features
 
@@ -61,4 +61,4 @@ No cloning. No internet after import. Zero ads. Privacy-focused.
 
 **Gzip Explorer** – View code anywhere, anytime.  
 
-📱 Available soon on Google Play (or sideload the APK from Releases)
+📱 Available soon on Google Play (or sideload the APK from [Releases here](https://github.com/uncrr/git-explorer/releases))
