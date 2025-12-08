@@ -49,13 +49,10 @@ No cloning. No internet after import. Privacy-focused.
 
 ## Privacy & Permissions
 
+- Read our Privacy policy, [view here](https://uncrr.github.io/privacy/gzip-privacy)
 - Only requires storage permission to read your `.zip` files
 - No internet permission needed after import
 - No tracking, no analytics, runs Ads
-
-## License
-
-[MIT License](LICENSE)
 
 ---
 
