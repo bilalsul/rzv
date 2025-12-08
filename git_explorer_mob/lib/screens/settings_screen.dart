@@ -965,11 +965,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
             ),
             const SizedBox(height: 35),
-            // ad here
-            _isNativeAdLoaded && _nativeAd != null
-                ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
-                : const SizedBox.shrink(),
 
+            // ad here
+            // _isNativeAdLoaded && _nativeAd != null
+            //     ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
+            //     : const SizedBox.shrink(),
             const SizedBox(height: 130),
             Center(
               child: Column(
