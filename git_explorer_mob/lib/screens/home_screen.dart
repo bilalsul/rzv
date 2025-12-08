@@ -1439,6 +1439,7 @@ class _ProjectBrowser extends StatelessWidget {
           Expanded(
             child: Markdown(data: selectedFileContent!, selectable: true),
           ),
+          SizedBox(height: 50),
         ],
       );
     }
