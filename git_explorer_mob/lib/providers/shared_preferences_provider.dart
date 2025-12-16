@@ -966,7 +966,7 @@ class Prefs extends ChangeNotifier {
 
 class AppState {
   final DateTime sessionStartTime;
-  final String appVersion = '0.0.10';
+  final String appVersion = '0.0.11';
   final DateTime firstInstallDate;
 
   AppState({required this.sessionStartTime, required this.firstInstallDate});
