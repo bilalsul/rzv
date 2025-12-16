@@ -37,7 +37,7 @@
   "settingsEditorSettings": "Настройки редактора",
   "settingsEditorTabSize": "Размер табуляции",
   "settingsEditorShowLineNumbers": "Номера строк",
-  "settingsEditorOpenFilePlaceholder": "# Открыть файл из проекта или создать новый файл",
+  "settingsEditorOpenFilePlaceholder": "# Открыть файл из проекта для просмотра в редакторе",
   "settingsEditorFontSize": "Размер шрифта",
   "settingsEditorFontFamily": "Семейство шрифтов",
   "settingsEditorZoomInOut": "Включить масштабирование (In/Out)",

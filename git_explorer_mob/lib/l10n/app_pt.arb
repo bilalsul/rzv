@@ -31,7 +31,7 @@
   "settingsEditorSettings": "Definições do Editor",
   "settingsEditorTabSize": "Tamanho da tabulação",
   "settingsEditorShowLineNumbers": "Mostrar números de linha",
-  "settingsEditorOpenFilePlaceholder": "# Abrir arquivo de um projeto ou criar novo arquivo",
+  "settingsEditorOpenFilePlaceholder": "# Abrir arquivo de um projeto para visualizar no Editor",
   "settingsEditorFontSize": "Tamanho da fonte",
   "settingsEditorFontFamily": "Família da fonte",
   "settingsEditorZoomInOut": "Ativar Zoom In/Out",

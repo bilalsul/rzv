@@ -31,7 +31,7 @@
   "settingsEditorSettings": "Impostazioni Editor",
   "settingsEditorTabSize": "Dimensione tab",
   "settingsEditorShowLineNumbers": "Mostra numeri di riga",
-  "settingsEditorOpenFilePlaceholder": "# Apri file da un progetto o crea nuovo file",
+  "settingsEditorOpenFilePlaceholder": "# Apri un file da un progetto per visualizzarlo nell'Editor",
   "settingsEditorFontSize": "Dimensione carattere",
   "settingsEditorFontFamily": "Famiglia caratteri",
   "settingsEditorZoomInOut": "Abilita Zoom In/Out",

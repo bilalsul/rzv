@@ -31,7 +31,7 @@
   "settingsEditorSettings": "Editör Ayarları",
   "settingsEditorTabSize": "Sekme boyutu",
   "settingsEditorShowLineNumbers": "Satır numaralarını göster",
-  "settingsEditorOpenFilePlaceholder": "# Projeden dosya aç veya yeni dosya oluştur",
+  "settingsEditorOpenFilePlaceholder": "# Projeden dosya açarak Editör'de görüntüle",
   "settingsEditorFontSize": "Yazı Boyutu",
   "settingsEditorFontFamily": "Yazı Tipi Ailesi",
   "settingsEditorZoomInOut": "Yakınlaştırma/Uzaklaştırma'yı Etkinleştir",
