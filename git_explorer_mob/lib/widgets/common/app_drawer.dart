@@ -27,7 +27,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   // bool _expandedExperimentalPlugins = false;
 
   NativeAd? _nativeAd;
-  // bool _isNativeAdLoaded = false;
+  bool _isNativeAdLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,26 +57,26 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   void initState() {
     super.initState();
     // make sure initialized Mobile Ads in main then load native ad for this screen
-    // _loadNativeAd();
+    _loadNativeAd();
   }
 
-  // void _loadNativeAd() {
-  //   _nativeAd = NativeAd(
-  //     adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
-  //     factoryId: 'listTileMedium',
-  //     request: const AdRequest(),
-  //     listener: NativeAdListener(
-  //       onAdLoaded: (ad) {
-  //         if (!mounted) return;
-  //         setState(() => _isNativeAdLoaded = true);
-  //       },
-  //       onAdFailedToLoad: (ad, error) {
-  //         ad.dispose();
-  //         debugPrint('Native Ad failed: $error');
-  //       },
-  //     ),
-  //   )..load();
-  // }
+  void _loadNativeAd() {
+    _nativeAd = NativeAd(
+      adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
+      factoryId: 'listTileMedium',
+      request: const AdRequest(),
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          if (!mounted) return;
+          setState(() => _isNativeAdLoaded = true);
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          debugPrint('Native Ad failed: $error');
+        },
+      ),
+    )..load();
+  }
 
   @override
   void dispose() {
@@ -321,11 +321,11 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         // Footer placed as a sliver so it only becomes visible when the user scrolls to the end
         SliverToBoxAdapter(child: _buildDrawerFooter(theme)),
 
-        // SliverToBoxAdapter(
-        //   child: _isNativeAdLoaded && _nativeAd != null
-        //       ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
-        //       : const SizedBox.shrink(),
-        // ),
+        SliverToBoxAdapter(
+          child: _isNativeAdLoaded && _nativeAd != null
+              ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
+              : const SizedBox.shrink(),
+        ),
         SliverToBoxAdapter(child: SizedBox(height: 60)),
         SliverToBoxAdapter(
           child: Consumer(
