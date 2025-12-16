@@ -55,6 +55,32 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
+Locale? getEffectiveLocale(Prefs prefs, List<Locale> supportedLocales) {
+  // Get the locale from prefs
+  Locale? storedLocale = prefs.locale;
+  
+  if (storedLocale != null) {
+    // If user has explicitly selected a locale, respect it
+    return storedLocale;
+  }
+  
+  // Get system locale
+  Locale systemLocale = WidgetsBinding.instance.window.locale;
+  
+  // Check if system locale is supported
+  bool isSystemLocaleSupported = supportedLocales.any((supportedLocale) => 
+      supportedLocale.languageCode == systemLocale.languageCode &&
+      (supportedLocale.countryCode == null || 
+       supportedLocale.countryCode == systemLocale.countryCode)
+  );
+  
+  if (isSystemLocaleSupported) {
+    return systemLocale;
+  } else {
+    // Default to English if system locale is not supported
+    return const Locale('en');
+  }
+}
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
@@ -108,7 +134,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
     final prefs = ref.watch(prefsProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: prefs.locale,
+      locale: prefs.getEffectiveLocale(prefs, L10n.supportedLocales),
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
       // scrollBehavior: ScrollConfiguration.of(context).copyWith(
@@ -121,7 +147,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
       // navigatorObservers: [FlutterSmartDialog.observer],
       // builder: FlutterSmartDialog.init(),
       navigatorKey: navigatorKey,
-      title: 'Git Explorer',
+      title: 'Gzip Explorer',
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),
       //   useMaterial3: true,
