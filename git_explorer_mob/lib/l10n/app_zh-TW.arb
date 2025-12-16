@@ -31,7 +31,7 @@
   "settingsEditorSettings": "編輯器設定",
   "settingsEditorTabSize": "Tab 寬度",
   "settingsEditorShowLineNumbers": "顯示行號",
-  "settingsEditorOpenFilePlaceholder": "# 從專案中開啟檔案或建立新檔案",
+  "settingsEditorOpenFilePlaceholder": "# 從專案中開啟檔案以在編輯器中檢視",
   "settingsEditorFontSize": "字型大小",
   "settingsEditorFontFamily": "字型系列",
   "settingsEditorZoomInOut": "啟用放大/縮小",

@@ -31,7 +31,7 @@
   "settingsEditorSettings": "إعدادات المحرر",
   "settingsEditorTabSize": "حجم علامة التبويب",
   "settingsEditorShowLineNumbers": "إظهار أرقام الأسطر",
-  "settingsEditorOpenFilePlaceholder": "# افتح ملفًا من مشروع أو أنشئ ملفًا جديدًا",
+  "settingsEditorOpenFilePlaceholder": "# افتح ملفًا من مشروع لعرضه في المحرر",
   "settingsEditorFontSize": "حجم الخط",
   "settingsEditorFontFamily": "عائلة الخط",
   "settingsEditorZoomInOut": "تفعيل التكبير/التصغير",

@@ -258,6 +258,34 @@ class Prefs extends ChangeNotifier {
     return Locale(localeCode);
   }
 
+  Locale? getEffectiveLocale(Prefs prefs, List<Locale> supportedLocales) {
+  // Get the locale from prefs
+  Locale? storedLocale = prefs.locale;
+  
+  if (storedLocale != null) {
+    // If user has explicitly selected a locale, respect it
+    return storedLocale;
+  }
+  
+  // Get system locale
+  Locale systemLocale = WidgetsBinding.instance.window.locale;
+  
+  // Check if system locale is supported
+  bool isSystemLocaleSupported = supportedLocales.any((supportedLocale) => 
+      supportedLocale.languageCode == systemLocale.languageCode &&
+      (supportedLocale.countryCode == null || 
+       supportedLocale.countryCode == systemLocale.countryCode)
+  );
+  
+  if (isSystemLocaleSupported) {
+    return systemLocale;
+  } else {
+    // Default to English if system locale is not supported
+    return const Locale('en');
+  }
+}
+
+
   Future<void> saveLocaleToPrefs(String localeCode) async {
     await prefs.setString('locale', localeCode);
     notifyListeners();
@@ -938,7 +966,7 @@ class Prefs extends ChangeNotifier {
 
 class AppState {
   final DateTime sessionStartTime;
-  final String appVersion = '0.0.10';
+  final String appVersion = '0.0.11';
   final DateTime firstInstallDate;
 
   AppState({required this.sessionStartTime, required this.firstInstallDate});

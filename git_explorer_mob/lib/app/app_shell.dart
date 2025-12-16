@@ -92,7 +92,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // Use the watched prefs instance so MaterialApp rebuilds when locale changes.
-      locale: prefs.locale,
+      locale: prefs.getEffectiveLocale(prefs, L10n.supportedLocales),
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
       title: 'Git Explorer',

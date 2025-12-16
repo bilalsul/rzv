@@ -31,7 +31,7 @@
   "settingsEditorSettings": "エディター設定",
   "settingsEditorTabSize": "タブ幅",
   "settingsEditorShowLineNumbers": "行番号を表示",
-  "settingsEditorOpenFilePlaceholder": "# プロジェクトからファイルを開くか新しいファイルを作成",
+  "settingsEditorOpenFilePlaceholder": "# プロジェクトからファイルを開いてエディタで表示",
   "settingsEditorFontSize": "フォントサイズ",
   "settingsEditorFontFamily": "フォントファミリー",
   "settingsEditorZoomInOut": "ズームイン/ズームアウトを有効にする",
