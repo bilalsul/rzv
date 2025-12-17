@@ -103,17 +103,17 @@ Future<String> _loadChangelogContent() async {
       // Check if we should show what's new
       final shouldShow = await Prefs().shouldShowWhatsNew();
       
-      // if (shouldShow && mounted) {
+      if (shouldShow && mounted) {
         // Get current version for display
         final currentVersion = await Prefs().getCurrentAppVersion();
         
         // Wait a bit for UI to initialize
         await Future.delayed(const Duration(milliseconds: 800));
         
-        // if (!mounted) return;
+        if (!mounted) return;
         
         await _showWhatsNewDialog(currentVersion);
-      // }
+      }
     } catch (e) {
       print('Error showing what\'s new dialog: $e');
       // Don't crash the app if this fails
