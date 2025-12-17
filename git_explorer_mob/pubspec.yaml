@@ -108,6 +108,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/images/ai/
+    - assets/changelog.md
     - pubspec.yaml
 
   # An image asset can refer to one or more resolution-specific "variants", see
