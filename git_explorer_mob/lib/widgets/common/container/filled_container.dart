@@ -1,4 +1,4 @@
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+// import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/widgets/common/container/base_rounded_container.dart';
 import 'package:git_explorer_mob/widgets/common/container/outlined_container.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,9 @@ class FilledContainer extends BaseRoundedContainer {
 
   @override
   Widget build(BuildContext context) {
-    if (Prefs().eInkMode && !fill) {
+    if (
+      // Prefs().eInkMode &&
+       !fill) {
       return OutlinedContainer(
         width: width,
         height: height,

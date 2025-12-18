@@ -62,8 +62,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       // }
 
       // ADD THIS LINE - Show what's new dialog if needed
-    // await _showWhatsNewDialogIfNeeded();
     initGzipExp();
+    await _showWhatsNewDialogIfNeeded();
     });
 
     // Listen for changes to prefs so we can react to toggles (e.g., enabling File Explorer)
