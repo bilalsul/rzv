@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 // Other providers removed; Prefs is now the central settings source.
 import 'package:shared_preferences/shared_preferences.dart';
@@ -325,6 +326,15 @@ class Prefs extends ChangeNotifier {
     prefs.remove('theme_accent_color');
     notifyListeners();
   }
+
+  // set eInkMode(bool status) {
+  //   prefs.setBool('eInkMode', status);
+  //   notifyListeners();
+  // }
+
+  // bool get eInkMode {
+  //   return prefs.getBool('eInkMode') ?? false;
+  // }
 
   // Getter and setter for custom theme name
   // String get customThemeName {
@@ -908,6 +918,78 @@ class Prefs extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? get lastAppVersion {
+    return prefs.getString('lastAppVersion');
+  }
+
+  set lastAppVersion(String? version) {
+    if (version != null) {
+      prefs.setString('lastAppVersion', version);
+    } else {
+      prefs.remove('lastAppVersion');
+    }
+    notifyListeners();
+  }
+
+  set lastShowUpdate(DateTime time) {
+    prefs.setString('lastShowUpdate', time.toIso8601String());
+    notifyListeners();
+  }
+
+  DateTime get lastShowUpdate {
+    String? lastShowUpdateStr = prefs.getString('lastShowUpdate');
+    if (lastShowUpdateStr == null) return DateTime(1970, 1, 1);
+    return DateTime.parse(lastShowUpdateStr);
+  }
+
+
+  static const String _lastVersionKey = 'last_app_version';
+  
+  Future<String> getCurrentAppVersion() async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version;
+  }
+  
+  Future<String?> getLastSeenVersion() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_lastVersionKey);
+  }
+  
+  Future<bool> shouldShowWhatsNew() async {
+    try {
+      final currentVersion = await getCurrentAppVersion();
+      final lastSeenVersion = await getLastSeenVersion();
+      
+      // No stored version = first launch ever
+      if (lastSeenVersion == null) {
+        await _saveLastSeenVersion(currentVersion);
+        return false;
+      }
+      
+      // Compare versions (simple string comparison)
+      final shouldShow = currentVersion != lastSeenVersion;
+      
+      if (shouldShow) {
+        await _saveLastSeenVersion(currentVersion);
+      }
+      
+      return shouldShow;
+    } catch (e) {
+      print('Error checking version: $e');
+      return false;
+    }
+  }
+  
+  Future<void> _saveLastSeenVersion(String version) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_lastVersionKey, version);
+  }
+  
+  // Optional: Mark current version as seen (if user dismisses dialog early)
+  Future<void> markVersionAsSeen() async {
+    final currentVersion = await getCurrentAppVersion();
+    await _saveLastSeenVersion(currentVersion);
+  }
   // Future<void> setPluginOptionEnabled(String pluginId, bool enabled) async {
   //   final List<String> current = prefs.getStringList('plugins_options') ?? [];
   //   final updated = List<String>.from(current);

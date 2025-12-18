@@ -320,7 +320,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
         // Footer placed as a sliver so it only becomes visible when the user scrolls to the end
         SliverToBoxAdapter(child: _buildDrawerFooter(theme)),
-
+        SliverToBoxAdapter(child: SizedBox(height: 100)),
         SliverToBoxAdapter(
           child: _isNativeAdLoaded && _nativeAd != null
               ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))

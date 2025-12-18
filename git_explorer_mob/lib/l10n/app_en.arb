@@ -1,12 +1,62 @@
 {
   "@@locale": "en",
   "appName": "gzip Explorer",
+  "appAboutTitle":"About Gzip Explorer",
   "appAbout": "Extract .zip git codebases and view files in markdown and read-only mode code editor.",
   "appVersion": "Version",
   "appLicense": "License",
   "appAuthor": "Author",
   "appDonate": "Donate",
   "appDonateTips": "gzip Explorer is an open-source software that is free to use. If you find it helpful, please donate to support us to continue improving it.",
+  "appPrivacyPolicy":"Privacy Policy",
+  "appTerms":"Terms of Use",
+
+  "onboardingWelcomeTitle": "Gzip Explorer - git Browser",
+  "onboardingWelcomeBody": "Browse git repositories offline by importing .zip files. View in code editor and markdown renderer in read-only mode. Perfect for learning, reviewing, or exploring git projects on the go quickly without setting up git.",
+
+  "onboardingAppearanceTitle": "Choose Your Look",
+  "onboardingAppearanceBody": "Select a theme that suits your style and device. Gzip Explorer supports light, dark, and specialized modes for the best reading experience.",
+  "onboardingAppearanceTip": "You can always change themes later in Settings.",
+  
+  "customizeYourExperience": "Customize Your Experience",
+  "eInkMode": "e-Ink Mode",
+  "optimizedForEInkDisplays": "Optimized for e-Ink displays with high contrast and minimal animations for comfortable long reading sessions.",
+  "moreDisplayOptionsTip": "Enable Theme Customizer for more display options in Settings.",
+
+  "onboardingPluginsTitle": "Dedicated Plugins Manager",
+  "onboardingPluginsBody": "Extend functionality with built-in plugins. Enable features like Editor Options, Theme Customizer, and more to match your workflow.",
+  "onboardingPluginsTip": "Toggle plugins anytime from the Plugins Manager by swipping left.",
+
+  "onboardingEditorTitle": "Customizable Code Editor",
+  "onboardingEditorBody": "Enjoy syntax highlighting, customizable font size, zoom in/out, and view unsupported characters if available and more in a read-only editor designed for code viewing.",
+  "onboardingEditorTip": "Fine-tune code editor settings by enabling Advanced Editor Options in Plugins Manager.",
+
+  "onboardingCompleteTitle": "You're All Set!",
+  "onboardingCompleteBody": "Start exploring git projects offline. Import your first .zip git project after downloading the ZIP from GitHub, GitLab or BitBucket and more.",
+
+  "commonUpdated": "Updated!",
+  "whatsNew": "What's New",
+  "updateFromVersion": "Updated from {version}",
+  "@updateFromVersion": {
+    "description": "Dialog title when showing previous App version",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "Welcome to {version}",
+  "@welcomeToVersion": {
+    "description": "Dialog title welcome user to new App version",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "Check for updates",
+  "updateNewVersion": "New version: ",
+  "updateCurrentVersion": "Current version: ",
+  "updateViaPlayStore": "Play store",
+  "updateViaGithub": "Via GitHub",
+  "updateViaOfficialWebsite": "Via Website",
+  
   "navBarHome": "Projects",
   "navBarFileExplorer": "File Explorer",
   "navBarEditor": "Editor",
@@ -80,6 +130,8 @@
   "commonOk": "OK",
   "commonSuccess": "Success",
   "commonFailed": "Failed",
+  "commonSkip":"Skip",
+  "commonDone":"Done",
   "commonUploading": "Uploading",
   "commonDownloading": "Downloading",
   "commonCopy": "Copy",
