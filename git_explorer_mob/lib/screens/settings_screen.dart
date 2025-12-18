@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/font_family.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
+import 'package:git_explorer_mob/widgets/settings/about.dart';
 import 'package:git_explorer_mob/widgets/settings/settings_tile.dart';
 import 'package:git_explorer_mob/widgets/settings/simple_dialog.dart';
 import 'package:git_explorer_mob/widgets/settings/theme_mode.dart';
@@ -49,7 +50,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget build(BuildContext context) {
     // single source: watch Prefs
     final prefs = ref.watch(prefsProvider);
-    final appState = ref.watch(appStateProvider);
+    // final appState = ref.watch(appStateProvider);
     // Temporary theme values are initialized in initState from Prefs.
     // plugin enabled flags read from prefs (prefs.notifyListeners will rebuild)
     final fileExplorerEnabled = prefs.isPluginEnabled(Plugin.fileExplorer.id);
@@ -109,7 +110,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               L10n.of(context).settingsAppearance,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 15),
             ChangeThemeMode(),
 
             // Appearance / Theme
@@ -174,6 +175,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 showLanguagePickerDialog(context);
               },
             ),
+            const SizedBox(height: 15),
+            const About(),
             // DropdownButtonFormField<String>(
             //   // current stored locale code or 'System'
             //   value: prefs.locale == null ? 'System' : (prefs.locale?.countryCode != null ? '${prefs.locale!.languageCode}-${prefs.locale!.countryCode}' : prefs.locale!.languageCode),
@@ -937,7 +940,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   )
                 : SizedBox.shrink(),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 10),
             ElevatedButton.icon(
               onPressed: () async {
                 // Reset selected plugin flags and a few common configs to defaults via Prefs.
@@ -965,29 +968,29 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
             ),
             const SizedBox(height: 35),
+            const SizedBox(height: 400),
+            // Center(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Text(
+            //         L10n.of(context).appName,
+            //         style: TextStyle(fontSize: 13),
+            //       ),
+            //       Text(
+            //         'v${appState.appVersion}',
+            //         style: TextStyle(fontSize: 10),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
             // ad here
             _isNativeAdLoaded && _nativeAd != null
                 ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
                 : const SizedBox.shrink(),
-
-            const SizedBox(height: 130),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    L10n.of(context).appName,
-                    style: TextStyle(fontSize: 13),
-                  ),
-                  Text(
-                    'v${appState.appVersion}',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 120),
+            const SizedBox(height: 200),
           ],
         ),
       ),

@@ -1,13 +1,16 @@
 {
   "@@locale": "en",
   "appName": "gzip Explorer",
+  "appAboutTitle":"About Gzip Explorer",
   "appAbout": "Extract .zip git codebases and view files in markdown and read-only mode code editor.",
   "appVersion": "Version",
   "appLicense": "License",
   "appAuthor": "Author",
   "appDonate": "Donate",
   "appDonateTips": "gzip Explorer is an open-source software that is free to use. If you find it helpful, please donate to support us to continue improving it.",
-  
+  "appPrivacyPolicy":"Privacy Policy",
+  "appTerms":"Terms of Use",
+
   "onboardingWelcomeTitle": "Gzip Explorer - git Browser",
   "onboardingWelcomeBody": "Browse git repositories offline by importing .zip files. View in code editor and markdown renderer in read-only mode. Perfect for learning, reviewing, or exploring git projects on the go quickly without setting up git.",
 
@@ -50,8 +53,9 @@
   "aboutCheckForUpdates": "Check for updates",
   "updateNewVersion": "New version: ",
   "updateCurrentVersion": "Current version: ",
+  "updateViaPlayStore": "Play store",
   "updateViaGithub": "Via GitHub",
-  "updateViaOfficialWebsite": "Via Official Website",
+  "updateViaOfficialWebsite": "Via Website",
   
   "navBarHome": "Projects",
   "navBarFileExplorer": "File Explorer",

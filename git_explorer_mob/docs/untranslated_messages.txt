@@ -1,5 +1,8 @@
 {
   "ar": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -24,6 +27,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -31,6 +35,9 @@
   ],
 
   "de": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -55,6 +62,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -62,6 +70,9 @@
   ],
 
   "es": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -86,6 +97,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -93,6 +105,9 @@
   ],
 
   "fr": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -117,6 +132,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -124,6 +140,9 @@
   ],
 
   "it": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -148,6 +167,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -155,6 +175,9 @@
   ],
 
   "ja": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -179,6 +202,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -186,6 +210,9 @@
   ],
 
   "ko": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -210,6 +237,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -217,6 +245,9 @@
   ],
 
   "pt": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -241,6 +272,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -248,6 +280,9 @@
   ],
 
   "ru": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -272,6 +307,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -279,6 +315,9 @@
   ],
 
   "tr": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -303,6 +342,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -310,6 +350,9 @@
   ],
 
   "zh": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -334,6 +377,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -341,6 +385,9 @@
   ],
 
   "zh_CN": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -365,6 +412,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -372,6 +420,9 @@
   ],
 
   "zh_LZH": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -396,6 +447,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
@@ -403,6 +455,9 @@
   ],
 
   "zh_TW": [
+    "appAboutTitle",
+    "appPrivacyPolicy",
+    "appTerms",
     "onboardingWelcomeTitle",
     "onboardingWelcomeBody",
     "onboardingAppearanceTitle",
@@ -427,6 +482,7 @@
     "aboutCheckForUpdates",
     "updateNewVersion",
     "updateCurrentVersion",
+    "updateViaPlayStore",
     "updateViaGithub",
     "updateViaOfficialWebsite",
     "commonSkip",
