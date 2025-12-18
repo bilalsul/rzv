@@ -11,6 +11,10 @@ import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:git_explorer_mob/services/initialization/initialization_check.dart';
+import 'package:git_explorer_mob/utils/load_default_font.dart';
+import 'package:git_explorer_mob/utils/check_update.dart';
+import 'package:git_explorer_mob/utils/toast/common.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -58,12 +62,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       // }
 
       // ADD THIS LINE - Show what's new dialog if needed
-    await _showWhatsNewDialogIfNeeded();
+    // await _showWhatsNewDialogIfNeeded();
+    initGzipExp();
     });
 
     // Listen for changes to prefs so we can react to toggles (e.g., enabling File Explorer)
     // NOTE: Do not provide an `async` callback to `ref.listen` because it must be
     // synchronous; schedule any async work via Future.microtask instead.
+  }
+
+  Future<void> initGzipExp() async {
+    GzipToast.init(context);
+    checkUpdate(false);
+    InitializationCheck.check();
+    loadDefaultFont();
+
   }
 
 Future<String> _loadChangelogContent() async {
