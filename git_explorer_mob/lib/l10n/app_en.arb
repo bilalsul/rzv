@@ -34,7 +34,19 @@
   "commonUpdated": "Updated!",
   "whatsNew": "What's New",
   "updateFromVersion": "Updated from {version}",
+  "@updateFromVersion": {
+    "description": "Dialog title when showing previous App version",
+    "placeholders": {
+      "version": {}
+    }
+  },
   "welcomeToVersion": "Welcome to {version}",
+  "@welcomeToVersion": {
+    "description": "Dialog title welcome user to new App version",
+    "placeholders": {
+      "version": {}
+    }
+  },
   "aboutCheckForUpdates": "Check for updates",
   "updateNewVersion": "New version: ",
   "updateCurrentVersion": "Current version: ",
