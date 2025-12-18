@@ -53,8 +53,9 @@
   "aboutCheckForUpdates": "Check for updates",
   "updateNewVersion": "New version: ",
   "updateCurrentVersion": "Current version: ",
+  "updateViaPlayStore": "Play store",
   "updateViaGithub": "Via GitHub",
-  "updateViaOfficialWebsite": "Via Official Website",
+  "updateViaOfficialWebsite": "Via Website",
   
   "navBarHome": "Projects",
   "navBarFileExplorer": "File Explorer",

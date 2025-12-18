@@ -27,6 +27,7 @@ Future<void> checkUpdate(bool manualCheck) async {
   Response response;
   try {
     // eg. https://api.gzip.bilalworku.com/api/info/latest
+    // https://raw.githubusercontent.com/Anxcye/anx-reader/develop/assets/CHANGELOG.md
     response = await Dio().get('');
   } catch (e) {
     if (manualCheck) {
@@ -82,21 +83,21 @@ $body'''),
               },
               child: Text(L10n.of(context).commonCancel),
             ),
+            // TextButton(
+            //   onPressed: () {
+            //     launchUrl(
+            //         Uri.parse(
+            //             'https://github.com/uncrr/git-explorer/releases/latest'),
+            //         mode: LaunchMode.externalApplication);
+            //   },
+            //   child: Text(L10n.of(context).updateViaGithub),
+            // ),
             TextButton(
               onPressed: () {
-                launchUrl(
-                    Uri.parse(
-                        'https://github.com/Anxcye/anx-reader/releases/latest'),
+                launchUrl(Uri.parse('https:play.google.com/store/apps/details?id=com.bilalworku.gzip'),
                     mode: LaunchMode.externalApplication);
               },
-              child: Text(L10n.of(context).updateViaGithub),
-            ),
-            TextButton(
-              onPressed: () {
-                launchUrl(Uri.parse('https://anx.anxcye.com/download'),
-                    mode: LaunchMode.externalApplication);
-              },
-              child: Text(L10n.of(context).updateViaOfficialWebsite),
+              child: Text(L10n.of(context).updateViaPlayStore),
             ),
           ],
         );
