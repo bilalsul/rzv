@@ -31,7 +31,7 @@
   "settingsEditorSettings": "Editor-Einstellungen",
   "settingsEditorTabSize": "Tab-Größe",
   "settingsEditorShowLineNumbers": "Zeilennummern anzeigen",
-  "settingsEditorOpenFilePlaceholder": "# Datei aus Projekt öffnen oder neue Datei erstellen",
+  "settingsEditorOpenFilePlaceholder": "# Datei aus einem Projekt öffnen, um sie im Editor anzuzeigen",
   "settingsEditorFontSize": "Schriftgröße",
   "settingsEditorFontFamily": "Schriftart",
   "settingsEditorZoomInOut": "Zoom In/Out aktivieren",

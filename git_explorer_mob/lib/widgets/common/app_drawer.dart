@@ -685,23 +685,19 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             absorbing: true,
             child: FilledButton(
               style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.grey[400]),
-                textStyle: WidgetStatePropertyAll(
-                  TextStyle(color: Colors.grey[500]),
-                ),
+                backgroundColor: WidgetStateProperty.all(prefs.accentColor),
               ),
               onPressed: () async {
-                // TODO: Implement feedback submission
-                Navigator.of(context).pop();
-                final Uri donateUrl = Uri.parse(
-                  'https://github.com/uncrr/git-explorer/issues',
+                // TODO: Implemented feedback submission, view it for Close Testers(change after publish)
+                final Uri feedbackUrl = Uri.parse(
+                  'https://play.google.com/store/apps/details?id=com.bilalworku.gzip',
                 ); // Replace with your actual PLAYSTORE link after publish
-                if (await canLaunchUrl(donateUrl)) {
-                  await launchUrl(donateUrl);
+                if (await canLaunchUrl(feedbackUrl)) {
+                  await launchUrl(feedbackUrl);
                 } else {
                   // Handle the case where the URL cannot be launched (e.g., no browser installed)
                   // You might display a SnackBar or an AlertDialog to inform the user.
-                  print('Could not launch $donateUrl');
+                  print('Could not launch $feedbackUrl');
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -709,6 +705,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                     ),
                   );
                 }
+                Navigator.of(context).pop();
               },
               child: Text(
                 L10n.of(context).drawerSendFeedback,

@@ -31,7 +31,7 @@
   "settingsEditorSettings": "Editor Settings",
   "settingsEditorTabSize": "Tab size",
   "settingsEditorShowLineNumbers": "Show line numbers",
-  "settingsEditorOpenFilePlaceholder": "# Open File from a Project or Create New File",
+  "settingsEditorOpenFilePlaceholder": "# Open File from a Project to view in Editor",
   "settingsEditorFontSize": "Font Size",
   "settingsEditorFontFamily": "Font Family",
   "settingsEditorZoomInOut": "Enable Zoom In/Out",
