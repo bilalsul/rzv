@@ -327,6 +327,15 @@ class Prefs extends ChangeNotifier {
     notifyListeners();
   }
 
+  // set eInkMode(bool status) {
+  //   prefs.setBool('eInkMode', status);
+  //   notifyListeners();
+  // }
+
+  // bool get eInkMode {
+  //   return prefs.getBool('eInkMode') ?? false;
+  // }
+
   // Getter and setter for custom theme name
   // String get customThemeName {
   //   return prefs.getString('theme_custom_name') ?? 'default_custom';
@@ -908,6 +917,31 @@ class Prefs extends ChangeNotifier {
     await prefs.setStringList('plugins_enabled', updated);
     notifyListeners();
   }
+
+  String? get lastAppVersion {
+    return prefs.getString('lastAppVersion');
+  }
+
+  set lastAppVersion(String? version) {
+    if (version != null) {
+      prefs.setString('lastAppVersion', version);
+    } else {
+      prefs.remove('lastAppVersion');
+    }
+    notifyListeners();
+  }
+
+  set lastShowUpdate(DateTime time) {
+    prefs.setString('lastShowUpdate', time.toIso8601String());
+    notifyListeners();
+  }
+
+  DateTime get lastShowUpdate {
+    String? lastShowUpdateStr = prefs.getString('lastShowUpdate');
+    if (lastShowUpdateStr == null) return DateTime(1970, 1, 1);
+    return DateTime.parse(lastShowUpdateStr);
+  }
+
 
   static const String _lastVersionKey = 'last_app_version';
   
