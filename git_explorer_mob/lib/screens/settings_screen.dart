@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
 import 'package:git_explorer_mob/enums/options/font_family.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/widgets/settings/about.dart';
@@ -14,6 +14,7 @@ import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/widgets/settings/plugin_settings_panel.dart';
 import 'package:git_explorer_mob/enums/options/supported_language.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:provider/provider.dart';
 
 /// SettingsScreen no longer contains plugin toggles (they live in AppDrawer).
 /// This screen exposes plugin-specific settings panels and connects them
@@ -229,153 +230,161 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         const SizedBox(height: 10),
                         Text(L10n.of(context).settingsAppearanceSecondaryColor),
                         const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 4,
-                          children: Colors.primaries.take(18).map((c) {
-                            // final col = c.shade400;
-                            final col = c;
-                            final selected = _tempSecondaryColor == col;
-                            return GestureDetector(
-                              onTap: () => setState(() {
-                                _tempSecondaryColor = col;
-                              }),
-                              child: Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: selected
-                                      ? Border.all(
-                                          color: prefs.secondaryColor,
-                                          width: 2,
-                                        )
-                                      : null,
-                                ),
-                                child: CircleAvatar(
-                                  backgroundColor: col,
-                                  radius: 14,
-                                ),
-                              ),
+                        Consumer<Prefs>(
+                          builder: (context,prefs,child) {
+                            return Wrap(
+                              spacing: 8,
+                              runSpacing: 4,
+                              children: Colors.primaries.take(18).map((c) {
+                                // final col = c.shade400;
+                                final col = c;
+                                final selected = _tempSecondaryColor.toARGB32() == col.toARGB32();
+                                return GestureDetector(
+                                  onTap: () => setState(() {
+                                    _tempSecondaryColor = col;
+                                  }),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: selected
+                                          ? Border.all(
+                                              color: prefs.secondaryColor,
+                                              width: 2,
+                                            )
+                                          : null,
+                                    ),
+                                    child: CircleAvatar(
+                                      backgroundColor: col,
+                                      radius: 14,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              //             if (Theme.of(context).brightness == Brightness.light) ...[
+                              //   GestureDetector(
+                              //     onTap: () {
+                              //       setState(() {
+                              //         // if (prefs.secondaryColor != _tempSecondaryColor){
+                              //         _tempSecondaryColor = Colors.black87;
+                              //         // }
+                              //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
+                              //       });
+                              //     },
+                              //     child: Container(
+                              //       padding: const EdgeInsets.all(3),
+                              //       decoration: BoxDecoration(
+                              //         shape: BoxShape.circle,
+                              //         border: _tempSecondaryColor == Colors.black87 ? Border.all(color: prefs.secondaryColor, width: 2) : null,
+                              //       ),
+                              //       child: CircleAvatar(backgroundColor: Colors.black87, radius: 14),
+                              //     ),
+                              //   ),
+                              // ],
+                              // if (Theme.of(context).brightness == Brightness.dark) ...[
+                              //   GestureDetector(
+                              //     onTap: () {
+                              //       setState(() {
+                              //         _tempSecondaryColor = Colors.white;
+                              //       });
+                              //     },
+                              //     child: Container(
+                              //       padding: const EdgeInsets.all(3),
+                              //       decoration: BoxDecoration(
+                              //         shape: BoxShape.circle,
+                              //         border: _tempSecondaryColor == Colors.white ? Border.all(color: prefs.secondaryColor, width: 2) : null,
+                              //       ),
+                              //       child: CircleAvatar(backgroundColor: Colors.white, radius: 14),
+                              //     ),
+                              //   ),
+                              // ],
                             );
-                          }).toList(),
-                          //             if (Theme.of(context).brightness == Brightness.light) ...[
-                          //   GestureDetector(
-                          //     onTap: () {
-                          //       setState(() {
-                          //         // if (prefs.secondaryColor != _tempSecondaryColor){
-                          //         _tempSecondaryColor = Colors.black87;
-                          //         // }
-                          //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
-                          //       });
-                          //     },
-                          //     child: Container(
-                          //       padding: const EdgeInsets.all(3),
-                          //       decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         border: _tempSecondaryColor == Colors.black87 ? Border.all(color: prefs.secondaryColor, width: 2) : null,
-                          //       ),
-                          //       child: CircleAvatar(backgroundColor: Colors.black87, radius: 14),
-                          //     ),
-                          //   ),
-                          // ],
-                          // if (Theme.of(context).brightness == Brightness.dark) ...[
-                          //   GestureDetector(
-                          //     onTap: () {
-                          //       setState(() {
-                          //         _tempSecondaryColor = Colors.white;
-                          //       });
-                          //     },
-                          //     child: Container(
-                          //       padding: const EdgeInsets.all(3),
-                          //       decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         border: _tempSecondaryColor == Colors.white ? Border.all(color: prefs.secondaryColor, width: 2) : null,
-                          //       ),
-                          //       child: CircleAvatar(backgroundColor: Colors.white, radius: 14),
-                          //     ),
-                          //   ),
-                          // ],
+                          }
                         ),
                         const SizedBox(height: 25),
                         Text(L10n.of(context).settingsAppearanceAccentColor),
                         const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8,
-                          children: Colors.accents.take(16).map((c) {
-                            // final col = c.shade400;
-                            final col = c;
-                            final selected = _tempAccentColor == col;
-                            return GestureDetector(
-                              onTap: () => setState(() {
-                                _tempAccentColor = col;
-                              }),
-                              child: Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: selected
-                                      ? Border.all(
-                                          color: prefs.accentColor,
-                                          width: 2,
-                                        )
-                                      : null,
-                                ),
-                                child: CircleAvatar(
-                                  backgroundColor: col,
-                                  radius: 14,
-                                ),
-                              ),
+                        Consumer<Prefs>(
+                          builder: (context,prefs,child) {
+                            return Wrap(
+                              spacing: 8,
+                              children: Colors.accents.take(16).map((c) {
+                                // final col = c.shade400;
+                                final col = c;
+                                final selected = _tempAccentColor.toARGB32() == col.toARGB32();
+                                return GestureDetector(
+                                  onTap: () => setState(() {
+                                    _tempAccentColor = col;
+                                  }),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: selected
+                                          ? Border.all(
+                                              color: prefs.accentColor,
+                                              width: 2,
+                                            )
+                                          : null,
+                                    ),
+                                    child: CircleAvatar(
+                                      backgroundColor: col,
+                                      radius: 14,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              //     if (Theme.of(context).brightness == Brightness.light) ...[
+                              //   GestureDetector(
+                              //     onTap: () {
+                              //       setState(() {
+                              //         _tempAccentColor = Colors.black54;
+                              //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
+                              //       });
+                              //     },
+                              //     child: Container(
+                              //       padding: const EdgeInsets.all(3),
+                              //       decoration: BoxDecoration(
+                              //         shape: BoxShape.circle,
+                              //         border: _tempAccentColor == Colors.black54 ? Border.all(color: prefs.accentColor, width: 2) : null,
+                              //       ),
+                              //       child: CircleAvatar(backgroundColor: Colors.black54, radius: 14),
+                              //     ),
+                              //   ),
+                              // ],
+                              // if (Theme.of(context).brightness == Brightness.dark) ...[
+                              //   GestureDetector(
+                              //     onTap: () {
+                              //       setState(() {
+                              //         _tempAccentColor = Colors.white70;
+                              //       });
+                              //     },
+                              //     child: Container(
+                              //       padding: const EdgeInsets.all(3),
+                              //       decoration: BoxDecoration(
+                              //         shape: BoxShape.circle,
+                              //         border: _tempAccentColor == Colors.white70 ? Border.all(color: prefs.accentColor, width: 2) : null,
+                              //       ),
+                              //       child: CircleAvatar(backgroundColor: Colors.white70, radius: 14),
+                              //     ),
+                              //   ),
+                              // ],
+                              // ...[Colors.black12,Colors.white].map((color) {
+                              //   final selected = _tempAccentColor == color;
+                              //   return GestureDetector(
+                              //     onTap: () => setState(() { _tempAccentColor = color; }),
+                              //     child: Container(
+                              //       padding: const EdgeInsets.all(3),
+                              //       decoration: BoxDecoration(
+                              //         shape: BoxShape.circle,
+                              //         border: selected ? Border.all(color: prefs.accentColor, width: 2) : null,
+                              //       ),
+                              //       child: CircleAvatar(backgroundColor: color, radius: 14),
+                              //     ),
+                              //   );
+                              // }),
                             );
-                          }).toList(),
-                          //     if (Theme.of(context).brightness == Brightness.light) ...[
-                          //   GestureDetector(
-                          //     onTap: () {
-                          //       setState(() {
-                          //         _tempAccentColor = Colors.black54;
-                          //         // _tempAccentColor = Colors.white70; // Set accent color to white if black is selected
-                          //       });
-                          //     },
-                          //     child: Container(
-                          //       padding: const EdgeInsets.all(3),
-                          //       decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         border: _tempAccentColor == Colors.black54 ? Border.all(color: prefs.accentColor, width: 2) : null,
-                          //       ),
-                          //       child: CircleAvatar(backgroundColor: Colors.black54, radius: 14),
-                          //     ),
-                          //   ),
-                          // ],
-                          // if (Theme.of(context).brightness == Brightness.dark) ...[
-                          //   GestureDetector(
-                          //     onTap: () {
-                          //       setState(() {
-                          //         _tempAccentColor = Colors.white70;
-                          //       });
-                          //     },
-                          //     child: Container(
-                          //       padding: const EdgeInsets.all(3),
-                          //       decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         border: _tempAccentColor == Colors.white70 ? Border.all(color: prefs.accentColor, width: 2) : null,
-                          //       ),
-                          //       child: CircleAvatar(backgroundColor: Colors.white70, radius: 14),
-                          //     ),
-                          //   ),
-                          // ],
-                          // ...[Colors.black12,Colors.white].map((color) {
-                          //   final selected = _tempAccentColor == color;
-                          //   return GestureDetector(
-                          //     onTap: () => setState(() { _tempAccentColor = color; }),
-                          //     child: Container(
-                          //       padding: const EdgeInsets.all(3),
-                          //       decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         border: selected ? Border.all(color: prefs.accentColor, width: 2) : null,
-                          //       ),
-                          //       child: CircleAvatar(backgroundColor: color, radius: 14),
-                          //     ),
-                          //   );
-                          // }),
+                          }
                         ),
                         const SizedBox(height: 15),
                         Row(
