@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:git_explorer_mob/utils/app_version.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart' hide AppState;
 import 'package:url_launcher/url_launcher.dart';
 // Navigation moved to AppShell
@@ -28,7 +29,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   NativeAd? _nativeAd;
   bool _isNativeAdLoaded = false;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -330,11 +330,10 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         SliverToBoxAdapter(
           child: Consumer(
             builder: (context, ref, child) {
-              final appState = ref.watch(appStateProvider);
               return Column(
                 children: [
                   Text(
-                    'v${appState.appVersion}',
+                    'v${getAppVersion()}',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onSurface.withOpacity(0.5),
                     ),
@@ -746,7 +745,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        'v${appState.appVersion}',
+                        'v${getAppVersion()}',
                         style: TextStyle(fontSize: 10),
                       ),
                     ],
