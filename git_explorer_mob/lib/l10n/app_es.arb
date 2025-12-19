@@ -1,12 +1,58 @@
 {
   "@@locale": "es",
   "appName": "gzip Explorer",
+  "appAboutTitle": "Acerca de Gzip Explorer",
   "appAbout": "Extrae codebases git en formato .zip y visualiza archivos en markdown y en editor de código en modo solo lectura.",
   "appVersion": "Versión",
   "appLicense": "Licencia",
   "appAuthor": "Autor",
   "appDonate": "Donar",
   "appDonateTips": "gzip Explorer es un software de código abierto y gratuito. Si te resulta útil, por favor dona para apoyarnos a seguir mejorándolo.",
+  "appPrivacyPolicy": "Política de privacidad",
+  "appTerms": "Términos de uso",
+  
+  "onboardingWelcomeTitle": "Gzip Explorer - Navegador git",
+  "onboardingWelcomeBody": "Explora repositorios git sin conexión importando archivos .zip. Visualiza en el editor de código y renderizador markdown en modo solo lectura. Perfecto para aprender, revisar o explorar proyectos git rápidamente en movimiento sin configurar git.",
+  "onboardingAppearanceTitle": "Elige tu apariencia",
+  "onboardingAppearanceBody": "Selecciona un tema que se adapte a tu estilo y dispositivo. Gzip Explorer soporta modos claros, oscuros y especializados para la mejor experiencia de lectura.",
+  "onboardingAppearanceTip": "Siempre puedes cambiar los temas más tarde en Ajustes.",
+  "customizeYourExperience": "Personaliza tu experiencia",
+  "eInkMode": "Modo e-Ink",
+  "optimizedForEInkDisplays": "Optimizado para pantallas e-Ink con alto contraste y animaciones mínimas para sesiones de lectura cómodas y largas.",
+  "moreDisplayOptionsTip": "Habilita el Personalizador de Temas para más opciones de visualización en Ajustes.",
+  "onboardingPluginsTitle": "Gestor de Plugins Dedicado",
+  "onboardingPluginsBody": "Extiende la funcionalidad con plugins integrados. Habilita características como Opciones del Editor, Personalizador de Temas y más para adaptarte a tu flujo de trabajo.",
+  "onboardingPluginsTip": "Activa/desactiva plugins en cualquier momento desde el Gestor de Plugins deslizando a la izquierda.",
+  "onboardingEditorTitle": "Editor de Código Personalizable",
+  "onboardingEditorBody": "Disfruta de resaltado de sintaxis, tamaños de fuente personalizables, zoom in/out y visualiza caracteres no compatibles si están disponibles y más en un editor de solo lectura diseñado para ver código.",
+  "onboardingEditorTip": "Ajusta las configuraciones del editor de código habilitando Opciones Avanzadas del Editor en el Gestor de Plugins.",
+  "onboardingCompleteTitle": "¡Estás listo!",
+  "onboardingCompleteBody": "Comienza a explorar proyectos git sin conexión. Importa tu primer proyecto git .zip después de descargar el ZIP desde GitHub, GitLab o BitBucket y más.",
+  "commonUpdated": "¡Actualizado!",
+  "whatsNew": "Novedades",
+  "updateFromVersion": "Actualizado desde {version}",
+  "@updateFromVersion": {
+    "description": "Título del diálogo al mostrar la versión anterior de la app",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "Bienvenido a {version}",
+  "@welcomeToVersion": {
+    "description": "Título del diálogo que da la bienvenida al usuario a la nueva versión de la app",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "Buscar actualizaciones",
+  "updateNewVersion": "Nueva versión: ",
+  "updateCurrentVersion": "Versión actual: ",
+  "updateViaPlayStore": "Play Store",
+  "updateViaGithub": "Vía GitHub",
+  "updateViaOfficialWebsite": "Vía Sitio Web",
+  "commonSkip": "Omitir",
+  "commonDone": "Hecho",
+  
   "navBarHome": "Proyectos",
   "navBarFileExplorer": "Explorador de Archivos",
   "navBarEditor": "Editor",

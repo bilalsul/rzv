@@ -1,12 +1,58 @@
 {
   "@@locale": "zh_TW",
   "appName": "gzip Explorer",
+  "appAboutTitle": "關於 Gzip Explorer",
   "appAbout": "解壓 .zip 格式的 git 程式碼庫，以 Markdown 及唯讀模式程式碼編輯器檢視檔案。",
   "appVersion": "版本",
   "appLicense": "授權",
   "appAuthor": "作者",
   "appDonate": "捐款支持",
   "appDonateTips": "gzip Explorer 是免費的開源軟體。如果您覺得好用，歡迎捐款支持我們持續改進。",
+  "appPrivacyPolicy": "隱私權政策",
+  "appTerms": "使用條款",
+  
+  "onboardingWelcomeTitle": "Gzip Explorer - git 瀏覽器",
+  "onboardingWelcomeBody": "透過匯入 .zip 檔案離線瀏覽 git 儲存庫。以唯讀模式在程式碼編輯器及 markdown 呈現器中檢視。適合快速學習、審閱或探索 git 專案，而無需設定 git。",
+  "onboardingAppearanceTitle": "選擇您的外觀",
+  "onboardingAppearanceBody": "選擇適合您的風格與裝置的主題。Gzip Explorer 支援明亮、黑暗及專用模式，以獲得最佳閱讀體驗。",
+  "onboardingAppearanceTip": "您可以隨時在設定中變更主題。",
+  "customizeYourExperience": "自訂您的體驗",
+  "eInkMode": "電子墨水模式",
+  "optimizedForEInkDisplays": "針對電子墨水顯示器最佳化，高對比度與最小動畫，以實現舒適的長時間閱讀。",
+  "moreDisplayOptionsTip": "在設定中啟用主題自訂器以取得更多顯示選項。",
+  "onboardingPluginsTitle": "專用外掛管理器",
+  "onboardingPluginsBody": "使用內建外掛擴充功能。啟用編輯器選項、主題自訂器等功能，以符合您的工作流程。",
+  "onboardingPluginsTip": "隨時從外掛管理器向左滑動切換外掛。",
+  "onboardingEditorTitle": "可自訂程式碼編輯器",
+  "onboardingEditorBody": "享受語法突顯、可自訂字型大小、放大/縮小，以及檢視不支援的字元（若可用）及更多功能，在專為程式碼檢視設計的唯讀編輯器中。",
+  "onboardingEditorTip": "透過在外掛管理器中啟用進階編輯器選項來微調程式碼編輯器設定。",
+  "onboardingCompleteTitle": "您已準備好！",
+  "onboardingCompleteBody": "開始離線探索 git 專案。从 GitHub、GitLab 或 BitBucket 等下載 ZIP 後匯入您的第一個 .zip git 專案。",
+  "commonUpdated": "已更新！",
+  "whatsNew": "新增功能",
+  "updateFromVersion": "從 {version} 更新",
+  "@updateFromVersion": {
+    "description": "顯示先前應用程式版本時的對話方塊標題",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "歡迎使用 {version}",
+  "@welcomeToVersion": {
+    "description": "歡迎使用者使用新應用程式版本的對話方塊標題",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "檢查更新",
+  "updateNewVersion": "新版本： ",
+  "updateCurrentVersion": "目前版本： ",
+  "updateViaPlayStore": "Play 商店",
+  "updateViaGithub": "透過 GitHub",
+  "updateViaOfficialWebsite": "透過網站",
+  "commonSkip": "略過",
+  "commonDone": "完成",
+
   "navBarHome": "專案",
   "navBarFileExplorer": "檔案總管",
   "navBarEditor": "編輯器",

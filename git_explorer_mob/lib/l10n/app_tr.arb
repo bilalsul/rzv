@@ -1,12 +1,58 @@
 {
   "@@locale": "tr",
   "appName": "gzip Explorer",
+  "appAboutTitle": "Gzip Explorer Hakkında",
   "appAbout": ".zip formatındaki git kod tabanlarını çıkarır ve dosyaları markdown olarak markdown ya da salt okunur kod editöründe görüntüler.",
   "appVersion": "Sürüm",
   "appLicense": "Lisans",
   "appAuthor": "Geliştirici",
   "appDonate": "Bağış Yap",
   "appDonateTips": "gzip Explorer ücretsiz ve açık kaynaklı bir yazılımdır. İşinize yarıyorsa, geliştirmeye devam edebilmemiz için bağış yaparak bize destek olabilirsiniz.",
+  "appPrivacyPolicy": "Gizlilik Politikası",
+  "appTerms": "Kullanım Şartları",
+  
+  "onboardingWelcomeTitle": "Gzip Explorer - git Tarayıcı",
+  "onboardingWelcomeBody": ".zip dosyalarını içe aktararak git depolarını çevrimdışı tarayın. Kod editörü ve markdown renderleyici ile salt okunur modda görüntüleyin. Öğrenmek, incelemek veya git projelerini hızlıca keşfetmek için mükemmel, git kurmadan.",
+  "onboardingAppearanceTitle": "Görünümünüzü Seçin",
+  "onboardingAppearanceBody": "Stilinize ve cihazınıza uygun bir tema seçin. Gzip Explorer, en iyi okuma deneyimi için açık, koyu ve özel modları destekler.",
+  "onboardingAppearanceTip": "Temaları daha sonra Ayarlar'da her zaman değiştirebilirsiniz.",
+  "customizeYourExperience": "Deneyiminizi Özelleştirin",
+  "eInkMode": "e-Ink Modu",
+  "optimizedForEInkDisplays": "Yüksek kontrast ve minimum animasyonlarla e-Ink ekranlar için optimize edilmiş, uzun okuma seansları için rahat.",
+  "moreDisplayOptionsTip": "Ayarlar'da Tema Özelleştirici'yi etkinleştirerek daha fazla görüntü seçeneği elde edin.",
+  "onboardingPluginsTitle": "Özel Eklenti Yöneticisi",
+  "onboardingPluginsBody": "Yerleşik eklentilerle işlevselliği genişletin. Editör Seçenekleri, Tema Özelleştirici gibi özellikleri etkinleştirerek iş akışınıza uyarlayın.",
+  "onboardingPluginsTip": "Eklentileri Eklenti Yöneticisi'nden sola kaydırarak istediğiniz zaman açıp kapatın.",
+  "onboardingEditorTitle": "Özelleştirilebilir Kod Editörü",
+  "onboardingEditorBody": "Sözdizimi vurgulaması, özelleştirilebilir yazı tipi boyutu, yakınlaştırma/uzaklaştırma ve desteklenmeyen karakterleri görüntüleme eğer mevcutsa ve daha fazlası, kod görüntüleme için tasarlanmış salt okunur editörde.",
+  "onboardingEditorTip": "Kod editörü ayarlarını Eklenti Yöneticisi'nde Gelişmiş Editör Seçenekleri'ni etkinleştirerek ince ayarlayın.",
+  "onboardingCompleteTitle": "Hazırsınız!",
+  "onboardingCompleteBody": "Git projelerini çevrimdışı keşfetmeye başlayın. GitHub, GitLab veya BitBucket'tan ZIP indirerek ilk .zip git projenizi içe aktarın ve daha fazlası.",
+  "commonUpdated": "Güncellendi!",
+  "whatsNew": "Yenilikler",
+  "updateFromVersion": "{version} sürümünden güncellendi",
+  "@updateFromVersion": {
+    "description": "Önceki Uygulama sürümünü gösterirken diyalog başlığı",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "{version} sürümüne hoş geldiniz",
+  "@welcomeToVersion": {
+    "description": "Kullanıcıyı yeni Uygulama sürümüne hoş geldin diyen diyalog başlığı",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "Güncellemeleri kontrol et",
+  "updateNewVersion": "Yeni sürüm: ",
+  "updateCurrentVersion": "Mevcut sürüm: ",
+  "updateViaPlayStore": "Play Store",
+  "updateViaGithub": "GitHub aracılığıyla",
+  "updateViaOfficialWebsite": "Web Sitesi aracılığıyla",
+  "commonSkip": "Atla",
+  "commonDone": "Tamam",
+
   "navBarHome": "Projeler",
   "navBarFileExplorer": "Dosya Gezgini",
   "navBarEditor": "Editör",
