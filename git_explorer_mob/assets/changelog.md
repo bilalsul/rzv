@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.14
+- Fix: Support Dark mode for Onboarding users
+- Fix: Support Dark mode for About Gzip Explorer in Settings
+- Clean: Removed features that have broken links yet. Will be added when they are fully supported
+
 ## 0.0.12
 - Feat: Added app onboarding explaining app's purpose
 - Feat: Added App About in settings
