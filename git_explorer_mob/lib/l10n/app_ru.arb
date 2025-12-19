@@ -1,12 +1,58 @@
 {
   "@@locale": "ru",
   "appName": "gzip Explorer",
+  "appAboutTitle": "О Gzip Explorer",
   "appAbout": "Распаковывает .zip-архивы с git-кодовой базой и позволяет просматривать файлы в формате markdown и в редакторе кода в режиме только чтение.",
   "appVersion": "Версия",
   "appLicense": "Лицензия",
   "appAuthor": "Автор",
   "appDonate": "Поддержать",
   "appDonateTips": "gzip Explorer — это бесплатное программное обеспечение с открытым исходным кодом. Если оно вам полезно, пожалуйста, поддержите нас донатом — это поможет продолжать развитие.",
+  "appPrivacyPolicy": "Политика конфиденциальности",
+  "appTerms": "Условия использования",
+  
+  "onboardingWelcomeTitle": "Gzip Explorer - браузер git",
+  "onboardingWelcomeBody": "Просматривайте git-репозитории оффлайн, импортируя .zip-файлы. Просматривайте в редакторе кода и рендере markdown в режиме только чтение. Идеально для обучения, проверки или исследования git-проектов на ходу быстро без настройки git.",
+  "onboardingAppearanceTitle": "Выберите свой вид",
+  "onboardingAppearanceBody": "Выберите тему, подходящую вашему стилю и устройству. Gzip Explorer поддерживает светлые, темные и специальные режимы для лучшего опыта чтения.",
+  "onboardingAppearanceTip": "Вы всегда можете изменить темы позже в Настройках.",
+  "customizeYourExperience": "Настройте свой опыт",
+  "eInkMode": "Режим e-Ink",
+  "optimizedForEInkDisplays": "Оптимизировано для e-Ink-дисплеев с высоким контрастом и минимальными анимациями для комфортных длинных сессий чтения.",
+  "moreDisplayOptionsTip": "Включите Настройщик Тем для большего количества опций отображения в Настройках.",
+  "onboardingPluginsTitle": "Выделенный Менеджер Плагинов",
+  "onboardingPluginsBody": "Расширьте функциональность встроенными плагинами. Включите функции вроде Опций Редактора, Настройщика Тем и больше для соответствия вашему рабочему процессу.",
+  "onboardingPluginsTip": "Включайте/выключайте плагины в любое время из Менеджера Плагинов, свайпнув влево.",
+  "onboardingEditorTitle": "Настраиваемый Редактор Кода",
+  "onboardingEditorBody": "Наслаждайтесь подсветкой синтаксиса, настраиваемыми размерами шрифта, зумом in/out и просмотром неподдерживаемых символов если доступны и больше в редакторе только для чтения, предназначенном для просмотра кода.",
+  "onboardingEditorTip": "Тонкая настройка настроек редактора кода путем включения Расширенных Опций Редактора в Менеджере Плагинов.",
+  "onboardingCompleteTitle": "Вы готовы!",
+  "onboardingCompleteBody": "Начните исследовать git-проекты оффлайн. Импортируйте свой первый .zip git-проект после скачивания ZIP с GitHub, GitLab или BitBucket и больше.",
+  "commonUpdated": "Обновлено!",
+  "whatsNew": "Что нового",
+  "updateFromVersion": "Обновлено с {version}",
+  "@updateFromVersion": {
+    "description": "Заголовок диалога при показе предыдущей версии приложения",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "Добро пожаловать в {version}",
+  "@welcomeToVersion": {
+    "description": "Заголовок диалога, приветствующий пользователя в новой версии приложения",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "Проверить обновления",
+  "updateNewVersion": "Новая версия: ",
+  "updateCurrentVersion": "Текущая версия: ",
+  "updateViaPlayStore": "Play Store",
+  "updateViaGithub": "Через GitHub",
+  "updateViaOfficialWebsite": "Через Веб-сайт",
+  "commonSkip": "Пропустить",
+  "commonDone": "Готово",
+
   "navBarHome": "Проекты",
   "navBarFileExplorer": "Проводник",
   "navBarEditor": "Редактор",

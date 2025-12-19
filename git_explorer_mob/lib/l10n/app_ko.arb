@@ -1,12 +1,58 @@
 {
   "@@locale": "ko",
   "appName": "gzip Explorer",
+  "appAboutTitle": "Gzip Explorer 정보",
   "appAbout": ".zip git 코드베이스를 압축 해제하고 마크다운 및 읽기 전용 코드 편집기에서 파일을 확인하세요.",
   "appVersion": "버전",
   "appLicense": "라이선스",
   "appAuthor": "제작자",
   "appDonate": "후원하기",
   "appDonateTips": "gzip Explorer는 무료 오픈소스 소프트웨어입니다. 유용하게 사용하고 계시다면 지속적인 개발을 위해 후원 부탁드립니다.",
+  "appPrivacyPolicy": "개인정보 보호정책",
+  "appTerms": "이용 약관",
+  
+  "onboardingWelcomeTitle": "Gzip Explorer - git 브라우저",
+  "onboardingWelcomeBody": ".zip 파일을 가져와서 git 저장소를 오프라인으로 탐색하세요. 읽기 전용 모드에서 코드 편집기와 markdown 렌더러로 확인하세요. git 설정 없이 빠르게 학습, 검토 또는 프로젝트 탐색에 완벽합니다.",
+  "onboardingAppearanceTitle": "모습 선택",
+  "onboardingAppearanceBody": "스타일과 기기에 맞는 테마를 선택하세요. Gzip Explorer는 밝은, 어두운, 전문 모드를 지원하여 최상의 읽기 경험을 제공합니다.",
+  "onboardingAppearanceTip": "테마는 나중에 설정에서 언제든지 변경할 수 있습니다.",
+  "customizeYourExperience": "경험 맞춤화",
+  "eInkMode": "e-Ink 모드",
+  "optimizedForEInkDisplays": "e-Ink 디스플레이에 최적화. 높은 대비와 최소 애니메이션으로 편안한 장시간 읽기 세션.",
+  "moreDisplayOptionsTip": "설정에서 테마 커스터마이저를 활성화하여 더 많은 표시 옵션 사용.",
+  "onboardingPluginsTitle": "전용 플러그인 관리자",
+  "onboardingPluginsBody": "내장 플러그인으로 기능 확장. 편집기 옵션, 테마 커스터마이저 등을 활성화하여 워크플로에 맞춥니다.",
+  "onboardingPluginsTip": "플러그인 관리자에서 왼쪽으로 스와이프하여 플러그인을 언제든지 토글.",
+  "onboardingEditorTitle": "커스터마이징 가능한 코드 편집기",
+  "onboardingEditorBody": "구문 강조, 사용자 지정 글꼴 크기, 확대/축소, 지원되지 않는 문자 보기(사용 가능 시) 등, 코드 보기용으로 설계된 읽기 전용 편집기에서.",
+  "onboardingEditorTip": "플러그인 관리자에서 고급 편집기 옵션을 활성화하여 코드 편집기 설정 세밀 조정.",
+  "onboardingCompleteTitle": "준비 완료!",
+  "onboardingCompleteBody": "오프라인으로 git 프로젝트 탐색 시작. GitHub, GitLab 또는 BitBucket 등에서 ZIP 다운로드 후 첫 번째 .zip git 프로젝트 가져오기.",
+  "commonUpdated": "업데이트됨!",
+  "whatsNew": "새로운 기능",
+  "updateFromVersion": "{version}에서 업데이트",
+  "@updateFromVersion": {
+    "description": "이전 앱 버전을 표시할 때 대화 상자 제목",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "{version}에 오신 것을 환영합니다",
+  "@welcomeToVersion": {
+    "description": "사용자를 새 앱 버전에 환영하는 대화 상자 제목",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "업데이트 확인",
+  "updateNewVersion": "새 버전: ",
+  "updateCurrentVersion": "현재 버전: ",
+  "updateViaPlayStore": "Play 스토어",
+  "updateViaGithub": "GitHub 경유",
+  "updateViaOfficialWebsite": "웹사이트 경유",
+  "commonSkip": "건너뛰기",
+  "commonDone": "완료",
+
   "navBarHome": "프로젝트",
   "navBarFileExplorer": "파일 탐색기",
   "navBarEditor": "편집기",

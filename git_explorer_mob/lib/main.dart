@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide ChangeNotifierProvider;
 import 'package:git_explorer_mob/app/app_shell.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
@@ -10,7 +10,8 @@ import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
 import 'package:git_explorer_mob/utils/error/common.dart';
 import 'package:git_explorer_mob/utils/log/common.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-// import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:provider/provider.dart';
 // import 'package:window_manager/window_manager.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -44,15 +45,23 @@ Future<void> main() async {
   GitExpLog.init();
   GitExpError.init();
 
-  // SmartDialog.config.custom = SmartConfigCustom(
-  //   // maskColor: Colors.black.withAlpha(35),
-  //   // maskColor: prefs.secondaryColor,
-  //   useAnimation: true,
-  //   animationType: SmartAnimationType.centerFade_otherSlide,
-  // );
+  SmartDialog.config.custom = SmartConfigCustom(
+    // maskColor: Colors.black.withAlpha(35),
+    // maskColor: prefs.secondaryColor,
+    useAnimation: true,
+    animationType: SmartAnimationType.centerFade_otherSlide,
+  );
 
   // runApp(const MyApp());
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Prefs>(create: (_) => Prefs()),
+      ],
+      child: const ProviderScope(child: MyApp()),
+      // child: const MyApp(),
+    ),
+  );
 }
 
 Locale? getEffectiveLocale(Prefs prefs, List<Locale> supportedLocales) {

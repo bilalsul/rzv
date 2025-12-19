@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'dart:io';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/app/app_shell.dart';
@@ -11,7 +11,12 @@ import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:git_explorer_mob/services/initialization/initialization_check.dart';
+import 'package:git_explorer_mob/utils/load_default_font.dart';
+import 'package:git_explorer_mob/utils/check_update.dart';
+import 'package:git_explorer_mob/utils/toast/common.dart';
 import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
@@ -55,11 +60,117 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       //   _projects.clear();
       setState(() {});
       // }
+
+      // ADD THIS LINE - Show what's new dialog if needed
+    initGzipExp();
+    await _showWhatsNewDialogIfNeeded();
     });
 
     // Listen for changes to prefs so we can react to toggles (e.g., enabling File Explorer)
     // NOTE: Do not provide an `async` callback to `ref.listen` because it must be
     // synchronous; schedule any async work via Future.microtask instead.
+  }
+
+  Future<void> initGzipExp() async {
+    GzipToast.init(context);
+    checkUpdate(false);
+    InitializationCheck.check();
+    loadDefaultFont();
+
+  }
+
+Future<String> _loadChangelogContent() async {
+    try {
+      // Try to load from assets first
+      return await rootBundle.loadString('assets/changelog.md');
+    } catch (e) {
+      print('Failed to load changelog from assets: $e');
+      
+      // Fallback 1: Check if there's a file in the documents directory
+      try {
+        final appDocDir = await getApplicationDocumentsDirectory();
+        final changelogFile = File(p.join(appDocDir.path, 'changelog.md'));
+        if (await changelogFile.exists()) {
+          return await changelogFile.readAsString();
+        }
+      } catch (_) {}
+      
+      // Fallback 2: Check in the project root (for development)
+      try {
+        final currentDir = Directory.current;
+        final changelogFile = File(p.join(currentDir.path, 'assets', 'changelog.md'));
+        if (await changelogFile.exists()) {
+          return await changelogFile.readAsString();
+        }
+      } catch (_) {}
+      
+      // Ultimate fallback: Use a default changelog
+      return '''
+#### Check our website for detailed release notes.
+''';
+    }
+  }
+  
+  Future<void> _showWhatsNewDialogIfNeeded() async {
+    try {
+      // Check if we should show what's new
+      final shouldShow = await Prefs().shouldShowWhatsNew();
+      
+      if (shouldShow && mounted) {
+        // Get current version for display
+        final currentVersion = await Prefs().getCurrentAppVersion();
+        
+        // Wait a bit for UI to initialize
+        await Future.delayed(const Duration(milliseconds: 800));
+        
+        if (!mounted) return;
+        
+        await _showWhatsNewDialog(currentVersion);
+      }
+    } catch (e) {
+      print('Error showing what\'s new dialog: $e');
+      // Don't crash the app if this fails
+    }
+  }
+  
+  Future<void> _showWhatsNewDialog(String currentVersion) async {
+    final changelogContent = await _loadChangelogContent();
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Gzip Explorer - Updated",
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Version $currentVersion',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: MarkdownBody(
+            data: changelogContent,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Got it!'),
+          ),
+        ],
+        scrollable: true,
+      ),
+    );
   }
 
   Future<void> _prepareProjectsDir() async {

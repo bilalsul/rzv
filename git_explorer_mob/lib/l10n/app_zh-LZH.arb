@@ -1,12 +1,58 @@
 {
   "@@locale": "zh_LZH",
   "appName": "gzip Explorer",
+  "appAboutTitle": "關於 Gzip Explorer",
   "appAbout": "解壓 .zip 之 git 程式碼庫，以 Markdown 及唯讀編輯器觀覽檔案。",
   "appVersion": "版本",
   "appLicense": "授權",
   "appAuthor": "作者",
   "appDonate": "施捨",
   "appDonateTips": "《gzip Explorer》乃開源免費之作。若君以為可用，願施小惠，使吾輩得續精進，感荷無量。",
+  
+  "appPrivacyPolicy": "隱私政策",
+  "appTerms": "使用條款",
+  "onboardingWelcomeTitle": "Gzip Explorer - git 瀏覽器",
+  "onboardingWelcomeBody": "匯入 .zip 檔以離線閱 git 倉庫。於程式碼編輯器及 markdown 呈現器中以唯讀模式觀之。適合學習、審閱或探索 git 專案於行中，無需設 git。",
+  "onboardingAppearanceTitle": "擇外觀",
+  "onboardingAppearanceBody": "擇適合風格與裝置之主題。Gzip Explorer 支援明暗及專用模式，以獲最佳閱讀體驗。",
+  "onboardingAppearanceTip": "可隨時於設定中變主題。",
+  "customizeYourExperience": "自訂體驗",
+  "eInkMode": "電子墨水模式",
+  "optimizedForEInkDisplays": "優化電子墨水顯示，高對比少動，以舒長讀。",
+  "moreDisplayOptionsTip": "於設定啟主題自訂器以得更多顯示選。",
+  "onboardingPluginsTitle": "專用插件管理",
+  "onboardingPluginsBody": "以內建插件擴充。啟編輯器選、主題自訂等，以適工作流。",
+  "onboardingPluginsTip": "隨時自插件管理左滑切換。",
+  "onboardingEditorTitle": "可訂程式碼編輯器",
+  "onboardingEditorBody": "享語法高亮、可訂字型大小、放大縮小、觀不支援字元若可用及更多，於唯讀編輯器中專為觀碼設計。",
+  "onboardingEditorTip": "於插件管理啟進階編輯選以微調程式碼編輯設定。",
+  "onboardingCompleteTitle": "君備矣！",
+  "onboardingCompleteBody": "始離線探索 git 專案。自 GitHub、GitLab 或 BitBucket 等下載 ZIP 後匯入首 .zip git 專案。",
+  "commonUpdated": "已更新！",
+  "whatsNew": "新增何物",
+  "updateFromVersion": "自 {version} 更新",
+  "@updateFromVersion": {
+    "description": "顯示先前應用版本時之對話標題",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "歡迎 {version}",
+  "@welcomeToVersion": {
+    "description": "歡迎使用者至新應用版本之對話標題",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "查更新",
+  "updateNewVersion": "新版本： ",
+  "updateCurrentVersion": "目前版本： ",
+  "updateViaPlayStore": "Play 商店",
+  "updateViaGithub": "經 GitHub",
+  "updateViaOfficialWebsite": "經網站",
+  "commonSkip": "略過",
+  "commonDone": "完成",
+  
   "navBarHome": "專案",
   "navBarFileExplorer": "檔案探秘",
   "navBarEditor": "編輯閣",
