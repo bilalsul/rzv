@@ -1,12 +1,58 @@
 {
   "@@locale": "ar",
   "appName": "مستكشف gzip",
+  "appAboutTitle": "عن Gzip Explorer",
   "appAbout": "فك ضغط قواعد الكود من git بصيغة .zip وعرض الملفات كـ Markdown وفي محرر أكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
   "appLicense": "الترخيص",
   "appAuthor": "المؤلف",
   "appDonate": "تبرع",
   "appDonateTips": "مستكشف Git هو برنامج مفتوح المصدر مجاني الاستخدام. إذا وجدته مفيدًا، يرجى التبرع لدعمنا لمواصلة تحسينه.",
+  
+  "appPrivacyPolicy": "سياسة الخصوصية",
+  "appTerms": "شروط الاستخدام",
+  "onboardingWelcomeTitle": "Gzip Explorer - متصفح git",
+  "onboardingWelcomeBody": "تصفح مستودعات git دون اتصال بالإنترنت عبر استيراد ملفات .zip. عرض في محرر الكود ومُقدم markdown في وضع القراءة فقط. مثالي للتعلم أو المراجعة أو استكشاف مشاريع git أثناء التنقل بسرعة دون إعداد git.",
+  "onboardingAppearanceTitle": "اختر مظهرك",
+  "onboardingAppearanceBody": "اختر موضوعًا يناسب أسلوبك وجهازك. يدعم Gzip Explorer أوضاع فاتحة وداكنة ومتخصصة لأفضل تجربة قراءة.",
+  "onboardingAppearanceTip": "يمكنك دائمًا تغيير الثيمات لاحقًا في الإعدادات.",
+  "customizeYourExperience": "خصص تجربتك",
+  "eInkMode": "وضع e-Ink",
+  "optimizedForEInkDisplays": "محسن لشاشات e-Ink مع تباين عالي وأقل حركات لجلسات قراءة مريحة طويلة.",
+  "moreDisplayOptionsTip": "فعل مخصص الثيمات لمزيد من خيارات العرض في الإعدادات.",
+  "onboardingPluginsTitle": "مدير إضافات مخصص",
+  "onboardingPluginsBody": "وسع الوظائف بإضافات مدمجة. فعل ميزات مثل خيارات المحرر، مخصص الثيمات وغيرها لتناسب تدفق عملك.",
+  "onboardingPluginsTip": "فعل/تعطيل الإضافات في أي وقت من مدير الإضافات بسحب إلى اليسار.",
+  "onboardingEditorTitle": "محرر كود قابل للتخصيص",
+  "onboardingEditorBody": "استمتع بتسليط الضوء على الصياغة، أحجام خطوط قابلة للتخصيص، تكبير/تصغير، وعرض الأحرف غير المدعومة إذا كانت متاحة وأكثر في محرر قراءة فقط مصمم لعرض الكود.",
+  "onboardingEditorTip": "ضبط إعدادات محرر الكود بدقة بتفعيل خيارات المحرر المتقدمة في مدير الإضافات.",
+  "onboardingCompleteTitle": "أنت جاهز!",
+  "onboardingCompleteBody": "ابدأ في استكشاف مشاريع git دون اتصال. استورد أول مشروع git .zip بعد تنزيل الـ ZIP من GitHub أو GitLab أو BitBucket وغيرها.",
+  "commonUpdated": "تم التحديث!",
+  "whatsNew": "ما الجديد",
+  "updateFromVersion": "تم التحديث من {version}",
+  "@updateFromVersion": {
+    "description": "عنوان الحوار عند عرض إصدار التطبيق السابق",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "مرحبا بك في {version}",
+  "@welcomeToVersion": {
+    "description": "عنوان الحوار الذي يرحب بالمستخدم في إصدار التطبيق الجديد",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "التحقق من التحديثات",
+  "updateNewVersion": "إصدار جديد: ",
+  "updateCurrentVersion": "الإصدار الحالي: ",
+  "updateViaPlayStore": "Play Store",
+  "updateViaGithub": "عبر GitHub",
+  "updateViaOfficialWebsite": "عبر الموقع",
+  "commonSkip": "تخطي",
+  "commonDone": "تم",
+  
   "navBarHome": "المشاريع",
   "navBarFileExplorer": "مستكشف الملفات",
   "navBarEditor": "المحرر",

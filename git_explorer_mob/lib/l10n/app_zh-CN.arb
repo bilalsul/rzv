@@ -1,12 +1,58 @@
 {
   "@@locale": "zh_CN",
   "appName": "gzip Explorer",
+  "appAboutTitle": "关于 Gzip Explorer",
   "appAbout": "解压 .zip 格式的 git 代码库，以 Markdown 和只读模式代码编辑器查看文件。",
   "appVersion": "版本",
   "appLicense": "许可证",
   "appAuthor": "作者",
   "appDonate": "捐赠",
   "appDonateTips": "gzip Explorer 是一款免费的开源软件。如果您觉得它好用，欢迎捐赠支持我们持续改进。",
+  "appPrivacyPolicy": "隐私政策",
+  "appTerms": "使用条款",
+  
+  "onboardingWelcomeTitle": "Gzip Explorer - git 浏览器",
+  "onboardingWelcomeBody": "通过导入 .zip 文件离线浏览 git 仓库。在只读模式下使用代码编辑器和 markdown 渲染器查看。非常适合快速学习、审阅或探索 git 项目，而无需设置 git。",
+  "onboardingAppearanceTitle": "选择您的外观",
+  "onboardingAppearanceBody": "选择适合您的风格和设备的主题。Gzip Explorer 支持明亮、黑暗和专用模式，以获得最佳阅读体验。",
+  "onboardingAppearanceTip": "您可以随时在设置中更改主题。",
+  "customizeYourExperience": "自定义您的体验",
+  "eInkMode": "电子墨水模式",
+  "optimizedForEInkDisplays": "针对电子墨水显示屏优化，高对比度和最小动画，以实现舒适的长时阅读。",
+  "moreDisplayOptionsTip": "在设置中启用主题自定义器以获取更多显示选项。",
+  "onboardingPluginsTitle": "专用插件管理器",
+  "onboardingPluginsBody": "使用内置插件扩展功能。启用编辑器选项、主题自定义器等功能，以匹配您的工作流程。",
+  "onboardingPluginsTip": "随时从插件管理器向左滑动切换插件。",
+  "onboardingEditorTitle": "可自定义代码编辑器",
+  "onboardingEditorBody": "享受语法高亮、可自定义字体大小、放大/缩小，以及查看不支持的字符（如果可用）和更多功能，在专为代码查看设计的只读编辑器中。",
+  "onboardingEditorTip": "通过在插件管理器中启用高级编辑器选项来微调代码编辑器设置。",
+  "onboardingCompleteTitle": "您已准备就绪！",
+  "onboardingCompleteBody": "开始离线探索 git 项目。从 GitHub、GitLab 或 BitBucket 等下载 ZIP 后导入您的第一个 .zip git 项目。",
+  "commonUpdated": "已更新！",
+  "whatsNew": "新增功能",
+  "updateFromVersion": "从 {version} 更新",
+  "@updateFromVersion": {
+    "description": "显示先前应用版本时的对话框标题",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "欢迎使用 {version}",
+  "@welcomeToVersion": {
+    "description": "欢迎用户使用新应用版本的对话框标题",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "检查更新",
+  "updateNewVersion": "新版本： ",
+  "updateCurrentVersion": "当前版本： ",
+  "updateViaPlayStore": "Play 商店",
+  "updateViaGithub": "通过 GitHub",
+  "updateViaOfficialWebsite": "通过网站",
+  "commonSkip": "跳过",
+  "commonDone": "完成",
+  
   "navBarHome": "项目",
   "navBarFileExplorer": "文件管理器",
   "navBarEditor": "编辑器",

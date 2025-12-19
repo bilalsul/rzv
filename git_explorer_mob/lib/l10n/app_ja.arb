@@ -1,12 +1,58 @@
 {
   "@@locale": "ja",
   "appName": "gzip Explorer",
+  "appAboutTitle": "Gzip Explorer について",
   "appAbout": ".zip 形式の git コードベースを展開し、Markdown および読み取り専用モードのコードエディタでファイルを表示します。",
   "appVersion": "バージョン",
   "appLicense": "ライセンス",
   "appAuthor": "作者",
   "appDonate": "寄付する",
   "appDonateTips": "gzip Explorer は無料のオープンソースソフトウェアです。お役に立った場合は、継続的な開発のために寄付で応援していただけると嬉しいです。",
+  "appPrivacyPolicy": "プライバシーポリシー",
+  "appTerms": "利用規約",
+  
+  "onboardingWelcomeTitle": "Gzip Explorer - git ブラウザ",
+  "onboardingWelcomeBody": ".zip ファイルをインポートして git リポジトリをオフラインで閲覧。コードエディタと markdown レンダラーで読み取り専用モードで表示。git を設定せずに素早く学習、レビュー、またはプロジェクト探索に最適。",
+  "onboardingAppearanceTitle": "外観を選択",
+  "onboardingAppearanceBody": "スタイルとデバイスに合ったテーマを選択。Gzip Explorer は明るい、暗い、特殊モードをサポートし、最適な読み取り体験を提供します。",
+  "onboardingAppearanceTip": "テーマは後で設定からいつでも変更できます。",
+  "customizeYourExperience": "体験をカスタマイズ",
+  "eInkMode": "e-Ink モード",
+  "optimizedForEInkDisplays": "e-Ink ディスプレイ向けに最適化。高コントラストと最小アニメーションで快適な長時間読み取り。",
+  "moreDisplayOptionsTip": "設定でテーマカスタマイザーを有効にすると、より多くの表示オプションが利用可能。",
+  "onboardingPluginsTitle": "専用プラグインマネージャー",
+  "onboardingPluginsBody": "組み込みプラグインで機能を拡張。エディタオプション、テーマカスタマイザーなどを有効にしてワークフローに合わせます。",
+  "onboardingPluginsTip": "プラグインマネージャーから左にスワイプしてプラグインをいつでも切り替え。",
+  "onboardingEditorTitle": "カスタマイズ可能なコードエディタ",
+  "onboardingEditorBody": "シンタックスハイライト、カスタムフォントサイズ、ズームイン/アウト、非サポート文字の表示（利用可能の場合）など、コード閲覧向けの読み取り専用エディタで。",
+  "onboardingEditorTip": "プラグインマネージャーで高度なエディタオプションを有効にしてコードエディタ設定を微調整。",
+  "onboardingCompleteTitle": "準備完了！",
+  "onboardingCompleteBody": "オフラインで git プロジェクトを探索開始。GitHub、GitLab または BitBucket などから ZIP をダウンロード後、最初の .zip git プロジェクトをインポート。",
+  "commonUpdated": "更新済み！",
+  "whatsNew": "新着情報",
+  "updateFromVersion": "{version} から更新",
+  "@updateFromVersion": {
+    "description": "前のアプリバージョンを表示する際のダイアログタイトル",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "welcomeToVersion": "{version} へようこそ",
+  "@welcomeToVersion": {
+    "description": "ユーザーを新しいアプリバージョンへ歓迎するダイアログタイトル",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "aboutCheckForUpdates": "更新を確認",
+  "updateNewVersion": "新バージョン： ",
+  "updateCurrentVersion": "現在のバージョン： ",
+  "updateViaPlayStore": "Play ストア",
+  "updateViaGithub": "GitHub 経由",
+  "updateViaOfficialWebsite": "ウェブサイト経由",
+  "commonSkip": "スキップ",
+  "commonDone": "完了",
+
   "navBarHome": "プロジェクト",
   "navBarFileExplorer": "ファイルエクスプローラー",
   "navBarEditor": "エディター",
