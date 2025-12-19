@@ -29,10 +29,14 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   NativeAd? _nativeAd;
   bool _isNativeAdLoaded = false;
+
+  String appVersion = '';
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final prefs = ref.watch(prefsProvider);
+    
     // final currentScreen = ref.watch(currentScreenProvider);
 
     return Drawer(
@@ -56,8 +60,13 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      appVersion = await getAppVersion();
+    });
+    
     // make sure initialized Mobile Ads in main then load native ad for this screen
     _loadNativeAd();
+    
   }
 
   void _loadNativeAd() {
@@ -332,8 +341,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             builder: (context, ref, child) {
               return Column(
                 children: [
-                  Text(
-                    'v${getAppVersion()}',
+                  Text( appVersion == ""? appVersion :
+                    'v$appVersion',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: theme.colorScheme.onSurface.withOpacity(0.5),
                     ),
@@ -580,7 +589,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           //     return Column(
           //       children: [
           //         Text(
-          //           'v${appState.appVersion}',
+          //           'v$appVersion',
           //           style: theme.textTheme.labelSmall?.copyWith(
           //             color: theme.colorScheme.onSurface.withOpacity(0.5),
           //           ),
@@ -745,7 +754,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        'v${getAppVersion()}',
+                        'v$appVersion',
                         style: TextStyle(fontSize: 10),
                       ),
                     ],
