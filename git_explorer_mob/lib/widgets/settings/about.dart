@@ -2,13 +2,15 @@ import 'dart:async';
 
 // import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/main.dart';
+// import 'package:git_explorer_mob/main.dart';
+import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 // import 'package:git_explorer_mob/page/settings_page/developer/developer_options_page.dart';
 import 'package:git_explorer_mob/utils/env_var.dart';
+import 'package:git_explorer_mob/utils/toast/common.dart';
 // import 'package:git_explorer_mob/utils/toast/common.dart';
 import 'package:git_explorer_mob/widgets/settings/link_icon.dart';
 import 'package:git_explorer_mob/utils/check_update.dart';
-import 'package:git_explorer_mob/widgets/settings/show_donate_dialog.dart';
+// import 'package:git_explorer_mob/widgets/settings/show_donate_dialog.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +45,8 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(L10n.of(context).appAboutTitle),
-      leading: Icon(Icons.info_outline,
-          color: widget.leadingColor
-              ? Theme.of(context).colorScheme.primary
-              : null),
-      onTap: () => openAboutDialog(),
+      leading: Icon(Icons.info_outline),
+      onTap: () => openAboutDialog(context),
     );
   }
 }
@@ -91,13 +90,14 @@ class _AboutState extends State<About> {
 //   );
 // }
 
-Future<void> openAboutDialog() async {
+Future<void> openAboutDialog(BuildContext context) async {
   final pubspecContent = await rootBundle.loadString('pubspec.yaml');
   final pubspec = Pubspec.parse(pubspecContent);
   final version = pubspec.version.toString();
 
   showDialog(
-    context: navigatorKey.currentContext!,
+    // context: navigatorKey.currentContext!,
+    context: context,
     builder: (BuildContext context) {
       return AlertDialog(
           content: ConstrainedBox(
@@ -119,7 +119,7 @@ Future<void> openAboutDialog() async {
                       style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
-                        // color: Prefs().secondaryColor,
+                        color: Prefs().secondaryColor,
                       ),
                     ),
                   ),
@@ -130,7 +130,7 @@ Future<void> openAboutDialog() async {
                   subtitle: Text(version + (kDebugMode ? ' (debug)' : '')),
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: version));
-                    // GzipToast.show(L10n.of(context).notesPageCopied);
+                    GzipToast.show(L10n.of(context).commonCopied);
                     // _handleDeveloperUnlockTap(context);
                   },
                 ),
@@ -138,29 +138,29 @@ Future<void> openAboutDialog() async {
                   ListTile(
                       title: Text(L10n.of(context).aboutCheckForUpdates),
                       onTap: () => checkUpdate(true)),
-                if (EnvVar.enableDonation)
-                  ListTile(
-                    title: Text(L10n.of(context).appDonate),
-                    onTap: () {
-                      showDonateDialog(context);
-                    },
-                  ),
-                ListTile(
-                  title: Text(L10n.of(context).appLicense),
-                  onTap: () {
-                    showLicensePage(
-                      context: context,
-                      applicationName: 'Gzip Explorer',
-                      applicationVersion: version,
-                    );
-                  },
-                ),
+                // if (EnvVar.enableDonation)
+                //   ListTile(
+                //     title: Text(L10n.of(context).appDonate),
+                //     onTap: () {
+                //       showDonateDialog(context);
+                //     },
+                //   ),
+                // ListTile(
+                //   title: Text(L10n.of(context).appLicense),
+                //   onTap: () {
+                //     showLicensePage(
+                //       context: context,
+                //       applicationName: L10n.of(context).appName,
+                //       applicationVersion: version,
+                //     );
+                //   },
+                // ),
                 ListTile(
                   title: Text(L10n.of(context).appAuthor),
                   onTap: () {
                     launchUrl(
                       Uri.parse(
-                          'https://github.com/uncrr/git-explorer/graphs/contributors'),
+                          'https:play.google.com/store/apps/details?id=com.bilalworku.gzip'),
                       mode: LaunchMode.externalApplication,
                     );
                   },

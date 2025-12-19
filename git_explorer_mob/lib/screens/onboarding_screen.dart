@@ -60,26 +60,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       controlsPadding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
       dotsDecorator: DotsDecorator(
         size: const Size(10.0, 10.0),
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: Prefs().secondaryColor.withAlpha(150),
         activeSize: const Size(22.0, 10.0),
-        activeColor: Theme.of(context).colorScheme.primary,
+        activeColor: Prefs().secondaryColor,
         activeShape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
       next: Icon(
         Icons.arrow_forward,
-        color: Theme.of(context).colorScheme.primary,
+        color: Prefs().secondaryColor,
       ),
       back: Icon(
         Icons.arrow_back,
-        color: Theme.of(context).colorScheme.onSurface.withAlpha(150),
+        color: Prefs().secondaryColor,
       ),
       done: Text(
         L10n.of(context).commonDone, // onboardingDone
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: Theme.of(context).colorScheme.primary,
+          color: Prefs().secondaryColor,
         ),
       ),
     );
@@ -91,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Text(
         L10n.of(context).commonSkip, // onboardingSkip
         style: TextStyle(
-          color: Theme.of(context).colorScheme.onSurface.withAlpha(150),
+          color: Prefs().secondaryColor,
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -122,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         L10n.of(context).onboardingEditorBody,
         L10n.of(context).onboardingEditorTip,
       ),
-      image: _buildIconPage(Icons.read_more_outlined),
+      image: _buildIconPage(Icons.code_outlined),
       decoration: _getPageDecoration(),
     );
   }
@@ -151,14 +151,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildIconPage(IconData icon) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer.withAlpha(50),
+        color: Prefs().secondaryColor.withAlpha(10),
         shape: BoxShape.circle,
       ),
-      padding: const EdgeInsets.all(40),
+      padding: const EdgeInsets.all(20),
       child: Icon(
         icon,
-        size: 120,
-        color: Theme.of(context).colorScheme.primary,
+        size: 60,
+        color: Prefs().secondaryColor,
       ),
     );
   }
@@ -166,12 +166,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   PageDecoration _getPageDecoration() {
     return PageDecoration(
       titleTextStyle: TextStyle(
-        fontSize: 28.0,
+        fontSize: 26.0,
         fontWeight: FontWeight.w700,
         color: Theme.of(context).colorScheme.onSurface,
       ),
       bodyTextStyle: TextStyle(
-        fontSize: 19.0,
+        fontSize: 17.0,
         color: Theme.of(context).colorScheme.onSurface.withAlpha(200),
       ),
       bodyPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
@@ -195,7 +195,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               Icon(
                 Icons.language,
-                color: Theme.of(context).colorScheme.primary,
+                color: Prefs().secondaryColor,
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -214,7 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Theme.of(context).colorScheme.outline.withAlpha(100),
+                color: Prefs().secondaryColor.withAlpha(100),
               ),
               borderRadius: BorderRadius.circular(8),
             ),
@@ -247,7 +247,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
     }
 
-    Widget buildThemeColorSelector() {
+    Widget buildSecondaryThemeColorSelector() {
       final List<Color> themeColors = [
     Colors.red,
     Colors.pink,
@@ -265,11 +265,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Colors.amber,
     Colors.orange,
     Colors.deepOrange,
-    Colors.brown,
+    // Colors.brown,
       ]..toList();
-
-      final currentThemeColor = Prefs().secondaryColor;
-
+      
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -277,12 +275,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               Icon(
                 Icons.palette,
-                color: Theme.of(context).colorScheme.primary,
+                color: Prefs().secondaryColor,
                 size: 20,
               ),
               const SizedBox(width: 8),
               Text(
-                L10n.of(context).settingsAppearanceThemeColor,
+                L10n.of(context).settingsAppearanceSecondaryColor,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -296,7 +294,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 6,
+              crossAxisCount: 8,
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
               childAspectRatio: 1,
@@ -305,12 +303,119 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             itemBuilder: (context, index) {
               final color = themeColors[index];
               final isSelected =
-                  color.toARGB32() == currentThemeColor.toARGB32();
+                  color.toARGB32() == Prefs().secondaryColor.toARGB32();
 
               return GestureDetector(
                 onTap: () {
                   setState(() {
                     Prefs().saveSecondaryColor(color);
+                    setState(() {
+                    });
+                  });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isSelected
+                          ? Theme.of(context).colorScheme.onSurface
+                          : Colors.transparent,
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(30),
+                        blurRadius: 2,
+                        offset: const Offset(0, 1),
+                      ),
+                      if (isSelected)
+                        BoxShadow(
+                          color: color.withAlpha(100),
+                          blurRadius: 8,
+                          spreadRadius: 1,
+                        ),
+                    ],
+                  ),
+                  child: isSelected
+                      ? Icon(
+                          Icons.check,
+                          color: color.computeLuminance() > 0.5
+                              ? Colors.black
+                              : Colors.white,
+                          size: 20,
+                        )
+                      : null,
+                ),
+              );
+            },
+          ),
+        ],
+      );
+    }
+
+    Widget buildAccentThemeColorSelector() {
+      final List<Color> themeColors = [
+    Colors.redAccent,
+    Colors.pinkAccent,
+    Colors.purpleAccent,
+    Colors.deepPurpleAccent,
+    Colors.indigoAccent,
+    Colors.blueAccent,
+    Colors.lightBlueAccent,
+    Colors.cyanAccent,
+    Colors.tealAccent,
+    Colors.greenAccent,
+    Colors.lightGreenAccent,
+    Colors.limeAccent,
+    Colors.yellowAccent,
+    Colors.amberAccent,
+    Colors.orangeAccent,
+    Colors.deepOrangeAccent,
+    // Colors.brown,
+      ]..toList();
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.palette,
+                color: Prefs().accentColor,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                L10n.of(context).settingsAppearanceAccentColor,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 8,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 1,
+            ),
+            itemCount: themeColors.length,
+            itemBuilder: (context, index) {
+              final color = themeColors[index];
+              final isSelected =
+                  color.toARGB32() == Prefs().accentColor.toARGB32();
+
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Prefs().saveAccentColor(color);
                   });
                 },
                 child: Container(
@@ -362,7 +467,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(0),
                     decoration: BoxDecoration(
                       color: Theme.of(context)
                           .colorScheme
@@ -372,11 +477,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     child: Icon(
                       Icons.palette_outlined,
-                      size: 48,
-                      color: Theme.of(context).colorScheme.primary,
+                      size: 30,
+                      color: Prefs().secondaryColor,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 10),
                   Text(
                     L10n.of(context).settingsAppearance,
                     style: TextStyle(
@@ -400,14 +505,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 12),
               buildLanguageSelector(),
               // const SizedBox(height: 12),
               // Row(
               //   children: [
               //     Icon(
               //       Icons.contrast,
-              //       color: Theme.of(context).colorScheme.primary,
+              //       color: Prefs().secondaryColor,
               //       size: 20,
               //     ),
               //     const SizedBox(width: 8),
@@ -449,11 +554,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               //     ),
               //   ],
               // ),
-              const SizedBox(height: 24),
-              buildThemeColorSelector(),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              buildSecondaryThemeColorSelector(),
+              buildAccentThemeColorSelector(),
+              // const SizedBox(height: 10),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Theme.of(context)
                       .colorScheme
@@ -461,14 +567,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       .withAlpha(50),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.outline.withAlpha(50),
+                    color: Prefs().secondaryColor.withAlpha(50),
                   ),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       Icons.info_outline,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Prefs().secondaryColor,
                       size: 18,
                     ),
                     const SizedBox(width: 8),
@@ -502,12 +608,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Text(
           bodyText,
           style: TextStyle(
-            fontSize: 19.0,
+            fontSize: 17.0,
             color: Theme.of(context).colorScheme.onSurface.withAlpha(200),
           ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 20),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -517,14 +623,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 .withAlpha(50),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: Theme.of(context).colorScheme.outline.withAlpha(50),
+              color: Prefs().secondaryColor.withAlpha(50),
             ),
           ),
           child: Row(
             children: [
               Icon(
                 Icons.info_outline,
-                color: Theme.of(context).colorScheme.primary,
+                color: Prefs().secondaryColor,
                 size: 18,
               ),
               const SizedBox(width: 8),
