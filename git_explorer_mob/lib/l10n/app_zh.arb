@@ -120,6 +120,7 @@
   "settingsThemeApplied": "主题颜色已应用",
   "commonDelete": "删除",
   "commonCreate": "创建",
+  "commonCopied": "已复制",
   "commonSave": "保存",
   "commonRefresh": "刷新",
   "commonCancel": "取消",

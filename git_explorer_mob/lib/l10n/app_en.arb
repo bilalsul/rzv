@@ -118,6 +118,7 @@
   "settingsThemeApplied": "Theme colors applied",
   "commonDelete": "Delete",
   "commonCreate": "Create",
+  "commonCopied":"Copied",
   "commonSave": "Save",
   "commonRefresh": "Refresh",
   "commonCancel": "Cancel",

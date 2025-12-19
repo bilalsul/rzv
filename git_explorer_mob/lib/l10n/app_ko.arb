@@ -126,6 +126,7 @@
   "settingsThemeApplied": "테마 색상이 적용되었습니다",
   "commonDelete": "삭제",
   "commonCreate": "만들기",
+  "commonCopied": "복사됨",
   "commonSave": "저장",
   "commonRefresh": "새로 고침",
   "commonCancel": "취소",

@@ -124,6 +124,7 @@
   "connectionSuccessful": "Conexión exitosa",
   "commonDelete": "Eliminar",
   "commonCreate": "Crear",
+  "commonCopied": "Copiado",
   "commonSave": "Guardar",
   "commonRefresh": "Actualizar",
   "commonCancel": "Cancelar",
