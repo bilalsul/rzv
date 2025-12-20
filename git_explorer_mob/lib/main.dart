@@ -156,14 +156,14 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
       navigatorObservers: [FlutterSmartDialog.observer],
       builder: FlutterSmartDialog.init(),
       navigatorKey: navigatorKey,
-      theme: ThemeData.light(),
+      // theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: prefs.themeMode,
       title: 'Gzip Explorer',
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),
-      //   useMaterial3: true,
-      // ),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),
+        useMaterial3: true,
+      ),
       home: const AppShell(),
     );
   }

@@ -89,7 +89,7 @@ Future<String> _loadChangelogContent() async {
       // Fallback 1: Check if there's a file in the documents directory
       try {
         final appDocDir = await getApplicationDocumentsDirectory();
-        final changelogFile = File(p.join(appDocDir.path, 'changelog.md'));
+        final changelogFile = File(p.join(appDocDir.path, 'assets', 'changelog.md'));
         if (await changelogFile.exists()) {
           return await changelogFile.readAsString();
         }
@@ -178,6 +178,8 @@ Future<String> _loadChangelogContent() async {
   }
 
   Future<void> _ensureTutorialProjectExists() async {
+    // init default turned on plugins
+    Prefs().setPluginEnabled(Plugin.editorWordWrap.id, true);
     final projRoot = await Prefs().projectsRoot();
     final id = 'tutorial_project';
     final dir = Directory('${projRoot.path}/$id');
@@ -1546,13 +1548,18 @@ class _ProjectBrowser extends StatelessWidget {
         (project.id == 'tutorial_project' ||
             Prefs().isPluginEnabled(Plugin.previewMarkdown.id))) {
       return Column(
-        children: [
-          Expanded(
-            child: Markdown(data: selectedFileContent!, selectable: true),
-          ),
-          SizedBox(height: 50),
-        ],
-      );
+          spacing: 80,
+          children: [
+            Expanded(
+              child: Markdown(
+                data: selectedFileContent!, 
+                selectable: true,
+                imageDirectory: Directory(Prefs().currentProjectPath).existsSync()? '${Prefs().currentProjectPath}/' : '',
+              ),
+            ),
+            SizedBox(height: 50),
+          ],
+        );
     }
 
     // If node is a file (string) but not selected (non-md), show placeholder

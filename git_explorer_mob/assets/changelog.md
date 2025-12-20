@@ -1,8 +1,10 @@
 # Changelog
 
 ## 0.0.14
+- Feat: Support setting up both secondary and accent colors in onboarding
 - Fix: Support Dark mode for Onboarding users
 - Fix: Support Dark mode for About Gzip Explorer in Settings
+- Fix: Theme Customizer not showing current selected theme
 - Clean: Removed features that have broken links yet. Will be added when they are fully supported
 
 ## 0.0.12
