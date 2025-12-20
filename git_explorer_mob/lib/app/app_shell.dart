@@ -95,8 +95,12 @@ class _AppShellState extends ConsumerState<AppShell> {
       locale: prefs.getEffectiveLocale(prefs, L10n.supportedLocales),
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
-      title: 'Git Explorer',
-      theme: ThemeData.light(),
+      title: 'Gzip Explorer',
+      // theme: ThemeData.light(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),
+        useMaterial3: true,
+      ),
       darkTheme: ThemeData.dark(),
       themeMode: themeMode,
       home: Scaffold(
@@ -113,7 +117,6 @@ class _AppShellState extends ConsumerState<AppShell> {
           prefs,
           // scrollController,
         ),
-
         // body: Expanded(
         //   child: Column(children: [
         //     _buildBody(currentScreen, plugins),
@@ -122,6 +125,7 @@ class _AppShellState extends ConsumerState<AppShell> {
         // ),
         // bottomNavigationBar: _buildBottomNavigationBar(plugins),
         // bottomNavigationBar: _buildFloatingNavigationBar(plugins,currentScreen),
+      // backgroundColor: const Color(0xFF1E1E1E),
       ),
     );
   }
