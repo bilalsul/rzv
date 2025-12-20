@@ -188,7 +188,9 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
           ],
         ),
       ),
-      body: SafeArea(child: MonacoWrapper()),
+      // body: SafeArea(child: MonacoWrapper()),
+      body:MonacoWrapper(),
+      // backgroundColor: const Color(0xFF1E1E1E),
     );
   }
 }
