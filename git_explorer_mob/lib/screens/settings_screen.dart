@@ -1002,22 +1002,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 : const SizedBox.shrink(),
 
             const SizedBox(height: 130),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    L10n.of(context).appName,
-                    style: TextStyle(fontSize: 13),
-                  ),
-                  Text(
-                    'v${getAppVersion()}',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                ],
-              ),
-            ),
+            // Center(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       Text(
+            //         L10n.of(context).appName,
+            //         style: TextStyle(fontSize: 13),
+            //       ),
+            //       Text(
+            //         'v${getAppVersion()}',
+            //         style: TextStyle(fontSize: 10),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(height: 120),
           ],
         ),
