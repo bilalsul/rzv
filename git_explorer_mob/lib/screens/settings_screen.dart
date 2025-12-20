@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
 import 'package:git_explorer_mob/enums/options/font_family.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
-import 'package:git_explorer_mob/utils/app_version.dart';
 import 'package:git_explorer_mob/widgets/settings/about.dart';
 import 'package:git_explorer_mob/widgets/settings/settings_tile.dart';
 import 'package:git_explorer_mob/widgets/settings/simple_dialog.dart';
