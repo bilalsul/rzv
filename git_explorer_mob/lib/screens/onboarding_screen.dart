@@ -556,10 +556,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // ),
               const SizedBox(height: 16),
               buildSecondaryThemeColorSelector(),
+              const SizedBox(height: 16),
               buildAccentThemeColorSelector(),
-              // const SizedBox(height: 10),
+              const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Theme.of(context)
                       .colorScheme
