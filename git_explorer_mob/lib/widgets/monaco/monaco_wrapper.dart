@@ -62,8 +62,6 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> with WidgetsBindi
     final prefs = ref.watch(prefsProvider);
     final double screenHeight = MediaQuery.of(context).size.height;
     final containerHeight = screenHeight - 220;
-    bool absorb = false;
-
     // top bar with a few quick toggles (maps to Prefs flags)
     return  
       // children: [
@@ -111,7 +109,7 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> with WidgetsBindi
         // ),
       Platform.isAndroid || Platform.isIOS
               ? AbsorbPointer(
-                absorbing: absorb,
+                absorbing: prefs.lockEditor,
                 child: MonacoEditor(
                   // showStatusBar: true,
                     constraints: BoxConstraints.tight(Size.fromHeight(containerHeight)),
