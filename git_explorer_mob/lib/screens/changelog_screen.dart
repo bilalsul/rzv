@@ -1,4 +1,5 @@
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/utils/get_current_language_code.dart';
 import 'package:git_explorer_mob/widgets/markdown/styled_markdown.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,11 @@ class _ChangelogScreenState extends State<ChangelogScreen> {
   @override
   void initState() {
     super.initState();
-    _loadChangelog();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    await _loadChangelog();
+    });
+
   }
 
   Future<void> _loadChangelog() async {
@@ -137,7 +142,9 @@ class _ChangelogScreenState extends State<ChangelogScreen> {
         actions: [],
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator(
+            color: Prefs().secondaryColor.withAlpha(50),
+          ))
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -152,7 +159,7 @@ class _ChangelogScreenState extends State<ChangelogScreen> {
                         children: [
                           Icon(
                             Icons.update,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Prefs().accentColor,
                             size: 24,
                           ),
                           const SizedBox(width: 8),
@@ -166,7 +173,7 @@ class _ChangelogScreenState extends State<ChangelogScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 25),
                       Text(
                         L10n.of(context).welcomeToVersion(currentVersion),
                         style: TextStyle(
@@ -189,6 +196,9 @@ class _ChangelogScreenState extends State<ChangelogScreen> {
                   padding: const EdgeInsets.all(16),
                   child: FilledButton(
                     onPressed: _onComplete,
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Prefs().secondaryColor)
+                    ),
                     child: Text(L10n.of(context).commonOk),
                   ),
                 ),

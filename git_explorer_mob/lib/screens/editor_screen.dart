@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
 import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 // import 'package:git_explorer_mob/l10n/generated/L10n.dart';
@@ -111,6 +111,25 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Marked as current open file/project')));
             //   },
             // ),
+            prefs.lockEditor ?
+                  IconButton(
+                    icon: const Icon(Icons.lock),
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    padding: EdgeInsets.zero,
+                    style: ButtonStyle(iconSize: WidgetStateProperty.all(20)),
+                    onPressed: () {
+                      if(prefs.lockEditor) prefs.saveLockEditor(false);
+                    },
+                    ) :
+                  IconButton(
+                    icon: const Icon(Icons.lock_open),
+                    visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                    padding: EdgeInsets.zero,
+                    style: ButtonStyle(iconSize: WidgetStateProperty.all(20)),
+                    onPressed: () {
+                      if(!prefs.lockEditor) prefs.saveLockEditor(true);
+                    },
+                  ),
             prefs.isPluginEnabled(Plugin.editorZoomInOut.id)
                 ? IconButton(
                     icon: const Icon(Icons.zoom_in),
@@ -172,7 +191,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             IconButton(
               icon: const Icon(Icons.view_carousel),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.only(right: 12),
               style: ButtonStyle(iconSize: WidgetStateProperty.all(20)),
               onPressed: () {
                 if (prefs.isPluginEnabled(Plugin.editorMinimap.id)) {

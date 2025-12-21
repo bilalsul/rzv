@@ -16,7 +16,6 @@ import 'package:git_explorer_mob/utils/load_default_font.dart';
 import 'package:git_explorer_mob/utils/check_update.dart';
 import 'package:git_explorer_mob/utils/toast/common.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({
@@ -63,7 +62,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
       // ADD THIS LINE - Show what's new dialog if needed
     initGzipExp();
-    await _showWhatsNewDialogIfNeeded();
     });
 
     // Listen for changes to prefs so we can react to toggles (e.g., enabling File Explorer)
@@ -77,100 +75,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     InitializationCheck.check();
     loadDefaultFont();
 
-  }
-
-Future<String> _loadChangelogContent() async {
-    try {
-      // Try to load from assets first
-      return await rootBundle.loadString('assets/changelog.md');
-    } catch (e) {
-      print('Failed to load changelog from assets: $e');
-      
-      // Fallback 1: Check if there's a file in the documents directory
-      try {
-        final appDocDir = await getApplicationDocumentsDirectory();
-        final changelogFile = File(p.join(appDocDir.path, 'assets', 'changelog.md'));
-        if (await changelogFile.exists()) {
-          return await changelogFile.readAsString();
-        }
-      } catch (_) {}
-      
-      // Fallback 2: Check in the project root (for development)
-      try {
-        final currentDir = Directory.current;
-        final changelogFile = File(p.join(currentDir.path, 'assets', 'changelog.md'));
-        if (await changelogFile.exists()) {
-          return await changelogFile.readAsString();
-        }
-      } catch (_) {}
-      
-      // Ultimate fallback: Use a default changelog
-      return '''
-#### Check our website for detailed release notes.
-''';
-    }
-  }
-  
-  Future<void> _showWhatsNewDialogIfNeeded() async {
-    try {
-      // Check if we should show what's new
-      final shouldShow = await Prefs().shouldShowWhatsNew();
-      
-      if (shouldShow && mounted) {
-        // Get current version for display
-        final currentVersion = await Prefs().getCurrentAppVersion();
-        
-        // Wait a bit for UI to initialize
-        await Future.delayed(const Duration(milliseconds: 800));
-        
-        if (!mounted) return;
-        
-        await _showWhatsNewDialog(currentVersion);
-      }
-    } catch (e) {
-      print('Error showing what\'s new dialog: $e');
-      // Don't crash the app if this fails
-    }
-  }
-  
-  Future<void> _showWhatsNewDialog(String currentVersion) async {
-    final changelogContent = await _loadChangelogContent();
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Gzip Explorer - Updated",
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Version $currentVersion',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
-        content: SingleChildScrollView(
-          child: MarkdownBody(
-            data: changelogContent,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Got it!'),
-          ),
-        ],
-        scrollable: true,
-      ),
-    );
   }
 
   Future<void> _prepareProjectsDir() async {
@@ -464,6 +368,8 @@ Future<String> _loadChangelogContent() async {
                       ),
                       const SizedBox(height: 20),
                       LinearProgressIndicator(
+                        color: Prefs().accentColor,
+                        backgroundColor: Colors.grey[500],
                         value: archive!.isEmpty
                             ? null
                             : processed / archive.length,
@@ -494,7 +400,9 @@ Future<String> _loadChangelogContent() async {
                       isCancelled = true;
                       Navigator.of(dc).pop();
                     },
-                    child: Text(L10n.of(context).commonCancel),
+                    child: Text(L10n.of(context).commonCancel,
+                    style: TextStyle(color: Prefs().accentColor),
+                    ),
                   ),
                 ],
               );
@@ -879,7 +787,14 @@ Future<String> _loadChangelogContent() async {
                       // This avoids a flash where the UI shows "no projects" before the background
                       // disk scan completes and populates `_projects`.
                       if (!_diskLoaded) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: Container(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            // color: prefs.secondaryColor,
+                          ),
+                        ));
                       }
                       if (_projects.isEmpty)
                         return EmptyState(

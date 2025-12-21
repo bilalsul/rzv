@@ -23,7 +23,7 @@ class MonacoWrapper extends ConsumerStatefulWidget {
   ConsumerState<MonacoWrapper> createState() => _MonacoWrapperState();
 }
 
-class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
+class _MonacoWrapperState extends ConsumerState<MonacoWrapper> with WidgetsBindingObserver {
   late TextEditingController _controller;
 
   @override
@@ -62,7 +62,6 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
     final prefs = ref.watch(prefsProvider);
     final double screenHeight = MediaQuery.of(context).size.height;
     final containerHeight = screenHeight - 220;
-
     // top bar with a few quick toggles (maps to Prefs flags)
     return  
       // children: [
@@ -109,35 +108,40 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> {
           // ),
         // ),
       Platform.isAndroid || Platform.isIOS
-              ? MonacoEditor(
-                  constraints: BoxConstraints.tight(Size.fromHeight(containerHeight)),
-                    onFocus: () {
-                      // Hide keyboard on focus to avoid showing it on mobile
-                      FocusScope.of(context).unfocus();
-                    },
-                    initialValue: prefs.currentOpenFile.isEmpty
-                        ? prefs.filePlaceholder(context)
-                        : prefs.currentOpenFileContent,
-                    onContentChanged: (value) =>
-                        prefs.saveCurrentOpenFileContent(value),
-                    options: EditorOptions(
-                      language:
-                          prefs.isPluginEnabled(Plugin.syntaxHighlighting.id)
-                          ? prefs.currentOpenFile.toMonacoLanguage()
-                          : MonacoLanguage.plaintext,
-                      lineNumbers: prefs.isPluginEnabled(
-                        Plugin.editorLineNumbers.id,
-                      ),
-                      minimap: prefs.isPluginEnabled(Plugin.editorMinimap.id),
-                      readOnly: true,
-                      fontFamily: prefs.editorFontFamily,
-                      fontSize: prefs.editorFontSize,
-                      wordWrap: prefs.isPluginEnabled(Plugin.editorWordWrap.id),
-                      renderControlCharacters: prefs.isPluginEnabled(
-                        Plugin.editorRenderControlCharacters.id,
+              ? AbsorbPointer(
+                absorbing: prefs.lockEditor,
+                child: MonacoEditor(
+                  // showStatusBar: true,
+                    constraints: BoxConstraints.tight(Size.fromHeight(containerHeight)),
+                      // onFocus: () {
+                      //   // Hide keyboard on focus to avoid showing it on mobile
+                      //   FocusScope.of(context).unfocus();
+                      // },
+                      initialValue: prefs.currentOpenFile.isEmpty
+                          ? prefs.filePlaceholder(context)
+                          : prefs.currentOpenFileContent,
+                      // onContentChanged: (value) =>
+                      //     prefs.saveCurrentOpenFileContent(value),
+                      options: EditorOptions(
+                        language:
+                            prefs.isPluginEnabled(Plugin.syntaxHighlighting.id)
+                            ? prefs.currentOpenFile.toMonacoLanguage()
+                            : MonacoLanguage.plaintext,
+                        lineNumbers: prefs.isPluginEnabled(
+                          Plugin.editorLineNumbers.id,
+                        ),
+                        minimap: prefs.isPluginEnabled(Plugin.editorMinimap.id),
+                        readOnly: true,
+                        fontFamily: prefs.editorFontFamily,
+                        fontSize: prefs.editorFontSize,
+                        wordWrap: prefs.isPluginEnabled(Plugin.editorWordWrap.id),
+                        renderControlCharacters: prefs.isPluginEnabled(
+                          Plugin.editorRenderControlCharacters.id,
+                        ),
+                        contextMenu: false,
                       ),
                     ),
-                  )
+              )
               : _buildFallbackEditor(prefs);
       // ],
   }
