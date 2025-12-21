@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0
+- Feat: Support Lock Editor to force locking Editor from interaction
+- Fix: Fix broken theme colors for different screens
+- Fix: Remove forced annoying keyboard from showing up in the editor
+- UI: Add lock and unlock icon buttons for locking Editor from interaction
+
 ## 0.0.14
 - Feat: Support setting up both secondary and accent colors in onboarding
 - Fix: Support Dark mode for Onboarding users
