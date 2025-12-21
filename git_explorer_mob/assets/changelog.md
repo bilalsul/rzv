@@ -1,23 +1,29 @@
 # Changelog
 
+## 0.1.0
+- Feat: Support Lock Editor to force locking Editor from interaction
+- Fix: Fix broken theme colors for different screens
+- Fix: Remove forced annoying keyboard from showing up in the editor
+- UI: Add lock and unlock icon buttons for locking Editor from interaction
+
 ## 0.0.14
 - Feat: Support setting up both secondary and accent colors in onboarding
 - Fix: Support Dark mode for Onboarding users
 - Fix: Support Dark mode for About Gzip Explorer in Settings
 - Fix: Theme Customizer not showing current selected theme
-- Clean: Removed features that have broken links yet. Will be added when they are fully supported
+- Fix Removed features that have broken links yet. Will be added when they are fully supported
 
 ## 0.0.12
 - Feat: Added app onboarding explaining app's purpose
 - Feat: Added App About in settings
-- Clean: Added a way to detect where new app instance start should take you.
+- Fix Added a way to detect where new app instance start should take you.
 
 ## 0.0.11
 - Fix: detect device language, not supported? show english by default.
 
 ## 0.0.10
 - Fix: Cleaned plugin definitions from breakage
-- Clean: Removed unused packages and minimized app size from bloating user's device.
+- Fix Removed unused packages and minimized app size from bloating user's device.
 
 ## 0.0.8
 - Feat: Added home action buttons (delete all projects, refresh)
@@ -55,20 +61,20 @@
 - Feat: Added Chinese language variants support
 
 ## 0.0.2
-- UI: Added loading indicator to remove empty state flashing
 - Feat: Added theme customization support
 - Fix: Updated release pipeline to release app for different Android platforms
+- UI: Added loading indicator to remove empty state flashing
 
 ## 0.0.1
 - Feat: Added timer that tracks when current project was last opened
 - Feat: Fixed i18n support issue
 - Feat: Supported localization for home and settings screens
-- Fix: Fixed MaterialApp not rebuilding when language is changed
 - Feat: Supported app_drawer localization
 - Feat: Fixed unzipping archives and showing them from file
 - Feat: Added MonacoEditor to editor
 - Feat: Added French language support
 - Feat: Added German language support
 - Feat: Added Arabic language support
-- Docs: Updated widget hierarchy and project structure documentation
+- Fix: Fixed MaterialApp not rebuilding when language is changed
 - UI: Added branding app icon
+- Docs: Updated widget hierarchy and project structure documentation
