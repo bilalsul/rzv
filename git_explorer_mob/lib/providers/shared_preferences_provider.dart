@@ -918,6 +918,15 @@ class Prefs extends ChangeNotifier {
     notifyListeners();
   }
 
+bool get lockEditor {
+  return prefs.getBool('lock_editor') ?? false;
+}
+
+void saveLockEditor(bool value) {
+  prefs.setBool('lock_editor', value);
+  notifyListeners();
+}
+
   String? get lastAppVersion {
     return prefs.getString('lastAppVersion');
   }
