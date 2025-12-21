@@ -787,8 +787,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       // This avoids a flash where the UI shows "no projects" before the background
                       // disk scan completes and populates `_projects`.
                       if (!_diskLoaded) {
-                        return Center(child: CircularProgressIndicator(
-                          // color: prefs.secondaryColor,
+                        return Center(child: Container(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            // color: prefs.secondaryColor,
+                          ),
                         ));
                       }
                       if (_projects.isEmpty)
