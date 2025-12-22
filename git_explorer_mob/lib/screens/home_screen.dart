@@ -724,12 +724,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     title: Text(L10n.of(context).homeGitProjectsTitle),
                     actions: [
                       IconButton(
+                        enableFeedback: false,
                         tooltip: L10n.of(context).homeRefreshProjects,
                         icon: const Icon(Icons.refresh),
                         onPressed: () async =>
                             await _refreshProjectsWithWarning(context),
                       ),
                       IconButton(
+                        enableFeedback: false,
                         tooltip: L10n.of(context).homeDeleteAllProjects,
                         icon: const Icon(Icons.delete_forever),
                         onPressed: () => _deleteAllProjects(context),
@@ -743,17 +745,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     // actions: [
                     //   IconButton(
+                    // enableFeedback: false,
                     //     tooltip: L10n.of(context).homeRefreshProjects,
                     //     icon: const Icon(Icons.refresh),
                     //     onPressed: () async => await _refreshProjects(context),
                     //   ),
                     //   IconButton(
+                    // enableFeedback: false,
                     //     tooltip: L10n.of(context).homeDeleteAllProjects,
                     //     icon: const Icon(Icons.delete_forever),
                     //     onPressed: () => _deleteAllProjects(context),
                     //   ),
                     // ],
                     leading: IconButton(
+                      enableFeedback: false,
                       icon: const Icon(Icons.arrow_back),
                       onPressed: () {
                         // navigate up one level or close project if at root

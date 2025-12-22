@@ -64,6 +64,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
           ),
           actions: [
             // IconButton(
+            // enableFeedback: false,
             //   icon: const Icon(Icons.save),
             //   style: ButtonStyle(
             //     iconSize: WidgetStateProperty.all(20),
@@ -88,6 +89,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             //   },
             // ),
             // IconButton(
+            // enableFeedback: false,
             //   icon: const Icon(Icons.upload_file),
             //   style: ButtonStyle(
             //     iconSize: WidgetStateProperty.all(20),
@@ -113,6 +115,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             // ),
             prefs.lockEditor ?
                   IconButton(
+                    enableFeedback: false,
                     icon: const Icon(Icons.lock),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     padding: EdgeInsets.zero,
@@ -122,6 +125,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                     },
                     ) :
                   IconButton(
+                    enableFeedback: false,
                     icon: const Icon(Icons.lock_open),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     padding: EdgeInsets.zero,
@@ -132,6 +136,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                   ),
             prefs.isPluginEnabled(Plugin.editorZoomInOut.id)
                 ? IconButton(
+                  enableFeedback: false,
                     icon: const Icon(Icons.zoom_in),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     padding: EdgeInsets.zero,
@@ -144,6 +149,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                 : SizedBox.shrink(),
             prefs.isPluginEnabled(Plugin.editorZoomInOut.id)
                 ? IconButton(
+                  enableFeedback: false,
                     icon: const Icon(Icons.zoom_out),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     padding: EdgeInsets.zero,
@@ -155,6 +161,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                   )
                 : SizedBox.shrink(),
                   IconButton(
+                    enableFeedback: false,
                     icon: const Icon(Icons.wrap_text),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     padding: EdgeInsets.zero,
@@ -171,6 +178,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                     },
                   ),
             IconButton(
+              enableFeedback: false,
               icon: const Icon(Icons.numbers),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
               padding: EdgeInsets.zero,
@@ -187,6 +195,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
               },
             ),
             IconButton(
+              enableFeedback: false,
               icon: const Icon(Icons.view_carousel),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
               padding: EdgeInsets.only(right: 15, left: 5),
