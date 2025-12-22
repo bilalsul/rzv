@@ -6,6 +6,11 @@
 - Fix: Remove forced annoying keyboard from showing up in the editor
 - UI: Add lock and unlock icon buttons for locking Editor from interaction
 
+- Feat: 支持锁定编辑器，强制防止与编辑器的交互
+- Fix: 修复不同屏幕的主题颜色问题
+- Fix: 移除编辑器中强制弹出的烦人键盘
+- UI: 为锁定编辑器交互添加锁定和解锁图标按钮
+
 ## 0.0.14
 - Feat: Support setting up both secondary and accent colors in onboarding
 - Fix: Support Dark mode for Onboarding users
@@ -13,17 +18,32 @@
 - Fix: Theme Customizer not showing current selected theme
 - Fix Removed features that have broken links yet. Will be added when they are fully supported
 
+- Feat: 支持在首次使用引导中设置次要颜色和强调色
+- Fix: 为首次使用用户支持深色模式
+- Fix: 为设置中的"关于 Gzip Explorer"支持深色模式
+- Fix: 主题自定义器未显示当前选中的主题
+- Fix: 移除了链接已损坏的功能。将在完全支持时重新添加
+
 ## 0.0.12
 - Feat: Added app onboarding explaining app's purpose
 - Feat: Added App About in settings
 - Fix Added a way to detect where new app instance start should take you.
 
+- Feat: 添加了应用首次使用引导，解释应用用途
+- Feat: 在设置中添加了"关于应用"
+- Fix: 添加了检测新应用实例启动位置的方法
+
 ## 0.0.11
 - Fix: detect device language, not supported? show english by default.
+
+- Fix: 检测设备语言，如果不支持？默认显示英文
 
 ## 0.0.10
 - Fix: Cleaned plugin definitions from breakage
 - Fix Removed unused packages and minimized app size from bloating user's device.
+
+- Fix: 清理了损坏的插件定义
+- Fix: 移除未使用的包并减小应用体积，防止用户设备膨胀
 
 ## 0.0.8
 - Feat: Added home action buttons (delete all projects, refresh)
@@ -34,12 +54,26 @@
 - Fix: Updated cached home screen and cached editor screen to not rebuild fully
 - Fix: Cleaned up broken scroll controller breaking app internal
 
+- Feat: 添加了主页操作按钮（删除所有项目、刷新）
+- Feat: 编辑器屏幕取消焦点时弹出键盘
+- Fix: 修复了主页中无法工作的 Markdown 预览器
+- Feat: 添加了在编辑器中打开当前 Markdown 的按钮
+- Fix: 修复了无法工作的刷新项目操作按钮
+- Fix: 更新了缓存的主页屏幕和编辑器屏幕，避免完全重建
+- Fix: 清理了破坏应用内部的损坏滚动控制器
+
 ## 0.0.7
 - UI: Cleaned up settings screen UI
 - UI: Enhanced theme selector and language selector widgets
 - UI: Updated legacy BottomNavigationBar with scroll detection
 - Feat: Added font family selector
 - UI: Improved floating action buttons alignment
+
+- UI: 清理了设置屏幕界面
+- UI: 增强了主题选择器和语言选择器小组件
+- UI: 使用滚动检测更新了旧版 BottomNavigationBar
+- Feat: 添加了字体家族选择器
+- UI: 改进了浮动操作按钮的对齐方式
 
 ## 0.0.6
 - Feat: Cleaned up hardcoded feature disabled and feature not supported screens localizations
@@ -49,6 +83,14 @@
 - Feat: Updated empty editor file placeholder message
 - Feat: Render unsupported characters in editor with warning bell
 - Feat: Implemented app about and send feedback with URL navigation
+
+- Feat: 清理了硬编码的功能禁用和功能不支持屏幕的本地化
+- Feat: 添加了支持的功能列表
+- Feat: 添加了缩放更改编辑器字体大小
+- Feat: 添加了字体家族选项
+- Feat: 更新了空编辑器文件占位符消息
+- Feat: 在编辑器中用警告铃渲染不支持的字符
+- Feat: 实现了应用关于和通过 URL 导航发送反馈
 
 ## 0.0.4
 - Feat: Placed native ads placeholders in settings and app-drawer
@@ -60,10 +102,23 @@
 - Feat: Added Korean language support
 - Feat: Added Chinese language variants support
 
+- Feat: 在设置和应用抽屉中放置了原生广告占位符
+- Feat: 添加了意大利语支持
+- Feat: 添加了土耳其语支持
+- Feat: 添加了葡萄牙语支持
+- Feat: 添加了俄语支持
+- Feat: 添加了日语支持
+- Feat: 添加了韩语支持
+- Feat: 添加了中文变体支持
+
 ## 0.0.2
 - Feat: Added theme customization support
 - Fix: Updated release pipeline to release app for different Android platforms
 - UI: Added loading indicator to remove empty state flashing
+
+- Feat: 添加了主题自定义支持
+- Fix: 更新了发布流水线，为不同的 Android 平台发布应用
+- UI: 添加了加载指示器以消除空状态闪烁
 
 ## 0.0.1
 - Feat: Added timer that tracks when current project was last opened
@@ -77,4 +132,15 @@
 - Feat: Added Arabic language support
 - Fix: Fixed MaterialApp not rebuilding when language is changed
 - UI: Added branding app icon
-- Docs: Updated widget hierarchy and project structure documentation
+
+- Feat: 添加了跟踪当前项目上次打开时间的计时器
+- Feat: 修复了 i18n 支持问题
+- Feat: 支持主页和设置屏幕的本地化
+- Feat: 支持应用抽屉的本地化
+- Feat: 修复了解压归档文件并从文件显示的问题
+- Feat: 在编辑器中添加了 MonacoEditor
+- Feat: 添加了法语支持
+- Feat: 添加了德语支持
+- Feat: 添加了阿拉伯语支持
+- Fix: 修复了更改语言时 MaterialApp 不重建的问题
+- UI: 添加了品牌应用图标
