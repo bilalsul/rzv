@@ -35,7 +35,7 @@ class PluginDefinition {
     required this.icon,
     required this.category,
     this.version = '0.0.1',
-    this.author = 'Git Explorer',
+    this.author = 'Gzip Explorer',
     this.dependencies = const [],
     this.conflictsWith = const [],
     this.defaultConfig = const {},
@@ -44,225 +44,225 @@ class PluginDefinition {
     this.lastUpdated,
   });
 
-  PluginDefinition copyWith({
-    String? id,
-    String? name,
-    String? description,
-    IconData? icon,
-    PluginCategory? category,
-    String? version,
-    String? author,
-    List<String>? dependencies,
-    List<String>? conflictsWith,
-    Map<String, dynamic>? defaultConfig,
-    bool? requiresRestart,
-    bool? enabledByDefault,
-    DateTime? lastUpdated,
-  }) {
-    return PluginDefinition(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      icon: icon ?? this.icon,
-      category: category ?? this.category,
-      version: version ?? this.version,
-      author: author ?? this.author,
-      dependencies: dependencies ?? this.dependencies,
-      conflictsWith: conflictsWith ?? this.conflictsWith,
-      defaultConfig: defaultConfig ?? this.defaultConfig,
-      requiresRestart: requiresRestart ?? this.requiresRestart,
-      enabledByDefault: enabledByDefault ?? this.enabledByDefault,
-      lastUpdated: lastUpdated ?? this.lastUpdated,
-    );
-  }
+  // PluginDefinition copyWith({
+  //   String? id,
+  //   String? name,
+  //   String? description,
+  //   IconData? icon,
+  //   PluginCategory? category,
+  //   String? version,
+  //   String? author,
+  //   List<String>? dependencies,
+  //   List<String>? conflictsWith,
+  //   Map<String, dynamic>? defaultConfig,
+  //   bool? requiresRestart,
+  //   bool? enabledByDefault,
+  //   DateTime? lastUpdated,
+  // }) {
+  //   return PluginDefinition(
+  //     id: id ?? this.id,
+  //     name: name ?? this.name,
+  //     description: description ?? this.description,
+  //     icon: icon ?? this.icon,
+  //     category: category ?? this.category,
+  //     version: version ?? this.version,
+  //     author: author ?? this.author,
+  //     dependencies: dependencies ?? this.dependencies,
+  //     conflictsWith: conflictsWith ?? this.conflictsWith,
+  //     defaultConfig: defaultConfig ?? this.defaultConfig,
+  //     requiresRestart: requiresRestart ?? this.requiresRestart,
+  //     enabledByDefault: enabledByDefault ?? this.enabledByDefault,
+  //     lastUpdated: lastUpdated ?? this.lastUpdated,
+  //   );
+  // }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'icon': _iconToCode(icon),
-      'category': category.name,
-      'version': version,
-      'author': author,
-      'dependencies': dependencies,
-      'conflictsWith': conflictsWith,
-      'defaultConfig': defaultConfig,
-      'requiresRestart': requiresRestart,
-      'enabledByDefault': enabledByDefault,
-      'lastUpdated': lastUpdated?.millisecondsSinceEpoch,
-    };
-  }
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     'id': id,
+  //     'name': name,
+  //     'description': description,
+  //     'icon': _iconToCode(icon),
+  //     'category': category.name,
+  //     'version': version,
+  //     'author': author,
+  //     'dependencies': dependencies,
+  //     'conflictsWith': conflictsWith,
+  //     'defaultConfig': defaultConfig,
+  //     'requiresRestart': requiresRestart,
+  //     'enabledByDefault': enabledByDefault,
+  //     'lastUpdated': lastUpdated?.millisecondsSinceEpoch,
+  //   };
+  // }
 
-  factory PluginDefinition.fromMap(Map<String, dynamic> map) {
-    return PluginDefinition(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      description: map['description'] as String?,
-      icon: _iconFromCode(map['icon'] as String?),
-      category: PluginCategory.values.firstWhere(
-        (e) => e.name == map['category'],
-        orElse: () => PluginCategory.utility,
-      ),
-      version: map['version'] as String? ?? '0.0.1',
-      author: map['author'] as String? ?? 'Git Explorer',
-      dependencies: List<String>.from(map['dependencies'] as List? ?? []),
-      conflictsWith: List<String>.from(map['conflictsWith'] as List? ?? []),
-      defaultConfig: Map<String, dynamic>.from(map['defaultConfig'] as Map? ?? {}),
-      requiresRestart: map['requiresRestart'] as bool? ?? false,
-      enabledByDefault: map['enabledByDefault'] as bool? ?? true,
-      lastUpdated: map['lastUpdated'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['lastUpdated'] as int)
-          : null,
-    );
-  }
+  // factory PluginDefinition.fromMap(Map<String, dynamic> map) {
+  //   return PluginDefinition(
+  //     id: map['id'] as String,
+  //     name: map['name'] as String,
+  //     description: map['description'] as String?,
+  //     icon: _iconFromCode(map['icon'] as String?),
+  //     category: PluginCategory.values.firstWhere(
+  //       (e) => e.name == map['category'],
+  //       orElse: () => PluginCategory.utility,
+  //     ),
+  //     version: map['version'] as String? ?? '0.0.1',
+  //     author: map['author'] as String? ?? 'Git Explorer',
+  //     dependencies: List<String>.from(map['dependencies'] as List? ?? []),
+  //     conflictsWith: List<String>.from(map['conflictsWith'] as List? ?? []),
+  //     defaultConfig: Map<String, dynamic>.from(map['defaultConfig'] as Map? ?? {}),
+  //     requiresRestart: map['requiresRestart'] as bool? ?? false,
+  //     enabledByDefault: map['enabledByDefault'] as bool? ?? true,
+  //     lastUpdated: map['lastUpdated'] != null
+  //         ? DateTime.fromMillisecondsSinceEpoch(map['lastUpdated'] as int)
+  //         : null,
+  //   );
+  // }
 
-  static String _iconToCode(IconData icon) {
-    // Convert IconData to a string representation
-    return '${icon.codePoint}:${icon.fontFamily}:${icon.fontPackage}';
-  }
+  // static String _iconToCode(IconData icon) {
+  //   // Convert IconData to a string representation
+  //   return '${icon.codePoint}:${icon.fontFamily}:${icon.fontPackage}';
+  // }
 
-  static IconData _iconFromCode(String? code) {
-    if (code == null) return Icons.extension;
+  // static IconData _iconFromCode(String? code) {
+  //   if (code == null) return Icons.extension;
     
-    try {
-      final parts = code.split(':');
-      return IconData(
-        int.parse(parts[0]),
-        fontFamily: parts.length > 1 ? parts[1] : null,
-        fontPackage: parts.length > 2 ? parts[2] : null,
-      );
-    } catch (e) {
-      return Icons.extension;
-    }
-  }
+  //   try {
+  //     final parts = code.split(':');
+  //     return IconData(
+  //       int.parse(parts[0]),
+  //       fontFamily: parts.length > 1 ? parts[1] : null,
+  //       fontPackage: parts.length > 2 ? parts[2] : null,
+  //     );
+  //   } catch (e) {
+  //     return Icons.extension;
+  //   }
+  // }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is PluginDefinition && other.id == id;
-  }
+//   @override
+//   bool operator ==(Object other) {
+//     if (identical(this, other)) return true;
+//     return other is PluginDefinition && other.id == id;
+//   }
 
-  @override
-  int get hashCode => id.hashCode;
+//   @override
+//   int get hashCode => id.hashCode;
 
-  @override
-  String toString() {
-    return 'PluginDefinition(id: $id, name: $name, category: $category)';
-  }
+//   @override
+//   String toString() {
+//     return 'PluginDefinition(id: $id, name: $name, category: $category)';
+//   }
 }
 
-class PluginState {
-  final PluginDefinition definition;
-  final bool isEnabled;
-  final Map<String, dynamic> config;
-  final bool isLoading;
-  final String? error;
-  final DateTime? lastUsed;
+// class PluginState {
+//   final PluginDefinition definition;
+//   final bool isEnabled;
+//   final Map<String, dynamic> config;
+//   final bool isLoading;
+//   final String? error;
+//   final DateTime? lastUsed;
 
-  const PluginState({
-    required this.definition,
-    required this.isEnabled,
-    required this.config,
-    this.isLoading = false,
-    this.error,
-    this.lastUsed,
-  });
+//   const PluginState({
+//     required this.definition,
+//     required this.isEnabled,
+//     required this.config,
+//     this.isLoading = false,
+//     this.error,
+//     this.lastUsed,
+//   });
 
-  PluginState copyWith({
-    PluginDefinition? definition,
-    bool? isEnabled,
-    Map<String, dynamic>? config,
-    bool? isLoading,
-    String? error,
-    DateTime? lastUsed,
-  }) {
-    return PluginState(
-      definition: definition ?? this.definition,
-      isEnabled: isEnabled ?? this.isEnabled,
-      config: config ?? this.config,
-      isLoading: isLoading ?? this.isLoading,
-      error: error ?? this.error,
-      lastUsed: lastUsed ?? this.lastUsed,
-    );
-  }
+//   PluginState copyWith({
+//     PluginDefinition? definition,
+//     bool? isEnabled,
+//     Map<String, dynamic>? config,
+//     bool? isLoading,
+//     String? error,
+//     DateTime? lastUsed,
+//   }) {
+//     return PluginState(
+//       definition: definition ?? this.definition,
+//       isEnabled: isEnabled ?? this.isEnabled,
+//       config: config ?? this.config,
+//       isLoading: isLoading ?? this.isLoading,
+//       error: error ?? this.error,
+//       lastUsed: lastUsed ?? this.lastUsed,
+//     );
+//   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'definition': definition.toMap(),
-      'isEnabled': isEnabled,
-      'config': config,
-      'isLoading': isLoading,
-      'error': error,
-      'lastUsed': lastUsed?.millisecondsSinceEpoch,
-    };
-  }
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'definition': definition.toMap(),
+//       'isEnabled': isEnabled,
+//       'config': config,
+//       'isLoading': isLoading,
+//       'error': error,
+//       'lastUsed': lastUsed?.millisecondsSinceEpoch,
+//     };
+//   }
 
-  factory PluginState.fromMap(Map<String, dynamic> map) {
-    return PluginState(
-      definition: PluginDefinition.fromMap(Map<String, dynamic>.from(map['definition'])),
-      isEnabled: map['isEnabled'] as bool,
-      config: Map<String, dynamic>.from(map['config'] as Map? ?? {}),
-      isLoading: map['isLoading'] as bool? ?? false,
-      error: map['error'] as String?,
-      lastUsed: map['lastUsed'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['lastUsed'] as int)
-          : null,
-    );
-  }
-}
+//   factory PluginState.fromMap(Map<String, dynamic> map) {
+//     return PluginState(
+//       definition: PluginDefinition.fromMap(Map<String, dynamic>.from(map['definition'])),
+//       isEnabled: map['isEnabled'] as bool,
+//       config: Map<String, dynamic>.from(map['config'] as Map? ?? {}),
+//       isLoading: map['isLoading'] as bool? ?? false,
+//       error: map['error'] as String?,
+//       lastUsed: map['lastUsed'] != null
+//           ? DateTime.fromMillisecondsSinceEpoch(map['lastUsed'] as int)
+//           : null,
+//     );
+//   }
+// }
 
-class PluginRegistry {
-  final Map<String, PluginDefinition> _plugins = {};
+// class PluginRegistry {
+//   final Map<String, PluginDefinition> _plugins = {};
 
-  void registerPlugin(PluginDefinition plugin) {
-    _plugins[plugin.id] = plugin;
-  }
+//   void registerPlugin(PluginDefinition plugin) {
+//     _plugins[plugin.id] = plugin;
+//   }
 
-  void unregisterPlugin(String pluginId) {
-    _plugins.remove(pluginId);
-  }
+//   void unregisterPlugin(String pluginId) {
+//     _plugins.remove(pluginId);
+//   }
 
-  PluginDefinition? getPlugin(String pluginId) {
-    return _plugins[pluginId];
-  }
+//   PluginDefinition? getPlugin(String pluginId) {
+//     return _plugins[pluginId];
+//   }
 
-  List<PluginDefinition> getPluginsByCategory(PluginCategory category) {
-    return _plugins.values
-        .where((plugin) => plugin.category == category)
-        .toList();
-  }
+//   List<PluginDefinition> getPluginsByCategory(PluginCategory category) {
+//     return _plugins.values
+//         .where((plugin) => plugin.category == category)
+//         .toList();
+//   }
 
-  List<PluginDefinition> getAllPlugins() {
-    return _plugins.values.toList();
-  }
+//   List<PluginDefinition> getAllPlugins() {
+//     return _plugins.values.toList();
+//   }
 
-  List<PluginDefinition> getEnabledPlugins(List<String> enabledIds) {
-    return enabledIds
-        .map((id) => _plugins[id])
-        .whereType<PluginDefinition>()
-        .toList();
-  }
+//   List<PluginDefinition> getEnabledPlugins(List<String> enabledIds) {
+//     return enabledIds
+//         .map((id) => _plugins[id])
+//         .whereType<PluginDefinition>()
+//         .toList();
+//   }
 
-  bool validateDependencies(String pluginId, List<String> enabledPlugins) {
-    final plugin = _plugins[pluginId];
-    if (plugin == null) return false;
+//   bool validateDependencies(String pluginId, List<String> enabledPlugins) {
+//     final plugin = _plugins[pluginId];
+//     if (plugin == null) return false;
 
-    for (final dependency in plugin.dependencies) {
-      if (!enabledPlugins.contains(dependency)) {
-        return false;
-      }
-    }
+//     for (final dependency in plugin.dependencies) {
+//       if (!enabledPlugins.contains(dependency)) {
+//         return false;
+//       }
+//     }
 
-    for (final conflict in plugin.conflictsWith) {
-      if (enabledPlugins.contains(conflict)) {
-        return false;
-      }
-    }
+//     for (final conflict in plugin.conflictsWith) {
+//       if (enabledPlugins.contains(conflict)) {
+//         return false;
+//       }
+//     }
 
-    return true;
-  }
-}
+//     return true;
+//   }
+// }
 
 // Default plugin definitions
 // final defaultPlugins = [

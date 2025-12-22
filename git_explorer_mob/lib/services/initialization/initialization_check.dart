@@ -1,3 +1,4 @@
+import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/enums/version_check_type.dart';
 import 'package:git_explorer_mob/main.dart';
@@ -31,6 +32,8 @@ class InitializationCheck {
     GitExpLog.info('Version check result: $result');
     if (result == VersionCheckType.firstLaunch) {
       _handleFirstLaunch();
+      _initDefaultPlugins();
+
     } else if (result == VersionCheckType.updated) {
       _handleUpdateAvailable();
     } else {
@@ -50,6 +53,19 @@ class InitializationCheck {
         return VersionCheckType.normal;
       }
     }
+  }
+
+  static Future<void> _initDefaultPlugins() async {
+    GitExpLog.info('init default Plugins: Set Enabled');
+    Prefs().setPluginEnabled(Plugin.previewMarkdown.id, true);
+    Prefs().setPluginEnabled(Plugin.syntaxHighlighting.id, true);
+    Prefs().setPluginEnabled(Plugin.editorWordWrap.id, true);
+    Prefs().setPluginEnabled(Plugin.editorMinimap.id, true);
+    Prefs().setPluginEnabled(Plugin.editorLineNumbers.id, true);
+    Prefs().setPluginEnabled(Plugin.editorZoomInOut.id, true);
+    Prefs().setPluginEnabled(Plugin.advancedEditorOptions.id, true);
+    
+    
   }
 
   static Future<void> _handleFirstLaunch() async {

@@ -83,7 +83,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> _ensureTutorialProjectExists() async {
     // init default turned on plugins
-    Prefs().setPluginEnabled(Plugin.editorWordWrap.id, true);
     final projRoot = await Prefs().projectsRoot();
     final id = 'tutorial_project';
     final dir = Directory('${projRoot.path}/$id');
@@ -1291,6 +1290,7 @@ class _ProjectCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
+        enableFeedback: false,
         onTap: onOpen,
         child: Padding(
           padding: const EdgeInsets.all(12.0),

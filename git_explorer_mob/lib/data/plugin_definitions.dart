@@ -20,13 +20,13 @@ List<PluginDefinition> editorPlugins = [
     icon: Icons.color_lens_outlined,
     category: PluginCategory.editor,
   ),
-  PluginDefinition(
-    id: Plugin.codeFolding.id,
-    name: Plugin.codeFolding.id,
-    description: Plugin.codeFolding.id,
-    icon: Icons.wrap_text,
-    category: PluginCategory.editor,
-  ),
+  // PluginDefinition(
+  //   id: Plugin.codeFolding.id,
+  //   name: Plugin.codeFolding.id,
+  //   description: Plugin.codeFolding.id,
+  //   icon: Icons.wrap_text,
+  //   category: PluginCategory.editor,
+  // ),
   PluginDefinition(
     id: Plugin.advancedEditorOptions.id,
     name: Plugin.advancedEditorOptions.id,
