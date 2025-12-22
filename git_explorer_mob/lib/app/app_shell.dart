@@ -366,7 +366,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                 // selectedLabelStyle: TextStyle(color: Prefs().accentColor),
                 // selectedIconTheme: IconThemeData(color: Prefs().secondaryColor),
                 // showSelectedLabels: true,
-                enableFeedback: true,
+                enableFeedback: false,
                 type: BottomNavigationBarType.fixed,
                 landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
                 currentIndex: currentIndex,

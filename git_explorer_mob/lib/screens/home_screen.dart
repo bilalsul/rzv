@@ -1290,6 +1290,7 @@ class _ProjectCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
+        enableFeedback: false,
         onTap: onOpen,
         child: Padding(
           padding: const EdgeInsets.all(12.0),

@@ -136,6 +136,7 @@ class AndroidSettingsTile extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          enableFeedback: false,
           onTap: cantShowAnimation
               ? null
               : () {
