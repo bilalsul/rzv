@@ -154,8 +154,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                     },
                   )
                 : SizedBox.shrink(),
-            prefs.isPluginEnabled(Plugin.codeFolding.id)
-                ? IconButton(
+                  IconButton(
                     icon: const Icon(Icons.wrap_text),
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     padding: EdgeInsets.zero,
@@ -170,8 +169,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                         return;
                       }
                     },
-                  )
-                : SizedBox.shrink(),
+                  ),
             IconButton(
               icon: const Icon(Icons.numbers),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
@@ -191,7 +189,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
             IconButton(
               icon: const Icon(Icons.view_carousel),
               visualDensity: VisualDensity(horizontal: -4, vertical: -4),
-              padding: EdgeInsets.only(right: 12),
+              padding: EdgeInsets.only(right: 15, left: 5),
               style: ButtonStyle(iconSize: WidgetStateProperty.all(20)),
               onPressed: () {
                 if (prefs.isPluginEnabled(Plugin.editorMinimap.id)) {
