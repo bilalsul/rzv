@@ -61,7 +61,7 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> with WidgetsBindi
   Widget build(BuildContext context) {
     final prefs = ref.watch(prefsProvider);
     final double screenHeight = MediaQuery.of(context).size.height;
-    final containerHeight = screenHeight - 220;
+    final containerHeight = screenHeight - 194;
     // top bar with a few quick toggles (maps to Prefs flags)
     return  
       // children: [
