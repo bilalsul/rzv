@@ -660,6 +660,18 @@ class Prefs extends ChangeNotifier {
     }
   }
 
+ bool isRecentlyOpened() {
+   final lastOpened = lastOpenedProjectTime;
+ if (lastOpened.millisecondsSinceEpoch <= 0) {
+   // File was never opened
+   return false;
+ }
+  final now = DateTime.now();
+ final difference = now.difference(lastOpened);
+  // Return true if opened within the last 5 minutes
+ return difference.inMinutes <= 5;
+}
+
   // Getter and setter for animation speed
   // double get animationSpeed {
   //   return prefs.getDouble('theme_animation_speed') ?? 1.0;
