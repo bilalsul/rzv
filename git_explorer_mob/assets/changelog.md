@@ -7,13 +7,15 @@
 - UI: Add lock and unlock icon buttons for locking Editor from interaction
 - UI: Removed Button feedbacks when clicked
 - Chore: Set Default Plugins Enabled in first launch
+- UI: Add a back navigation in Editor takes back to Project Browser
 
 - Feat: 支持锁定编辑器，强制防止与编辑器的交互
 - Fix: 修复不同屏幕的主题颜色问题
 - Fix: 移除编辑器中强制弹出的烦人键盘
 - UI: 为锁定编辑器交互添加锁定和解锁图标按钮
 - UI: 移除按钮点击时的反馈效果
-- Chore：在首次启动时默认启用插件
+- Chore： 在首次启动时默认启用插件
+- UI： 在编辑器中添加返回导航，可回到项目浏览器
 
 ## 0.0.14
 - Feat: Support setting up both secondary and accent colors in onboarding
