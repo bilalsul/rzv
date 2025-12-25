@@ -201,6 +201,7 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
                     // Editor screen content
                     Expanded(
                       child: EditorScreen(
+                        status: false,
                         onClose: () {
                           // _hideEditorSheet();
                           // Navigator.of(context).pop();
@@ -300,6 +301,7 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
                     // Editor screen content
                     Expanded(
                       child: EditorScreen(
+                        status: true,
                         onClose: () {
                           // _hideEditorSheet();
                           Navigator.pop(context);
