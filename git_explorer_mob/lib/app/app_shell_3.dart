@@ -60,9 +60,8 @@ class _AppShellState extends ConsumerState<AppShell> {
   late final Widget _cachedHomeScreen;
   // Cache editor so it doesn't rebuild on simple navigation; only recreate
   // when a new file is opened (prefs.currentOpenFile changes).
-  late Widget _cachedEditorScreen;
-  late String _cachedEditorKey;
-  bool _isEditorSheetVisible = false;
+  // late Widget _cachedEditorScreen;
+  // late String _cachedEditorKey;
   bool firstLaunch = true;
 
   // NOTE: other pages are created dynamically to allow recreation when needed.
@@ -73,8 +72,8 @@ class _AppShellState extends ConsumerState<AppShell> {
     _initializeApp();
     // Create and cache HomeScreen once to preserve its state between navigations
     _cachedHomeScreen = HomeScreen();
-    _cachedEditorKey = '';
-    _cachedEditorScreen = EditorScreen();
+    // _cachedEditorKey = '';
+    // _cachedEditorScreen = EditorScreen();
     // Other screens (Editor/Settings/AI) will be created on demand so they
     // reinitialize when their keys or prefs change.
   }
@@ -84,19 +83,6 @@ class _AppShellState extends ConsumerState<AppShell> {
     await ref.read(sharedPreferencesProvider.future);
     // ref.read(pluginControllerProvider.notifier).loadPlugins();
     // ref.read(themeControllerProvider.notifier).loadTheme();
-  }
-
-  void _showEditorSheet(BuildContext context, Prefs prefs) {
-    setState(() {
-      _isEditorSheetVisible = true;
-    });
-    onBottomTap(context, prefs);
-  }
-
-  void _hideEditorSheet() {
-    setState(() {
-      _isEditorSheetVisible = false;
-    });
   }
 
   @override
@@ -164,11 +150,14 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
     return GestureDetector(
       onTap: () {
         // Close sheet when tapping outside
-        if (_isEditorSheetVisible) {
-          _hideEditorSheet();
+        // if (_isEditorSheetVisible) {
+          // _hideEditorSheet();
+          // Navigator.of(context).pop();
+          // Navigator.pop(context);
+
           // Navigate back to home
           prefs.saveLastKnownRoute(screenToString(Screen.home));
-        }
+        // }
       },
       child: Container(
         color: Colors.black.withOpacity(0.5),
@@ -213,7 +202,9 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
                     Expanded(
                       child: EditorScreen(
                         onClose: () {
-                          _hideEditorSheet();
+                          // _hideEditorSheet();
+                          // Navigator.of(context).pop();
+                          // Navigator.pop(context);
                           prefs.saveLastKnownRoute(screenToString(Screen.home));
                         },
                       ),
@@ -260,12 +251,12 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
       return GestureDetector(
       onTap: () {
         // Close sheet when tapping outside
-        if (!_isEditorSheetVisible) {
-          Navigator.of(context).pop();
-          _hideEditorSheet();
+        // if (!_isEditorSheetVisible) {
+          // _hideEditorSheet();
+          Navigator.pop(context);
           // Navigate back to home
           prefs.saveLastKnownRoute(screenToString(Screen.home));
-        }
+        // }
       },
       child: Container(
         color: Colors.black.withOpacity(0.5),
@@ -310,8 +301,8 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
                     Expanded(
                       child: EditorScreen(
                         onClose: () {
-                          _hideEditorSheet();
-                          Navigator.of(context).pop();
+                          // _hideEditorSheet();
+                          Navigator.pop(context);
                           prefs.saveLastKnownRoute(screenToString(Screen.home));
                         },
                       ),
@@ -353,11 +344,11 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
         // editor and update the cache so Monaco re-initializes for the new
         // file. Navigating to Editor without opening a file reuses the
         // cached instance.
-        final currentFile = prefs.currentOpenFile;
-        if (currentFile.isNotEmpty && currentFile != _cachedEditorKey) {
-          _cachedEditorKey = currentFile;
-          _cachedEditorScreen = EditorScreen(key: ValueKey(_cachedEditorKey));
-        }
+        // final currentFile = prefs.currentOpenFile;
+        // if (currentFile.isNotEmpty && currentFile != _cachedEditorKey) {
+        //   _cachedEditorKey = currentFile;
+        //   _cachedEditorScreen = EditorScreen(key: ValueKey(_cachedEditorKey));
+        // }
         // activePage = onBottomTap(context, prefs);
         activePage = SizedBox.shrink();
         // onBottomTap(context, prefs);
@@ -510,7 +501,7 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
 
     // Compute current index based on currentScreen
     int currentIndex = visibleNavItems.indexWhere(
-      (item) => item.screen == Prefs().lastKnownScreen,
+      (item) => item.screen == currentScreen,
     );
     if (currentIndex == -1) {
       currentIndex = 0; // Fallback to first item
@@ -575,6 +566,7 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
                 enableFeedback: false,
                 type: BottomNavigationBarType.fixed,
                 landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
+                // currentIndex: currentIndex,
                 currentIndex: firstLaunch ? 0 : currentIndex,
                 // onTap: (int index) => onBottomTap(index, false),
                 onTap: (index) {
