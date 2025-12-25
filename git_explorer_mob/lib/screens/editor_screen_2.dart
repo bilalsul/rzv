@@ -8,9 +8,11 @@ class EditorScreen extends ConsumerStatefulWidget {
   const EditorScreen({
     super.key,
     this.onClose,
+    required this.status
   });
 
   final VoidCallback? onClose;
+  final bool status;
 
   @override
   ConsumerState<EditorScreen> createState() => _EditorScreenState();
@@ -135,7 +137,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
           ],
         ),
       ),
-      body: const MonacoWrapper(),
+      body: MonacoWrapper(status: widget.status,),
     );
   }
 }
