@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:git_explorer_mob/app/app_shell.dart';
+import 'package:git_explorer_mob/app/app_shell_3.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
