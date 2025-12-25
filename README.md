@@ -5,7 +5,7 @@ Extract .zip git codebases and view files in markdown and read-only mode code ed
 ![Gzip Explorer Banner](screens/export/playstore.png)  
 *Soon Available on the Play Store*
 
-Explore any GitHub, GitLab, Gitea, or Bitbucket repository **without internet** – just download it as a .zip and open it instantly in a beautiful, read-only code editor.
+Explore any GitHub, GitLab or Bitbucket repository and more **without internet** – just download it as a .zip and open it instantly in a beautiful, read-only code editor.
 
 Perfect for:
 

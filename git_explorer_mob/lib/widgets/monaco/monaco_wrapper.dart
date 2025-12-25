@@ -15,9 +15,11 @@ import 'package:git_explorer_mob/utils/extension/monaco_language_helper.dart';
 class MonacoWrapper extends ConsumerStatefulWidget {
   const MonacoWrapper({
     super.key,
+    required this.status
     // required this.controller
   });
 
+  final bool status;
   // final ScrollController controller;
   @override
   ConsumerState<MonacoWrapper> createState() => _MonacoWrapperState();
@@ -111,7 +113,7 @@ class _MonacoWrapperState extends ConsumerState<MonacoWrapper> with WidgetsBindi
               ? AbsorbPointer(
                 absorbing: prefs.lockEditor,
                 child: MonacoEditor(
-                  // showStatusBar: true,
+                  showStatusBar: widget.status,
                     constraints: BoxConstraints.tight(Size.fromHeight(containerHeight)),
                       // onFocus: () {
                       //   // Hide keyboard on focus to avoid showing it on mobile

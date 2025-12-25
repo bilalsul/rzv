@@ -54,14 +54,22 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
         : filePath;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(30),
+appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(36),
         child: AppBar(
+          leading: Prefs().isRecentlyOpened() ?
+          IconButton(icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            prefs.saveLastKnownRoute('/');
+          },
+          ) : null,
           // replace '' with unnamed file, add l10n
           title: Text(
             fileName.isNotEmpty ? fileName : '',
             style: TextStyle(fontSize: 15),
+            maxLines: 3,
           ),
+          titleSpacing: Prefs().isRecentlyOpened() ? -1 : 18,
           actions: [
             // IconButton(
             // enableFeedback: false,
@@ -215,7 +223,9 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
         ),
       ),
       // body: SafeArea(child: MonacoWrapper()),
-      body:MonacoWrapper(),
+      body:MonacoWrapper(
+        status: false,
+      ),
       // backgroundColor: const Color(0xFF1E1E1E),
     );
   }

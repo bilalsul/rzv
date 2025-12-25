@@ -1,12 +1,13 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/enums/options/screen.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/screens/ai_screen.dart';
-import 'package:git_explorer_mob/screens/editor_screen.dart';
+import 'package:git_explorer_mob/screens/editor_screen_2.dart';
 import 'package:git_explorer_mob/screens/settings_screen.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 
@@ -59,8 +60,10 @@ class _AppShellState extends ConsumerState<AppShell> {
   late final Widget _cachedHomeScreen;
   // Cache editor so it doesn't rebuild on simple navigation; only recreate
   // when a new file is opened (prefs.currentOpenFile changes).
-  late Widget _cachedEditorScreen;
-  late String _cachedEditorKey;
+  // late Widget _cachedEditorScreen;
+  // late String _cachedEditorKey;
+  bool firstLaunch = true;
+
   // NOTE: other pages are created dynamically to allow recreation when needed.
 
   @override
@@ -69,8 +72,8 @@ class _AppShellState extends ConsumerState<AppShell> {
     _initializeApp();
     // Create and cache HomeScreen once to preserve its state between navigations
     _cachedHomeScreen = HomeScreen();
-    _cachedEditorKey = '';
-    _cachedEditorScreen = EditorScreen();
+    // _cachedEditorKey = '';
+    // _cachedEditorScreen = EditorScreen();
     // Other screens (Editor/Settings/AI) will be created on demand so they
     // reinitialize when their keys or prefs change.
   }
@@ -85,10 +88,23 @@ class _AppShellState extends ConsumerState<AppShell> {
   @override
   Widget build(BuildContext context) {
     final prefs = ref.watch(prefsProvider);
-    final currentScreen = prefs.lastKnownScreen;
+    final currentScreen = firstLaunch ? Screen.home : prefs.lastKnownScreen;
     final themeMode = prefs.themeMode;
     final plugins = prefs.enabledPlugins;
 
+    // Show editor sheet when editor screen is selected
+    // if (currentScreen == Screen.editor && _isEditorSheetVisible) {
+    //   // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     _showEditorSheet(context, prefs);
+    //     return SizedBox.shrink();
+    //   // });
+    // } else if (currentScreen != Screen.editor && !_isEditorSheetVisible) {
+    //   _hideEditorSheet();
+    // }
+
+    
+    if (firstLaunch) firstLaunch = false;
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // Use the watched prefs instance so MaterialApp rebuilds when locale changes.
@@ -130,6 +146,186 @@ class _AppShellState extends ConsumerState<AppShell> {
     );
   }
 
+Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
+    return GestureDetector(
+      onTap: () {
+        // Close sheet when tapping outside
+        // if (_isEditorSheetVisible) {
+          // _hideEditorSheet();
+          // Navigator.of(context).pop();
+          // Navigator.pop(context);
+
+          // Navigate back to home
+          prefs.saveLastKnownRoute(screenToString(Screen.home));
+        // }
+      },
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+        child: DraggableScrollableSheet(
+          // initialChildSize: 0.85,
+          initialChildSize: 0.92,
+          minChildSize: 0.1,
+          maxChildSize: 1,
+          snap: true,
+          snapSizes: [0.1, 0.5, 0.85, 0.95],
+          builder: (context, scrollController) {
+            return ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    // Drag handle
+                    Container(
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+                    // Editor screen content
+                    Expanded(
+                      child: EditorScreen(
+                        status: false,
+                        onClose: () {
+                          // _hideEditorSheet();
+                          // Navigator.of(context).pop();
+                          // Navigator.pop(context);
+                          prefs.saveLastKnownRoute(screenToString(Screen.home));
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+//void
+ void onBottomTap(BuildContext context, Prefs prefs) {
+      // VibrationService.heavy();
+      showCupertinoModalPopup(
+      context: context,
+      // useNestedNavigation: true,
+      builder: (context) {
+
+      // DraggableScrollableSheet(
+      //         initialChildSize: 0.92,
+      //         minChildSize: 0.1,
+      //         maxChildSize: 1,
+      //         snap: true,
+      //         snapSizes: [0.1, 0.5, 0.85, 0.95],
+      //         builder: (context, scrollController) {
+      //         return ClipRRect(
+      //           borderRadius: const BorderRadius.only(
+      //             topLeft: Radius.circular(20),
+      //             topRight: Radius.circular(20),
+      //           ),
+      //           child: Container(
+      //             decoration: BoxDecoration(
+      //               color: Theme.of(context).scaffoldBackgroundColor,
+      //               borderRadius: const BorderRadius.only(
+      //                 topLeft: Radius.circular(20),
+      //                 topRight: Radius.circular(20),
+      //               ),
+      //             ),
+      //             child: 
+      return GestureDetector(
+      onTap: () {
+        // Close sheet when tapping outside
+        // if (!_isEditorSheetVisible) {
+          // _hideEditorSheet();
+          Navigator.pop(context);
+          // Navigate back to home
+          prefs.saveLastKnownRoute(screenToString(Screen.home));
+        // }
+      },
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+        child: DraggableScrollableSheet(
+          initialChildSize: 0.85,
+          // initialChildSize: 0.92,
+          minChildSize: 0.1,
+          maxChildSize: 1,
+          snap: true,
+          snapSizes: [0.1, 0.5, 0.85, 0.95],
+          builder: (context, scrollController) {
+            return ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    // Drag handle
+                    Container(
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+                    // Editor screen content
+                    Expanded(
+                      child: EditorScreen(
+                        status: true,
+                        onClose: () {
+                          // _hideEditorSheet();
+                          Navigator.pop(context);
+                          prefs.saveLastKnownRoute(screenToString(Screen.home));
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+      },
+                //   ),
+                // ),
+            // },
+        // ),
+            );
+        return;
+    }
+
   Widget _buildBody(
     Screen currentScreen,
     List<String> plugins,
@@ -139,7 +335,6 @@ class _AppShellState extends ConsumerState<AppShell> {
     // Keep HomeScreen mounted forever by placing it in a Stack and
     // toggling visibility with Offstage/TickerMode. Other pages (Editor,
     // Settings, AI) are created dynamically so they rebuild when needed.
-
     Widget activePage;
     switch (currentScreen) {
       case Screen.home:
@@ -151,12 +346,14 @@ class _AppShellState extends ConsumerState<AppShell> {
         // editor and update the cache so Monaco re-initializes for the new
         // file. Navigating to Editor without opening a file reuses the
         // cached instance.
-        final currentFile = prefs.currentOpenFile;
-        if (currentFile.isNotEmpty && currentFile != _cachedEditorKey) {
-          _cachedEditorKey = currentFile;
-          _cachedEditorScreen = EditorScreen(key: ValueKey(_cachedEditorKey));
-        }
-        activePage = _cachedEditorScreen;
+        // final currentFile = prefs.currentOpenFile;
+        // if (currentFile.isNotEmpty && currentFile != _cachedEditorKey) {
+        //   _cachedEditorKey = currentFile;
+        //   _cachedEditorScreen = EditorScreen(key: ValueKey(_cachedEditorKey));
+        // }
+        // activePage = onBottomTap(context, prefs);
+        activePage = SizedBox.shrink();
+        // onBottomTap(context, prefs);
         break;
       case Screen.settings:
         activePage = SettingsScreen(
@@ -184,6 +381,7 @@ class _AppShellState extends ConsumerState<AppShell> {
         ),
         // Active page overlays the home when it's not the home screen.
         if (currentScreen != Screen.home) Positioned.fill(child: activePage),
+        if (currentScreen == Screen.editor) _buildEditorSheet(context, prefs),
       ],
     );
   }
@@ -305,7 +503,7 @@ class _AppShellState extends ConsumerState<AppShell> {
 
     // Compute current index based on currentScreen
     int currentIndex = visibleNavItems.indexWhere(
-      (item) => item.screen == Prefs().lastKnownScreen,
+      (item) => item.screen == currentScreen,
     );
     if (currentIndex == -1) {
       currentIndex = 0; // Fallback to first item
@@ -324,6 +522,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     return //Scaffold(
     // extendBody: true,
     // body:
+    // currentScreen != Screen.editor ?
     BottomBar(
       body: (context, _) =>
           // controller: scrollController,
@@ -369,13 +568,19 @@ class _AppShellState extends ConsumerState<AppShell> {
                 enableFeedback: false,
                 type: BottomNavigationBarType.fixed,
                 landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
-                currentIndex: currentIndex,
+                // currentIndex: currentIndex,
+                currentIndex: firstLaunch ? 0 : currentIndex,
                 // onTap: (int index) => onBottomTap(index, false),
                 onTap: (index) {
                   final selectedItem = visibleNavItems[index];
                   final selectedScreen = selectedItem.screen;
                   // Persist selection to Prefs (prefsProvider will notify listeners and rebuild)
+                  if(firstLaunch) firstLaunch = false;
+                  if(selectedScreen != Screen.editor ) {
                   Prefs().saveLastKnownRoute(screenToString(selectedScreen));
+                  } else {
+                    onBottomTap(context,prefs);
+                  }
 
                   // For debugging: Get/print the value of the current selected item
                   // print('Selected index: $index');
@@ -383,6 +588,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                   // print('Selected label: ${selectedItem.label}');
                 },
                 items: bottomBarItems,
+                showSelectedLabels: currentScreen == Screen.editor ? false : true,
+                showUnselectedLabels: currentScreen == Screen.editor ? false : true,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 // height: 64,
@@ -393,6 +600,7 @@ class _AppShellState extends ConsumerState<AppShell> {
       ),
       // ),
     );
+    //  : _buildEditorSheet(context, prefs);
   }
 
   // Widget _buildBottomNavigationBar(List<String> plugins) {
@@ -436,42 +644,54 @@ class _AppShellState extends ConsumerState<AppShell> {
       NavItem(
         screen: Screen.home,
         label: L10n.of(context).navBarHome,
-        icon: const Icon(Icons.folder_shared_outlined),
+        icon: Icon(Icons.folder_shared_outlined,
+        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
+        ),
         activeIcon: Icon(Icons.folder_shared, color: prefs.secondaryColor),
         pluginKey: null, // Always visible (but body may disable content)
       ),
       NavItem(
         screen: Screen.editor,
         label: L10n.of(context).navBarEditor,
-        icon: const Icon(Icons.edit_outlined),
+        icon: Icon(Icons.edit_outlined,
+        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
+        ),
         activeIcon: Icon(Icons.edit, color: prefs.secondaryColor),
         pluginKey: null,
       ),
       NavItem(
         screen: Screen.ai,
         label: L10n.of(context).navBarAI,
-        icon: const Icon(Icons.chat_outlined),
+        icon: Icon(Icons.chat_outlined,
+        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
+        ),
         activeIcon: Icon(Icons.chat_rounded, color: prefs.secondaryColor),
         pluginKey: 'ai_assist',
       ),
       NavItem(
         screen: Screen.gitHistory,
         label: L10n.of(context).navBarGitHistory,
-        icon: const Icon(Icons.history_outlined),
+        icon: Icon(Icons.history_outlined,
+        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
+        ),
         activeIcon: Icon(Icons.history, color: prefs.secondaryColor),
         pluginKey: 'git_history',
       ),
       NavItem(
         screen: Screen.terminal,
         label: L10n.of(context).navBarTerminal,
-        icon: const Icon(Icons.terminal_outlined),
+        icon: Icon(Icons.terminal_outlined,
+        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
+        ),
         activeIcon: Icon(Icons.terminal, color: prefs.secondaryColor),
         pluginKey: 'terminal',
       ),
       NavItem(
         screen: Screen.settings,
         label: L10n.of(context).navBarSettings,
-        icon: const Icon(Icons.settings_outlined),
+        icon: Icon(Icons.settings_outlined,
+        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
+        ),
         activeIcon: Icon(Icons.settings, color: prefs.secondaryColor),
         pluginKey: null,
       ),

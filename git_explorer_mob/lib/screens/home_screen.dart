@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:git_explorer_mob/app/app_shell.dart';
+import 'package:git_explorer_mob/app/app_shell_3.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
@@ -911,7 +911,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             floatingActionButton: _openedProject != null
                 ? Padding(
-                    padding: EdgeInsets.only(bottom: 70),
+                    padding: EdgeInsets.only(bottom: 50),
                     child: Builder(
                       builder: (ctx) {
                         final previewing =
@@ -921,161 +921,167 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   Plugin.previewMarkdown.id,
                                 ));
                         if (previewing) {
-                          return FloatingActionButton.extended(
-                            // heroTag: 'open_in_editor',
-                            icon: Icon(
-                              Icons.open_in_new,
-                              color: prefs.accentColor,
-                            ),
-                            backgroundColor: prefs.secondaryColor,
-                            label: Text(
-                              L10n.of(context).navBarEditor,
-                              style: TextStyle(color: prefs.accentColor),
-                            ),
-                            tooltip: L10n.of(context).homeOpenFileEditorNotice,
-                            onPressed: () async {
-                              if (_openedProject == null) return;
-                              try {
-                                final projRoot = await Prefs().projectsRoot();
-                                String abs = _selectedFilePath ?? '';
-                                if (abs.isEmpty) {
-                                  // Try common README names in current folder
-                                  final base =
-                                      '${projRoot.path}/${_openedProject!.id}${_pathStack.isEmpty ? '' : '/' + _pathStack.join('/')}';
-                                  final candidates = [
-                                    // Most common / standard
-                                    'README',
-                                    'README.md',
-                                    'README.markdown',
-                                    'README.mdown',
-                                    'README.mkdn',
-                                    'README.mkd',
-                                    'README.txt',
-                                    'README.1st',
-                                    'README.first',
-
-                                    // Case variations of the most common ones
-                                    'readme',
-                                    'readme.md',
-                                    'Readme.md',
-                                    'readme.markdown',
-                                    'ReadMe.md',
-                                    'READme.md',
-                                    'README.MD',
-                                    'readme.MD',
-                                    'Readme.MD',
-
-                                    // Other markdown extensions
-                                    'README.mkd',
-                                    'readme.mkd',
-                                    'README.mkd',
-                                    'README.mkdn',
-                                    'readme.mkdn',
-                                    'README.markdown',
-                                    'readme.markdown',
-                                    'README.mdown',
-                                    'readme.mdown',
-
-                                    // Textile, reStructuredText, AsciiDoc, Org-mode, etc.
-                                    'README.txt',
-                                    'readme.txt',
-                                    'README.textile',
-                                    'readme.textile',
-                                    'README.rst',
-                                    'readme.rst',
-                                    'README.rest',
-                                    'readme.rest',
-                                    'README.adoc',
-                                    'readme.adoc',
-                                    'README.asc',
-                                    'readme.asc',
-                                    'README.org',
-                                    'readme.org',
-                                    'README.creole',
-                                    'readme.creole',
-
-                                    // Other common plain-text or unusual extensions
-                                    'README.htm',
-                                    'README.html',
-                                    'readme.html',
-                                    'README.rtfd', // Rich Text Format Directory (macOS)
-                                    'README.pdf', // Yes, some repos do this
-                                    'README.doc',
-                                    'README.docx',
-
-                                    // No extension at all (very common on Unix)
-                                    'readme',
-                                    'READme',
-                                    'readME',
-
-                                    // Hidden files (some projects use these)
-                                    '.README',
-                                    '.readme',
-                                    '.README.md',
-
-                                    // International / translated READMEs (GitHub supports these as fallback)
-                                    'README.ar.md', // Arabic
-                                    'README.de.md', // German
-                                    'README.es.md', // Spanish
-                                    'README.fr.md', // French
-                                    'README.it.md', // Italian
-                                    'README.ja.md', // Japanese
-                                    'README.ko.md', // Korean
-                                    'README.pt.md', // Portuguese
-                                    'README.ru.md', // Russian
-                                    'README.zh-CN.md', // Simplified Chinese
-                                    'README.zh-TW.md', // Traditional Chinese
-                                    'LIESMICH.md', // German "Read Me"
-                                    'LISEZMOI.md', // French "Read Me"
-                                    'LEIAME.md', // Portuguese "Read Me"
-                                    'LEAME.md', // Spanish "Read Me"
-                                    'PROCHITAI-MENYA.md', // Russian
-                                    'README.ckb.md', // Central Kurdish (Sorani)
-                                    // Legacy / very old conventions
-                                    '00README',
-                                    'README.1ST',
-                                    'README.FIRST',
-                                    'READ.ME',
-                                    'READ-ME',
-                                    'MANIFEST',
-
-                                    // Some projects use a folder with index file
-                                    'readme/index.html',
-                                    'README/index.html',
-                                    'docs/README.md',
-                                    'doc/README.md',
-
-                                    // Extremely rare but seen in the wild
-                                    'ReadMe.txt',
-                                    'Readme.txt',
-                                    'read-me.md',
-                                    'read_me.md',
-                                    'README-me',
-                                  ];
-                                  for (final c in candidates) {
-                                    final f = File('$base/$c');
-                                    if (await f.exists()) {
-                                      abs = f.path;
-                                      break;
+                          return SizedBox(
+                            height: 80,
+                            width: 80,
+                            child: FittedBox(
+                              child: FloatingActionButton.extended(
+                                // heroTag: 'open_in_editor',
+                                icon: Icon(
+                                  Icons.open_in_new,
+                                  color: prefs.accentColor,
+                                ),
+                                backgroundColor: prefs.secondaryColor,
+                                label: Text(
+                                  L10n.of(context).navBarEditor,
+                                  style: TextStyle(color: prefs.accentColor),
+                                ),
+                                tooltip: L10n.of(context).homeOpenFileEditorNotice,
+                                onPressed: () async {
+                                  if (_openedProject == null) return;
+                                  try {
+                                    final projRoot = await Prefs().projectsRoot();
+                                    String abs = _selectedFilePath ?? '';
+                                    if (abs.isEmpty) {
+                                      // Try common README names in current folder
+                                      final base =
+                                          '${projRoot.path}/${_openedProject!.id}${_pathStack.isEmpty ? '' : '/' + _pathStack.join('/')}';
+                                      final candidates = [
+                                        // Most common / standard
+                                        'README',
+                                        'README.md',
+                                        'README.markdown',
+                                        'README.mdown',
+                                        'README.mkdn',
+                                        'README.mkd',
+                                        'README.txt',
+                                        'README.1st',
+                                        'README.first',
+                              
+                                        // Case variations of the most common ones
+                                        'readme',
+                                        'readme.md',
+                                        'Readme.md',
+                                        'readme.markdown',
+                                        'ReadMe.md',
+                                        'READme.md',
+                                        'README.MD',
+                                        'readme.MD',
+                                        'Readme.MD',
+                              
+                                        // Other markdown extensions
+                                        'README.mkd',
+                                        'readme.mkd',
+                                        'README.mkd',
+                                        'README.mkdn',
+                                        'readme.mkdn',
+                                        'README.markdown',
+                                        'readme.markdown',
+                                        'README.mdown',
+                                        'readme.mdown',
+                              
+                                        // Textile, reStructuredText, AsciiDoc, Org-mode, etc.
+                                        'README.txt',
+                                        'readme.txt',
+                                        'README.textile',
+                                        'readme.textile',
+                                        'README.rst',
+                                        'readme.rst',
+                                        'README.rest',
+                                        'readme.rest',
+                                        'README.adoc',
+                                        'readme.adoc',
+                                        'README.asc',
+                                        'readme.asc',
+                                        'README.org',
+                                        'readme.org',
+                                        'README.creole',
+                                        'readme.creole',
+                              
+                                        // Other common plain-text or unusual extensions
+                                        'README.htm',
+                                        'README.html',
+                                        'readme.html',
+                                        'README.rtfd', // Rich Text Format Directory (macOS)
+                                        'README.pdf', // Yes, some repos do this
+                                        'README.doc',
+                                        'README.docx',
+                              
+                                        // No extension at all (very common on Unix)
+                                        'readme',
+                                        'READme',
+                                        'readME',
+                              
+                                        // Hidden files (some projects use these)
+                                        '.README',
+                                        '.readme',
+                                        '.README.md',
+                              
+                                        // International / translated READMEs (GitHub supports these as fallback)
+                                        'README.ar.md', // Arabic
+                                        'README.de.md', // German
+                                        'README.es.md', // Spanish
+                                        'README.fr.md', // French
+                                        'README.it.md', // Italian
+                                        'README.ja.md', // Japanese
+                                        'README.ko.md', // Korean
+                                        'README.pt.md', // Portuguese
+                                        'README.ru.md', // Russian
+                                        'README.zh-CN.md', // Simplified Chinese
+                                        'README.zh-TW.md', // Traditional Chinese
+                                        'LIESMICH.md', // German "Read Me"
+                                        'LISEZMOI.md', // French "Read Me"
+                                        'LEIAME.md', // Portuguese "Read Me"
+                                        'LEAME.md', // Spanish "Read Me"
+                                        'PROCHITAI-MENYA.md', // Russian
+                                        'README.ckb.md', // Central Kurdish (Sorani)
+                                        // Legacy / very old conventions
+                                        '00README',
+                                        'README.1ST',
+                                        'README.FIRST',
+                                        'READ.ME',
+                                        'READ-ME',
+                                        'MANIFEST',
+                              
+                                        // Some projects use a folder with index file
+                                        'readme/index.html',
+                                        'README/index.html',
+                                        'docs/README.md',
+                                        'doc/README.md',
+                              
+                                        // Extremely rare but seen in the wild
+                                        'ReadMe.txt',
+                                        'Readme.txt',
+                                        'read-me.md',
+                                        'read_me.md',
+                                        'README-me',
+                                      ];
+                                      for (final c in candidates) {
+                                        final f = File('$base/$c');
+                                        if (await f.exists()) {
+                                          abs = f.path;
+                                          break;
+                                        }
+                                      }
                                     }
-                                  }
-                                }
-                                await Prefs().saveCurrentOpenFile(
-                                  _openedProject!.id,
-                                  abs,
-                                  _selectedFileContent ?? '',
-                                );
-                                await Prefs().saveCurrentProject(
-                                  id: _openedProject!.id,
-                                  name:
-                                      _openedProject!.name ??
+                                    await Prefs().saveCurrentOpenFile(
                                       _openedProject!.id,
-                                  path:
-                                      projRoot.path + '/${_openedProject!.id}',
-                                );
-                                await Prefs().saveLastKnownRoute('editor');
-                              } catch (_) {}
-                            },
+                                      abs,
+                                      _selectedFileContent ?? '',
+                                    );
+                                    await Prefs().saveCurrentProject(
+                                      id: _openedProject!.id,
+                                      name:
+                                          _openedProject!.name ??
+                                          _openedProject!.id,
+                                      path:
+                                          projRoot.path + '/${_openedProject!.id}',
+                                    );
+                                    await Prefs().saveLastKnownRoute('editor');
+                                  } catch (_) {}
+                                },
+                              ),
+                            ),
                           );
                         }
                         return SizedBox.shrink();
@@ -1467,19 +1473,17 @@ class _ProjectBrowser extends StatelessWidget {
     if (selectedFileContent != null &&
         (project.id == 'tutorial_project' ||
             Prefs().isPluginEnabled(Plugin.previewMarkdown.id))) {
-      return Column(
-          spacing: 80,
-          children: [
-            Expanded(
-              child: Markdown(
-                data: selectedFileContent!, 
-                selectable: true,
-                imageDirectory: Directory(Prefs().currentProjectPath).existsSync()? '${Prefs().currentProjectPath}/' : '',
+      return Padding(
+        padding: EdgeInsets.only(top:10,bottom: 120),
+        child: Expanded(
+                child: Markdown(
+                  data: selectedFileContent!, 
+                  selectable: true,
+                  imageDirectory: Directory(Prefs().currentProjectPath).existsSync()? '${Prefs().currentProjectPath}/' : '',
+                ),
               ),
-            ),
-            SizedBox(height: 50),
-          ],
-        );
+      );
+            
     }
 
     // If node is a file (string) but not selected (non-md), show placeholder
