@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
 import 'package:git_explorer_mob/enums/options/plugin.dart';
+import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
 import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
 
@@ -35,16 +36,17 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
               ? IconButton(
                   icon: const Icon(Icons.keyboard_arrow_down),
                   onPressed: widget.onClose,
-                  tooltip: 'Close editor',
+                  tooltip: L10n.of(context).commonClose,
                 )
               : null,
           title: Text(
-            fileName.isNotEmpty ? fileName : 'Untitled',
-            style: const TextStyle(fontSize: 16),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            fileName.isNotEmpty ? fileName : '',
+            style: const TextStyle(fontSize: 12),
+            maxLines: 3,
+            // overflow: TextOverflow.ellipsis,
           ),
-          centerTitle: true,
+          titleSpacing: 0,
+          // centerTitle: true,
           actions: [
             if (prefs.lockEditor)
               IconButton(
