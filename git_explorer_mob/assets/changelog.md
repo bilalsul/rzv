@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6
+- Fix: Upgrade editor layout to support two different views, one when opening a file and another when using direct bottom navigation
+
+- Fix：升级编辑器布局，支持两种不同视图：打开文件时一种，直接底部导航时另一种
+
 ## 0.1.0
 - Feat: Support Lock Editor to force locking Editor from interaction
 - Fix: Fix broken theme colors for different screens
