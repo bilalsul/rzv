@@ -223,7 +223,9 @@ appBar: PreferredSize(
         ),
       ),
       // body: SafeArea(child: MonacoWrapper()),
-      body:MonacoWrapper(),
+      body:MonacoWrapper(
+        status: false,
+      ),
       // backgroundColor: const Color(0xFF1E1E1E),
     );
   }
