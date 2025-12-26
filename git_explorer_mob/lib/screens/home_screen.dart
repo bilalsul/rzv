@@ -1491,15 +1491,17 @@ class _ProjectBrowser extends StatelessWidget {
     if (selectedFileContent != null &&
         (project.id == 'tutorial_project' ||
             Prefs().isPluginEnabled(Plugin.previewMarkdown.id))) {
-      return Padding(
-        padding: EdgeInsets.only(top:10,bottom: 120),
-        child: Expanded(
+      return Column(
+        children:[
+         Expanded(
                 child: Markdown(
                   data: selectedFileContent!, 
                   selectable: true,
                   imageDirectory: Directory(Prefs().currentProjectPath).existsSync()? '${Prefs().currentProjectPath}/' : '',
                 ),
               ),
+          SizedBox(height: 50),
+        ],
       );
             
     }
