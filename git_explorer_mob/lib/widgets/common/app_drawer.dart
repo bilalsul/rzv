@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:git_explorer_mob/utils/app_version.dart';
+import 'package:git_explorer_mob/utils/toast/common.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart' hide AppState;
 import 'package:url_launcher/url_launcher.dart';
 // Navigation moved to AppShell
@@ -705,13 +706,15 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 } else {
                   // Handle the case where the URL cannot be launched (e.g., no browser installed)
                   // You might display a SnackBar or an AlertDialog to inform the user.
-                  print('Could not launch $feedbackUrl');
+                  // print('Could not launch $feedbackUrl');
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(L10n.of(context).drawerFeedbackComingSoon),
-                    ),
-                  );
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(
+                  //     content: Text(L10n.of(context).drawerFeedbackComingSoon),
+                  //   ),
+                  // );
+                  GzipToast.show(L10n.of(context).drawerFeedbackComingSoon);
+
                 }
                 Navigator.of(context).pop();
               },
@@ -795,9 +798,11 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 // You might display a SnackBar or an AlertDialog to inform the user.
                 print('Could not launch $donateUrl');
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(L10n.of(context).commonFailed)),
-                );
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(content: Text(L10n.of(context).commonFailed)),
+                // );
+                GzipToast.show(L10n.of(context).commonFailed);
+
               }
               Navigator.of(context).pop();
             },
