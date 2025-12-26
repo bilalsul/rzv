@@ -207,9 +207,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         await _loadProjectsFromDisk();
         if (!mounted) return;
         setState(() {});
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)),
+        // );
+      GzipToast.show(L10n.of(context).homeCreatedNewProject);
+
         return;
       } catch (_) {
         // fall back to in-memory
@@ -227,9 +229,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       );
       _projects.insert(0, p);
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(content: Text(L10n.of(context).homeCreatedNewProject)),
+    // );
+      GzipToast.show(L10n.of(context).homeCreatedNewProject);
+
   }
 
   // Future<void> _importZipProject() async {
@@ -300,9 +304,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final f = File(path);
     if (!await f.exists()) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(L10n.of(context).homeImportedZipNotFound)),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text(L10n.of(context).homeImportedZipNotFound)),
+      // );
+      GzipToast.show(L10n.of(context).homeImportedZipNotFound);
+
       return;
     }
 
@@ -451,22 +457,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           await dir.delete(recursive: true);
         }
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(L10n.of(context).commonCanceled),
-            ), // import canceled
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(L10n.of(context).commonCanceled),
+          //   ), // import canceled
+          // );
+          GzipToast.show(L10n.of(context).commonCanceled);
+
+          
         }
       } else {
         // Success path
         await _loadProjectsFromDisk();
         if (context.mounted) {
           setState(() {});
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(L10n.of(context).homeImportZipAsProject),
-            ), // 'Project imported successfully'
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(L10n.of(context).homeImportZipAsProject),
+          //   ), // 'Project imported successfully'
+          // );
+          GzipToast.show(L10n.of(context).homeImportZipAsProject);
         }
       }
     } catch (e) {
@@ -490,9 +500,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       }
 
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(L10n.of(context).importFailed(e.toString()))),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text(L10n.of(context).importFailed(e.toString()))),
+        // );
+          GzipToast.show(L10n.of(context).importFailed(e.toString()));
+
       }
     } finally {
       // Always ensure dialog is closed
@@ -605,16 +617,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       setState(() {
         _diskLoaded = true;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(L10n.of(context).homeRefreshedProjects)),
-      ); // 'Projects refreshed'
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text(L10n.of(context).homeRefreshedProjects)),
+      // ); // 'Projects refreshed'
+      GzipToast.show(L10n.of(context).homeRefreshedProjects);
     } catch (e) {
-      if (context.mounted)
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${L10n.of(context).homeRefreshProjectsFailed}: $e'),
-          ), // 'Failed to refresh projects'
-        );
+      if (context.mounted) GzipToast.show('${L10n.of(context).homeRefreshProjectsFailed}: $e');
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text('${L10n.of(context).homeRefreshProjectsFailed}: $e'),
+        //   ), // 'Failed to refresh projects'
+        // );
     }
   }
 
@@ -677,18 +690,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       await _loadProjectsFromDisk();
       if (!mounted) return;
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(L10n.of(context).homeDeletedAllProjects)),
-      ); // 'All projects are deleted'
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text(L10n.of(context).homeDeletedAllProjects)),
+      // ); // 'All projects are deleted'
+      GzipToast.show(L10n.of(context).homeDeletedAllProjects);
     } catch (e) {
-      if (context.mounted)
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '${L10n.of(context).homeDeleteAllProjectsFailed}: $e',
-            ),
-          ), // 'Failed to delete projects'
-        );
+      if (context.mounted) GzipToast.show('${L10n.of(context).homeDeleteAllProjectsFailed}: $e');
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(
+        //       '${L10n.of(context).homeDeleteAllProjectsFailed}: $e',
+        //     ),
+        //   ), // 'Failed to delete projects'
+        // );
+
     }
   }
 
@@ -1226,9 +1241,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             }
           } catch (_) {}
           if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(L10n.of(context).homeProjectRemoved)),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text(L10n.of(context).homeProjectRemoved)),
+          // );
+        GzipToast.show(L10n.of(context).homeProjectRemoved);
+
+          
         },
       );
     } catch (_) {

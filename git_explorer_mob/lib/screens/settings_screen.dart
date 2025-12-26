@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
 import 'package:git_explorer_mob/enums/options/font_family.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
+import 'package:git_explorer_mob/utils/toast/common.dart';
 import 'package:git_explorer_mob/widgets/settings/about.dart';
 import 'package:git_explorer_mob/widgets/settings/settings_tile.dart';
 import 'package:git_explorer_mob/widgets/settings/simple_dialog.dart';
@@ -397,13 +398,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                   _tempSecondaryColor,
                                 );
                                 await Prefs().saveAccentColor(_tempAccentColor);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      L10n.of(context).settingsThemeApplied,
-                                    ),
-                                  ),
-                                );
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(
+                                //     content: Text(
+                                //       L10n.of(context).settingsThemeApplied,
+                                //     ),
+                                //   ),
+                                // );
+                                GzipToast.show(L10n.of(context).settingsThemeApplied);
                               },
                               child: Text(
                                 L10n.of(context).commonApply,
@@ -769,17 +771,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 final ok = activeProvider != ''
                                     ? await _checkApiKey(activeProvider)
                                     : false;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      ok
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(
+                                //     content: Text(
+                                //       ok
+                                //           ? L10n.of(
+                                //               context,
+                                //             ).connectionSuccessful
+                                //           : L10n.of(context).connectionFailed,
+                                //     ),
+                                //   ),
+                                // );
+                                GzipToast.show(ok
                                           ? L10n.of(
                                               context,
                                             ).connectionSuccessful
-                                          : L10n.of(context).connectionFailed,
-                                    ),
-                                  ),
-                                );
+                                          : L10n.of(context).connectionFailed);
+
                               },
                               child: Text(
                                 L10n.of(context).commonApply,
@@ -861,13 +869,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                     null,
                                   );
                                 }
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      L10n.of(context).settingsAiSettingsReset,
-                                    ),
-                                  ),
-                                );
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(
+                                //     content: Text(
+                                //       L10n.of(context).settingsAiSettingsReset,
+                                //     ),
+                                //   ),
+                                // );
+                                GzipToast.show(L10n.of(context).settingsAiSettingsReset);
+
                               },
                               child: Text(
                                 L10n.of(context).commonReset,
@@ -1272,13 +1282,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     _tempActiveModel = selectedModel;
                     Navigator.of(context).pop();
                     setState(() {});
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          L10n.of(context).settingsProviderSaved(label),
-                        ),
-                      ),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text(
+                    //       L10n.of(context).settingsProviderSaved(label),
+                    //     ),
+                    //   ),
+                    // );
+                      GzipToast.show(L10n.of(context).settingsProviderSaved(label));
+
                   },
                   child: Text(L10n.of(context).commonSave),
                 ),

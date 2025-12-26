@@ -169,7 +169,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   title: Text(L10n.of(context).appPrivacyPolicy),
                   onTap: () async {
                     launchUrl(
-                      Uri.parse('https://uncrr.github.io/privacy/gzip-privacy'),
+                      Uri.parse('https://gzip-page.vercel.app/privacy'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
@@ -178,7 +178,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   title: Text(L10n.of(context).appTerms),
                   onTap: () async {
                     launchUrl(
-                      Uri.parse('https://uncrr.github.io/privacy/gzip-terms'),
+                      Uri.parse('https://gzip-page.vercel.app/terms'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
@@ -202,14 +202,14 @@ Future<void> openAboutDialog(BuildContext context) async {
                           IonIcons.earth,
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        url: 'https://uncrr.github.io/gzip',
+                        url: 'https://gzip-page.vercel.app',
                         mode: LaunchMode.externalApplication),
                     linkIcon(
                         icon: Icon(
                           IonIcons.logo_github,
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        url: 'https://github.com/uncrr/git-explorer',
+                        url: 'https://github.com/uncrr/gzip-explorer',
                         mode: LaunchMode.externalApplication),
                     if (EnvVar.showTelegramLink)
                       linkIcon(
