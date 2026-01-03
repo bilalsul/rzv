@@ -84,7 +84,7 @@ Future<void> checkUpdate(bool manualCheck) async {
       }
       
       // Remove the version header line (## 0.1.6)
-      final lines = latestVersionChangelog!.split('\n');
+      final lines = latestVersionChangelog.split('\n');
       if (lines.isNotEmpty && lines[0].contains(versionRegex)) {
         lines.removeAt(0);
         latestVersionChangelog = lines.join('\n').trim();
