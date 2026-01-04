@@ -3,14 +3,29 @@
 Extract .zip git codebases and view files in markdown and read-only mode code editor.
 
 ![Gzip Explorer Banner](screens/export/playstore.png)  
-<div style="display: flex; gap: 10px; align-items: center;">
-  <a href="https://play.google.com/store/apps/details?id=com.bilalworku.gzip">
-    <img src="screens/googleplay.png" alt="Get it on Google Play" style="width: 200px; height: 60px; object-fit: contain;">
-  </a>
-  <a href="https://github.com/uncrr/gzip-explorer/releases">
-    <img src="screens/github-badge.png" alt="Download from GitHub" style="width: 200px; height: 60px; object-fit: contain;">
-  </a>
-</div>
+<table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+  <thead style="background-color: #f8f9fa;">
+    <tr>
+      <th colspan="2" style="padding: 15px; text-align: center; font-size: 18px; color: #333;">
+        Currently available on Android only.
+      </th>
+    </tr>
+  </thead>
+  <tbody style="text-align: center;">
+    <tr>
+      <td style="padding: 20px; width: 50%;">
+        <a href="https://play.google.com/store/apps/details?id=com.bilalworku.gzip">
+          <img src="screens/googleplay.png" alt="Get it on Google Play" style="width: 200px; height: auto; max-width: 100%;">
+        </a>
+      </td>
+      <td style="padding: 20px; width: 50%;">
+        <a href="https://github.com/uncrr/gzip-explorer/releases">
+          <img src="screens/github-badge.png" alt="Download from GitHub" style="width: 200px; height: auto; max-width: 100%;">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
