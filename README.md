@@ -7,7 +7,7 @@ Extract .zip git codebases and view files in markdown and read-only mode code ed
   <thead style="background-color: #f8f9fa;">
     <tr>
       <th colspan="2" style="padding: 15px; text-align: center; font-size: 18px; color: #333;">
-        Supports Android platform only.
+        Currently supports Android platform only.
       </th>
     </tr>
   </thead>
