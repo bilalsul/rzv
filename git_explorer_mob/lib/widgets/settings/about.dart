@@ -169,7 +169,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   title: Text(L10n.of(context).appPrivacyPolicy),
                   onTap: () async {
                     launchUrl(
-                      Uri.parse('https://gzip-page.vercel.app/privacy'),
+                      Uri.parse('https://gzip.bilsul.com/privacy'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
@@ -178,7 +178,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   title: Text(L10n.of(context).appTerms),
                   onTap: () async {
                     launchUrl(
-                      Uri.parse('https://gzip-page.vercel.app/terms'),
+                      Uri.parse('https://gzip.bilsul.com/terms'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
@@ -202,7 +202,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                           IonIcons.earth,
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        url: 'https://gzip-page.vercel.app',
+                        url: 'https://gzip.bilsul.com',
                         mode: LaunchMode.externalApplication),
                     linkIcon(
                         icon: Icon(

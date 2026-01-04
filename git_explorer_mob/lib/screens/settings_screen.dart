@@ -1057,7 +1057,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // }
   void _loadNativeAd() {
     _nativeAd = NativeAd(
-      adUnitId: 'ca-app-pub-3940256099942544/2247696110', // Test Native Ad Unit
+      adUnitId: 'ca-app-pub-7435179702373263/4381106786',
       factoryId: 'listTileMedium',
       request: const AdRequest(),
       listener: NativeAdListener(
