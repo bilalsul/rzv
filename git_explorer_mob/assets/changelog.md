@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0
+- Feature: Added auto-detection for new app updates directly from the Google Play Console
+- Fix: Updated and fixed all production links across the app to ensure they point to the correct live environments
+
+- Feature: 添加了从 Google Play Console 自动检测新版本更新的功能
+- Fix: 修复并更新了应用内所有生产环境链接，确保指向正确的线上地址
+
 ## 0.1.6
 - Fix: Upgrade editor layout to support two different views, one when opening a file and another when using direct bottom navigation
 

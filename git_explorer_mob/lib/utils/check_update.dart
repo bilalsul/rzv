@@ -30,7 +30,7 @@ Future<void> checkUpdate(bool manualCheck) async {
   try {
     // Fetch the changelog from GitHub raw URL
     response = await Dio().get<String>(
-      'https://raw.githubusercontent.com/uncrr/gzip-explorer/develop-live/git_explorer_mob/assets/changelog.md',
+      'https://raw.githubusercontent.com/uncrr/gzip-explorer/production/git_explorer_mob/assets/changelog.md',
       options: Options(
         headers: {
           'Accept': 'text/markdown',
