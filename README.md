@@ -3,7 +3,16 @@
 Extract .zip git codebases and view files in markdown and read-only mode code editor.
 
 ![Gzip Explorer Banner](screens/export/playstore.png)  
-*Soon Available on the Play Store*
+<div style="display: flex; gap: 10px; align-items: center;">
+  <a href="https://play.google.com/store/apps/details?id=com.bilalworku.gzip">
+    <img src="screens/googleplay.png" alt="Get it on Google Play" style="width: 200px; height: 60px; object-fit: contain;">
+  </a>
+  <a href="https://github.com/uncrr/gzip-explorer/releases">
+    <img src="screens/github-badge.png" alt="Download from GitHub" style="width: 200px; height: 60px; object-fit: contain;">
+  </a>
+</div>
+
+<br>
 
 Explore any GitHub, GitLab or Bitbucket repository and more **without internet** – just download it as a .zip and open it instantly in a beautiful, read-only code editor.
 
@@ -49,7 +58,8 @@ No cloning. No internet after import. Privacy-focused.
 
 ## Privacy & Permissions
 
-- Read our Privacy policy, [view here](https://uncrr.github.io/privacy/gzip-privacy)
+- Read our Privacy policy, [view here](https://gzip.bilsul.com/privacy)
+- Terms of Use, [view here](https://gzip.bilsul.com/terms)
 - Only requires storage permission to read your `.zip` files
 - No internet permission needed after import
 - No tracking, no analytics, runs Ads
@@ -58,4 +68,4 @@ No cloning. No internet after import. Privacy-focused.
 
 **Gzip Explorer** – View code anywhere, anytime.  
 
-📱 Available soon on Google Play (or sideload the APK from [Releases here](https://github.com/uncrr/git-explorer/releases))
+📱 Available soon on Google Play (or sideload the APK from [Releases here](https://github.com/uncrr/gzip-explorer/releases))
