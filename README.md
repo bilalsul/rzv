@@ -3,11 +3,11 @@
 Extract .zip git codebases and view files in markdown and read-only mode code editor.
 
 ![Gzip Explorer Banner](screens/export/playstore.png)  
-<table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
-  <thead style="background-color: #f8f9fa;">
+<table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto;">
+  <thead>
     <tr>
-      <th colspan="2" style="padding: 15px; text-align: center; font-size: 18px; color: #333;">
-        Currently available on Android only.
+      <th colspan="2" style="padding: 15px; text-align: center; font-size: 18px;">
+        Currently supports Android platform only.
       </th>
     </tr>
   </thead>
