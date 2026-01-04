@@ -691,7 +691,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             ),
           ),
           AbsorbPointer(
-            absorbing: true,
+            absorbing: false,
             child: FilledButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(prefs.accentColor),
