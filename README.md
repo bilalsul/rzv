@@ -1,8 +1,8 @@
-# Gzip Explorer
+# Git .zip Explorer
 
 Extract .zip git codebases and view files in markdown and read-only mode code editor.
 
-![Gzip Explorer Banner](screens/export/playstore.png)  
+![Git .zip Explorer Banner](screens/export/playstore.jpg)  
 <table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto;">
   <thead>
     <tr>
@@ -66,7 +66,7 @@ No cloning. No internet after import. Privacy-focused.
 ## How to Use
 
 1. Download any repository as `.zip` from GitHub, GitLab, etc.
-2. Open **Gzip Explorer**
+2. Open **Git .zip Explorer**
 3. Tap **Import Project** → select your `.zip` file
 4. Wait for extraction (progress shown for large projects)
 5. Browse, search, and read code offline!
@@ -81,6 +81,6 @@ No cloning. No internet after import. Privacy-focused.
 
 ---
 
-**Gzip Explorer** – View code anywhere, anytime.  
+**Git .zip Explorer** – View code anywhere, anytime.  
 
 📱 Available soon on Google Play (or sideload the APK from [Releases here](https://github.com/uncrr/gzip-explorer/releases))
