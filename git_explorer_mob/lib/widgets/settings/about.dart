@@ -10,7 +10,7 @@ import 'package:git_explorer_mob/utils/toast/common.dart';
 // import 'package:git_explorer_mob/utils/toast/common.dart';
 import 'package:git_explorer_mob/widgets/settings/link_icon.dart';
 import 'package:git_explorer_mob/utils/check_update.dart';
-// import 'package:git_explorer_mob/widgets/settings/show_donate_dialog.dart';
+import 'package:git_explorer_mob/widgets/settings/show_donate_dialog.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -138,13 +138,13 @@ Future<void> openAboutDialog(BuildContext context) async {
                   ListTile(
                       title: Text(L10n.of(context).aboutCheckForUpdates),
                       onTap: () => checkUpdate(true)),
-                // if (EnvVar.enableDonation)
-                //   ListTile(
-                //     title: Text(L10n.of(context).appDonate),
-                //     onTap: () {
-                //       showDonateDialog(context);
-                //     },
-                //   ),
+                if (EnvVar.enableDonation)
+                  ListTile(
+                    title: Text(L10n.of(context).appDonate),
+                    onTap: () {
+                      showDonateDialog(context);
+                    },
+                  ),
                 // ListTile(
                 //   title: Text(L10n.of(context).appLicense),
                 //   onTap: () {
