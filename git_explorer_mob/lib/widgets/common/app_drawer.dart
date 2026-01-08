@@ -789,7 +789,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             onPressed: () async {
               // TODO: Implement donate submission
               final Uri donateUrl = Uri.parse(
-                'https://github.com/uncrr',
+                'https://www.patreon.com/cw/mafianextdoor/membership',
               ); // Replace with your actual donation link
               if (await canLaunchUrl(donateUrl)) {
                 await launchUrl(donateUrl);
