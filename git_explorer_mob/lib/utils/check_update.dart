@@ -149,15 +149,15 @@ $changelogBody''',
               },
               child: Text(L10n.of(context).commonCancel),
             ),
-            TextButton(
-              onPressed: () {
-                launchUrl(
-                  Uri.parse('https://github.com/uncrr/gzip-explorer/releases/latest'),
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              child: Text(L10n.of(context).updateViaGithub),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     launchUrl(
+            //       Uri.parse('https://github.com/uncrr/gzip-explorer/releases/latest'),
+            //       mode: LaunchMode.externalApplication,
+            //     );
+            //   },
+            //   child: Text(L10n.of(context).updateViaGithub),
+            // ),
             TextButton(
               onPressed: () {
                 launchUrl(
