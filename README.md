@@ -1,8 +1,8 @@
-# Git .zip Explorer
+# repo zip Viewer (rzv)
 
-Extract .zip git codebases and view files in markdown and read-only mode code editor.
+extracts .zip git codebases and view files in code editor and markdown viewer.
 
-![Git .zip Explorer Banner](screens/export/playstore.jpg)  
+![Git .zip Explorer Banner](screens/export/playstore.png)  
 <table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto;">
   <thead>
     <tr>
@@ -19,7 +19,7 @@ Extract .zip git codebases and view files in markdown and read-only mode code ed
         </a>
       </td>
       <td style="padding: 20px; width: 50%;">
-        <a href="https://github.com/uncrr/gzip-explorer/releases">
+        <a href="https://github.com/uncrr/rzv/releases">
           <img src="screens/github-badge.png" alt="Download from GitHub" style="width: 200px; height: auto; max-width: 100%;">
         </a>
       </td>
@@ -73,8 +73,8 @@ No cloning. No internet after import. Privacy-focused.
 
 ## Privacy & Permissions
 
-- Read our Privacy policy, [view here](https://gzip.bilsul.com/privacy)
-- Terms of Use, [view here](https://gzip.bilsul.com/terms)
+- Read our Privacy policy, [view here](https://rzv.bilsul.com/privacy)
+- Terms of Use, [view here](https://rzv.bilsul.com/terms)
 - Only requires storage permission to read your `.zip` files
 - No internet permission needed after import
 - No tracking, no analytics, runs Ads
@@ -83,4 +83,4 @@ No cloning. No internet after import. Privacy-focused.
 
 **Git .zip Explorer** – View code anywhere, anytime.  
 
-📱 Available soon on Google Play (or sideload the APK from [Releases here](https://github.com/uncrr/gzip-explorer/releases))
+📱 Available soon on Google Play (or sideload the APK from [Releases here](https://github.com/uncrr/rzv/releases))

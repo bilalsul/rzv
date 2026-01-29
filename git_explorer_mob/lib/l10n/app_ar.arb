@@ -1,7 +1,7 @@
 {
   "@@locale": "ar",
-  "appName": "مستكشف gzip",
-  "appAboutTitle": "عن Gzip Explorer",
+  "appName": "repo zip Viewer",
+  "appAboutTitle": "عن repo zip Viewer",
   "appAbout": "فك ضغط قواعد الكود من git بصيغة .zip وعرض الملفات كـ Markdown وفي محرر أكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
   "appLicense": "الترخيص",
@@ -11,10 +11,10 @@
   
   "appPrivacyPolicy": "سياسة الخصوصية",
   "appTerms": "شروط الاستخدام",
-  "onboardingWelcomeTitle": "Gzip Explorer - متصفح git",
+  "onboardingWelcomeTitle": "repo zip Viewer - متصفح git",
   "onboardingWelcomeBody": "تصفح مستودعات git دون اتصال بالإنترنت عبر استيراد ملفات .zip. عرض في محرر الكود ومُقدم markdown في وضع القراءة فقط. مثالي للتعلم أو المراجعة أو استكشاف مشاريع git أثناء التنقل بسرعة دون إعداد git.",
   "onboardingAppearanceTitle": "اختر مظهرك",
-  "onboardingAppearanceBody": "اختر موضوعًا يناسب أسلوبك وجهازك. يدعم Gzip Explorer أوضاع فاتحة وداكنة ومتخصصة لأفضل تجربة قراءة.",
+  "onboardingAppearanceBody": "اختر موضوعًا يناسب أسلوبك وجهازك. يدعم repo zip Viewer أوضاع فاتحة وداكنة ومتخصصة لأفضل تجربة قراءة.",
   "onboardingAppearanceTip": "يمكنك دائمًا تغيير الثيمات لاحقًا في الإعدادات.",
   "customizeYourExperience": "خصص تجربتك",
   "eInkMode": "وضع e-Ink",
@@ -254,7 +254,7 @@
   "drawerFolderNameHint": "اسم المجلد",
   "drawerEditorTheme": "سمة المحرر",
   "drawerEditorWordWrap": "التفاف النص",
-  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول gzip Explorer",
+  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول repo zip Viewer",
   "drawerSendFeedback": "إرسال ملاحظات",
   "drawerFirstInstalled": "أول تثبيت: {date}",
   "@drawerFirstInstalled": {
