@@ -115,7 +115,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                   child: Center(
                     child: Text(
-                      'gzip',
+                      'rzv',
                       style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
@@ -169,7 +169,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   title: Text(L10n.of(context).appPrivacyPolicy),
                   onTap: () async {
                     launchUrl(
-                      Uri.parse('https://gzip.bilsul.com/privacy'),
+                      Uri.parse('https://rzv.bilsul.com/privacy'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
@@ -178,7 +178,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   title: Text(L10n.of(context).appTerms),
                   onTap: () async {
                     launchUrl(
-                      Uri.parse('https://gzip.bilsul.com/terms'),
+                      Uri.parse('https://rzv.bilsul.com/terms'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
@@ -202,14 +202,14 @@ Future<void> openAboutDialog(BuildContext context) async {
                           IonIcons.earth,
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        url: 'https://gzip.bilsul.com',
+                        url: 'https://rzv.bilsul.com',
                         mode: LaunchMode.externalApplication),
                     linkIcon(
                         icon: Icon(
                           IonIcons.logo_github,
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        url: 'https://github.com/uncrr/gzip-explorer',
+                        url: 'https://github.com/uncrr/rzv',
                         mode: LaunchMode.externalApplication),
                     if (EnvVar.showTelegramLink)
                       linkIcon(
@@ -217,7 +217,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                             Icons.telegram,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
-                          url: 'https://t.me/GzipExplorer',
+                          url: 'https://t.me/repozipviewer',
                           mode: LaunchMode.externalApplication),
                     // linkIcon(
                     //     icon: Image.asset(
