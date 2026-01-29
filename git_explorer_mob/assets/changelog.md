@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+- Fix: Rebranded application to "repo zip Viewer (rzv)" with updated app name across all platforms
+- Fix: Updated and fixed all external links (GitHub, Telegram, website) to ensure they point to latest versions
+
+- Fix: 将应用重新品牌化为 "repo zip Viewer (rzv)"，在所有平台上更新了应用名称
+- Fix: 更新并修复了所有外部链接（GitHub, Telegram, 网站），确保指向最新版本
+
 ## 0.2.0
 - Feature: Added auto-detection for new app updates directly from the Google Play Console
 - Fix: Updated and fixed all production links across the app to ensure they point to the correct live environments
