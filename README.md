@@ -1,8 +1,8 @@
-# repo zip Viewer (rzv)
+# repo zip Viewer (RZV)
 
 extracts .zip git codebases and view files in code editor and markdown viewer.
 
-![Git .zip Explorer Banner](screens/export/playstore.png)  
+![repo zip Viewer (RZV) Banner](screens/export/playstore.png)  
 <table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto;">
   <thead>
     <tr>
@@ -66,7 +66,7 @@ No cloning. No internet after import. Privacy-focused.
 ## How to Use
 
 1. Download any repository as `.zip` from GitHub, GitLab, etc.
-2. Open **Git .zip Explorer**
+2. Open **repo zip Viewer (RZV)**
 3. Tap **Import Project** → select your `.zip` file
 4. Wait for extraction (progress shown for large projects)
 5. Browse, search, and read code offline!
@@ -81,6 +81,6 @@ No cloning. No internet after import. Privacy-focused.
 
 ---
 
-**Git .zip Explorer** – View code anywhere, anytime.  
+**repo zip Viewer (RZV)** – View code anywhere, anytime.  
 
 📱 Available soon on Google Play (or sideload the APK from [Releases here](https://github.com/uncrr/rzv/releases))
