@@ -77,7 +77,7 @@ No cloning. No internet after import. Privacy-focused.
 - Terms of Use, [view here](https://rzv.bilsul.com/terms)
 - Only requires storage permission to read your `.zip` files
 - No internet permission needed after import
-- No tracking, no analytics, runs Ads
+- No tracking, no analytics
 
 ---
 
