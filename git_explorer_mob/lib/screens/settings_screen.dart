@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
 import 'package:git_explorer_mob/enums/options/font_family.dart';
 import 'package:git_explorer_mob/enums/options/plugin.dart';
@@ -8,18 +7,13 @@ import 'package:git_explorer_mob/widgets/settings/about.dart';
 import 'package:git_explorer_mob/widgets/settings/settings_tile.dart';
 import 'package:git_explorer_mob/widgets/settings/simple_dialog.dart';
 import 'package:git_explorer_mob/widgets/settings/theme_mode.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-// Theme provider removed; theme is driven from Prefs
 import 'package:git_explorer_mob/widgets/settings/plugin_settings_panel.dart';
 import 'package:git_explorer_mob/enums/options/supported_language.dart';
 import 'package:git_explorer_mob/l10n/generated/L10n.dart';
 import 'package:provider/provider.dart';
 
-/// SettingsScreen no longer contains plugin toggles (they live in AppDrawer).
-/// This screen exposes plugin-specific settings panels and connects them
-/// to plugin configuration stored through `pluginSettingsProvider`.
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key, required this.controller});
 
@@ -30,10 +24,6 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  // AdMob native ad
-  NativeAd? _nativeAd;
-  bool _isNativeAdLoaded = false;
-  // Temporary theme customizer state (apply button will persist)
   // late Color _tempPrimaryColor;
   late Color _tempSecondaryColor;
   late Color _tempAccentColor;
@@ -1006,28 +996,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             // ),
 
             // ad here
-            _isNativeAdLoaded && _nativeAd != null
-                ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
-                : const SizedBox.shrink(),
-
-            const SizedBox(height: 130),
-            // Center(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       Text(
-            //         L10n.of(context).appName,
-            //         style: TextStyle(fontSize: 13),
-            //       ),
-            //       Text(
-            //         'v${getAppVersion()}',
-            //         style: TextStyle(fontSize: 10),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            const SizedBox(height: 120),
+            // _isNativeAdLoaded && _nativeAd != null
+            //     ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
+            //     : const SizedBox.shrink(),
+            const SizedBox(height: 200),
           ],
         ),
       ),
@@ -1037,13 +1009,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    // make sure initialized Mobile Ads in main then load native ad for this screen
-    _loadNativeAd();
-    // Read current persisted values from Prefs singleton into temporary state
     final p = Prefs();
-    // _tempPrimaryColor = p.primaryColor;
-    // final prefs = ref.watch(prefsProvider);
 
+    // _tempPrimaryColor = p.primaryColor;
     _tempSecondaryColor = p.secondaryColor;
     _tempAccentColor = p.accentColor;
 
@@ -1055,27 +1023,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   // ScrollController get getController{
   //   return controller;
   // }
-  void _loadNativeAd() {
-    _nativeAd = NativeAd(
-      adUnitId: 'ca-app-pub-7435179702373263/4381106786',
-      factoryId: 'listTileMedium',
-      request: const AdRequest(),
-      listener: NativeAdListener(
-        onAdLoaded: (ad) {
-          if (!mounted) return;
-          setState(() => _isNativeAdLoaded = true);
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-          debugPrint('Native Ad failed: $error');
-        },
-      ),
-    )..load();
-  }
 
   @override
   void dispose() {
-    _nativeAd?.dispose();
     super.dispose();
   }
 

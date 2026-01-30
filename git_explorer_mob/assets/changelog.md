@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.1
+## 0.3.1
 - Fix: Rebranded application to "repo zip Viewer (rzv)" with updated app name across all platforms
 - Fix: Updated and fixed all external links (GitHub, Telegram, website) to ensure they point to latest versions
 
