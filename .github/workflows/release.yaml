@@ -118,7 +118,7 @@ jobs:
         path: code
     - name: Remove unrelated folders
       run: |
-        rm -rf code/screens
+        rm -rf code/screens code/.github
         # Add other unrelated folders here if needed, e.g., rm -rf code/other_folder
     - name: Get Flutter version
       id: get-flutter-version
