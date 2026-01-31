@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Clone the repository
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     - name: Ensure SHA pinned actions
       uses: zgosalvez/github-actions-ensure-sha-pinned-actions@6124774845927d14c601359ab8138699fa5b70c3
 
@@ -35,7 +35,7 @@ jobs:
   #     fail-fast: false
   #   steps:
   #   - name: Clone the repository
-  #     uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+  #     uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
   #     with:
   #       path: code
   #   - name: Get Flutter version
@@ -57,7 +57,7 @@ jobs:
   #       cache-name: flutter-cache
   #   - name: Clone the Flutter repository
   #     if: steps.flutter-cache.outputs.cache-hit != 'true'
-  #     uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+  #     uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
   #     with:
   #       repository: flutter/flutter
   #       ref: ${{ steps.get-flutter-version.outputs.version }}
@@ -113,7 +113,7 @@ jobs:
       if: ${{ !(matrix.file == 'apk' && github.event.release.prerelease) || ((matrix.file == 'aab' || matrix.file == 'ipa') && !github.event.release.prerelease) }}
       run: exit
     - name: Clone the repository
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       with:
         path: code
     - name: Remove unrelated folders
@@ -139,7 +139,7 @@ jobs:
         cache-name: flutter-cache
     - name: Clone the Flutter repository
       if: steps.flutter-cache.outputs.cache-hit != 'true'
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       with:
         repository: flutter/flutter
         ref: ${{ steps.get-flutter-version.outputs.version }}
