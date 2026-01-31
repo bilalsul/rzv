@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/utils/log/string_to_level.dart';
-import 'package:git_explorer_mob/utils/get_path/log_file.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/utils/log/string_to_level.dart';
+import 'package:rzv/utils/get_path/log_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';

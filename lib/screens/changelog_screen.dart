@@ -1,10 +1,10 @@
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/utils/get_current_language_code.dart';
-import 'package:git_explorer_mob/widgets/markdown/styled_markdown.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/utils/get_current_language_code.dart';
+import 'package:rzv/widgets/markdown/styled_markdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:git_explorer_mob/utils/log/common.dart';
+import 'package:rzv/utils/log/common.dart';
 
 /// Changelog screen for showing app updates
 /// Displays version history and new features

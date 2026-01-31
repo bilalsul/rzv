@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
 
 /// Minimal AI chat service that calls OpenAI-compatible Chat Completions.
 /// Reads API key from secure storage via Prefs.setPluginApiKey / getPluginApiKey.

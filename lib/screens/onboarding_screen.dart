@@ -1,9 +1,9 @@
-// import 'package:git_explorer_mob/page/settings_page/appearance.dart';
+// import 'package:rzv/page/settings_page/appearance.dart';
 import 'package:flutter/material.dart';
-import 'package:git_explorer_mob/enums/options/supported_language.dart';
+import 'package:rzv/enums/options/supported_language.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
 import 'package:provider/provider.dart';
 
 /// Onboarding screen for first-time users

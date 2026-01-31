@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "git_explorer_mob" "\0"
+            VALUE "FileDescription", "rzv" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "git_explorer_mob" "\0"
+            VALUE "InternalName", "rzv" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "git_explorer_mob.exe" "\0"
-            VALUE "ProductName", "git_explorer_mob" "\0"
+            VALUE "OriginalFilename", "rzv.exe" "\0"
+            VALUE "ProductName", "rzv" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

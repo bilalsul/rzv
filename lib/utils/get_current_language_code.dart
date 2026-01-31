@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
 
 String getCurrentLanguageCode() {
   String? locale = Prefs().locale?.toLanguageTag();

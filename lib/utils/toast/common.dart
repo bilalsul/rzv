@@ -1,5 +1,5 @@
-import 'package:git_explorer_mob/main.dart';
-import 'package:git_explorer_mob/widgets/common/container/filled_container.dart';
+import 'package:rzv/main.dart';
+import 'package:rzv/widgets/common/container/filled_container.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

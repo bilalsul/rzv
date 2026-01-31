@@ -1,12 +1,12 @@
-import 'package:git_explorer_mob/enums/options/plugin.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/enums/version_check_type.dart';
-import 'package:git_explorer_mob/main.dart';
-import 'package:git_explorer_mob/utils/app_version.dart';
+import 'package:rzv/enums/options/plugin.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/enums/version_check_type.dart';
+import 'package:rzv/main.dart';
+import 'package:rzv/utils/app_version.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:git_explorer_mob/screens/onboarding_screen.dart';
-import 'package:git_explorer_mob/screens/changelog_screen.dart';
-import 'package:git_explorer_mob/utils/log/common.dart';
+import 'package:rzv/screens/onboarding_screen.dart';
+import 'package:rzv/screens/changelog_screen.dart';
+import 'package:rzv/utils/log/common.dart';
 import 'package:flutter/material.dart';
 
 class InitializationCheck {

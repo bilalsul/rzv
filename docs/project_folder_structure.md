@@ -1,8 +1,8 @@
-# Project structure (git_explorer_mob)
+# Project structure (rzv)
 
-This file documents the actual layout of the `git_explorer_mob` Flutter module in this repository. Use it as a quick reference when navigating the codebase.
+This file documents the actual layout of the `rzv` Flutter module in this repository. Use it as a quick reference when navigating the codebase.
 
-- [Project structure (git\_explorer\_mob)](#project-structure-git_explorer_mob)
+- [Project structure (git\_explorer\_mob)](#project-structure-rzv)
   - [Top-level layout](#top-level-layout)
   - [Key files](#key-files)
   - [`lib/` layout (application code)](#lib-layout-application-code)
@@ -12,7 +12,7 @@ This file documents the actual layout of the `git_explorer_mob` Flutter module i
 
 ## Top-level layout
 
-git_explorer_mob/
+rzv/
 ├── .dart_tool/                  # Dart/Flutter tool cache (generated)
 ├── android/                     # Android native project
 ├── ios/                         # iOS native project
@@ -29,7 +29,7 @@ git_explorer_mob/
 ├── l10n.yaml                    # Flutter localization configuration
 ├── analysis_options.yaml        # Lint / analyzer configuration
 ├── README.md                    # High-level project README
-└── git_explorer_mob.iml         # IDE project file
+└── rzv.iml         # IDE project file
 
 ## Key files
 

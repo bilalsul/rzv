@@ -1,4 +1,4 @@
-name: git_explorer_mob
+name: rzv
 description: "extracts .zip git codebases and view files in code editor and markdown viewer."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

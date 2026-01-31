@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/utils/theme_mode_to_string.dart';
-import 'package:git_explorer_mob/widgets/common/gitr_segmented_button.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/utils/theme_mode_to_string.dart';
+import 'package:rzv/widgets/common/gitr_segmented_button.dart';
 
 class ChangeThemeMode extends StatefulWidget {
   const ChangeThemeMode({super.key});

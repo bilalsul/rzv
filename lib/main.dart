@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide ChangeNotifierProvider;
-import 'package:git_explorer_mob/app/app_shell_3.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
-import 'package:git_explorer_mob/utils/error/common.dart';
-import 'package:git_explorer_mob/utils/log/common.dart';
+import 'package:rzv/app/app_shell_3.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/utils/get_path/get_base_path.dart';
+import 'package:rzv/utils/error/common.dart';
+import 'package:rzv/utils/log/common.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 // import 'package:window_manager/window_manager.dart';

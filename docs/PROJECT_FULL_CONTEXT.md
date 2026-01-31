@@ -1,14 +1,14 @@
-# Git Explorer (git_explorer_mob) — Full Project Context
+# Git Explorer (rzv) — Full Project Context
 
 Generated: 2025-11-01
 
-This document is a single, self-contained, large context file intended to capture everything a developer (or an assistant) needs to know to understand, modify, or continue work on the `git_explorer_mob` Flutter application inside the `git-explorer` workspace. Use this file as the canonical context when you ask follow-up questions or provide patches.
+This document is a single, self-contained, large context file intended to capture everything a developer (or an assistant) needs to know to understand, modify, or continue work on the `rzv` Flutter application inside the `git-explorer` workspace. Use this file as the canonical context when you ask follow-up questions or provide patches.
 
 ---
 
 ## High-level overview
 
-- Project: Git Explorer (mobile flavor: `git_explorer_mob`)
+- Project: Git Explorer (mobile flavor: `rzv`)
 - Tech stack: Flutter (Dart). Riverpod is used in places for reactive providers. Several key dependencies include `flutter_monaco` (editor), `flutter_secure_storage` (secure API keys), `http` (AI service), and `shared_preferences` (settings persistence). The app targets mobile and desktop (and web partially, but some features use `dart:io` and are desktop-only).
 - Primary purpose: A code and repository explorer/editor with plugin system, AI chat integration, editor (Monaco) embedding, project browser/home screen, settings, and other utilities.
 - Architectural pattern: Single-source-of-truth via a `Prefs` ChangeNotifier provider that centralizes feature toggles, editor settings, AI model & API key storage (secure + prefs), and small session state (open file, last route). UI widgets and screens read/write through `Prefs`.
@@ -19,7 +19,7 @@ This document is a single, self-contained, large context file intended to captur
 
 (Truncated to the parts that matter for this mobile app flavor.)
 
-- git_explorer_mob/
+- rzv/
   - `pubspec.yaml` — declared dependencies (e.g., `flutter_monaco`, `flutter_secure_storage`, `http`, `flutter_riverpod`).
   - android/, ios/, linux/, macos/, web/, windows/ — platform folders.
   - lib/
@@ -187,7 +187,7 @@ Key packages (non-exhaustive); check `pubspec.yaml` for exact versions:
 
 ```bash
 # from repository root or package directory
-cd git_explorer_mob
+cd rzv
 flutter pub get
 flutter run -d <device>
 ```

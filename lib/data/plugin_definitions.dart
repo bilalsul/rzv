@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:git_explorer_mob/enums/options/plugin.dart';
-import 'package:git_explorer_mob/models/plugin.dart';
+import 'package:rzv/enums/options/plugin.dart';
+import 'package:rzv/models/plugin.dart';
 
 // This file centralizes the canonical plugin IDs, icons and categories.
 // Names/descriptions are localized at render time via `L10n.of(context)`.

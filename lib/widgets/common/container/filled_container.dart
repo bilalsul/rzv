@@ -1,6 +1,6 @@
-// import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/widgets/common/container/base_rounded_container.dart';
-import 'package:git_explorer_mob/widgets/common/container/outlined_container.dart';
+// import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/widgets/common/container/base_rounded_container.dart';
+import 'package:rzv/widgets/common/container/outlined_container.dart';
 import 'package:flutter/material.dart';
 
 class FilledContainer extends BaseRoundedContainer {

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:git_explorer_mob/utils/get_path/get_base_path.dart';
+import 'package:rzv/utils/get_path/get_base_path.dart';
 import 'package:flutter/services.dart';
 
 Future<void> loadDefaultFont() async {

@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:git_explorer_mob/app/app_shell_3.dart';
-import 'package:git_explorer_mob/enums/options/plugin.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
+import 'package:rzv/app/app_shell_3.dart';
+import 'package:rzv/enums/options/plugin.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
 import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:git_explorer_mob/services/initialization/initialization_check.dart';
-import 'package:git_explorer_mob/utils/load_default_font.dart';
-import 'package:git_explorer_mob/utils/check_update.dart';
-import 'package:git_explorer_mob/utils/toast/common.dart';
+import 'package:rzv/services/initialization/initialization_check.dart';
+import 'package:rzv/utils/load_default_font.dart';
+import 'package:rzv/utils/check_update.dart';
+import 'package:rzv/utils/toast/common.dart';
 import 'package:path/path.dart' as p;
 
 class HomeScreen extends ConsumerStatefulWidget {

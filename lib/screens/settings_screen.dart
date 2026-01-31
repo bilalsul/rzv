@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
-import 'package:git_explorer_mob/enums/options/font_family.dart';
-import 'package:git_explorer_mob/enums/options/plugin.dart';
-import 'package:git_explorer_mob/utils/toast/common.dart';
-import 'package:git_explorer_mob/widgets/settings/about.dart';
-import 'package:git_explorer_mob/widgets/settings/settings_tile.dart';
-import 'package:git_explorer_mob/widgets/settings/simple_dialog.dart';
-import 'package:git_explorer_mob/widgets/settings/theme_mode.dart';
+import 'package:rzv/enums/options/font_family.dart';
+import 'package:rzv/enums/options/plugin.dart';
+import 'package:rzv/utils/toast/common.dart';
+import 'package:rzv/widgets/settings/about.dart';
+import 'package:rzv/widgets/settings/settings_tile.dart';
+import 'package:rzv/widgets/settings/simple_dialog.dart';
+import 'package:rzv/widgets/settings/theme_mode.dart';
 import 'package:http/http.dart' as http;
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/widgets/settings/plugin_settings_panel.dart';
-import 'package:git_explorer_mob/enums/options/supported_language.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/widgets/settings/plugin_settings_panel.dart';
+import 'package:rzv/enums/options/supported_language.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {

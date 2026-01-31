@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:git_explorer_mob/utils/app_version.dart';
-import 'package:git_explorer_mob/utils/toast/common.dart';
+import 'package:rzv/utils/app_version.dart';
+import 'package:rzv/utils/toast/common.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Providers
 import '../../providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/data/plugin_definitions.dart' as plugin_defs;
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/data/plugin_definitions.dart' as plugin_defs;
 
 // Models
-import 'package:git_explorer_mob/models/plugin.dart';
+import 'package:rzv/models/plugin.dart';
 
 class AppDrawer extends ConsumerStatefulWidget {
   const AppDrawer({super.key});

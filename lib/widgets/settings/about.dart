@@ -1,16 +1,16 @@
 import 'dart:async';
 
-// import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-// import 'package:git_explorer_mob/main.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-// import 'package:git_explorer_mob/page/settings_page/developer/developer_options_page.dart';
-import 'package:git_explorer_mob/utils/env_var.dart';
-import 'package:git_explorer_mob/utils/toast/common.dart';
-// import 'package:git_explorer_mob/utils/toast/common.dart';
-import 'package:git_explorer_mob/widgets/settings/link_icon.dart';
-import 'package:git_explorer_mob/utils/check_update.dart';
-import 'package:git_explorer_mob/widgets/settings/show_donate_dialog.dart';
+// import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+// import 'package:rzv/main.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+// import 'package:rzv/page/settings_page/developer/developer_options_page.dart';
+import 'package:rzv/utils/env_var.dart';
+import 'package:rzv/utils/toast/common.dart';
+// import 'package:rzv/utils/toast/common.dart';
+import 'package:rzv/widgets/settings/link_icon.dart';
+import 'package:rzv/utils/check_update.dart';
+import 'package:rzv/widgets/settings/show_donate_dialog.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

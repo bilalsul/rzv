@@ -1,12 +1,12 @@
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/main.dart';
-import 'package:git_explorer_mob/utils/app_version.dart';
-import 'package:git_explorer_mob/utils/env_var.dart';
-import 'package:git_explorer_mob/utils/get_current_language_code.dart';
-import 'package:git_explorer_mob/utils/log/common.dart';
-import 'package:git_explorer_mob/utils/toast/common.dart';
-import 'package:git_explorer_mob/widgets/markdown/styled_markdown.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/main.dart';
+import 'package:rzv/utils/app_version.dart';
+import 'package:rzv/utils/env_var.dart';
+import 'package:rzv/utils/get_current_language_code.dart';
+import 'package:rzv/utils/log/common.dart';
+import 'package:rzv/utils/toast/common.dart';
+import 'package:rzv/widgets/markdown/styled_markdown.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -30,7 +30,7 @@ Future<void> checkUpdate(bool manualCheck) async {
   try {
     // Fetch the changelog from GitHub raw URL
     response = await Dio().get<String>(
-      'https://raw.githubusercontent.com/uncrr/rzv/production/git_explorer_mob/assets/changelog.md',
+      'https://raw.githubusercontent.com/uncrr/rzv/production/rzv/assets/changelog.md',
       options: Options(
         headers: {
           'Accept': 'text/markdown',

@@ -1,4 +1,4 @@
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';

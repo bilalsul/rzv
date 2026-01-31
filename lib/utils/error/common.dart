@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:git_explorer_mob/utils/log/common.dart';
+import 'package:rzv/utils/log/common.dart';
 import 'package:flutter/material.dart';
 
 class GitExpError {

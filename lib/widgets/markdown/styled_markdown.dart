@@ -1,4 +1,4 @@
-import 'package:git_explorer_mob/widgets/markdown/selection_control.dart';
+import 'package:rzv/widgets/markdown/selection_control.dart';
 import 'package:flutter/material.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:url_launcher/url_launcher_string.dart';

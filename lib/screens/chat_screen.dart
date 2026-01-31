@@ -6,9 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/services/ai_chat_service.dart';
-import 'package:git_explorer_mob/widgets/chat/chat_bubble.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/services/ai_chat_service.dart';
+import 'package:rzv/widgets/chat/chat_bubble.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key});

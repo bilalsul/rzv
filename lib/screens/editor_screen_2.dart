@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Consumer;
-import 'package:git_explorer_mob/enums/options/plugin.dart';
-import 'package:git_explorer_mob/l10n/generated/L10n.dart';
-import 'package:git_explorer_mob/providers/shared_preferences_provider.dart';
-import 'package:git_explorer_mob/widgets/monaco/monaco_wrapper.dart';
+import 'package:rzv/enums/options/plugin.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/widgets/monaco/monaco_wrapper.dart';
 
 class EditorScreen extends ConsumerStatefulWidget {
   const EditorScreen({

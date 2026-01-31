@@ -120,13 +120,13 @@ jobs:
       id: get-flutter-version
       uses: zgosalvez/github-actions-get-flutter-version-env@34a86de9beede9d0771465c702d530c2aea2b1ee
       with:
-        pubspec-file-path: code/git_explorer_mob/pubspec.yaml
+        pubspec-file-path: code/rzv/pubspec.yaml
     - name: Cache Flutter
       id: flutter-cache
       uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
       with:
         path: flutter
-        key: ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/git_explorer_mob/pubspec.lock') }}
+        key: ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/rzv/pubspec.lock') }}
         restore-keys: |
           ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-
           ${{ env.cache-name }}-${{ matrix.os }}-
@@ -151,7 +151,7 @@ jobs:
         flutter precache
     - name: Get Flutter packages
       run: flutter pub get
-      working-directory: code/git_explorer_mob
+      working-directory: code/rzv
 
     # all
     - name: Parse the release tag
@@ -159,11 +159,11 @@ jobs:
       run: | # remove the leading "v"
         VERSION=${{ github.event.release.tag_name }}
         echo "::set-output name=version::${VERSION#v}"
-      working-directory: code/git_explorer_mob
+      working-directory: code/rzv
     - name: Set the app version
       uses: microsoft/variable-substitution@6287962da9e5b6e68778dc51e840caa03ca84495
       with:
-        files: 'code/git_explorer_mob/pubspec.yaml'
+        files: 'code/rzv/pubspec.yaml'
       env:
         version: ${{ steps.parse-release-tag.outputs.version }}
 
@@ -176,7 +176,7 @@ jobs:
         mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ../../GitExplorer-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
         mv build/app/outputs/flutter-apk/app-x86_64-release.apk ../../GitExplorer-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
         mv build/app/outputs/mapping/release/mapping.txt ../../apk-mapping.txt
-      working-directory: code/git_explorer_mob
+      working-directory: code/rzv
     
     # # aab
     # - name: Build an Android App Bundle file
@@ -217,7 +217,7 @@ jobs:
     # all
     - name: Archive Flutter ${{ matrix.file }} symbols
       run: zip --recurse-paths ${{ github.workspace }}/code/${{ matrix.file }}-symbols.zip .
-      working-directory: code/git_explorer_mob/${{ env.FLUTTER_DEBUG_INFO_PATH }}
+      working-directory: code/rzv/${{ env.FLUTTER_DEBUG_INFO_PATH }}
     - name: Upload the artifacts — ${{ matrix.file }}-symbols.zip file
       uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
       with:
