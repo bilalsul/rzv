@@ -176,10 +176,10 @@ jobs:
       if: matrix.file == 'apk'
       run: |
         flutter build apk --obfuscate --split-debug-info=$FLUTTER_DEBUG_INFO_PATH --split-per-abi
-        mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk ../../RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
-        mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ../../RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
-        mv build/app/outputs/flutter-apk/app-x86_64-release.apk ../../RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
-        mv build/app/outputs/mapping/release/mapping.txt ../../apk-mapping.txt
+        mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk ../RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
+        mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ../RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
+        mv build/app/outputs/flutter-apk/app-x86_64-release.apk ../RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
+        mv build/app/outputs/mapping/release/mapping.txt ../apk-mapping.txt
       working-directory: code
     
     # # aab
