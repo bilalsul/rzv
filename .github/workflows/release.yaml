@@ -40,7 +40,7 @@ jobs:
   #       path: code
   #   - name: Get Flutter version
   #     id: get-flutter-version
-  #     uses: zgosalvez/github-actions-get-flutter-version-env@22ab458dabc3aa2dce4dd9f1632a6800869d00de
+  #     uses: zgosalvez/github-actions-get-flutter-version-env@34a86de9beede9d0771465c702d530c2aea2b1ee
   #     with:
   #       pubspec-file-path: code/pubspec.yaml
   #   - name: Cache Flutter
@@ -116,17 +116,21 @@ jobs:
       uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
       with:
         path: code
+    - name: Remove unrelated folders
+      run: |
+        rm -rf code/screens code/.github
+        # Add other unrelated folders here if needed, e.g., rm -rf code/other_folder
     - name: Get Flutter version
       id: get-flutter-version
-      uses: zgosalvez/github-actions-get-flutter-version-env@22ab458dabc3aa2dce4dd9f1632a6800869d00de
+      uses: zgosalvez/github-actions-get-flutter-version-env@34a86de9beede9d0771465c702d530c2aea2b1ee
       with:
-        pubspec-file-path: code/git_explorer_mob/pubspec.yaml
+        pubspec-file-path: code/pubspec.yaml
     - name: Cache Flutter
       id: flutter-cache
       uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
       with:
         path: flutter
-        key: ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/git_explorer_mob/pubspec.lock') }}
+        key: ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/pubspec.lock') }}
         restore-keys: |
           ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-
           ${{ env.cache-name }}-${{ matrix.os }}-
@@ -151,7 +155,7 @@ jobs:
         flutter precache
     - name: Get Flutter packages
       run: flutter pub get
-      working-directory: code/git_explorer_mob
+      working-directory: code
 
     # all
     - name: Parse the release tag
@@ -159,11 +163,11 @@ jobs:
       run: | # remove the leading "v"
         VERSION=${{ github.event.release.tag_name }}
         echo "::set-output name=version::${VERSION#v}"
-      working-directory: code/git_explorer_mob
+      working-directory: code
     - name: Set the app version
       uses: microsoft/variable-substitution@6287962da9e5b6e68778dc51e840caa03ca84495
       with:
-        files: 'code/git_explorer_mob/pubspec.yaml'
+        files: 'code/pubspec.yaml'
       env:
         version: ${{ steps.parse-release-tag.outputs.version }}
 
@@ -172,11 +176,11 @@ jobs:
       if: matrix.file == 'apk'
       run: |
         flutter build apk --obfuscate --split-debug-info=$FLUTTER_DEBUG_INFO_PATH --split-per-abi
-        mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk ../../GitExplorer-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
-        mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ../../GitExplorer-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
-        mv build/app/outputs/flutter-apk/app-x86_64-release.apk ../../GitExplorer-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
+        mv build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk ../../RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
+        mv build/app/outputs/flutter-apk/app-arm64-v8a-release.apk ../../RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
+        mv build/app/outputs/flutter-apk/app-x86_64-release.apk ../../RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
         mv build/app/outputs/mapping/release/mapping.txt ../../apk-mapping.txt
-      working-directory: code/git_explorer_mob
+      working-directory: code
     
     # # aab
     # - name: Build an Android App Bundle file
@@ -217,7 +221,7 @@ jobs:
     # all
     - name: Archive Flutter ${{ matrix.file }} symbols
       run: zip --recurse-paths ${{ github.workspace }}/code/${{ matrix.file }}-symbols.zip .
-      working-directory: code/git_explorer_mob/${{ env.FLUTTER_DEBUG_INFO_PATH }}
+      working-directory: code/${{ env.FLUTTER_DEBUG_INFO_PATH }}
     - name: Upload the artifacts — ${{ matrix.file }}-symbols.zip file
       uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
       with:
@@ -235,15 +239,15 @@ jobs:
     # - name: Upload the artifacts — ${{ matrix.file }} file
     #   uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
     #   with:
-    #     name: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
-    #     path: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
+    #     name: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
+    #     path: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
     #     if-no-files-found: error
     # - name: Upload the release assets — ${{ matrix.file }} file
     #   uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
     #   with:
     #     upload_url: ${{ github.event.release.upload_url }}
-    #     asset_path: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
-    #     asset_name: GitExplorer-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
+    #     asset_path: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
+    #     asset_name: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
     #     asset_content_type: ${{ matrix.asset-content-type }}
     #   env:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -251,15 +255,15 @@ jobs:
     - name: Upload the artifacts — armeabi-v7a Apk file
       uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
       with:
-        name: GitExplorer-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
-        path: GitExplorer-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
+        name: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
+        path: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
         if-no-files-found: error
     - name: Upload the release asset — armeabi-v7a Apk file
       uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: GitExplorer-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
-        asset_name: GitExplorer-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
+        asset_path: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
+        asset_name: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
         asset_content_type: application/java-archive
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -267,15 +271,15 @@ jobs:
     - name: Upload the artifacts — arm64-v8a Apk file
       uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
       with:
-        name: GitExplorer-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
-        path: GitExplorer-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
+        name: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
+        path: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
         if-no-files-found: error
     - name: Upload the release asset — arm64-v8a Apk file
       uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: GitExplorer-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
-        asset_name: GitExplorer-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
+        asset_path: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
+        asset_name: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
         asset_content_type: application/java-archive
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -283,15 +287,15 @@ jobs:
     - name: Upload the artifacts — x86_64 Apk file
       uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
       with:
-        name: GitExplorer-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
-        path: GitExplorer-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
+        name: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
+        path: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
         if-no-files-found: error
     - name: Upload the release asset — x86_64 Apk file
       uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: GitExplorer-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
-        asset_name: GitExplorer-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
+        asset_path: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
+        asset_name: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
         asset_content_type: application/java-archive
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
