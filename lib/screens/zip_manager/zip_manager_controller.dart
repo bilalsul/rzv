@@ -6,13 +6,14 @@ import '../../services/filesystem/app_directories.dart';
 import '../../services/filesystem/extraction_service.dart';
 import '../../services/state/side_effect_handler.dart';
 import '../../services/state/async_status.dart';
+import '../../services/state/projects_update_notifier.dart';
 
 class ZipManagerController extends ChangeNotifier {
   List<ZipEntry> entries = [];
   AsyncStatus status = AsyncStatus.idle;
   String? message;
 
-  final CancellationToken _token = CancellationToken();
+  CancellationToken? _token;
 
   Future<void> refresh() async {
     status = AsyncStatus.loading;
@@ -34,17 +35,27 @@ class ZipManagerController extends ChangeNotifier {
   }
 
   Future<void> extract(String filename, {void Function(int,int)? onProgress}) async {
+    if (status == AsyncStatus.loading) return;
     status = AsyncStatus.loading;
     notifyListeners();
+    _token?.cancel();
+    _token = CancellationToken();
     try {
       final file = await ZipStorageManager.instance.fileForZip(filename);
-      await ExtractionService.instance.extractZipFile(file, token: _token, onProgress: (a,b){ if(onProgress!=null) onProgress(a,b);});
+      await ExtractionService.instance.extractZipFile(file, token: _token!, onProgress: (a,b){ if(onProgress!=null) onProgress(a,b);});
       status = AsyncStatus.success;
+      // Signal that the projects folder has new content so the Home screen
+      // can reload project list and show the extracted folder.
+      ProjectsUpdateNotifier.instance.markUpdated();
+    } on OperationCanceledException {
+      status = AsyncStatus.idle;
+      message = 'Cancelled';
     } catch (e) {
       status = AsyncStatus.error;
       message = e.toString();
     }
     notifyListeners();
+    _token = null;
   }
 
   Future<void> deleteZip(String filename) async {
@@ -70,7 +81,7 @@ class ZipManagerController extends ChangeNotifier {
   }
 
   void cancel() {
-    _token.cancel();
+    _token?.cancel();
   }
 }
 
