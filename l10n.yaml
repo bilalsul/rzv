@@ -5,7 +5,7 @@ output-dir: lib/l10n/generated
 output-class: L10n
 use-deferred-loading: true
 nullable-getter: false
-untranslated-messages-file: docs/untranslated_messages.txt
+untranslated-messages-file: untranslated_messages.txt
 
 # Flutter Extract Art Extension 
 translate: true              
