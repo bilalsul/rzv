@@ -23,8 +23,8 @@ class AppDirectories {
   }
 
   static Future<Directory> extractedDirectory() async {
-    final base = await applicationSupport();
-    final dir = Directory(p.join(base.path, _extracted));
+    final docsBase = await getApplicationDocumentsDirectory();
+    final dir = Directory(p.join(docsBase.path, 'projects'));
     if (!await dir.exists()) await dir.create(recursive: true);
     return dir;
   }
