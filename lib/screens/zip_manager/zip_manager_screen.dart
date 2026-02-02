@@ -19,6 +19,18 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => ref.read(zipManagerControllerProvider).refresh());
   }
 
+  String _readable(int bytes) {
+    if (bytes <= 0) return '0 B';
+    const suffixes = ['B', 'KB', 'MB', 'GB'];
+    var i = 0;
+    double b = bytes.toDouble();
+    while (b >= 1024 && i < suffixes.length - 1) {
+      b /= 1024;
+      i++;
+    }
+    return '${b.toStringAsFixed(b < 10 ? 2 : 1)} ${suffixes[i]}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final ctrl = ref.watch(zipManagerControllerProvider);
@@ -58,7 +70,64 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                 subtitle: Text('${(e.size/1024).toStringAsFixed(1)} KB · ${e.modified.toLocal()}'),
                 trailing: PopupMenuButton<String>(
                   onSelected: (act) async {
-                    if (act == 'extract') await ref.read(zipManagerControllerProvider).extract(e.filename);
+                    final manager = ref.read(zipManagerControllerProvider);
+                    if (act == 'extract') {
+                      // Show extraction progress dialog and call controller.extract with onProgress
+                      StateSetter? dialogSetState;
+                      BuildContext? dialogContext;
+                      int extracted = 0;
+                      int? total;
+                      bool cancelledByUser = false;
+
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext dc) {
+                          dialogContext = dc;
+                          return StatefulBuilder(builder: (context, StateSetter setState) {
+                            dialogSetState = setState;
+                            final value = (total != null && total! > 0) ? (extracted / total!) : null;
+                            return AlertDialog(
+                              title: Text('Extracting ${e.filename}'),
+                              content: SizedBox(
+                                width: 400,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    LinearProgressIndicator(value: value),
+                                    const SizedBox(height: 12),
+                                    Text(total != null ? '${_readable(extracted)} / ${_readable(total!)}' : _readable(extracted)),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    cancelledByUser = true;
+                                    manager.cancel();
+                                    if (dialogContext != null && Navigator.of(dialogContext!).canPop()) Navigator.of(dialogContext!).pop();
+                                  },
+                                  child: Text('Cancel', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                                )
+                              ],
+                            );
+                          });
+                        },
+                      );
+
+                      // Run extraction and update dialog via onProgress
+                      try {
+                        await manager.extract(e.filename, onProgress: (a, b) {
+                          extracted = a;
+                          total = b;
+                          dialogSetState?.call(() {});
+                        });
+                      } catch (_) {}
+
+                      // Close dialog if still open
+                      if (dialogContext != null && Navigator.of(dialogContext!).canPop()) Navigator.of(dialogContext!).pop();
+                    }
                     if (act == 'delete') await ref.read(zipManagerControllerProvider).deleteZip(e.filename);
                     if (act == 'deleteExtracted') await ref.read(zipManagerControllerProvider).deleteExtraction(e.filename);
                     if (act == 'reExtract') await ref.read(zipManagerControllerProvider).reExtract(e.filename);
