@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import '../../services/state/async_status.dart';
 
 class ZipDownloadState {
@@ -7,6 +6,7 @@ class ZipDownloadState {
   final int downloadedBytes;
   final int? totalBytes;
   final String? message;
+  final String? savedPath;
 
   ZipDownloadState({
     this.status = AsyncStatus.idle,
@@ -14,15 +14,17 @@ class ZipDownloadState {
     this.downloadedBytes = 0,
     this.totalBytes,
     this.message,
+    this.savedPath,
   });
 
-  ZipDownloadState copyWith({AsyncStatus? status, double? progress, int? downloadedBytes, int? totalBytes, String? message}) {
+  ZipDownloadState copyWith({AsyncStatus? status, double? progress, int? downloadedBytes, int? totalBytes, String? message, String? savedPath}) {
     return ZipDownloadState(
       status: status ?? this.status,
       progress: progress ?? this.progress,
       downloadedBytes: downloadedBytes ?? this.downloadedBytes,
       totalBytes: totalBytes ?? this.totalBytes,
       message: message ?? this.message,
+      savedPath: savedPath ?? this.savedPath,
     );
   }
 }

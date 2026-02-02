@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rzv/services/network/github_zip_service.dart';
@@ -55,37 +54,17 @@ class ZipDownloadController extends ChangeNotifier {
         _setState(_state.copyWith(message: null));
       });
     } on OperationCanceledException {
-      // Cancellation can be requested by user; ensure UI updates immediately and show toast
-      _setState(_state.copyWith(status: AsyncStatus.idle, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: 'Cancelled', savedPath: null));
-      GzipToast.show('Download cancelled');
-    } catch (e, st) {
-      // Show a concise, user-friendly error and surface details in a toast
-      final raw = e is Exception ? e.toString() : 'Unknown error';
-      final friendly = _friendlyError(raw);
-      _setState(_state.copyWith(status: AsyncStatus.error, message: friendly, savedPath: null));
-      GzipToast.show('Download failed: $raw');
-      // Optionally log stack to console for debugging
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print('ZipDownload error: $raw\n$st');
-      }
+      _setState(_state.copyWith(status: AsyncStatus.idle, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: 'Cancelled'));
+    } catch (e) {
+      final msg = e is Exception ? e.toString() : 'Unknown error';
+      _setState(_state.copyWith(status: AsyncStatus.error, message: msg));
     } finally {
       _token = null;
     }
   }
 
   void cancel() {
-    // Immediately reflect cancellation in UI so progress disappears and controls re-enable
     _token?.cancel();
-    _setState(_state.copyWith(status: AsyncStatus.idle, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: 'Cancelled', savedPath: null));
-  }
-
-  String _friendlyError(String raw) {
-    // Map some common raw messages to nicer user-facing text
-    if (raw.contains('Repository not found') || raw.toLowerCase().contains('not found')) return 'Repository not found';
-    if (raw.toLowerCase().contains('invalid') && raw.toLowerCase().contains('repo')) return 'Invalid owner/repo format';
-    if (raw.toLowerCase().contains('network')) return 'Network error — check your connection';
-    return 'Download failed';
   }
 }
 

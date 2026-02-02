@@ -1,9 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'zip_manager_controller.dart';
+import 'zip_download_controller.dart';
+import 'zip_download_state.dart';
+import '../../services/state/async_status.dart';
 import '../../services/filesystem/zip_storage_manager.dart';
-import '../../services/filesystem/app_directories.dart';
 
 class ZipManagerScreen extends ConsumerStatefulWidget {
   const ZipManagerScreen({super.key});
@@ -13,10 +14,17 @@ class ZipManagerScreen extends ConsumerStatefulWidget {
 }
 
 class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
+  final _downloadTc = TextEditingController();
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => ref.read(zipManagerControllerProvider).refresh());
+  }
+
+  @override
+  void dispose() {
+    _downloadTc.dispose();
+    super.dispose();
   }
 
   String _readable(int bytes) {
@@ -53,22 +61,71 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
 
   Widget _buildBody(dynamic ctrl) {
     if (ctrl.status == null || ctrl.status == null) {}
+    // Combine download UI above the ZIP list
+    final downloadCtrl = ref.watch(zipDownloadControllerProvider);
+    final dlState = downloadCtrl.state;
+
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: FutureBuilder<List<ZipEntry>>(
-        future: ZipStorageManager.instance.listZips(),
-        builder: (context, snap) {
-          if (snap.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator());
-          final list = snap.data ?? [];
-          if (list.isEmpty) return const Center(child: Text('No ZIPs downloaded'));
-          return ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, idx) {
-              final e = list[idx];
-              return ListTile(
-                title: Text(e.filename),
-                subtitle: Text('${(e.size/1024).toStringAsFixed(1)} KB · ${e.modified.toLocal()}'),
-                trailing: PopupMenuButton<String>(
+      child: Column(
+        children: [
+          // Download area
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text('Download ZIP (owner/repo)', style: TextStyle(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _downloadTc,
+                    decoration: const InputDecoration(hintText: 'owner/repo'),
+                  ),
+                  const SizedBox(height: 12),
+                  _DownloadProgressDisplay(state: dlState),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FilledButton(
+                          onPressed: dlState.status == AsyncStatus.loading
+                              ? null
+                              : () {
+                                  final input = _downloadTc.text.trim();
+                                  downloadCtrl.download(input);
+                                },
+                          child: const Text('Download'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      FilledButton(
+                        onPressed: dlState.status == AsyncStatus.loading ? () => downloadCtrl.cancel() : null,
+                        child: const Text('Cancel'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          // ZIP list below
+          Expanded(
+            child: FutureBuilder<List<ZipEntry>>(
+              future: ZipStorageManager.instance.listZips(),
+              builder: (context, snap) {
+                if (snap.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator());
+                final list = snap.data ?? [];
+                if (list.isEmpty) return const Center(child: Text('No ZIPs downloaded'));
+                return ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (context, idx) {
+                    final e = list[idx];
+                    return ListTile(
+                      title: Text(e.filename),
+                      subtitle: Text('${(e.size/1024).toStringAsFixed(1)} KB · ${e.modified.toLocal()}'),
+                      trailing: PopupMenuButton<String>(
                   onSelected: (act) async {
                     final manager = ref.read(zipManagerControllerProvider);
                     if (act == 'extract') {
@@ -145,6 +202,95 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
           );
         },
       ),
-    );
+    ),
+  ]
+)
+);
+}
+}
+
+// }
+
+class _DownloadProgressDisplay extends StatelessWidget {
+  final ZipDownloadState state;
+
+  const _DownloadProgressDisplay({required this.state});
+
+  String _human(int bytes) {
+    if (bytes <= 0) return '0 B';
+    const suffixes = ['B', 'KB', 'MB', 'GB'];
+    var i = 0;
+    double b = bytes.toDouble();
+    while (b >= 1024 && i < suffixes.length - 1) {
+      b /= 1024;
+      i++;
+    }
+    return '${b.toStringAsFixed(b < 10 ? 2 : 1)} ${suffixes[i]}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (state.status == AsyncStatus.loading) {
+      final pct = (state.progress * 100).clamp(0.0, 100.0);
+      final downloaded = state.downloadedBytes;
+      final total = state.totalBytes;
+      final cs = Theme.of(context).colorScheme;
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              height: 12,
+              color: Colors.grey.shade300,
+              child: total != null && total > 0
+                  ? LayoutBuilder(builder: (context, constraints) {
+                      final width = constraints.maxWidth * state.progress.clamp(0.0, 1.0);
+                      return Stack(children: [
+                        Positioned.fill(
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 240),
+                            width: width,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [cs.primary, cs.primaryContainer]),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ]);
+                    })
+                  : const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                      child: LinearProgressIndicator(),
+                    ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (total != null && total > 0) Text('${pct.toStringAsFixed(1)}%') else const Text('Downloading'),
+              Text(total != null ? '${_human(downloaded)} / ${_human(total)}' : _human(downloaded)),
+            ],
+          ),
+        ],
+      );
+    }
+
+    if (state.status == AsyncStatus.success) {
+      return Row(
+        children: [
+          Expanded(child: Text(state.message != null ? 'Downloaded: ${state.message}' : 'Saved')),
+          const SizedBox(width: 8),
+        ],
+      );
+    }
+
+    if (state.status == AsyncStatus.error) {
+      return Text(state.message ?? 'Error', style: const TextStyle(color: Colors.red));
+    }
+
+    return const SizedBox.shrink();
   }
 }
