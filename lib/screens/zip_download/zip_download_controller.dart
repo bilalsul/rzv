@@ -10,40 +10,52 @@ class ZipDownloadController extends ChangeNotifier {
   ZipDownloadState _state = ZipDownloadState();
   ZipDownloadState get state => _state;
 
-  final CancellationToken _token = CancellationToken();
+  CancellationToken? _token;
+  bool _disposed = false;
 
   void _setState(ZipDownloadState s) {
+    if (_disposed) return;
     _state = s;
     notifyListeners();
   }
 
   void disposeController() {
-    _token.cancel();
+    _disposed = true;
+    _token?.cancel();
     super.dispose();
   }
 
   Future<void> download(String ownerRepo) async {
-    _setState(_state.copyWith(status: AsyncStatus.loading, progress: 0.0, message: null));
+    if (_state.status == AsyncStatus.loading) return;
+    // create a fresh token for this run
+    _token?.cancel();
+    _token = CancellationToken();
+
+    _setState(_state.copyWith(status: AsyncStatus.loading, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: null));
     try {
-      final file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: _token, onProgress: (dl, total) {
-        if (total != null && total > 0) {
-          final p = dl / total;
-          _setState(_state.copyWith(progress: p));
-        }
+      final token = _token!;
+      final file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+        if (token.isCanceled) return;
+        final p = (total != null && total > 0) ? (dl / total) : 0.0;
+        _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
       });
 
-      // success
-      _setState(_state.copyWith(status: AsyncStatus.success, progress: 1.0, message: file.path));
+      if (token.isCanceled) throw OperationCanceledException();
+
+      final fileSize = await file.length();
+      _setState(_state.copyWith(status: AsyncStatus.success, progress: 1.0, downloadedBytes: fileSize, totalBytes: fileSize, message: file.path));
     } on OperationCanceledException {
-      _setState(_state.copyWith(status: AsyncStatus.idle, progress: 0.0, message: 'Cancelled'));
+      _setState(_state.copyWith(status: AsyncStatus.idle, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: 'Cancelled'));
     } catch (e) {
       final msg = e is Exception ? e.toString() : 'Unknown error';
       _setState(_state.copyWith(status: AsyncStatus.error, message: msg));
+    } finally {
+      _token = null;
     }
   }
 
   void cancel() {
-    _token.cancel();
+    _token?.cancel();
   }
 }
 
