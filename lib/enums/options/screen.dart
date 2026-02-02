@@ -8,7 +8,6 @@ enum Screen {
   gitHistory,
   terminal,
   settings,
-  zipDownloader,
   zipManager
 }
 
@@ -29,8 +28,6 @@ String screenToString(Screen screen) {
       return 'terminal';
     case Screen.settings:
       return 'settings';
-    case Screen.zipDownloader:
-      return Plugin.zipDownloader.id;
     case Screen.zipManager:
       return Plugin.zipManager.id;
   }

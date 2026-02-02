@@ -13,7 +13,6 @@ import 'package:rzv/providers/shared_preferences_provider.dart';
 // Screens
 import 'package:rzv/screens/home_screen.dart';
 import 'package:rzv/screens/editor_screen_2.dart';
-import 'package:rzv/screens/zip_download/zip_download_screen.dart';
 import 'package:rzv/screens/zip_manager/zip_manager_screen.dart';
 import 'package:rzv/screens/ai_screen.dart';
 import 'package:rzv/screens/settings_screen.dart';
@@ -356,11 +355,6 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
           controller: controller,
         );
         break;
-      case Screen.zipDownloader:
-        activePage = ZipDownloadScreen(
-          key: ValueKey(prefs.themeMode.toString()),
-        );
-        break;
       case Screen.zipManager:
         activePage = ZipManagerScreen(
           key: ValueKey(prefs.themeMode.toString()),
@@ -691,19 +685,9 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
         activeIcon: Icon(Icons.terminal, color: prefs.secondaryColor),
         pluginKey: 'terminal',
       ),
-      NavItem(
-        screen: Screen.zipDownloader,
-        label: 'zip D',
-        icon: Icon(Icons.file_download,
-        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
-        ),
-        activeIcon: Icon(Icons.file_download, color: prefs.secondaryColor),
-        pluginKey: 'zip_downloader',
-      ),
-
         NavItem(
         screen: Screen.zipManager,
-        label: 'zip M',
+        label: 'Manager',
         icon: Icon(Icons.folder_open,
         color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
         ),

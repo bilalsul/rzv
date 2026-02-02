@@ -135,13 +135,6 @@ List<PluginDefinition> experimentalPlugins = [
   //   category: PluginCategory.experimental,
   // ),
   PluginDefinition(
-    id: Plugin.zipDownloader.id,
-    name: Plugin.zipDownloader.id,
-    description: Plugin.zipDownloader.id,
-    icon: Icons.file_download,
-    category: PluginCategory.experimental,
-  ),
-  PluginDefinition(
     id: Plugin.zipManager.id,
     name: Plugin.zipManager.id,
     description: Plugin.zipManager.id,

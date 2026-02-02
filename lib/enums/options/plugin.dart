@@ -17,7 +17,6 @@ enum Plugin {
   fileExplorer('file_explorer'),
   previewMarkdown('preview_markdown'),
 
-  zipDownloader('zip_downloader'),
   zipManager('zip_manager');
 
   final String id;
