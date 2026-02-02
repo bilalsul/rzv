@@ -159,6 +159,10 @@ class Prefs extends ChangeNotifier {
         return Screen.editor;
       case '/settings':
         return Screen.settings;
+      case '/zip_manager':
+        return Screen.zipManager;
+      case '/zip_downloader':
+        return Screen.zipDownloader;
       case '/terminal':
         return Screen.terminal;
       case '/ai':

@@ -15,7 +15,10 @@ enum Plugin {
   ai('ai_assist'),
 
   fileExplorer('file_explorer'),
-  previewMarkdown('preview_markdown');
+  previewMarkdown('preview_markdown'),
+
+  zipDownloader('zip_downloader'),
+  zipManager('zip_manager');
 
   final String id;
   const Plugin(this.id);
