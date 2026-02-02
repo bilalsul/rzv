@@ -15,10 +15,11 @@ class ZipManagerScreen extends ConsumerStatefulWidget {
 
 class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   final _downloadTc = TextEditingController();
+  bool _didInit = false;
+  bool _registeredDownloadListener = false;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => ref.read(zipManagerControllerProvider).refresh());
   }
 
   @override
@@ -43,6 +44,26 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   Widget build(BuildContext context) {
     final ctrl = ref.watch(zipManagerControllerProvider);
 
+    // Ensure we refresh the ZIP list once after the provider is available.
+    if (!_didInit) {
+      _didInit = true;
+      Future.microtask(() => ref.read(zipManagerControllerProvider).refresh());
+    }
+
+    // Register a listener for download completion during build (allowed here).
+    if (!_registeredDownloadListener) {
+      _registeredDownloadListener = true;
+      ref.listen<ZipDownloadState>(
+        zipDownloadControllerProvider.select((c) => c.state),
+        (previous, next) {
+          if (next.status == AsyncStatus.success) {
+            // Refresh ZIP list so the newly downloaded file appears.
+            Future.microtask(() => ref.read(zipManagerControllerProvider).refresh());
+          }
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text('ZIP Manager'), actions: [
         IconButton(onPressed: () => ref.read(zipManagerControllerProvider).refresh(), icon: const Icon(Icons.refresh)),
@@ -60,55 +81,57 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   }
 
   Widget _buildBody(dynamic ctrl) {
-    if (ctrl.status == null || ctrl.status == null) {}
     // Combine download UI above the ZIP list
-    final downloadCtrl = ref.watch(zipDownloadControllerProvider);
-    final dlState = downloadCtrl.state;
-
+    final downloadCtrl = ref.read(zipDownloadControllerProvider);
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
-          // Download area
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text('Download ZIP (owner/repo)', style: TextStyle(fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _downloadTc,
-                    decoration: const InputDecoration(hintText: 'owner/repo'),
-                  ),
-                  const SizedBox(height: 12),
-                  _DownloadProgressDisplay(state: dlState),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: FilledButton(
-                          onPressed: dlState.status == AsyncStatus.loading
-                              ? null
-                              : () {
-                                  final input = _downloadTc.text.trim();
-                                  downloadCtrl.download(input);
-                                },
-                          child: const Text('Download'),
+          // Download area (keeps progress updates local to this Consumer)
+          Consumer(builder: (c, ref, _) {
+            final dlState = ref.watch(zipDownloadControllerProvider.select((c) => c.state));
+            final downloadCtrlLocal = ref.read(zipDownloadControllerProvider);
+            return Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text('Download ZIP (owner/repo)', style: TextStyle(fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _downloadTc,
+                      decoration: const InputDecoration(hintText: 'owner/repo'),
+                    ),
+                    const SizedBox(height: 12),
+                    _DownloadProgressDisplay(state: dlState),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: FilledButton(
+                            onPressed: dlState.status == AsyncStatus.loading
+                                ? null
+                                : () {
+                                    final input = _downloadTc.text.trim();
+                                    if (input.isEmpty) return;
+                                    downloadCtrlLocal.download(input);
+                                  },
+                            child: const Text('Download'),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      FilledButton(
-                        onPressed: dlState.status == AsyncStatus.loading ? () => downloadCtrl.cancel() : null,
-                        child: const Text('Cancel'),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: 8),
+                        FilledButton(
+                          onPressed: dlState.status == AsyncStatus.loading ? () => downloadCtrlLocal.cancel() : null,
+                          child: const Text('Cancel'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+          }),
           const SizedBox(height: 12),
           // ZIP list below
           Expanded(
@@ -270,8 +293,16 @@ class _DownloadProgressDisplay extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (total != null && total > 0) Text('${pct.toStringAsFixed(1)}%') else const Text('Downloading'),
-              Text(total != null ? '${_human(downloaded)} / ${_human(total)}' : _human(downloaded)),
+              // Show downloaded / total prominently
+              if (total != null && total > 0)
+                Text('${_human(downloaded)} / ${_human(total)}')
+              else
+                const Text('Downloading'),
+              // Show percent on the right when available
+              if (total != null && total > 0)
+                Text('${pct.toStringAsFixed(1)}%')
+              else
+                const SizedBox.shrink(),
             ],
           ),
         ],
@@ -287,9 +318,7 @@ class _DownloadProgressDisplay extends StatelessWidget {
       );
     }
 
-    if (state.status == AsyncStatus.error) {
-      return Text(state.message ?? 'Error', style: const TextStyle(color: Colors.red));
-    }
+    // Errors are shown via GzipToast from the controller; do not surface raw errors in UI
 
     return const SizedBox.shrink();
   }
