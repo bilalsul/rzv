@@ -23,7 +23,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
   bool _expandedEditorPlugins = true;
   // bool _expandedGitPlugins = true;
   bool _expandedUtilityPlugins = true;
-  // bool _expandedExperimentalPlugins = false;
+  bool _expandedExperimentalPlugins = false;
 
   String appVersion = '';
 
@@ -47,7 +47,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           // Plugin Toggles Section
           Expanded(child: _buildPluginTogglesSection(prefs, theme)),
           // Footer is rendered as the last sliver inside the scrollable plugin section
-        ],
+          ],
       ),
     );
   }
@@ -275,14 +275,14 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         ),
 
         // Experimental Plugins
-        // _buildPluginCategory(
-        //   title: L10n.of(context).drawerExperimental,
-        //   plugins: plugin_defs.experimentalPlugins,
-        //   isExpanded: _expandedExperimentalPlugins,
-        //   onToggle: () => setState(() => _expandedExperimentalPlugins = !_expandedExperimentalPlugins),
-        //   theme: theme,
-        //   showExperimentalBadge: true,
-        // ),
+        _buildPluginCategory(
+          title: L10n.of(context).drawerExperimental,
+          plugins: plugin_defs.experimentalPlugins,
+          isExpanded: _expandedExperimentalPlugins,
+          onToggle: () => setState(() => _expandedExperimentalPlugins = !_expandedExperimentalPlugins),
+          theme: theme,
+          showExperimentalBadge: true,
+        ),
 
         // SliverToBoxAdapter(child:
         // _isNativeAdLoaded && _nativeAd != null
@@ -299,6 +299,9 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         //           child: AdWidget(ad: _nativeAd!),
         //         )
         //       : const SizedBox.shrink(),
+
+        // Insert ZIP drawer tiles (download/manage) if enabled
+        // SliverToBoxAdapter(child: buildZipDrawerSliver(context, prefs)),
 
         // Footer placed as a sliver so it only becomes visible when the user scrolls to the end
         SliverToBoxAdapter(child: _buildDrawerFooter(theme)),

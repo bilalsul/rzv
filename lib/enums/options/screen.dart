@@ -1,3 +1,5 @@
+import 'package:rzv/enums/options/plugin.dart';
+
 enum Screen {
   home,
   editor,
@@ -6,6 +8,7 @@ enum Screen {
   gitHistory,
   terminal,
   settings,
+  zipManager
 }
 
 // convert Screen enum to string
@@ -16,14 +19,16 @@ String screenToString(Screen screen) {
     case Screen.editor:
       return 'editor';
     case Screen.ai:
-      return 'ai';
+      return Plugin.ai.id;
     case Screen.fileExplorer:
-      return 'file_explorer';
+      return Plugin.fileExplorer.id;
     case Screen.gitHistory:
       return 'git_history';
     case Screen.terminal:
       return 'terminal';
     case Screen.settings:
       return 'settings';
+    case Screen.zipManager:
+      return Plugin.zipManager.id;
   }
 }
