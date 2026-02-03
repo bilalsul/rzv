@@ -54,6 +54,7 @@ class ZipManagerScreen extends ConsumerStatefulWidget {
 class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   final _downloadTc = TextEditingController();
   bool _registeredDownloadListener = false;
+  ZipProvider _selectedProvider = ZipProvider.github;
 
   @override
   void initState() {
@@ -141,9 +142,68 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                   children: [
                     const Text('Download ZIP (owner/repo)', style: TextStyle(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
-                    TextField(
-                      controller: _downloadTc,
-                      decoration: const InputDecoration(hintText: 'owner/repo'),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _downloadTc,
+                            decoration: const InputDecoration(hintText: 'owner/repo'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        // Provider dropdown (small)
+                        Container(
+                          height: 30,
+                          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Theme.of(context).dividerColor),
+                          ),
+                          child: DropdownButton<ZipProvider>(
+                            value: _selectedProvider,
+                            underline: const SizedBox.shrink(),
+                            items: [
+                              DropdownMenuItem(
+                                value: ZipProvider.github,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    CircleAvatar(radius: 10, backgroundColor: Colors.white, child: Image.asset('assets/images/zip_services/github.png')),
+                                    SizedBox(width: 6),
+                                    Text('GitHub', style: TextStyle(fontSize: 12)),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: ZipProvider.gitlab,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    CircleAvatar(radius: 10, backgroundColor: WidgetStateColor.transparent, child: Image.asset('assets/images/zip_services/gitlab.png')),
+                                    SizedBox(width: 6),
+                                    Text('GitLab', style: TextStyle(fontSize: 12)),
+                                  ],
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: ZipProvider.bitbucket,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    CircleAvatar(radius: 10, backgroundColor: WidgetStateColor.transparent, child: Image.asset('assets/images/zip_services/bitbucket.png')),
+                                    SizedBox(width: 6),
+                                    Text('Bitbucket', style: TextStyle(fontSize: 12)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                            onChanged: (v) {
+                              if (v == null) return;
+                              setState(() => _selectedProvider = v);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     _DownloadProgressDisplay(state: dlState),
@@ -157,7 +217,7 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                                 : () {
                                     final input = _downloadTc.text.trim();
                                     if (input.isEmpty) return;
-                                    downloadCtrlLocal.download(input);
+                                    downloadCtrlLocal.download(input, provider: _selectedProvider);
                                   },
                             child: const Text('Download'),
                           ),

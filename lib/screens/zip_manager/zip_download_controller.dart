@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rzv/services/network/github_zip_service.dart';
+import 'package:rzv/services/network/gitlab_zip_service.dart';
+import 'package:rzv/services/network/bitbucket_zip_service.dart';
 import 'package:rzv/services/state/async_status.dart';
 import 'package:rzv/services/state/side_effect_handler.dart';
 import 'zip_download_state.dart';
 import 'package:rzv/utils/toast/common.dart';
+
+enum ZipProvider { github, gitlab, bitbucket }
 
 class ZipDownloadController extends ChangeNotifier {
   ZipDownloadState _state = ZipDownloadState();
@@ -25,7 +31,7 @@ class ZipDownloadController extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> download(String ownerRepo) async {
+  Future<void> download(String ownerRepo, {ZipProvider provider = ZipProvider.github}) async {
     if (_state.status == AsyncStatus.loading) return;
     // create a fresh token for this run
     _token?.cancel();
@@ -34,11 +40,31 @@ class ZipDownloadController extends ChangeNotifier {
     _setState(_state.copyWith(status: AsyncStatus.loading, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: null));
     try {
       final token = _token!;
-      final file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
-        if (token.isCanceled) return;
-        final p = (total != null && total > 0) ? (dl / total) : 0.0;
-        _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
-      });
+      late final File file;
+      // Route to the selected provider's service
+      switch (provider) {
+        case ZipProvider.github:
+          file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+            if (token.isCanceled) return;
+            final p = (total != null && total > 0) ? (dl / total) : 0.0;
+            _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
+          });
+          break;
+        case ZipProvider.gitlab:
+          file = await GitLabZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+            if (token.isCanceled) return;
+            final p = (total != null && total > 0) ? (dl / total) : 0.0;
+            _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
+          });
+          break;
+        case ZipProvider.bitbucket:
+          file = await BitbucketZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+            if (token.isCanceled) return;
+            final p = (total != null && total > 0) ? (dl / total) : 0.0;
+            _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
+          });
+          break;
+      }
 
       if (token.isCanceled) throw OperationCanceledException();
 
