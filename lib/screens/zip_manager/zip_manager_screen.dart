@@ -66,17 +66,17 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
     super.dispose();
   }
 
-  String _readable(int bytes) {
-    if (bytes <= 0) return '0 B';
-    const suffixes = ['B', 'KB', 'MB', 'GB'];
-    var i = 0;
-    double b = bytes.toDouble();
-    while (b >= 1024 && i < suffixes.length - 1) {
-      b /= 1024;
-      i++;
-    }
-    return '${b.toStringAsFixed(b < 10 ? 2 : 1)} ${suffixes[i]}';
-  }
+  // String _readable(int bytes) {
+  //   if (bytes <= 0) return '0 B';
+  //   const suffixes = ['B', 'KB', 'MB', 'GB'];
+  //   var i = 0;
+  //   double b = bytes.toDouble();
+  //   while (b >= 1024 && i < suffixes.length - 1) {
+  //     b /= 1024;
+  //     i++;
+  //   }
+  //   return '${b.toStringAsFixed(b < 10 ? 2 : 1)} ${suffixes[i]}';
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,7 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
 
   Widget _buildBody(dynamic ctrl) {
     // Combine download UI above the ZIP list
-    final downloadCtrl = ref.read(zipDownloadControllerProvider);
+    // final downloadCtrl = ref.read(zipDownloadControllerProvider);
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
@@ -271,7 +271,7 @@ class ZipList extends ConsumerWidget {
                         BuildContext? dialogContext;
                         int extracted = 0;
                         int? total;
-                        bool cancelledByUser = false;
+                        // bool cancelledByUser = false;
 
                         showDialog(
                           context: context,
@@ -298,7 +298,7 @@ class ZipList extends ConsumerWidget {
                                 actions: [
                                   TextButton(
                                     onPressed: () {
-                                      cancelledByUser = true;
+                                      // cancelledByUser = true;
                                       manager.cancel();
                                       if (dialogContext != null && Navigator.of(dialogContext!).canPop()) Navigator.of(dialogContext!).pop();
                                     },

@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 class AppDirectories {
   static const _appFolder = 'rzv';
   static const _zips = 'zips';
-  static const _extracted = 'extracted';
+  // static const _extracted = 'extracted';
 
   /// Returns the application support directory for the app.
   static Future<Directory> applicationSupport() async {

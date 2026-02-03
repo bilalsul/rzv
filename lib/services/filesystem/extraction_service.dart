@@ -15,7 +15,7 @@ class ExtractionService {
   /// Extraction is atomic: files are extracted into a temp folder and
   /// renamed on success.
   Future<void> extractZipFile(File zipFile, {required CancellationToken token, ExtractionProgress? onProgress}) async {
-    final totalBytes = await zipFile.length();
+    // final totalBytes = await zipFile.length();
     final basename = p.basename(zipFile.path);
     final tempRoot = await AppDirectories.extractedDirectory();
     final tmpDir = Directory(p.join(tempRoot.path, basename + '.tmp'));
@@ -30,7 +30,7 @@ class ExtractionService {
       final archive = decoder.decodeBuffer(input);
 
       int extracted = 0;
-      int total = archive.files.fold<int>(0, (s, f) => s + (f.size ?? 0));
+      int total = archive.files.fold<int>(0, (s, f) => s + (f.size));
 
       for (final file in archive.files) {
         token.throwIfCanceled();
@@ -47,7 +47,7 @@ class ExtractionService {
           await outFile.parent.create(recursive: true);
           final bytes = file.content as List<int>;
           await outFile.writeAsBytes(bytes, flush: true);
-          extracted += file.size ?? bytes.length;
+          extracted += file.size;
         } else {
           await Directory(outPath).create(recursive: true);
         }
