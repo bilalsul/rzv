@@ -116,6 +116,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/images/ai/
+    - assets/images/zip_services/
     - assets/changelog.md
     - pubspec.yaml
 
