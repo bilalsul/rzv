@@ -42,30 +42,28 @@ class ZipDownloadController extends ChangeNotifier {
       final token = _token!;
       late final File file;
       // Route to the selected provider's service
-      switch (provider) {
-        case ZipProvider.github:
+        if( provider == ZipProvider.github) {
           file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
             if (token.isCanceled) return;
             final p = (total != null && total > 0) ? (dl / total) : 0.0;
             _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
           });
-          break;
-        case ZipProvider.gitlab:
+        }
+        if(provider == ZipProvider.gitlab) {
           file = await GitLabZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
             if (token.isCanceled) return;
             final p = (total != null && total > 0) ? (dl / total) : 0.0;
             _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
           });
-          break;
-        case ZipProvider.bitbucket:
+        }
+        if( provider == ZipProvider.bitbucket) {
+          
           file = await BitbucketZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
             if (token.isCanceled) return;
             final p = (total != null && total > 0) ? (dl / total) : 0.0;
             _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
           });
-          break;
-      }
-
+        }
       if (token.isCanceled) throw OperationCanceledException();
 
       final fileSize = await file.length();

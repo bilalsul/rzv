@@ -22,7 +22,6 @@ class ZipEntriesNotifier extends AutoDisposeAsyncNotifier<List<ZipEntry>> {
   Future<void> addEntryFromPath(String path) async {
     try {
       final f = File(path);
-      if (!await f.exists()) return;
       final stat = await f.stat();
       final filename = p.basename(path);
       final currentEntries = state.value ?? [];
