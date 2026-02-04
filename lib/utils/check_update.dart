@@ -30,7 +30,7 @@ Future<void> checkUpdate(bool manualCheck) async {
   try {
     // Fetch the changelog from GitHub raw URL
     response = await Dio().get<String>(
-      'https://raw.githubusercontent.com/uncrr/rzv/production/rzv/assets/changelog.md',
+      'https://raw.githubusercontent.com/bilalsul/rzv/production/rzv/assets/changelog.md',
       options: Options(
         headers: {
           'Accept': 'text/markdown',
@@ -152,7 +152,7 @@ $changelogBody''',
             TextButton(
               onPressed: () {
                 launchUrl(
-                  Uri.parse('https://github.com/uncrr/rzv/releases/latest'),
+                  Uri.parse('https://github.com/bilalsul/rzv/releases/latest'),
                   mode: LaunchMode.externalApplication,
                 );
               },

@@ -209,7 +209,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                           IonIcons.logo_github,
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        url: 'https://github.com/uncrr/rzv',
+                        url: 'https://github.com/bilalsul/rzv',
                         mode: LaunchMode.externalApplication),
                     if (EnvVar.showTelegramLink)
                       linkIcon(
