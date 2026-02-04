@@ -295,6 +295,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "다운로드",
+  "zipManagerTitle": "ZIP 관리자",
+  "zipManagerDescription": "ZIP 다운로드, 추출 및 관리 한 곳에서",
+  "zipManagerHeader": "올인원 관리자",
+  "zipManagerDownloadZipTitle": "ZIP 다운로드",
+  "zipManagerDownloadZipHint": "소유자/리포지토리",
+  "zipManagerNoZipsDownloaded": "다운로드된 ZIP 없음",
+  "zipManagerExtracting": "{zip} 추출 중",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "ZIP 로딩 오류: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "ZIP 추출",
+  "zipManagerMenuReextract": "ZIP 재추출",
+  "zipManagerMenuDeleteExtracted": "추출된 항목 삭제",
+  "zipManagerMenuDeleteAllZips": "모든 ZIP 삭제?",
+  "zipManagerMenuDeleteAllZipsHint": "이 작업으로 모든 다운로드된 ZIP 파일이 삭제됩니다.",
+  "zipManagerExtractedZip": "{zip} 추출 완료",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip} 삭제 완료",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip} 재추출 완료",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "읽기 전용 모드",
   "readonlyModeDescription": "파일 실수로 수정되는 것을 방지",
   "syntaxHighlightingName": "구문 강조",

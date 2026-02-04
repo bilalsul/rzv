@@ -293,6 +293,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "Baixar",
+  "zipManagerTitle": "Gerenciador ZIP",
+  "zipManagerDescription": "Baixar, extrair e gerenciar ZIP em um só lugar",
+  "zipManagerHeader": "Gerenciador tudo em um",
+  "zipManagerDownloadZipTitle": "Baixar ZIP",
+  "zipManagerDownloadZipHint": "proprietário/repo",
+  "zipManagerNoZipsDownloaded": "Nenhum ZIP baixado",
+  "zipManagerExtracting": "Extraindo {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "Erro ao carregar ZIPs: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "Extrair ZIP",
+  "zipManagerMenuReextract": "Re-extrair ZIP",
+  "zipManagerMenuDeleteExtracted": "Excluir extraído",
+  "zipManagerMenuDeleteAllZips": "Excluir todos os ZIPs?",
+  "zipManagerMenuDeleteAllZipsHint": "Isso excluirá todos os arquivos ZIP baixados.",
+  "zipManagerExtractedZip": "{zip} extraído",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip} excluído",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip} re-extraído",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "Modo Só de Leitura",
   "readonlyModeDescription": "Evita edições acidentais nos ficheiros",
   "syntaxHighlightingName": "Realce de Sintaxe",

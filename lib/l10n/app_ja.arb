@@ -293,6 +293,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "ダウンロード",
+  "zipManagerTitle": "ZIPマネージャー",
+  "zipManagerDescription": "ZIPのダウンロード、抽出、管理を一括で",
+  "zipManagerHeader": "オールインワンマネージャー",
+  "zipManagerDownloadZipTitle": "ZIPダウンロード",
+  "zipManagerDownloadZipHint": "所有者/リポジトリ",
+  "zipManagerNoZipsDownloaded": "ZIPがダウンロードされていません",
+  "zipManagerExtracting": "{zip}を抽出中",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "ZIPの読み込みエラー: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "ZIPを抽出",
+  "zipManagerMenuReextract": "ZIPを再抽出",
+  "zipManagerMenuDeleteExtracted": "抽出済みを削除",
+  "zipManagerMenuDeleteAllZips": "すべてのZIPを削除？",
+  "zipManagerMenuDeleteAllZipsHint": "これによりすべてのダウンロードされたZIPファイルが削除されます。",
+  "zipManagerExtractedZip": "{zip}を抽出済み",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip}を削除済み",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip}を再抽出済み",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "読み取り専用モード",
   "readonlyModeDescription": "ファイルの誤編集を防止",
   "syntaxHighlightingName": "構文ハイライト",
