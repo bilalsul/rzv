@@ -4,24 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rzv/enums/options/screen.dart';
-import 'package:rzv/l10n/generated/L10n.dart';
-import 'package:rzv/providers/shared_preferences_provider.dart';
-import 'package:rzv/screens/ai_screen.dart';
-import 'package:rzv/screens/editor_screen_2.dart';
-import 'package:rzv/screens/settings_screen.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 
 // Providers
-// import 'package:rzv/providers/plugin_provider.dart';
-// import 'package:rzv/providers/theme_provider.dart';
-// import '../providers/navigation_provider.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
 
 // Screens
 import 'package:rzv/screens/home_screen.dart';
-// import '../screens/editor_screen.dart';
-// import '../screens/file_explorer_screen.dart';
-// import '../screens/git_history_screen.dart';
-// import '../screens/settings_screen.dart';
+import 'package:rzv/screens/editor_screen_2.dart';
+import 'package:rzv/screens/zip_manager/zip_manager_screen.dart';
+import 'package:rzv/screens/ai_screen.dart';
+import 'package:rzv/screens/settings_screen.dart';
 
 // Widgets
 import 'package:rzv/widgets/common/app_drawer.dart';
@@ -111,7 +105,7 @@ class _AppShellState extends ConsumerState<AppShell> {
       locale: prefs.getEffectiveLocale(prefs, L10n.supportedLocales),
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
-      title: 'Gzip Explorer',
+      title: 'RZV',
       // theme: ThemeData.light(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),
@@ -359,6 +353,11 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
         activePage = SettingsScreen(
           key: ValueKey(prefs.themeMode.toString()),
           controller: controller,
+        );
+        break;
+      case Screen.zipManager:
+        activePage = ZipManagerScreen(
+          key: ValueKey(prefs.themeMode.toString()),
         );
         break;
       case Screen.ai:
@@ -686,6 +685,16 @@ Widget _buildEditorSheet(BuildContext context, Prefs prefs) {
         activeIcon: Icon(Icons.terminal, color: prefs.secondaryColor),
         pluginKey: 'terminal',
       ),
+        NavItem(
+        screen: Screen.zipManager,
+        label: 'Manager',
+        icon: Icon(Icons.folder_open,
+        color: Prefs().lastKnownScreen == Screen.editor ? Colors.grey[400] : null,
+        ),
+        activeIcon: Icon(Icons.folder_open, color: prefs.secondaryColor),
+        pluginKey: 'zip_manager',
+      ),
+      
       NavItem(
         screen: Screen.settings,
         label: L10n.of(context).navBarSettings,

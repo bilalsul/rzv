@@ -1,20 +1,19 @@
 {
   "@@locale": "ru",
-  "appName": "repo zip Viewer",
-  "appAboutTitle": "О repo zip Viewer",
+  "appAboutTitle": "О Repo Zip Viewer",
   "appAbout": "Распаковывает .zip-архивы с git-кодовой базой и позволяет просматривать файлы в формате markdown и в редакторе кода в режиме только чтение.",
   "appVersion": "Версия",
   "appLicense": "Лицензия",
   "appAuthor": "Автор",
   "appDonate": "Поддержать",
-  "appDonateTips": "repo zip Viewer — это бесплатное программное обеспечение с открытым исходным кодом. Если оно вам полезно, пожалуйста, поддержите нас донатом — это поможет продолжать развитие.",
+  "appDonateTips": "Repo Zip Viewer — это бесплатное программное обеспечение с открытым исходным кодом. Если оно вам полезно, пожалуйста, поддержите нас донатом — это поможет продолжать развитие.",
   "appPrivacyPolicy": "Политика конфиденциальности",
   "appTerms": "Условия использования",
   
-  "onboardingWelcomeTitle": "repo zip Viewer - браузер git",
+  "onboardingWelcomeTitle": "Repo Zip Viewer - браузер git",
   "onboardingWelcomeBody": "Просматривайте git-репозитории оффлайн, импортируя .zip-файлы. Просматривайте в редакторе кода и рендере markdown в режиме только чтение. Идеально для обучения, проверки или исследования git-проектов на ходу быстро без настройки git.",
   "onboardingAppearanceTitle": "Выберите свой вид",
-  "onboardingAppearanceBody": "Выберите тему, подходящую вашему стилю и устройству. repo zip Viewer поддерживает светлые, темные и специальные режимы для лучшего опыта чтения.",
+  "onboardingAppearanceBody": "Выберите тему, подходящую вашему стилю и устройству. Repo Zip Viewer поддерживает светлые, темные и специальные режимы для лучшего опыта чтения.",
   "onboardingAppearanceTip": "Вы всегда можете изменить темы позже в Настройках.",
   "customizeYourExperience": "Настройте свой опыт",
   "eInkMode": "Режим e-Ink",
@@ -224,7 +223,7 @@
   "homeExtractItemsExtracted": "Распакованные файлы",
   "homeRetry": "Повторить",
   "tutorialProjectName": "Учебный проект",
-  "tutorialProjectReadmeTitle": "# Добро пожаловать в урок repo zip Viewer",
+  "tutorialProjectReadmeTitle": "# Добро пожаловать в урок Repo Zip Viewer",
   "tutorialProjectReadmeBody": "Этот README познакомит вас с функциями Проектов и покажет, как открывать файлы в режиме только чтение (без изменений).\n\n- Нажмите на проект, чтобы открыть его\n- Нажмите на markdown-файл для предпросмотра (нужно включить в Настройках → Проводник, по умолчанию выключено) или откройте в редакторе\n- В разделе PLUGINS & FEATURES включайте/выключайте функции, например Проводник файлов\n- Здесь можно импортировать .zip или удалять проекты\n\nПриятного использования! Оставьте отзыв с предложениями",
   "drawerCurrentProject": "Текущий проект",
   "drawerNoProjectOpen": "Проект не открыт",
@@ -260,7 +259,7 @@
   "drawerFolderNameHint": "Имя папки",
   "drawerEditorTheme": "Тема редактора",
   "drawerEditorWordWrap": "Перенос строк",
-  "drawerFeedbackBody": "Мы будем рады вашему отзыву о repo zip Viewer!",
+  "drawerFeedbackBody": "Мы будем рады вашему отзыву о Repo Zip Viewer!",
   "drawerSendFeedback": "Отправить отзыв",
   "drawerFirstInstalled": "Впервые установлен: {date}",
   "@drawerFirstInstalled": {
@@ -296,6 +295,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "Скачать",
+  "zipManagerTitle": "Менеджер ZIP",
+  "zipManagerDescription": "Скачивание, извлечение и управление ZIP в одном месте",
+  "zipManagerHeader": "Менеджер все в одном",
+  "zipManagerDownloadZipTitle": "Скачать ZIP",
+  "zipManagerDownloadZipHint": "владелец/репо",
+  "zipManagerNoZipsDownloaded": "Нет скачанных ZIP",
+  "zipManagerExtracting": "Извлечение {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "Ошибка загрузки ZIP: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "Извлечь ZIP",
+  "zipManagerMenuReextract": "Переизвлечь ZIP",
+  "zipManagerMenuDeleteExtracted": "Удалить извлеченное",
+  "zipManagerMenuDeleteAllZips": "Удалить все ZIP?",
+  "zipManagerMenuDeleteAllZipsHint": "Это удалит все скачанные файлы ZIP.",
+  "zipManagerExtractedZip": "{zip} извлечено",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip} удалено",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip} переизвлечено",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "Режим только чтение",
   "readonlyModeDescription": "Защита от случайных изменений файлов",
   "syntaxHighlightingName": "Подсветка синтаксиса",
