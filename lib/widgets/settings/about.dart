@@ -69,7 +69,7 @@ class _AboutState extends State<About> {
 //   _developerUnlockTapCount = 0;
 //   if (!alreadyEnabled) {
 //     Prefs().developerOptionsEnabled = true;
-//     GzipToast.show('Developer options enabled');
+//     RZVToast.show('Developer options enabled');
 //   }
 
 //   final navigator = Navigator.of(context, rootNavigator: true);
@@ -130,7 +130,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   subtitle: Text(version + (kDebugMode ? ' (debug)' : '')),
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: version));
-                    GzipToast.show(L10n.of(context).commonCopied);
+                    RZVToast.show(L10n.of(context).commonCopied);
                     // _handleDeveloperUnlockTap(context);
                   },
                 ),
@@ -209,7 +209,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                           IonIcons.logo_github,
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        url: 'https://github.com/uncrr/rzv',
+                        url: 'https://github.com/bilalsul/rzv',
                         mode: LaunchMode.externalApplication),
                     if (EnvVar.showTelegramLink)
                       linkIcon(

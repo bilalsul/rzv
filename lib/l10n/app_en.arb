@@ -1,20 +1,20 @@
 {
   "@@locale": "en",
-  "appName": "repo zip Viewer",
-  "appAboutTitle":"About repo zip Viewer",
+  "appName": "RZV",
+  "appAboutTitle":"About Repo Zip Viewer",
   "appAbout": "Extract .zip git codebases and view files in markdown and read-only mode code editor.",
   "appVersion": "Version",
   "appLicense": "License",
   "appAuthor": "Author",
   "appDonate": "Donate",
-  "appDonateTips": "repo zip Viewer is an open-source software that is free to use. If you find it helpful, please donate to support us to continue improving it.",
+  "appDonateTips": "Repo Zip Viewer is an open-source software that is free to use. If you find it helpful, please donate to support us to continue improving it.",
   "appPrivacyPolicy":"Privacy Policy",
   "appTerms":"Terms of Use",
 
-  "onboardingWelcomeTitle": "repo zip Viewer - git Browser",
+  "onboardingWelcomeTitle": "Repo Zip Viewer - git Browser",
   "onboardingWelcomeBody": "Browse git repositories offline by importing .zip files. View in code editor and markdown renderer in read-only mode. Perfect for learning, reviewing, or exploring git projects on the go quickly without setting up git.",
   "onboardingAppearanceTitle": "Choose Your Look",
-  "onboardingAppearanceBody": "Select a theme that suits your style and device. repo zip Viewer supports light, dark, and specialized modes for the best reading experience.",
+  "onboardingAppearanceBody": "Select a theme that suits your style and device. Repo Zip Viewer supports light, dark, and specialized modes for the best reading experience.",
   "onboardingAppearanceTip": "You can always change themes later in Settings.",
   "customizeYourExperience": "Customize Your Experience",
   "eInkMode": "e-Ink Mode",
@@ -129,6 +129,7 @@
   "commonDone":"Done",
   "commonUploading": "Uploading",
   "commonDownloading": "Downloading",
+  "commonDownload":"Download",
   "commonCopy": "Copy",
   "commonNewVersion": "New version!",
   "commonUpdate": "Update",
@@ -218,7 +219,7 @@
   "homeExtractItemsExtracted": "Files extracted",
   "homeRetry": "Retry",
   "tutorialProjectName": "Tutorial Project",
-  "tutorialProjectReadmeTitle": "# Welcome to the repo zip Viewer Tutorial",
+  "tutorialProjectReadmeTitle": "# Welcome to the Repo Zip Viewer Tutorial",
   "tutorialProjectReadmeBody": "This README walks you through Projects features and how to open files in read-only mode, no further files modifications.\n\n- Tap a project to open it\n- Tap a markdown file to preview it (make sure it is enabled in File Explorer Settings, disabled by default) or open it in the Editor\n- Use the PLUGINS & FEATURES section to toggle features like File Explorer\n- Import .zip file or remove projects from here\n\nEnjoy exploring the app! Leave a Review for suggestions",
   "drawerCurrentProject": "Current Project",
   "drawerNoProjectOpen": "No project open",
@@ -254,7 +255,7 @@
   "drawerFolderNameHint": "Folder name",
   "drawerEditorTheme": "Editor Theme",
   "drawerEditorWordWrap": "Word Wrap",
-  "drawerFeedbackBody": "We'd love to hear your feedback about repo zip Viewer!",
+  "drawerFeedbackBody": "We'd love to hear your feedback about Repo Zip Viewer!",
   "drawerSendFeedback": "Send Feedback",
   "drawerFirstInstalled": "First installed: {date}",
   "@drawerFirstInstalled": {
@@ -290,6 +291,52 @@
       "id": {}
     }
   },
+
+  "zipManagerTitle":"ZIP Manager",
+  "zipManagerDescription":"Download, Extract and Manage ZIP in one place",
+  "zipManagerHeader":"All in one manager",
+  "zipManagerDownloadZipTitle":"Download ZIP",
+  "zipManagerDownloadZipHint":"owner/repo",
+  "zipManagerNoZipsDownloaded":"No ZIPs downloaded",
+  "zipManagerExtracting":"Extracting {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips":"Error loading ZIPs: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract":"Extract ZIP",
+  "zipManagerMenuReextract":"Re-Extract ZIP",
+  "zipManagerMenuDeleteExtracted":"Delete Extracted",
+  "zipManagerMenuDeleteAllZips":"Delete all ZIPs?",
+  "zipManagerMenuDeleteAllZipsHint":"This will delete all downloaded ZIP files.",
+  "zipManagerExtractedZip":"Extracted {zip}",
+    "@zipManagerExtractedZip": {
+      "placeholders": {
+        "zip": {}
+      }
+    },
+
+  "zipManagerDeleteExtractedZip":"Deleted {zip}",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip":"Re-Extracted {zip}",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+
+
+
   "readonlyModeName": "Read-Only Mode",
   "readonlyModeDescription": "Prevent accidental edits to files",
   "syntaxHighlightingName": "Syntax Highlighting",

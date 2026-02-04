@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Clone the repository
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     - name: Ensure SHA pinned actions
-      uses: zgosalvez/github-actions-ensure-sha-pinned-actions@9e9574ef04ea69da568d6249bd69539ccc704e74
+      uses: zgosalvez/github-actions-ensure-sha-pinned-actions@6124774845927d14c601359ab8138699fa5b70c3
 
   verify_clean_release:
     name: Verify a clean release
@@ -35,7 +35,7 @@ jobs:
   #     fail-fast: false
   #   steps:
   #   - name: Clone the repository
-  #     uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+  #     uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
   #     with:
   #       path: code
   #   - name: Get Flutter version
@@ -45,7 +45,7 @@ jobs:
   #       pubspec-file-path: code/pubspec.yaml
   #   - name: Cache Flutter
   #     id: flutter-cache
-  #     uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+  #     uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
   #     with:
   #       path: flutter
   #       key: ${{ env.cache-name }}-ubuntu-latest-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/pubspec.lock') }}
@@ -57,7 +57,7 @@ jobs:
   #       cache-name: flutter-cache
   #   - name: Clone the Flutter repository
   #     if: steps.flutter-cache.outputs.cache-hit != 'true'
-  #     uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+  #     uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
   #     with:
   #       repository: flutter/flutter
   #       ref: ${{ steps.get-flutter-version.outputs.version }}
@@ -113,7 +113,7 @@ jobs:
       if: ${{ !(matrix.file == 'apk' && github.event.release.prerelease) || ((matrix.file == 'aab' || matrix.file == 'ipa') && !github.event.release.prerelease) }}
       run: exit
     - name: Clone the repository
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       with:
         path: code
     - name: Remove unrelated folders
@@ -127,7 +127,7 @@ jobs:
         pubspec-file-path: code/pubspec.yaml
     - name: Cache Flutter
       id: flutter-cache
-      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+      uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
       with:
         path: flutter
         key: ${{ env.cache-name }}-${{ matrix.os }}-${{ steps.get-flutter-version.outputs.version }}-${{ hashFiles('code/pubspec.lock') }}
@@ -139,7 +139,7 @@ jobs:
         cache-name: flutter-cache
     - name: Clone the Flutter repository
       if: steps.flutter-cache.outputs.cache-hit != 'true'
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       with:
         repository: flutter/flutter
         ref: ${{ steps.get-flutter-version.outputs.version }}
@@ -194,7 +194,7 @@ jobs:
     # apk/aab
     # - name: Upload the artifacts — ${{ matrix.file }}-mapping.txt file
     #   if: matrix.file == 'apk' || matrix.file == 'aab'
-    #   uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+    #   uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
     #   with:
     #     name: ${{ matrix.file }}-mapping.txt
     #     path: ${{ matrix.file }}-mapping.txt
@@ -223,7 +223,7 @@ jobs:
       run: zip --recurse-paths ${{ github.workspace }}/code/${{ matrix.file }}-symbols.zip .
       working-directory: code/${{ env.FLUTTER_DEBUG_INFO_PATH }}
     - name: Upload the artifacts — ${{ matrix.file }}-symbols.zip file
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:
         name: ${{ matrix.file }}-symbols.zip
         path: code/${{ matrix.file }}-symbols.zip
@@ -237,7 +237,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     # - name: Upload the artifacts — ${{ matrix.file }} file
-    #   uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+    #   uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
     #   with:
     #     name: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
     #     path: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
@@ -253,7 +253,7 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Upload the artifacts — armeabi-v7a Apk file
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:
         name: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
         path: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
@@ -269,7 +269,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload the artifacts — arm64-v8a Apk file
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:
         name: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
         path: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
@@ -285,7 +285,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload the artifacts — x86_64 Apk file
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:
         name: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
         path: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk

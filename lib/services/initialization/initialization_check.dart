@@ -29,7 +29,7 @@ class InitializationCheck {
 
   static Future<void> check() async {
     final result = await _checkVersion();
-    GitExpLog.info('Version check result: $result');
+    RZVLog.info('Version check result: $result');
     if (result == VersionCheckType.firstLaunch) {
       _handleFirstLaunch();
       _initDefaultPlugins();
@@ -56,7 +56,7 @@ class InitializationCheck {
   }
 
   static Future<void> _initDefaultPlugins() async {
-    GitExpLog.info('init default Plugins: Set Enabled');
+    RZVLog.info('init default Plugins: Set Enabled');
     Prefs().setPluginEnabled(Plugin.previewMarkdown.id, true);
     Prefs().setPluginEnabled(Plugin.syntaxHighlighting.id, true);
     Prefs().setPluginEnabled(Plugin.editorWordWrap.id, true);
@@ -69,7 +69,7 @@ class InitializationCheck {
   }
 
   static Future<void> _handleFirstLaunch() async {
-    GitExpLog.info('First launch detected, showing onboarding');
+    RZVLog.info('First launch detected, showing onboarding');
     final cv = await currentVersion;
     // wait 0.8 seconds to ensure the app is ready
     Future.delayed(const Duration(milliseconds: 800), () {
@@ -90,7 +90,7 @@ class InitializationCheck {
   static Future<void> _handleUpdateAvailable() async {
     final lv = await lastVersion;
     final cv = await currentVersion;
-    GitExpLog.info('Version update detected: $lv -> $cv');
+    RZVLog.info('Version update detected: $lv -> $cv');
     Future.delayed(const Duration(milliseconds: 800), () {
       showCupertinoSheet(
         context: navigatorKey.currentContext!,
@@ -107,6 +107,6 @@ class InitializationCheck {
   }
 
   static void _handleNormalStartup() {
-    GitExpLog.info('Normal startup, proceeding to main app');
+    RZVLog.info('Normal startup, proceeding to main app');
   }
 }

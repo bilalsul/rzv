@@ -48,7 +48,7 @@ class _ChangelogScreenState extends State<ChangelogScreen> {
           await rootBundle.loadString('assets/changelog.md');
       _changelogContent = _extractVersionChangelog(fullChangelog);
     } catch (e) {
-      GitExpLog.warning('Failed to load changelog from assets: $e');
+      RZVLog.warning('Failed to load changelog from assets: $e');
       _changelogContent = _getDefaultChangelog();
     } finally {
       _changelogContent = processChangelogContent(_changelogContent);
@@ -101,7 +101,7 @@ class _ChangelogScreenState extends State<ChangelogScreen> {
     final startIndex = lines.indexWhere((line) => line.trim() == versionHeader);
 
     if (startIndex == -1) {
-      GitExpLog.warning('Version $version not found in changelog');
+      RZVLog.warning('Version $version not found in changelog');
       return _getDefaultChangelog();
     }
 
