@@ -293,6 +293,8 @@
   },
 
   "zipManagerTitle":"ZIP Manager",
+  "zipManagerDescription":"Download, Extract and Manage ZIP in one place",
+  "zipManagerHeader":"All in one manager",
   "zipManagerDownloadZipTitle":"Download ZIP",
   "zipManagerDownloadZipHint":"owner/repo",
   "zipManagerNoZipsDownloaded":"No ZIPs downloaded",

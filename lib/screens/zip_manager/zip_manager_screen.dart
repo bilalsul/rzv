@@ -107,7 +107,7 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(L10n.of(context).zipManagerTitle), actions: [
+      appBar: AppBar(title: Text(L10n.of(context).zipManagerHeader), actions: [
         IconButton(onPressed: () => ref.read(zipEntriesProvider.notifier).reload(), icon: const Icon(Icons.refresh)),
         IconButton(onPressed: () async {
           final ok = await showDialog<bool>(context: context, builder: (c) => AlertDialog(
