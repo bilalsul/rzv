@@ -1,6 +1,5 @@
 {
   "@@locale": "ru",
-  "appName": "RZV",
   "appAboutTitle": "О Repo Zip Viewer",
   "appAbout": "Распаковывает .zip-архивы с git-кодовой базой и позволяет просматривать файлы в формате markdown и в редакторе кода в режиме только чтение.",
   "appVersion": "Версия",

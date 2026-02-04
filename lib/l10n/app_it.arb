@@ -1,6 +1,5 @@
 {
   "@@locale": "it",
-  "appName": "RZV",
   "appAboutTitle": "Informazioni su Repo Zip Viewer",
   "appAbout": "Estrai codebase git in formato .zip e visualizza i file in markdown e nell'editor di codice in modalità sola lettura.",
   "appVersion": "Versione",

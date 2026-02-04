@@ -1,6 +1,5 @@
 {
   "@@locale": "ko",
-  "appName": "RZV",
   "appAboutTitle": "Repo Zip Viewer 정보",
   "appAbout": ".zip git 코드베이스를 압축 해제하고 마크다운 및 읽기 전용 코드 편집기에서 파일을 확인하세요.",
   "appVersion": "버전",

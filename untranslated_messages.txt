@@ -1,1 +1,57 @@
-{}
+{
+  "ar": [
+    "appName"
+  ],
+
+  "de": [
+    "appName"
+  ],
+
+  "es": [
+    "appName"
+  ],
+
+  "fr": [
+    "appName"
+  ],
+
+  "it": [
+    "appName"
+  ],
+
+  "ja": [
+    "appName"
+  ],
+
+  "ko": [
+    "appName"
+  ],
+
+  "pt": [
+    "appName"
+  ],
+
+  "ru": [
+    "appName"
+  ],
+
+  "tr": [
+    "appName"
+  ],
+
+  "zh": [
+    "appName"
+  ],
+
+  "zh_CN": [
+    "appName"
+  ],
+
+  "zh_LZH": [
+    "appName"
+  ],
+
+  "zh_TW": [
+    "appName"
+  ]
+}

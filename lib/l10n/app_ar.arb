@@ -1,6 +1,5 @@
 {
   "@@locale": "ar",
-  "appName": "RZV",
   "appAboutTitle": "عن Repo Zip Viewer",
   "appAbout": "فك ضغط قواعد الكود من git بصيغة .zip وعرض الملفات كـ Markdown وفي محرر أكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
