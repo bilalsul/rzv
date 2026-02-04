@@ -105,7 +105,7 @@ class _AppShellState extends ConsumerState<AppShell> {
       locale: prefs.getEffectiveLocale(prefs, L10n.supportedLocales),
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
-      title: 'Gzip Explorer',
+      title: 'RZV',
       // theme: ThemeData.light(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),

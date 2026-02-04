@@ -129,6 +129,7 @@
   "commonDone":"Done",
   "commonUploading": "Uploading",
   "commonDownloading": "Downloading",
+  "commonDownload":"Download",
   "commonCopy": "Copy",
   "commonNewVersion": "New version!",
   "commonUpdate": "Update",
@@ -290,6 +291,52 @@
       "id": {}
     }
   },
+
+  "zipManagerTitle":"ZIP Manager",
+  "zipManagerDescription":"Download, Extract and Manage ZIP in one place",
+  "zipManagerHeader":"All in one manager",
+  "zipManagerDownloadZipTitle":"Download ZIP",
+  "zipManagerDownloadZipHint":"owner/repo",
+  "zipManagerNoZipsDownloaded":"No ZIPs downloaded",
+  "zipManagerExtracting":"Extracting {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips":"Error loading ZIPs: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract":"Extract ZIP",
+  "zipManagerMenuReextract":"Re-Extract ZIP",
+  "zipManagerMenuDeleteExtracted":"Delete Extracted",
+  "zipManagerMenuDeleteAllZips":"Delete all ZIPs?",
+  "zipManagerMenuDeleteAllZipsHint":"This will delete all downloaded ZIP files.",
+  "zipManagerExtractedZip":"Extracted {zip}",
+    "@zipManagerExtractedZip": {
+      "placeholders": {
+        "zip": {}
+      }
+    },
+
+  "zipManagerDeleteExtractedZip":"Deleted {zip}",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip":"Re-Extracted {zip}",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+
+
+
   "readonlyModeName": "Read-Only Mode",
   "readonlyModeDescription": "Prevent accidental edits to files",
   "syntaxHighlightingName": "Syntax Highlighting",

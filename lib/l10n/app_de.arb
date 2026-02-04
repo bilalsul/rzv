@@ -289,6 +289,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "Herunterladen",
+  "zipManagerTitle": "ZIP-Manager",
+  "zipManagerDescription": "Herunterladen, Extrahieren und Verwalten von ZIP an einem Ort",
+  "zipManagerHeader": "All-in-One-Manager",
+  "zipManagerDownloadZipTitle": "ZIP herunterladen",
+  "zipManagerDownloadZipHint": "Besitzer/Repo",
+  "zipManagerNoZipsDownloaded": "Keine ZIPs heruntergeladen",
+  "zipManagerExtracting": "Extrahiere {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "Fehler beim Laden der ZIPs: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "ZIP extrahieren",
+  "zipManagerMenuReextract": "ZIP erneut extrahieren",
+  "zipManagerMenuDeleteExtracted": "Extrahiertes löschen",
+  "zipManagerMenuDeleteAllZips": "Alle ZIPs löschen?",
+  "zipManagerMenuDeleteAllZipsHint": "Dies löscht alle heruntergeladenen ZIP-Dateien.",
+  "zipManagerExtractedZip": "{zip} extrahiert",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip} gelöscht",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip} erneut extrahiert",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+
   "readonlyModeName": "Nur-Lese-Modus",
   "readonlyModeDescription": "Verhindert versehentliches Bearbeiten von Dateien",
   "syntaxHighlightingName": "Syntax-Hervorhebung",

@@ -289,6 +289,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "Télécharger",
+  "zipManagerTitle": "Gestionnaire ZIP",
+  "zipManagerDescription": "Télécharger, extraire et gérer ZIP en un seul endroit",
+  "zipManagerHeader": "Gestionnaire tout-en-un",
+  "zipManagerDownloadZipTitle": "Télécharger ZIP",
+  "zipManagerDownloadZipHint": "propriétaire/dépôt",
+  "zipManagerNoZipsDownloaded": "Aucun ZIP téléchargé",
+  "zipManagerExtracting": "Extraction de {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "Erreur de chargement des ZIP : {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "Extraire ZIP",
+  "zipManagerMenuReextract": "Ré-extraire ZIP",
+  "zipManagerMenuDeleteExtracted": "Supprimer extrait",
+  "zipManagerMenuDeleteAllZips": "Supprimer tous les ZIP ?",
+  "zipManagerMenuDeleteAllZipsHint": "Cela supprimera tous les fichiers ZIP téléchargés.",
+  "zipManagerExtractedZip": "{zip} extrait",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip} supprimé",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip} ré-extrait",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "Mode Lecture Seule",
   "readonlyModeDescription": "Empêche les modifications accidentelles de fichiers",
   "syntaxHighlightingName": "Coloration Syntaxique",
