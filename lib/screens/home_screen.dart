@@ -9,6 +9,7 @@ import 'package:rzv/app/app_shell_3.dart';
 import 'package:rzv/enums/options/plugin.dart';
 import 'package:rzv/l10n/generated/L10n.dart';
 import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/services/state/projects_update_notifier.dart';
 import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:rzv/services/initialization/initialization_check.dart';
@@ -552,7 +553,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       _pathStack = <String>[];
       _selectedFileContent = null;
     });
+
+    // Listen for external updates to the projects folder (e.g. ZIP extractions).
+    _projectsListener = () {
+      Future.microtask(() async {
+        await _loadProjectsFromDisk();
+        if (!mounted) return;
+        setState(() {
+          _diskLoaded = true;
+        });
+      });
+    };
+    ProjectsUpdateNotifier.instance.addListener(_projectsListener!);
   }
+
+  @override
+  void dispose() {
+    if (_projectsListener != null) ProjectsUpdateNotifier.instance.removeListener(_projectsListener!);
+    super.dispose();
+  }
+
+  VoidCallback? _projectsListener;
 
   // Future<void> _refreshProjects(BuildContext context) async {
   //   try {

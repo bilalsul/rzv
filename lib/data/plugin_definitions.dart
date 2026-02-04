@@ -134,4 +134,11 @@ List<PluginDefinition> experimentalPlugins = [
   //   icon: Icons.monitor_heart_outlined,
   //   category: PluginCategory.experimental,
   // ),
+  PluginDefinition(
+    id: Plugin.zipManager.id,
+    name: Plugin.zipManager.id,
+    description: Plugin.zipManager.id,
+    icon: Icons.folder_zip,
+    category: PluginCategory.experimental,
+  ),
 ];
