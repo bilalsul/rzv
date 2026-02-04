@@ -1,7 +1,7 @@
 {
   "@@locale": "ar",
-  "appName": "repo zip Viewer",
-  "appAboutTitle": "عن repo zip Viewer",
+  "appName": "RZV",
+  "appAboutTitle": "عن Repo Zip Viewer",
   "appAbout": "فك ضغط قواعد الكود من git بصيغة .zip وعرض الملفات كـ Markdown وفي محرر أكواد بوضع القراءة فقط.",
   "appVersion": "الإصدار",
   "appLicense": "الترخيص",
@@ -11,10 +11,10 @@
   
   "appPrivacyPolicy": "سياسة الخصوصية",
   "appTerms": "شروط الاستخدام",
-  "onboardingWelcomeTitle": "repo zip Viewer - متصفح git",
+  "onboardingWelcomeTitle": "Repo Zip Viewer - متصفح git",
   "onboardingWelcomeBody": "تصفح مستودعات git دون اتصال بالإنترنت عبر استيراد ملفات .zip. عرض في محرر الكود ومُقدم markdown في وضع القراءة فقط. مثالي للتعلم أو المراجعة أو استكشاف مشاريع git أثناء التنقل بسرعة دون إعداد git.",
   "onboardingAppearanceTitle": "اختر مظهرك",
-  "onboardingAppearanceBody": "اختر موضوعًا يناسب أسلوبك وجهازك. يدعم repo zip Viewer أوضاع فاتحة وداكنة ومتخصصة لأفضل تجربة قراءة.",
+  "onboardingAppearanceBody": "اختر موضوعًا يناسب أسلوبك وجهازك. يدعم Repo Zip Viewer أوضاع فاتحة وداكنة ومتخصصة لأفضل تجربة قراءة.",
   "onboardingAppearanceTip": "يمكنك دائمًا تغيير الثيمات لاحقًا في الإعدادات.",
   "customizeYourExperience": "خصص تجربتك",
   "eInkMode": "وضع e-Ink",
@@ -254,7 +254,7 @@
   "drawerFolderNameHint": "اسم المجلد",
   "drawerEditorTheme": "سمة المحرر",
   "drawerEditorWordWrap": "التفاف النص",
-  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول repo zip Viewer",
+  "drawerFeedbackBody": "نود أن نسمع ملاحظاتك حول Repo Zip Viewer",
   "drawerSendFeedback": "إرسال ملاحظات",
   "drawerFirstInstalled": "أول تثبيت: {date}",
   "@drawerFirstInstalled": {
