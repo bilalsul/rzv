@@ -289,6 +289,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "下載",
+  "zipManagerTitle": "ZIP 管理者",
+  "zipManagerDescription": "下載、提取、管理 ZIP 於一處",
+  "zipManagerHeader": "一體管理者",
+  "zipManagerDownloadZipTitle": "下載 ZIP",
+  "zipManagerDownloadZipHint": "所有者/倉庫",
+  "zipManagerNoZipsDownloaded": "無下載 ZIP",
+  "zipManagerExtracting": "提取 {zip} 中",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "載入 ZIP 誤: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "提取 ZIP",
+  "zipManagerMenuReextract": "再提取 ZIP",
+  "zipManagerMenuDeleteExtracted": "刪除已提",
+  "zipManagerMenuDeleteAllZips": "刪所有 ZIP？",
+  "zipManagerMenuDeleteAllZipsHint": "此刪所有下載 ZIP 檔。",
+  "zipManagerExtractedZip": "已提 {zip}",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "已刪 {zip}",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "已再提 {zip}",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "唯讀",
   "readonlyModeDescription": "防誤改檔案",
   "syntaxHighlightingName": "語法燦然",

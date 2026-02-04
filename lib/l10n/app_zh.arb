@@ -289,6 +289,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "下载",
+  "zipManagerTitle": "ZIP 管理器",
+  "zipManagerDescription": "下载、提取和管理 ZIP 一站式",
+  "zipManagerHeader": "一体式管理器",
+  "zipManagerDownloadZipTitle": "下载 ZIP",
+  "zipManagerDownloadZipHint": "所有者/仓库",
+  "zipManagerNoZipsDownloaded": "无下载 ZIP",
+  "zipManagerExtracting": "正在提取 {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "加载 ZIP 错误: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "提取 ZIP",
+  "zipManagerMenuReextract": "重新提取 ZIP",
+  "zipManagerMenuDeleteExtracted": "删除已提取",
+  "zipManagerMenuDeleteAllZips": "删除所有 ZIP？",
+  "zipManagerMenuDeleteAllZipsHint": "这将删除所有下载的 ZIP 文件。",
+  "zipManagerExtractedZip": "已提取 {zip}",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "已删除 {zip}",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "已重新提取 {zip}",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "只读模式",
   "readonlyModeDescription": "防止意外修改文件",
   "syntaxHighlightingName": "语法高亮",

@@ -395,7 +395,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 //     ),
                                 //   ),
                                 // );
-                                GzipToast.show(L10n.of(context).settingsThemeApplied);
+                                RZVToast.show(L10n.of(context).settingsThemeApplied);
                               },
                               child: Text(
                                 L10n.of(context).commonApply,
@@ -772,7 +772,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 //     ),
                                 //   ),
                                 // );
-                                GzipToast.show(ok
+                                RZVToast.show(ok
                                           ? L10n.of(
                                               context,
                                             ).connectionSuccessful
@@ -866,7 +866,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 //     ),
                                 //   ),
                                 // );
-                                GzipToast.show(L10n.of(context).settingsAiSettingsReset);
+                                RZVToast.show(L10n.of(context).settingsAiSettingsReset);
 
                               },
                               child: Text(
@@ -1239,7 +1239,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     //     ),
                     //   ),
                     // );
-                      GzipToast.show(L10n.of(context).settingsProviderSaved(label));
+                      RZVToast.show(L10n.of(context).settingsProviderSaved(label));
 
                   },
                   child: Text(L10n.of(context).commonSave),

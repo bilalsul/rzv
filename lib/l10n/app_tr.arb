@@ -289,6 +289,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "İndir",
+  "zipManagerTitle": "ZIP Yöneticisi",
+  "zipManagerDescription": "ZIP indirme, çıkarma ve yönetme bir arada",
+  "zipManagerHeader": "Hepsi bir arada yönetici",
+  "zipManagerDownloadZipTitle": "ZIP İndir",
+  "zipManagerDownloadZipHint": "sahip/depo",
+  "zipManagerNoZipsDownloaded": "İndirilen ZIP yok",
+  "zipManagerExtracting": "{zip} çıkarılıyor",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "ZIP yükleme hatası: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "ZIP Çıkar",
+  "zipManagerMenuReextract": "ZIP Yeniden Çıkar",
+  "zipManagerMenuDeleteExtracted": "Çıkarılmışı Sil",
+  "zipManagerMenuDeleteAllZips": "Tüm ZIP'leri Sil?",
+  "zipManagerMenuDeleteAllZipsHint": "Bu, tüm indirilen ZIP dosyalarını siler.",
+  "zipManagerExtractedZip": "{zip} çıkarıldı",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip} silindi",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip} yeniden çıkarıldı",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "Salt Okunur Mod",
   "readonlyModeDescription": "Dosyalarda kazara değişiklik yapılmasını önler",
   "syntaxHighlightingName": "Sözdizimi Renklendirme",

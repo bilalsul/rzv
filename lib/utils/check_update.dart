@@ -40,9 +40,9 @@ Future<void> checkUpdate(bool manualCheck) async {
     );
   } catch (e) {
     if (manualCheck) {
-      GzipToast.show(L10n.of(context).commonFailed);
+      RZVToast.show(L10n.of(context).commonFailed);
     }
-    GitExpLog.severe('Update: Failed to fetch changelog: $e');
+    RZVLog.severe('Update: Failed to fetch changelog: $e');
     return;
   }
 
@@ -53,16 +53,16 @@ Future<void> checkUpdate(bool manualCheck) async {
   
   if (match == null) {
     if (manualCheck) {
-      GzipToast.show('Failed to parse changelog version');
+      RZVToast.show('Failed to parse changelog version');
     }
-    GitExpLog.severe('Update: No version found in changelog');
+    RZVLog.severe('Update: No version found in changelog');
     return;
   }
 
   String newVersion = match.group(1)!;
   String currentVersion = (await getAppVersion()).split('+').first;
   
-  GitExpLog.info('Update: Latest changelog version $newVersion, Current: $currentVersion');
+  RZVLog.info('Update: Latest changelog version $newVersion, Current: $currentVersion');
 
   // Extract the changelog content for the latest version
   String? latestVersionChangelog;
@@ -91,7 +91,7 @@ Future<void> checkUpdate(bool manualCheck) async {
       }
     }
   } catch (e) {
-    GitExpLog.warning('Update: Failed to extract changelog content: $e');
+    RZVLog.warning('Update: Failed to extract changelog content: $e');
     latestVersionChangelog = '';
   }
 
@@ -173,7 +173,7 @@ $changelogBody''',
     );
   } else {
     if (manualCheck) {
-      GzipToast.show(L10n.of(context).commonNoNewVersion);
+      RZVToast.show(L10n.of(context).commonNoNewVersion);
     }
   }
 }

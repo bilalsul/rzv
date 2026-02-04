@@ -295,6 +295,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "Скачать",
+  "zipManagerTitle": "Менеджер ZIP",
+  "zipManagerDescription": "Скачивание, извлечение и управление ZIP в одном месте",
+  "zipManagerHeader": "Менеджер все в одном",
+  "zipManagerDownloadZipTitle": "Скачать ZIP",
+  "zipManagerDownloadZipHint": "владелец/репо",
+  "zipManagerNoZipsDownloaded": "Нет скачанных ZIP",
+  "zipManagerExtracting": "Извлечение {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "Ошибка загрузки ZIP: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "Извлечь ZIP",
+  "zipManagerMenuReextract": "Переизвлечь ZIP",
+  "zipManagerMenuDeleteExtracted": "Удалить извлеченное",
+  "zipManagerMenuDeleteAllZips": "Удалить все ZIP?",
+  "zipManagerMenuDeleteAllZipsHint": "Это удалит все скачанные файлы ZIP.",
+  "zipManagerExtractedZip": "{zip} извлечено",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "{zip} удалено",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "{zip} переизвлечено",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  
   "readonlyModeName": "Режим только чтение",
   "readonlyModeDescription": "Защита от случайных изменений файлов",
   "syntaxHighlightingName": "Подсветка синтаксиса",

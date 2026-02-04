@@ -40,8 +40,8 @@ Future<void> main() async {
   // }
 
   initBasePath();
-  GitExpLog.init();
-  GitExpError.init();
+  RZVLog.init();
+  RZVError.init();
 
   SmartDialog.config.custom = SmartConfigCustom(
     // maskColor: Colors.black.withAlpha(35),
@@ -157,7 +157,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
       // theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: prefs.themeMode,
-      title: 'Gzip Explorer',
+      title: 'RZV',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: prefs.accentColor),
         useMaterial3: true,

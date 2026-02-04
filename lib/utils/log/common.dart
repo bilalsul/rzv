@@ -7,15 +7,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
-class GitExpLog {
-  static final log = Logger('GitExplorerLog');
+class RZVLog {
+  static final log = Logger('RZVLog');
   static late File? logFile;
 
   Level level;
   DateTime time;
   String message;
 
-  GitExpLog(this.level, this.time, this.message);
+  RZVLog(this.level, this.time, this.message);
 
   get color => level == Level.SEVERE
       ? Colors.red
@@ -23,15 +23,15 @@ class GitExpLog {
           ? Colors.orange
           : Colors.grey;
 
-  static GitExpLog parse(String log) {
+  static RZVLog parse(String log) {
     try {
       final logParts = log.split('^*^');
       final level = stringToLevel(logParts[0]);
       final time = DateTime.parse(logParts[1].trim());
       final message = logParts[2];
-      return GitExpLog(level, time, message);
+      return RZVLog(level, time, message);
     } catch (e) {
-      return GitExpLog(Level.SEVERE, DateTime.now(), 'Parse log error: $e');
+      return RZVLog(Level.SEVERE, DateTime.now(), 'Parse log error: $e');
     }
   }
 

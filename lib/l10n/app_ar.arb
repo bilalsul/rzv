@@ -289,6 +289,50 @@
       "id": {}
     }
   },
+
+  "commonDownload": "تنزيل",
+  "zipManagerTitle": "ZIP Manager",
+  "zipManagerDescription": "تنزيل واستخراج وإدارة ZIP في مكان واحد",
+  "zipManagerHeader": "مدير الكل في واحد",
+  "zipManagerDownloadZipTitle": "تنزيل ZIP",
+  "zipManagerDownloadZipHint": "صاحب/مستودع",
+  "zipManagerNoZipsDownloaded": "لم يتم تنزيل أي ZIP",
+  "zipManagerExtracting": "جاري استخراج {zip}",
+  "@zipManagerExtracting": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerErrorLoadingZips": "خطأ في تحميل ZIP: {err}",
+  "@zipManagerErrorLoadingZips": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "zipManagerMenuExtract": "استخراج ZIP",
+  "zipManagerMenuReextract": "إعادة استخراج ZIP",
+  "zipManagerMenuDeleteExtracted": "حذف المستخرج",
+  "zipManagerMenuDeleteAllZips": "حذف كل ZIP؟",
+  "zipManagerMenuDeleteAllZipsHint": "سيؤدي هذا إلى حذف جميع ملفات ZIP المحملة.",
+  "zipManagerExtractedZip": "تم استخراج {zip}",
+  "@zipManagerExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerDeleteExtractedZip": "تم حذف {zip}",
+  "@zipManagerDeleteExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+  "zipManagerReExtractedZip": "تم إعادة استخراج {zip}",
+  "@zipManagerReExtractedZip": {
+    "placeholders": {
+      "zip": {}
+    }
+  },
+
   "readonlyModeName": "وضع القراءة فقط",
   "readonlyModeDescription": "يمنع التعديلات العرضية على الملفات",
   "syntaxHighlightingName": "تمييز الصيغة",

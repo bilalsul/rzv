@@ -688,7 +688,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                   //     content: Text(L10n.of(context).drawerFeedbackComingSoon),
                   //   ),
                   // );
-                  GzipToast.show(L10n.of(context).drawerFeedbackComingSoon);
+                  RZVToast.show(L10n.of(context).drawerFeedbackComingSoon);
 
                 }
                 Navigator.of(context).pop();
@@ -776,7 +776,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   SnackBar(content: Text(L10n.of(context).commonFailed)),
                 // );
-                GzipToast.show(L10n.of(context).commonFailed);
+                RZVToast.show(L10n.of(context).commonFailed);
 
               }
               Navigator.of(context).pop();
@@ -788,28 +788,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  // void _showAboutDialogLicenses() {
-  //   final appState = ref.read(appStateProvider);
-
-  //   showAboutDialog(
-  //     context: context,
-  //     applicationName: L10n.of(context).appName,
-  //     applicationVersion: 'v${appState.appVersion}',
-  //     applicationIcon: Image.asset('assets/icons/git-explorer-icon.png' , height: 48, width: 48,),
-  //     children: [
-  //       const SizedBox(height: 16),
-  //       Text(L10n.of(context).appAbout),
-  //       const SizedBox(height: 16),
-  //       Text(
-  //         L10n.of(context).drawerFirstInstalled(_formatDate(appState.firstInstallDate, context)),
-  //         style: Theme.of(context).textTheme.bodySmall,
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Localized plugin name lookup. Keep a switch on plugin id so the id stays
-  // canonical for pref lookups, while the displayed string comes from L10n.
   String _localizedPluginName(String id, BuildContext context) {
     final l = L10n.of(context);
     switch (id) {
@@ -819,30 +797,18 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.syntaxHighlightingName;
       case 'code_folding':
         return l.codeFoldingName;
-      // case 'bracket_matching':
-      //   return l.bracketMatchingName;
       case 'advanced_editor_options':
         return l.advancedEditorName;
-      case 'git_history':
-        return l.gitHistoryName;
-      // case 'git_lens':
-      //   return l.gitLensName;
-      // case 'branch_manager':
-      //   return l.branchManagerName;
       case 'file_explorer':
         return l.fileExplorerName;
-      // case 'search_replace':
-      //   return l.searchReplaceName;
       case 'terminal':
         return l.terminalName;
       case 'theme_customizer':
         return l.themeCustomizerName;
       case 'ai_assist':
         return l.aiAssistName;
-      // case 'real_time_collab':
-      //   return l.realtimeCollabName;
-      // case 'performance_monitor':
-      //   return l.performanceMonitorName;
+      case 'zip_manager':
+        return l.zipManagerTitle;
       default:
         return id;
     }
@@ -857,30 +823,18 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
         return l.syntaxHighlightingDescription;
       case 'code_folding':
         return l.codeFoldingDescription;
-      // case 'bracket_matching':
-      //   return l.bracketMatchingDescription;
       case 'advanced_editor_options':
         return l.advancedEditorDescription;
-      case 'git_history':
-        return l.gitHistoryDescription;
-      // case 'git_lens':
-      //   return l.gitLensDescription;
-      // case 'branch_manager':
-      //   return l.branchManagerDescription;
       case 'file_explorer':
         return l.fileExplorerDescription;
-      // case 'search_replace':
-      //   return l.searchReplaceDescription;
       case 'terminal':
         return l.terminalDescription;
       case 'theme_customizer':
         return l.themeCustomizerDescription;
       case 'ai_assist':
         return l.aiAssistDescription;
-      // case 'real_time_collab':
-      //   return l.realtimeCollabDescription;
-      // case 'performance_monitor':
-      //   return l.performanceMonitorDescription;
+      case 'zip_manager':
+        return l.zipManagerDescription;
       default:
         return '';
     }
