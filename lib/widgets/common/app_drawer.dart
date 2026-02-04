@@ -688,7 +688,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                   //     content: Text(L10n.of(context).drawerFeedbackComingSoon),
                   //   ),
                   // );
-                  GzipToast.show(L10n.of(context).drawerFeedbackComingSoon);
+                  RZVToast.show(L10n.of(context).drawerFeedbackComingSoon);
 
                 }
                 Navigator.of(context).pop();
@@ -776,7 +776,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   SnackBar(content: Text(L10n.of(context).commonFailed)),
                 // );
-                GzipToast.show(L10n.of(context).commonFailed);
+                RZVToast.show(L10n.of(context).commonFailed);
 
               }
               Navigator.of(context).pop();

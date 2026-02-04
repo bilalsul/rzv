@@ -71,7 +71,7 @@ class ZipDownloadController extends ChangeNotifier {
       _setState(_state.copyWith(status: AsyncStatus.success, progress: 1.0, downloadedBytes: fileSize, totalBytes: fileSize, message: ownerRepo, savedPath: file.path));
 
       // show toast and then clear ephemeral message after a short delay
-      GzipToast.show('Downloaded $ownerRepo', duration: 2500);
+      RZVToast.show('Downloaded $ownerRepo', duration: 2500);
       Future.delayed(const Duration(seconds: 3), () {
         // only clear ephemeral message if still success and savedPath unchanged
         if (_disposed) return;
