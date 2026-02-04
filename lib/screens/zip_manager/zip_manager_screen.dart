@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rzv/l10n/generated/L10n.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
+import 'package:rzv/utils/toast/common.dart';
 import 'zip_manager_controller.dart';
 import 'zip_download_controller.dart';
 import 'zip_download_state.dart';
@@ -104,13 +107,13 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('ZIP Manager'), actions: [
+      appBar: AppBar(title: Text(L10n.of(context).zipManagerTitle), actions: [
         IconButton(onPressed: () => ref.read(zipEntriesProvider.notifier).reload(), icon: const Icon(Icons.refresh)),
         IconButton(onPressed: () async {
           final ok = await showDialog<bool>(context: context, builder: (c) => AlertDialog(
-            title: const Text('Delete all ZIPs?'),
-            content: const Text('This will delete all downloaded ZIP files.'),
-            actions: [TextButton(onPressed: ()=>Navigator.of(c).pop(false), child: const Text('Cancel')), TextButton(onPressed: ()=>Navigator.of(c).pop(true), child: const Text('Delete'))],
+            title: Text(L10n.of(context).zipManagerMenuDeleteAllZips),
+            content: Text(L10n.of(context).zipManagerMenuDeleteAllZipsHint),
+            actions: [TextButton(onPressed: ()=>Navigator.of(c).pop(false), child: Text(L10n.of(context).commonCancel)), TextButton(onPressed: ()=>Navigator.of(c).pop(true), child: Text(L10n.of(context).commonDelete))],
           ));
           if (ok == true) {
             await ref.read(zipManagerControllerProvider).deleteAllZips();
@@ -139,14 +142,14 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text('Download ZIP (owner/repo)', style: TextStyle(fontWeight: FontWeight.w600)),
+                   Text(L10n.of(context).zipManagerDownloadZipTitle, style: TextStyle(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
                     Row(
                       children: [
                         Expanded(
                           child: TextField(
                             controller: _downloadTc,
-                            decoration: const InputDecoration(hintText: 'owner/repo'),
+                            decoration: InputDecoration(hintText: L10n.of(context).zipManagerDownloadZipHint),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -211,6 +214,9 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                       children: [
                         Expanded(
                           child: FilledButton(
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(Prefs().secondaryColor),
+                            ),
                             onPressed: dlState.status == AsyncStatus.loading
                                 ? null
                                 : () {
@@ -218,13 +224,22 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                                     if (input.isEmpty) return;
                                     downloadCtrlLocal.download(input, provider: _selectedProvider);
                                   },
-                            child: const Text('Download'),
+                            child: Text(L10n.of(context).commonDownload),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        FilledButton(
-                          onPressed: dlState.status == AsyncStatus.loading ? () => downloadCtrlLocal.cancel() : null,
-                          child: const Text('Cancel'),
+                        TextButton(
+                          style: ButtonStyle(
+                            textStyle: WidgetStateProperty.all(TextStyle(
+                              color: Prefs().accentColor,
+                            ),
+                            ),
+                          ),
+                          onPressed: dlState.status == AsyncStatus.loading ? () {
+                            downloadCtrlLocal.cancel();
+                            RZVToast.show(L10n.of(context).commonCanceled, duration: 2500);
+                          } : null,
+                          child: Text(L10n.of(context).commonCancel),
                         ),
                       ],
                     ),
@@ -252,9 +267,9 @@ class ZipList extends ConsumerWidget {
     final asyncEntries = ref.watch(zipEntriesProvider);
     return asyncEntries.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Error loading ZIPs: $err')),
+      error: (err, stack) => Center(child: Text(L10n.of(context).zipManagerErrorLoadingZips(err))),
       data: (entries) => entries.isEmpty
-          ? const Center(child: Text('No ZIPs downloaded'))
+          ? Center(child: Text(L10n.of(context).zipManagerNoZipsDownloaded))
           : ListView.builder(
               itemCount: entries.length,
               itemBuilder: (context, idx) {
@@ -282,7 +297,7 @@ class ZipList extends ConsumerWidget {
                               dialogSetState = setState;
                               final value = (total != null && total! > 0) ? (extracted / total!) : null;
                               return AlertDialog(
-                                title: Text('Extracting ${e.filename}'),
+                                title: Text(L10n.of(context).zipManagerExtracting(e.filename)),
                                 content: SizedBox(
                                   width: 400,
                                   child: Column(
@@ -302,7 +317,7 @@ class ZipList extends ConsumerWidget {
                                       manager.cancel();
                                       if (dialogContext != null && Navigator.of(dialogContext!).canPop()) Navigator.of(dialogContext!).pop();
                                     },
-                                    child: Text('Cancel', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                                    child: Text(L10n.of(context).commonCancel, style: TextStyle(color: Theme.of(context).colorScheme.primary)),
                                   )
                                 ],
                               );
@@ -322,26 +337,31 @@ class ZipList extends ConsumerWidget {
                         // Close dialog if still open
                         if (dialogContext != null && Navigator.of(dialogContext!).canPop()) Navigator.of(dialogContext!).pop();
                         // Refresh list after extraction completes
+                        RZVToast.show(L10n.of(context).zipManagerExtractedZip(e.filename), duration: 2500);
                         ref.read(zipEntriesProvider.notifier).reload();
                       }
                       if (act == 'delete') {
                         await ref.read(zipManagerControllerProvider).deleteZip(e.filename);
                         ref.read(zipEntriesProvider.notifier).reload();
+                        RZVToast.show(L10n.of(context).zipManagerDeleteExtractedZip(e.filename), duration: 2500);
                       }
                       if (act == 'deleteExtracted') {
                         await ref.read(zipManagerControllerProvider).deleteExtraction(e.filename);
                         ref.read(zipEntriesProvider.notifier).reload();
+                        RZVToast.show(L10n.of(context).zipManagerDeleteExtractedZip(e.filename), duration: 2500);
+
                       }
                       if (act == 'reExtract') {
                         await ref.read(zipManagerControllerProvider).reExtract(e.filename);
                         ref.read(zipEntriesProvider.notifier).reload();
+                        RZVToast.show(L10n.of(context).zipManagerReExtractedZip(e.filename), duration: 2500);
                       }
                     },
                     itemBuilder: (c) => [
-                      const PopupMenuItem(value: 'extract', child: Text('Extract')),
-                      const PopupMenuItem(value: 'reExtract', child: Text('Re-extract')),
-                      const PopupMenuItem(value: 'delete', child: Text('Delete ZIP')),
-                      const PopupMenuItem(value: 'deleteExtracted', child: Text('Delete Extracted')),
+                      PopupMenuItem(value: 'extract', child: Text(L10n.of(context).zipManagerMenuExtract)),
+                      PopupMenuItem(value: 'reExtract', child: Text(L10n.of(context).zipManagerMenuReextract)),
+                      PopupMenuItem(value: 'delete', child: Text(L10n.of(context).commonDelete)),
+                      PopupMenuItem(value: 'deleteExtracted', child: Text(L10n.of(context).zipManagerMenuDeleteExtracted)),
                     ],
                   ),
                 );
@@ -422,7 +442,7 @@ class _DownloadProgressDisplay extends StatelessWidget {
               if (total != null && total > 0)
                 Text('${_human(downloaded)} / ${_human(total)}')
               else
-                Text('Downloading ${_human(downloaded)}'),
+                Text('${L10n.of(context).commonDownloading} ${_human(downloaded)}'),
               // Show percent on the right when available
               if (total != null && total > 0)
                 Text('${pct.toStringAsFixed(1)}%')
@@ -437,7 +457,7 @@ class _DownloadProgressDisplay extends StatelessWidget {
     if (state.status == AsyncStatus.success) {
       return Row(
         children: [
-          Expanded(child: Text(state.message != null ? 'Downloaded: ${state.message}' : 'Saved')),
+          Expanded(child: Text(state.message != null ? '${L10n.of(context).commonDone}: ${state.message}' : L10n.of(context).commonSaved)),
           const SizedBox(width: 8),
         ],
       );

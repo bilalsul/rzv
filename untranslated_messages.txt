@@ -1,57 +1,267 @@
 {
   "ar": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "de": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "es": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "fr": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "it": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "ja": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "ko": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "pt": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "ru": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "tr": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "zh": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "zh_CN": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "zh_LZH": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ],
 
   "zh_TW": [
-    "appName"
+    "appName",
+    "commonDownload",
+    "zipManagerTitle",
+    "zipManagerDownloadZipTitle",
+    "zipManagerDownloadZipHint",
+    "zipManagerNoZipsDownloaded",
+    "zipManagerExtracting",
+    "zipManagerErrorLoadingZips",
+    "zipManagerMenuExtract",
+    "zipManagerMenuReextract",
+    "zipManagerMenuDeleteExtracted",
+    "zipManagerMenuDeleteAllZips",
+    "zipManagerMenuDeleteAllZipsHint",
+    "zipManagerExtractedZip",
+    "zipManagerDeleteExtractedZip",
+    "zipManagerReExtractedZip"
   ]
 }
