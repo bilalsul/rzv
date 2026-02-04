@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+- Feature: In App Zip Download, Add Multi-Provider (Github, Gitlab, Bitbucket) Zip Download and Manager
+
+- 功能：应用内 ZIP 下载，添加多提供商（GitHub、GitLab、Bitbucket）ZIP 下载和管理
+
 ## 0.3.1
 - Fix: Rebranded application to "repo zip Viewer (rzv)" with updated app name across all platforms
 - Fix: Updated and fixed all external links (GitHub, Telegram, website) to ensure they point to latest versions
