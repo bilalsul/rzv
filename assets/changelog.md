@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.1
+- Fix: give INTERNET permission for downloading ZIPs and Check for Updates
+- Fix: Update changelog Check for Updates
+
+- 修复：允许通过 Internet 下载 ZIP 文件并检查更新
+- 修复：更新变更日志并检查更新
+
 ## 0.6.0
 - Feature: In App Zip Download, Add Multi-Provider (Github, Gitlab, Bitbucket) Zip Download and Manager
 
