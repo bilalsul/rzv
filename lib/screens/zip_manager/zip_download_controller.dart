@@ -7,6 +7,7 @@ import 'package:rzv/services/network/gitlab_zip_service.dart';
 import 'package:rzv/services/network/bitbucket_zip_service.dart';
 import 'package:rzv/services/state/async_status.dart';
 import 'package:rzv/services/state/side_effect_handler.dart';
+import 'package:rzv/utils/log/common.dart';
 import 'zip_download_state.dart';
 import 'package:rzv/utils/toast/common.dart';
 
@@ -77,7 +78,7 @@ class ZipDownloadController extends ChangeNotifier {
         if (_disposed) return;
         _setState(_state.copyWith(message: null));
       });
-    } on OperationCanceledException {
+    } on RZVLog {
       _setState(_state.copyWith(status: AsyncStatus.idle, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: 'Cancelled'));
     } catch (e) {
       final msg = e is Exception ? e.toString() : 'Unknown error';
