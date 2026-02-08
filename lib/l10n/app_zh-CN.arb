@@ -296,6 +296,7 @@
   "zipManagerHeader": "一体式管理器",
   "zipManagerDownloadZipTitle": "下载 ZIP",
   "zipManagerDownloadZipHint": "所有者/仓库",
+  "zipManagerDownloadBranchHint": "分支（可选）",
   "zipManagerNoZipsDownloaded": "无下载 ZIP",
   "zipManagerExtracting": "正在提取 {zip}",
   "@zipManagerExtracting": {

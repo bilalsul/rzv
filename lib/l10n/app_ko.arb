@@ -302,6 +302,7 @@
   "zipManagerHeader": "올인원 관리자",
   "zipManagerDownloadZipTitle": "ZIP 다운로드",
   "zipManagerDownloadZipHint": "소유자/리포지토리",
+  "zipManagerDownloadBranchHint": "브랜치 (선택)",
   "zipManagerNoZipsDownloaded": "다운로드된 ZIP 없음",
   "zipManagerExtracting": "{zip} 추출 중",
   "@zipManagerExtracting": {

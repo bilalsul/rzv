@@ -13,8 +13,6 @@ class GitHubZipService {
   GitHubZipService._();
   static final instance = GitHubZipService._();
 
-  static final _candidateBranches = ['main', 'master'];
-
   /// Validate owner/repo input. Reject URLs.
   void _validateRepoId(String input) {
     if (input.trim().isEmpty) RZVLog.warning('Github - Repository cannot be empty');
@@ -27,38 +25,63 @@ class GitHubZipService {
     }
   }
 
+  Future<String> _getDefaultBranch(String owner, String repo) async {
+    final apiUrl = Uri.parse('https://api.github.com/repos/$owner/$repo');
+    final client = HttpClient();
+    try {
+      final req = await client.getUrl(apiUrl);
+      req.headers.set('User-Agent', 'rzv');
+      final resp = await req.close();
+      if (resp.statusCode == 200) {
+        final body = await resp.transform(const Utf8Decoder()).join();
+        final match = RegExp(r'"default_branch"\s*:\s*"([^"]+)"').firstMatch(body);
+        final defaultBranch = match?.group(1);
+        if (defaultBranch != null && defaultBranch.isNotEmpty) {
+          return defaultBranch;
+        }
+      } else if (resp.statusCode == 404) {
+        throw RZVLog.warning('Github - Repository not found');
+      }
+      throw RZVLog.warning('Github - Failed to determine default branch');
+    } finally {
+      try {
+        client.close(force: true);
+      } catch (_) {}
+    }
+  }
+
   Future<File> downloadRepoZip(
     String repoId, {
     required CancellationToken token,
     DownloadProgress? onProgress,
+    String? branch,
   }) async {
     _validateRepoId(repoId);
     final parts = repoId.split('/');
     final owner = parts[0];
     final repo = parts[1];
 
+    final branchToUse = branch?.trim().isNotEmpty == true
+        ? branch!.trim()
+        : await _getDefaultBranch(owner, repo);
+
     final zipsDir = await AppDirectories.zipsDirectory();
-    final filename = '${owner}_${repo}.zip';
+    final filename = '${owner}_${repo}_$branchToUse.zip';
     final tempFile = File(p.join(zipsDir.path, filename + '.part'));
     final outFile = File(p.join(zipsDir.path, filename));
 
-    // Try candidate branches then fallback to API default by requesting /repos/{owner}/{repo}
-    final branches = List<String>.from(_candidateBranches);
-
-    // Helper to perform single attempt
-    Future<File> _attemptDownload(String branch) async {
-      final url = Uri.parse('https://github.com/$owner/$repo/archive/refs/heads/$branch.zip');
+    Future<File> _attemptDownload(String branchName) async {
+      final url = Uri.parse('https://github.com/$owner/$repo/archive/refs/heads/$branchName.zip');
       final client = HttpClient();
       try {
         final req = await client.getUrl(url);
         final resp = await req.close();
         if (resp.statusCode == 404) {
-          RZVLog.warning('Github - Branch $branch not found (404)');
+          throw RZVLog.warning('Github - Branch $branchName not found (404)');
         }
         if (resp.statusCode >= 400) {
-          RZVLog.warning('Github - Download Attempt HTTP ${resp.statusCode}');
+          throw RZVLog.warning('Github - Download HTTP ${resp.statusCode}');
         }
-
 
         final contentLength = resp.contentLength == -1 ? null : resp.contentLength;
         if (await tempFile.exists()) await tempFile.delete();
@@ -103,40 +126,6 @@ class GitHubZipService {
       }
     }
 
-    for (final b in branches) {
-      try {
-        return await _attemptDownload(b);
-      } on RZVLog catch (e) {
-        if (RZVLog.warning('First Attempt to Download ${e.message.contains('404') ? 'Succeeded' : 'Failed'}')) continue;
-        try {
-          return await _attemptDownload(b);
-        } catch (e) {
-          RZVLog.warning('Second Attempt to Download Failed with $e');
-        }
-      }
-    }
-
-    // Fallback: query repo metadata to get default branch
-    try {
-      final apiUrl = Uri.parse('https://api.github.com/repos/$owner/$repo');
-      final client = HttpClient();
-      final req = await client.getUrl(apiUrl);
-      req.headers.set('User-Agent', 'rzv');
-      final resp = await req.close();
-      if (resp.statusCode == 200) {
-        final body = await resp.transform(const Utf8Decoder()).join();
-        // crude default branch extraction
-        final match = RegExp('"default_branch"\s*:\s*"([^"]+)"').firstMatch(body);
-        final defaultBranch = match?.group(1);
-        if (defaultBranch != null && defaultBranch.isNotEmpty) {
-          return await _attemptDownload(defaultBranch);
-        }
-      } else if (resp.statusCode == 404) {
-        throw RZVLog.warning('Github - Repository not found');
-      }
-      throw RZVLog.warning('Github - Failed to determine default branch');
-    } catch (e) {
-      throw RZVLog.warning('Github - Download failed: $e');
-    }
+    return await _attemptDownload(branchToUse);
   }
 }

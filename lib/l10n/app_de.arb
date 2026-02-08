@@ -296,6 +296,7 @@
   "zipManagerHeader": "All-in-One-Manager",
   "zipManagerDownloadZipTitle": "ZIP herunterladen",
   "zipManagerDownloadZipHint": "Besitzer/Repo",
+  "zipManagerDownloadBranchHint": "Branch (optional)",
   "zipManagerNoZipsDownloaded": "Keine ZIPs heruntergeladen",
   "zipManagerExtracting": "Extrahiere {zip}",
   "@zipManagerExtracting": {
