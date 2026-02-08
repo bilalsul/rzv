@@ -33,54 +33,68 @@ class ZipDownloadController extends ChangeNotifier {
   }
 
   Future<void> download(String ownerRepo, {ZipProvider provider = ZipProvider.github}) async {
-    if (_state.status == AsyncStatus.loading) return;
-    // create a fresh token for this run
+    if (_state.status == AsyncStatus.loading) {
+      RZVLog.info('Zip Download: Ignored - already loading');
+      return;
+    }
     _token?.cancel();
     _token = CancellationToken();
 
+    RZVLog.info('Zip Download: Starting download for $ownerRepo (provider: $provider)');
     _setState(_state.copyWith(status: AsyncStatus.loading, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: null));
     try {
       final token = _token!;
       late final File file;
-      // Route to the selected provider's service
-        if( provider == ZipProvider.github) {
-          file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
-            if (token.isCanceled) return;
-            final p = (total != null && total > 0) ? (dl / total) : 0.0;
-            _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
-          });
-        }
-        if(provider == ZipProvider.gitlab) {
-          file = await GitLabZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
-            if (token.isCanceled) return;
-            final p = (total != null && total > 0) ? (dl / total) : 0.0;
-            _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
-          });
-        }
-        if( provider == ZipProvider.bitbucket) {
-          
-          file = await BitbucketZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
-            if (token.isCanceled) return;
-            final p = (total != null && total > 0) ? (dl / total) : 0.0;
-            _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
-          });
-        }
+      if (provider == ZipProvider.github) {
+        file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+          if (token.isCanceled) return;
+          final p = (total != null && total > 0) ? (dl / total) : 0.0;
+          _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
+        });
+      } else if (provider == ZipProvider.gitlab) {
+        file = await GitLabZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+          if (token.isCanceled) return;
+          final p = (total != null && total > 0) ? (dl / total) : 0.0;
+          _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
+        });
+      } else if (provider == ZipProvider.bitbucket) {
+        file = await BitbucketZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+          if (token.isCanceled) return;
+          final p = (total != null && total > 0) ? (dl / total) : 0.0;
+          _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
+        });
+      } else {
+        throw StateError('Unknown provider: $provider');
+      }
       if (token.isCanceled) throw OperationCanceledException();
 
       final fileSize = await file.length();
-      // save path separately and show an ephemeral owner/repo success message
+      RZVLog.info('Zip Download: Completed - $ownerRepo saved to ${file.path}');
       _setState(_state.copyWith(status: AsyncStatus.success, progress: 1.0, downloadedBytes: fileSize, totalBytes: fileSize, message: ownerRepo, savedPath: file.path));
 
-      // show toast and then clear ephemeral message after a short delay
       RZVToast.show('Downloaded $ownerRepo', duration: 2500);
       Future.delayed(const Duration(seconds: 3), () {
-        // only clear ephemeral message if still success and savedPath unchanged
         if (_disposed) return;
-        _setState(_state.copyWith(message: null));
+        if (_state.status == AsyncStatus.success) {
+          _setState(_state.copyWith(message: null));
+        }
       });
-    } on RZVLog {
-      _setState(_state.copyWith(status: AsyncStatus.idle, progress: 0.0, downloadedBytes: 0, totalBytes: null, message: 'Cancelled'));
+    } on OperationCanceledException {
+      RZVLog.info('Zip Download: Caught OperationCanceledException - download cancelled');
+      _setState(ZipDownloadState());
+    } on StateError catch (e) {
+      if (e.message.toLowerCase().contains('cancel')) {
+        RZVLog.info('Zip Download: Caught StateError (cancel) - download cancelled');
+        _setState(ZipDownloadState());
+      } else {
+        RZVLog.severe('Zip Download: StateError - $e');
+        rethrow;
+      }
+    } on RZVLog catch (e) {
+      RZVLog.warning('Zip Download: RZVLog error - ${e.message}');
+      _setState(ZipDownloadState());
     } catch (e) {
+      RZVLog.severe('Zip Download: Unexpected error - $e');
       final msg = e is Exception ? e.toString() : 'Unknown error';
       _setState(_state.copyWith(status: AsyncStatus.error, message: msg));
     } finally {
@@ -89,7 +103,13 @@ class ZipDownloadController extends ChangeNotifier {
   }
 
   void cancel() {
+    if (_token?.isCanceled ?? true) {
+      RZVLog.info('Zip Download: cancel() called but token already cancelled or null');
+      return;
+    }
+    RZVLog.info('Zip Download: User requested cancel - resetting state immediately');
     _token?.cancel();
+    _setState(ZipDownloadState());
   }
 }
 
