@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.6
+- Fix broken donwload due to setting default branch
+- Add set branch name to download zip for the providers
+
+- 修复因设置默认分支导致的下载失败问题
+- 为提供商添加设置分支名称以下载压缩包的功能
+
 ## 0.6.4
 - Fix: fix download cancelling and robustly allow another download
 - Clean: remove unused app deps to minimize build size
