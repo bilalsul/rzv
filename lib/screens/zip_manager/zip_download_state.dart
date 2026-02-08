@@ -8,7 +8,7 @@ class ZipDownloadState {
   final String? message;
   final String? savedPath;
 
-  ZipDownloadState({
+  const ZipDownloadState({
     this.status = AsyncStatus.idle,
     this.progress = 0.0,
     this.downloadedBytes = 0,
