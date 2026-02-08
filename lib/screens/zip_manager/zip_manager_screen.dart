@@ -55,7 +55,7 @@ class ZipManagerScreen extends ConsumerStatefulWidget {
 
 class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   final _downloadTc = TextEditingController();
-  bool _registeredDownloadListener = false;
+  final _branchTc = TextEditingController();
   ZipProvider _selectedProvider = ZipProvider.github;
 
   @override
@@ -66,29 +66,29 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   @override
   void dispose() {
     _downloadTc.dispose();
+    _branchTc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final ctrl = ref.watch(zipManagerControllerProvider);
-
-    if (!_registeredDownloadListener) {
-      _registeredDownloadListener = true;
-      ref.listen<ZipDownloadState>(
-        zipDownloadControllerProvider.select((c) => c.state),
-        (previous, next) async {
-          if (next.status == AsyncStatus.success) {
-            final saved = next.savedPath;
-            if (saved != null) {
-              await ref.read(zipEntriesProvider.notifier).addEntryFromPath(saved);
-            } else {
-              await ref.read(zipEntriesProvider.notifier).reload();
-            }
+    // listener once when the widget is initialized so the zip list
+    // reloads automatically after a download completes.
+    ref.listen<ZipDownloadState>(
+      zipDownloadControllerProvider.select((c) => c.state),
+      (previous, next) async {
+        if (!mounted) return;
+        if (next.status == AsyncStatus.success) {
+          final saved = next.savedPath;
+          if (saved != null) {
+            await ref.read(zipEntriesProvider.notifier).addEntryFromPath(saved);
+          } else {
+            await ref.read(zipEntriesProvider.notifier).reload();
           }
-        },
-      );
-    }
+        }
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(L10n.of(context).zipManagerHeader), actions: [
@@ -187,8 +187,15 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _branchTc,
+                      decoration: InputDecoration(
+                        hintText: L10n.of(context).zipManagerDownloadBranchHint,
+                        isDense: true,
+                      ),
+                    ),
                     const SizedBox(height: 12),
-                    
                     _DownloadProgressDisplay(
                       ),
                     const SizedBox(height: 12),
@@ -204,7 +211,8 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                                 : () {
                                     final input = _downloadTc.text.trim();
                                     if (input.isEmpty) return;
-                                    downloadCtrlLocal.download(input, provider: _selectedProvider);
+                                    final branch = _branchTc.text.trim();
+                                    downloadCtrlLocal.download(input, provider: _selectedProvider, branch: branch.isEmpty ? null : branch);
                                   },
                             child: Text(L10n.of(context).commonDownload),
                           ),

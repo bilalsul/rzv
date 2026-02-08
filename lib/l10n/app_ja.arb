@@ -300,6 +300,7 @@
   "zipManagerHeader": "オールインワンマネージャー",
   "zipManagerDownloadZipTitle": "ZIPダウンロード",
   "zipManagerDownloadZipHint": "所有者/リポジトリ",
+  "zipManagerDownloadBranchHint": "ブランチ（任意）",
   "zipManagerNoZipsDownloaded": "ZIPがダウンロードされていません",
   "zipManagerExtracting": "{zip}を抽出中",
   "@zipManagerExtracting": {
