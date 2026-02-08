@@ -56,7 +56,6 @@ class ZipManagerScreen extends ConsumerStatefulWidget {
 class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   final _downloadTc = TextEditingController();
   final _branchTc = TextEditingController();
-  bool _registeredDownloadListener = false;
   ZipProvider _selectedProvider = ZipProvider.github;
 
   @override
@@ -74,23 +73,22 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   @override
   Widget build(BuildContext context) {
     final ctrl = ref.watch(zipManagerControllerProvider);
-
-    if (!_registeredDownloadListener) {
-      _registeredDownloadListener = true;
-      ref.listen<ZipDownloadState>(
-        zipDownloadControllerProvider.select((c) => c.state),
-        (previous, next) async {
-          if (next.status == AsyncStatus.success) {
-            final saved = next.savedPath;
-            if (saved != null) {
-              await ref.read(zipEntriesProvider.notifier).addEntryFromPath(saved);
-            } else {
-              await ref.read(zipEntriesProvider.notifier).reload();
-            }
+    // listener once when the widget is initialized so the zip list
+    // reloads automatically after a download completes.
+    ref.listen<ZipDownloadState>(
+      zipDownloadControllerProvider.select((c) => c.state),
+      (previous, next) async {
+        if (!mounted) return;
+        if (next.status == AsyncStatus.success) {
+          final saved = next.savedPath;
+          if (saved != null) {
+            await ref.read(zipEntriesProvider.notifier).addEntryFromPath(saved);
+          } else {
+            await ref.read(zipEntriesProvider.notifier).reload();
           }
-        },
-      );
-    }
+        }
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(L10n.of(context).zipManagerHeader), actions: [
