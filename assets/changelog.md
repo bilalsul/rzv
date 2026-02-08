@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.4
+- Fix: fix download cancelling and robustly allow another download
+
+- 修复：修复下载取消问题，并允许再次下载。
+
 ## 0.6.1
 - Fix: give INTERNET permission for downloading ZIPs and Check for Updates
 - Fix: Update changelog Check for Updates
