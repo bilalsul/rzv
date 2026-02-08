@@ -2,8 +2,10 @@
 
 ## 0.6.4
 - Fix: fix download cancelling and robustly allow another download
+- Clean: remove unused app deps to minimize build size
 
 - 修复：修复下载取消问题，并允许再次下载。
+- 清理：移除未使用的应用程序依赖项，以最小化构建大小
 
 ## 0.6.1
 - Fix: give INTERNET permission for downloading ZIPs and Check for Updates
