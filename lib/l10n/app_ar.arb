@@ -296,6 +296,7 @@
   "zipManagerHeader": "مدير الكل في واحد",
   "zipManagerDownloadZipTitle": "تنزيل ZIP",
   "zipManagerDownloadZipHint": "صاحب/مستودع",
+  "zipManagerDownloadBranchHint": "الفرع (اختياري)",
   "zipManagerNoZipsDownloaded": "لم يتم تنزيل أي ZIP",
   "zipManagerExtracting": "جاري استخراج {zip}",
   "@zipManagerExtracting": {

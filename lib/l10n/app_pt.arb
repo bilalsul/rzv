@@ -300,6 +300,7 @@
   "zipManagerHeader": "Gerenciador tudo em um",
   "zipManagerDownloadZipTitle": "Baixar ZIP",
   "zipManagerDownloadZipHint": "proprietário/repo",
+  "zipManagerDownloadBranchHint": "Branch (opcional)",
   "zipManagerNoZipsDownloaded": "Nenhum ZIP baixado",
   "zipManagerExtracting": "Extraindo {zip}",
   "@zipManagerExtracting": {
