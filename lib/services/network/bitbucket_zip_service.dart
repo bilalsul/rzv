@@ -12,7 +12,29 @@ class BitbucketZipService {
   BitbucketZipService._();
   static final instance = BitbucketZipService._();
 
-  static final _candidateBranches = ['main', 'master'];
+  Future<String> _getDefaultBranch(String owner, String repo) async {
+    final apiUrl = Uri.parse('https://api.bitbucket.org/2.0/repositories/$owner/$repo');
+    final client = HttpClient();
+    try {
+      final req = await client.getUrl(apiUrl);
+      final resp = await req.close();
+      if (resp.statusCode == 200) {
+        final body = await resp.transform(const Utf8Decoder()).join();
+        final match = RegExp(r'"mainbranch"\s*:\s*\{[^}]*"name"\s*:\s*"([^"]+)"').firstMatch(body);
+        final defaultBranch = match?.group(1);
+        if (defaultBranch != null && defaultBranch.isNotEmpty) {
+          return defaultBranch;
+        }
+      } else if (resp.statusCode == 404) {
+        throw RZVLog.warning('BitBucket - Repository not found');
+      }
+      throw RZVLog.warning('BitBucket - Failed to determine default branch');
+    } finally {
+      try {
+        client.close(force: true);
+      } catch (_) {}
+    }
+  }
 
   void _validateRepoId(String input) {
     if (input.trim().isEmpty) throw RZVLog.warning('BitBucket - Repository cannot be empty');
@@ -29,14 +51,19 @@ class BitbucketZipService {
     String repoId, {
     required CancellationToken token,
     DownloadProgress? onProgress,
+    String? branch,
   }) async {
     _validateRepoId(repoId);
     final parts = repoId.split('/');
     final owner = parts[0];
     final repo = parts[1];
 
+    final branchToUse = branch?.trim().isNotEmpty == true
+        ? branch!.trim()
+        : await _getDefaultBranch(owner, repo);
+
     final zipsDir = await AppDirectories.zipsDirectory();
-    final filename = '${owner}_${repo}.zip';
+    final filename = '${owner}_${repo}_$branchToUse.zip';
     final tempFile = File(p.join(zipsDir.path, filename + '.part'));
     final outFile = File(p.join(zipsDir.path, filename));
 
@@ -91,36 +118,6 @@ class BitbucketZipService {
       }
     }
 
-    for (final b in _candidateBranches) {
-      try {
-        return await _attemptDownload(b);
-      } on RZVLog catch (e) {
-        if (e.message.contains('404')) continue;
-        try {
-          return await _attemptDownload(b);
-        } catch (_) {}
-      }
-    }
-
-    // Fallback: try to determine default via Bitbucket API (limited)
-    try {
-      final apiUrl = Uri.parse('https://api.bitbucket.org/2.0/repositories/$owner/$repo');
-      final client = HttpClient();
-      final req = await client.getUrl(apiUrl);
-      final resp = await req.close();
-      if (resp.statusCode == 200) {
-        final body = await resp.transform(const Utf8Decoder()).join();
-        final match = RegExp('"mainbranch"\s*:\s*\{[^}]*"name"\s*:\s*"([^"]+)"').firstMatch(body);
-        final defaultBranch = match?.group(1);
-        if (defaultBranch != null && defaultBranch.isNotEmpty) {
-          return await _attemptDownload(defaultBranch);
-        }
-      } else if (resp.statusCode == 404) {
-        throw RZVLog.warning('BitBucket - Repository not found');
-      }
-      throw RZVLog.warning('BitBucket - Failed to determine default branch');
-    } catch (e) {
-      throw RZVLog.warning('BitBucket - Download failed: $e');
-    }
+    return await _attemptDownload(branchToUse);
   }
 }

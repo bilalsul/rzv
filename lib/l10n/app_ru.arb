@@ -302,6 +302,7 @@
   "zipManagerHeader": "Менеджер все в одном",
   "zipManagerDownloadZipTitle": "Скачать ZIP",
   "zipManagerDownloadZipHint": "владелец/репо",
+  "zipManagerDownloadBranchHint": "Ветка (опционально)",
   "zipManagerNoZipsDownloaded": "Нет скачанных ZIP",
   "zipManagerExtracting": "Извлечение {zip}",
   "@zipManagerExtracting": {
