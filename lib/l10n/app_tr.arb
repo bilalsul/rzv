@@ -296,6 +296,7 @@
   "zipManagerHeader": "Hepsi bir arada yönetici",
   "zipManagerDownloadZipTitle": "ZIP İndir",
   "zipManagerDownloadZipHint": "sahip/depo",
+  "zipManagerDownloadBranchHint": "Dal (isteğe bağlı)",
   "zipManagerNoZipsDownloaded": "İndirilen ZIP yok",
   "zipManagerExtracting": "{zip} çıkarılıyor",
   "@zipManagerExtracting": {
