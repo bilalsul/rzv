@@ -69,36 +69,20 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
     super.dispose();
   }
 
-  // String _readable(int bytes) {
-  //   if (bytes <= 0) return '0 B';
-  //   const suffixes = ['B', 'KB', 'MB', 'GB'];
-  //   var i = 0;
-  //   double b = bytes.toDouble();
-  //   while (b >= 1024 && i < suffixes.length - 1) {
-  //     b /= 1024;
-  //     i++;
-  //   }
-  //   return '${b.toStringAsFixed(b < 10 ? 2 : 1)} ${suffixes[i]}';
-  // }
-
   @override
   Widget build(BuildContext context) {
     final ctrl = ref.watch(zipManagerControllerProvider);
 
-    // Register a listener for download completion during build (allowed here).
     if (!_registeredDownloadListener) {
       _registeredDownloadListener = true;
       ref.listen<ZipDownloadState>(
         zipDownloadControllerProvider.select((c) => c.state),
         (previous, next) async {
           if (next.status == AsyncStatus.success) {
-            // If we have the saved path from the download, try to append a new entry
-            // directly to the list to avoid a full reload UI.
             final saved = next.savedPath;
             if (saved != null) {
               await ref.read(zipEntriesProvider.notifier).addEntryFromPath(saved);
             } else {
-              // Fallback: reload the list so the newly downloaded file appears.
               await ref.read(zipEntriesProvider.notifier).reload();
             }
           }
@@ -126,15 +110,12 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   }
 
   Widget _buildBody(dynamic ctrl) {
-    // Combine download UI above the ZIP list
-    // final downloadCtrl = ref.read(zipDownloadControllerProvider);
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
-          // Download area (keeps progress updates local to this Consumer)
           Consumer(builder: (c, ref, _) {
-            final dlState = ref.watch(zipDownloadControllerProvider.select((c) => c.state));
+            var dlState = ref.watch(zipDownloadControllerProvider.select((c) => c.state));
             final downloadCtrlLocal = ref.read(zipDownloadControllerProvider);
             return Card(
               child: Padding(
@@ -153,7 +134,6 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        // Provider dropdown (small)
                         Container(
                           height: 30,
                           padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
@@ -208,7 +188,9 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    _DownloadProgressDisplay(state: dlState),
+                    
+                    _DownloadProgressDisplay(
+                      ),
                     const SizedBox(height: 12),
                     Row(
                       children: [
@@ -383,10 +365,8 @@ class ZipList extends ConsumerWidget {
   }
 }
 
-class _DownloadProgressDisplay extends StatelessWidget {
-  final ZipDownloadState state;
-
-  const _DownloadProgressDisplay({required this.state});
+class _DownloadProgressDisplay extends ConsumerWidget {
+  const _DownloadProgressDisplay();
 
   String _human(int bytes) {
     if (bytes <= 0) return '0 B';
@@ -401,7 +381,8 @@ class _DownloadProgressDisplay extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(zipDownloadControllerProvider.select((c) => c.state));
     if (state.status == AsyncStatus.loading) {
       final pct = (state.progress * 100).clamp(0.0, 100.0);
       final downloaded = state.downloadedBytes;

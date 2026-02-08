@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:path/path.dart' as p;
+import 'package:rzv/utils/log/common.dart';
 import '../state/side_effect_handler.dart';
 import 'app_directories.dart';
-import '../state/async_status.dart';
 
 typedef ExtractionProgress = void Function(int extractedBytes, int totalBytes);
 
@@ -39,7 +39,7 @@ class ExtractionService {
         // Prevent zip-slip: normalize and ensure it stays inside tmpDir
         final outPath = p.normalize(p.join(tmpDir.path, name));
         if (!p.isWithin(tmpDir.path, outPath)) {
-          throw ExtractionError('Invalid entry path in zip: $name');
+          throw RZVLog.warning('Extraction Service: Invalid entry path in zip: $name');
         }
 
         if (file.isFile) {
@@ -65,7 +65,7 @@ class ExtractionService {
       rethrow;
     } catch (e) {
       if (await tmpDir.exists()) await tmpDir.delete(recursive: true);
-      throw ExtractionError('Failed to extract zip: $e');
+      throw RZVLog.warning('Extraction Service: Failed to extract zip: $e');
     }
   }
 }
