@@ -32,7 +32,7 @@ class ZipDownloadController extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> download(String ownerRepo, {ZipProvider provider = ZipProvider.github}) async {
+  Future<void> download(String ownerRepo, {ZipProvider provider = ZipProvider.github, String? branch}) async {
     if (_state.status == AsyncStatus.loading) {
       RZVLog.info('Zip Download: Ignored - already loading');
       return;
@@ -46,19 +46,19 @@ class ZipDownloadController extends ChangeNotifier {
       final token = _token!;
       late final File file;
       if (provider == ZipProvider.github) {
-        file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+        file = await GitHubZipService.instance.downloadRepoZip(ownerRepo, token: token, branch: branch, onProgress: (dl, total) {
           if (token.isCanceled) return;
           final p = (total != null && total > 0) ? (dl / total) : 0.0;
           _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
         });
       } else if (provider == ZipProvider.gitlab) {
-        file = await GitLabZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+        file = await GitLabZipService.instance.downloadRepoZip(ownerRepo, token: token, branch: branch, onProgress: (dl, total) {
           if (token.isCanceled) return;
           final p = (total != null && total > 0) ? (dl / total) : 0.0;
           _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));
         });
       } else if (provider == ZipProvider.bitbucket) {
-        file = await BitbucketZipService.instance.downloadRepoZip(ownerRepo, token: token, onProgress: (dl, total) {
+        file = await BitbucketZipService.instance.downloadRepoZip(ownerRepo, token: token, branch: branch, onProgress: (dl, total) {
           if (token.isCanceled) return;
           final p = (total != null && total > 0) ? (dl / total) : 0.0;
           _setState(_state.copyWith(progress: p.clamp(0.0, 1.0), downloadedBytes: dl, totalBytes: total));

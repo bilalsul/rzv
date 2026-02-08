@@ -55,6 +55,7 @@ class ZipManagerScreen extends ConsumerStatefulWidget {
 
 class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   final _downloadTc = TextEditingController();
+  final _branchTc = TextEditingController();
   bool _registeredDownloadListener = false;
   ZipProvider _selectedProvider = ZipProvider.github;
 
@@ -66,6 +67,7 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
   @override
   void dispose() {
     _downloadTc.dispose();
+    _branchTc.dispose();
     super.dispose();
   }
 
@@ -187,8 +189,15 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _branchTc,
+                      decoration: InputDecoration(
+                        hintText: L10n.of(context).zipManagerDownloadBranchHint,
+                        isDense: true,
+                      ),
+                    ),
                     const SizedBox(height: 12),
-                    
                     _DownloadProgressDisplay(
                       ),
                     const SizedBox(height: 12),
@@ -204,7 +213,8 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                                 : () {
                                     final input = _downloadTc.text.trim();
                                     if (input.isEmpty) return;
-                                    downloadCtrlLocal.download(input, provider: _selectedProvider);
+                                    final branch = _branchTc.text.trim();
+                                    downloadCtrlLocal.download(input, provider: _selectedProvider, branch: branch.isEmpty ? null : branch);
                                   },
                             child: Text(L10n.of(context).commonDownload),
                           ),
