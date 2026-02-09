@@ -173,16 +173,16 @@ Future<void> openAboutDialog(BuildContext context) async {
                       showDonateDialog(context);
                     },
                   ),
-                // ListTile(
-                //   title: Text(L10n.of(context).appLicense),
-                //   onTap: () {
-                //     showLicensePage(
-                //       context: context,
-                //       applicationName: L10n.of(context).appName,
-                //       applicationVersion: version,
-                //     );
-                //   },
-                // ),
+                ListTile(
+                  title: Text(L10n.of(context).appLicense),
+                  onTap: () {
+                    showLicensePage(
+                      context: context,
+                      applicationName: L10n.of(context).appName,
+                      applicationVersion: version,
+                    );
+                  },
+                ),
                 ListTile(
                   title: Text(L10n.of(context).appAuthor),
                   onTap: () {
