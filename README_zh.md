@@ -16,7 +16,7 @@
 
 提取 .zip Github/Gitlab/Bitbucket 仓库，并在移动设备上使用代码编辑器和 Markdown 查看器打开文件，适用于学生、代码阅读者和快速访问。
 
-![Repo Zip Viewer (RZV) 横幅](screens/export/playstore.png)  
+![Repo Zip Viewer (RZV) 横幅](screens/export/zh/playstore_zh.png)  
 
 <table border="1">
   <tr>
