@@ -91,7 +91,7 @@ No cloning. No internet after import. Privacy-focused.
 
 **Repo Zip Viewer (RZV)** – View code anywhere, anytime.  
 
-📱 Available on [Google Play]() (or [get the latest APK release](https://github.com/uncrr/rzv/releases/latest))
+📱 Available on [Google Play]() (or [get the latest APK release](https://github.com/bilalsul/rzv/releases/latest))
 
 ## License
 
