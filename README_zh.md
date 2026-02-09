@@ -64,19 +64,19 @@
 
 | 已导入项目 | 插件管理器 |
 |--------------------------|-----------------|
-| ![主屏幕](screens/export/projects%20dir.png) | ![插件管理器](screens/export/plugin%20manager.png) |
+| ![主屏幕](screens/export/zh/projects_dir_zh.png) | ![插件管理器](screens/export/zh/plugin_manager_zh.png) |
 
 | Markdown 预览器 | 代码编辑器 |
 |---------------------|------------------|
-| ![Markdown 预览器](screens/export/markdown.png) | ![代码编辑器](screens/export/code%20editor.png) |
+| ![Markdown 预览器](screens/export/zh/markdown_zh.png) | ![代码编辑器](screens/export/zh/code_editor_zh.png) |
 
 | 高级选项 | 可自定义主题 |
 |--------------------|-----------------|
-| ![高级编辑器选项](screens/export/advanced%20editor.png) | ![可自定义主题](screens/export/theme.png) |
+| ![高级编辑器选项](screens/export/zh/advanced_editor_zh.png) | ![可自定义主题](screens/export/zh/theme_zh.png) |
 
 | ZIP 管理器 |
 |------------------|
-| ![ZIP 管理器](screens/export/zip%20manager.png) |
+| ![ZIP 管理器](screens/export/zh/zip_manager_zh.png) |
 
 ## 如何使用
 
