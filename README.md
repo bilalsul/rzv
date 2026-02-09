@@ -101,6 +101,6 @@ This project is licensed under the [MIT License](./LICENSE).
 
 [flutter_monaco](https://github.com/omar-hanafy/flutter_monaco), which is MIT licensed, a flutter plugin for integrating the Monaco Editor (VS Code's editor) into Flutter applications via WebView.
 
-[Anx Reader](https://github.com/Anxcye/anx-reader), MIT licensed Ebook Reader, thanks for the UI inspiration and such a plugin rich reading app.
+[Anx Reader](https://github.com/Anxcye/anx-reader), MIT licensed Ebook Reader, thanks for the UI inspiration and such a plugin rich reading app. RZV UI is a reflection of this Cool Project.
 
 And many [other open source projects](./pubspec.yaml), thanks to all the authors for their contributions.
