@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rzv/utils/app_version.dart';
 import 'package:rzv/utils/toast/common.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rzv/widgets/settings/about.dart';
 
 // Providers
 import '../../providers/shared_preferences_provider.dart';
@@ -539,7 +540,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               const SizedBox(width: 8),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () => _showAboutDialogDonate(appState, prefs),
+                  onPressed: () => openAboutDialog(context),
                   icon: Icon(
                     Icons.info_outlined,
                     size: 16,
@@ -703,90 +704,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  void _showAboutDialogDonate(AppState appState, Prefs prefs) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        // title: Text(L10n.of(context).appName),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              spacing: 10,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(40.0),
-                  child: Image.asset(
-                    'assets/icons/git-explorer-icon.png',
-                    height: 60,
-                    width: 60,
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        L10n.of(context).appName,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        'v$appVersion',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 25),
-            Text(L10n.of(context).appAbout, style: TextStyle(fontSize: 15)),
-            const SizedBox(height: 25),
-            Text(
-              L10n.of(context).appDonateTips,
-              style: TextStyle(fontSize: 12),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              L10n.of(context).commonClose,
-              style: TextStyle(color: prefs.accentColor),
-            ),
-          ),
-          FilledButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(prefs.accentColor),
-            ),
-            onPressed: () async {
-              // TODO: Implement donate submission
-              final Uri donateUrl = Uri.parse(
-                'https://www.patreon.com/cw/mafianextdoor/membership',
-              ); // Replace with your actual donation link
-              if (await canLaunchUrl(donateUrl)) {
-                await launchUrl(donateUrl);
-              } else {
-                // Handle the case where the URL cannot be launched (e.g., no browser installed)
-                // You might display a SnackBar or an AlertDialog to inform the user.
-                print('Could not launch $donateUrl');
 
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(content: Text(L10n.of(context).commonFailed)),
-                // );
-                RZVToast.show(L10n.of(context).commonFailed);
-
-              }
-              Navigator.of(context).pop();
-            },
-            child: Text(L10n.of(context).appDonate),
-          ),
-        ],
-      ),
-    );
-  }
 
   String _localizedPluginName(String id, BuildContext context) {
     final l = L10n.of(context);
