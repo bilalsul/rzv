@@ -53,13 +53,11 @@ No cloning. No internet after import. Privacy-focused.
 - Import any git repository as a `.zip` file (GitHub "Download ZIP", GitLab export, etc.)
 - Download A Repository in Zip Manager, Extract it and start viewing & reading code.
 - Full folder/file tree browser
-- Syntax-highlighted read-only code editor ([VSCode Monaco Editor](https://pub.dev/packages/flutter_monaco))
+- Syntax-highlighted read-only code editor ([VSCode Monaco Editor](https://github.com/omar-hanafy/flutter_monaco))
 - Instant Markdown preview for READMEs and `.md` files
 - Search across files and inside file contents
 - Customizable: font size, font family, zoom, light/dark theme
 - Toggleable File Explorer & advanced features via **Plugins** system
-- View unsupported characters with warning
-- Extremely lightweight and fast
 - Supports huge projects (with progress indicator during extraction)
 - Multiple languages (English, Italian, French, German, Arabic, Spanish, Portuguese, Turkish, Chinese (Simplified & Traditional), Japanese, Korean, Russian)
 - No unnecessary permissions – only storage access to read local .zip files
