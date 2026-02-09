@@ -3,6 +3,7 @@
   "appAboutTitle": "Repo Zip Viewer Hakkında",
   "appAbout": ".zip formatındaki git kod tabanlarını çıkarır ve dosyaları markdown olarak markdown ya da salt okunur kod editöründe görüntüler.",
   "appVersion": "Sürüm",
+  "appChangelog": "Değişiklik Günlüğü",
   "appLicense": "Lisans",
   "appAuthor": "Geliştirici",
   "appDonate": "Bağış Yap",
