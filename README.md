@@ -17,30 +17,24 @@
 extract .zip Github/Gitlab/Bitbucket repositories and open files in code editor and markdown viewer in mobile, for students, code readers and quick access.
 
 ![Repo Zip Viewer (RZV) Banner](screens/export/playstore.png)  
-<table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 0 auto;">
-  <thead>
-    <tr>
-      <th colspan="2" style="padding: 15px; text-align: center; font-size: 18px;">
-        Currently supports Android platform only.
-      </th>
-    </tr>
-  </thead>
-  <tbody style="text-align: center;">
-    <tr>
-      <td style="padding: 20px; width: 50%;">
-        <a href="https://play.google.com/store/apps/details?id=com.bilalworku.gzip">
-          <img src="screens/googleplay.png" alt="Get it on Google Play" style="width: 200px; height: auto; max-width: 100%;">
-        </a>
-      </td>
-      <td style="padding: 20px; width: 50%;">
-        <a href="https://github.com/uncrr/rzv/releases">
-          <img src="screens/github-badge.png" alt="Download from GitHub" style="width: 200px; height: auto; max-width: 100%;">
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
+<table border="1">
+  <tr>
+    <th>OS</th>
+    <th>Source</th>
+  </tr>
+  <tr>
+    <td>Android</td>
+    <td>
+      <a href="https://github.com/bilalsul/rzv/releases/latest">
+          <img src="screens/github-badge.png" alt="Download from GitHub" height="45">
+        </a>
+      <a href="https://play.google.com/store/apps/details?id=com.bilalworku.gzip">
+          <img src="screens/googleplay.png" alt="Get it on Google Play" height="45">
+        </a>
+    </td>
+  </tr>
+</table>
 <br>
 
 Explore any Github, Gitlab or Bitbucket repository – just download it as a .zip and open it instantly in a beautiful, read-only code editor.
