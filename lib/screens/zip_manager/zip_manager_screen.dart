@@ -95,9 +95,11 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
         IconButton(onPressed: () => ref.read(zipEntriesProvider.notifier).reload(), icon: const Icon(Icons.refresh)),
         IconButton(onPressed: () async {
           final ok = await showDialog<bool>(context: context, builder: (c) => AlertDialog(
-            title: Text(L10n.of(context).zipManagerMenuDeleteAllZips),
+            title: Text(L10n.of(context).zipManagerMenuDeleteAllZips,
+            style: TextStyle(fontSize: 13),
+            ),
             content: Text(L10n.of(context).zipManagerMenuDeleteAllZipsHint),
-            actions: [TextButton(onPressed: ()=>Navigator.of(c).pop(false), child: Text(L10n.of(context).commonCancel)), TextButton(onPressed: ()=>Navigator.of(c).pop(true), child: Text(L10n.of(context).commonDelete))],
+            actions: [TextButton(onPressed: ()=>Navigator.of(c).pop(false), child: Text(L10n.of(context).commonCancel, style: TextStyle(color: Prefs().accentColor))), TextButton(onPressed: ()=>Navigator.of(c).pop(true), child: Text(L10n.of(context).commonDelete,style: TextStyle(color: Prefs().accentColor)))],
           ));
           if (ok == true) {
             await ref.read(zipManagerControllerProvider).deleteAllZips();
@@ -130,7 +132,11 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                         Expanded(
                           child: TextField(
                             controller: _downloadTc,
-                            decoration: InputDecoration(hintText: L10n.of(context).zipManagerDownloadZipHint),
+                            decoration: InputDecoration(hintText: L10n.of(context).zipManagerDownloadZipHint,
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color:Prefs().accentColor, width: 3.0),
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -192,6 +198,9 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                       controller: _branchTc,
                       decoration: InputDecoration(
                         hintText: L10n.of(context).zipManagerDownloadBranchHint,
+                        focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color:Prefs().accentColor, width: 3.0),
+                              ),
                         isDense: true,
                       ),
                     ),
@@ -204,7 +213,7 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                         Expanded(
                           child: FilledButton(
                             style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(Prefs().secondaryColor),
+                              backgroundColor: WidgetStateProperty.all(Prefs().accentColor),
                             ),
                             onPressed: dlState.status == AsyncStatus.loading
                                 ? null
@@ -213,6 +222,7 @@ class _ZipManagerScreenState extends ConsumerState<ZipManagerScreen> {
                                     if (input.isEmpty) return;
                                     final branch = _branchTc.text.trim();
                                     downloadCtrlLocal.download(input, provider: _selectedProvider, branch: branch.isEmpty ? null : branch);
+
                                   },
                             child: Text(L10n.of(context).commonDownload),
                           ),
@@ -287,14 +297,14 @@ class ZipList extends ConsumerWidget {
                               dialogSetState = setState;
                               final value = (total != null && total! > 0) ? (extracted / total!) : null;
                               return AlertDialog(
-                                title: Text(L10n.of(context).zipManagerExtracting(e.filename)),
+                                title: Text(L10n.of(context).zipManagerExtracting(e.filename),style: TextStyle(fontSize: 13)),
                                 content: SizedBox(
                                   width: 400,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      LinearProgressIndicator(value: value),
+                                      LinearProgressIndicator(value: value, color: Prefs().accentColor),
                                       const SizedBox(height: 12),
                                       Text(total != null ? '${_readable(extracted)} / ${_readable(total!)}' : _readable(extracted)),
                                     ],
@@ -307,7 +317,7 @@ class ZipList extends ConsumerWidget {
                                       manager.cancel();
                                       if (dialogContext != null && Navigator.of(dialogContext!).canPop()) Navigator.of(dialogContext!).pop();
                                     },
-                                    child: Text(L10n.of(context).commonCancel, style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                                    child: Text(L10n.of(context).commonCancel, style: TextStyle(color: Prefs().accentColor)),
                                   )
                                 ],
                               );
