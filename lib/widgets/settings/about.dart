@@ -136,7 +136,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                   },
                 ),
                 ListTile(
-                  title: const Text('Changelog'),
+                  title: Text(L10n.of(context).appChangelog),
                   onTap: () async {
                     final content =
                         await rootBundle.loadString('assets/changelog.md');
