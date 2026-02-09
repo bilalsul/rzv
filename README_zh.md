@@ -62,13 +62,21 @@
 - 支持多种语言（英语、意大利语、法语、德语、阿拉伯语、西班牙语、葡萄牙语、土耳其语、简体中文、繁体中文、日语、韩语、俄语）
 - 无需多余权限 – 仅需存储访问权限来读取本地 .zip 文件
 
-| 已导入项目 |  插件管理器 | Markdown 预览器 |
-|--------------------------|-----------------|---------------------|
-| ![主屏幕](screens/export/projects%20dir.png) | ![插件管理器](screens/export/plugin%20manager.png) | ![Markdown 预览器](screens/export/markdown.png) |
+| 已导入项目 | 插件管理器 |
+|--------------------------|-----------------|
+| ![主屏幕](screens/export/projects%20dir.png) | ![插件管理器](screens/export/plugin%20manager.png) |
 
-| 代码编辑器 | 高级选项 | 可自定义主题 |
-|------------------|--------------------|-----------------|
-| ![代码编辑器](screens/export/code%20editor.png) | ![高级编辑器选项](screens/export/advanced%20editor.png) | ![可自定义主题](screens/export/theme.png) |
+| Markdown 预览器 | 代码编辑器 |
+|---------------------|------------------|
+| ![Markdown 预览器](screens/export/markdown.png) | ![代码编辑器](screens/export/code%20editor.png) |
+
+| 高级选项 | 可自定义主题 |
+|--------------------|-----------------|
+| ![高级编辑器选项](screens/export/advanced%20editor.png) | ![可自定义主题](screens/export/theme.png) |
+
+| ZIP 管理器 |
+|------------------|
+| ![ZIP 管理器](screens/export/zip%20manager.png) |
 
 ## 如何使用
 
