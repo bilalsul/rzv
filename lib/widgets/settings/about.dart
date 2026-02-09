@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rzv/widgets/markdown/styled_markdown.dart';
 
 class About extends StatefulWidget {
   const About({
@@ -132,6 +133,33 @@ Future<void> openAboutDialog(BuildContext context) async {
                     Clipboard.setData(ClipboardData(text: version));
                     RZVToast.show(L10n.of(context).commonCopied);
                     // _handleDeveloperUnlockTap(context);
+                  },
+                ),
+                ListTile(
+                  title: const Text('Changelog'),
+                  onTap: () async {
+                    final content =
+                        await rootBundle.loadString('assets/changelog.md');
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext ctx) => AlertDialog(
+                        content: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxWidth: 700,
+                            minWidth: 300,
+                          ),
+                          child: SingleChildScrollView(
+                            child: StyledMarkdown(data: content),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(),
+                            child: Text(L10n.of(context).commonOk, style: TextStyle(color: Prefs().accentColor),),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 ),
                 if (EnvVar.enableCheckUpdate)
