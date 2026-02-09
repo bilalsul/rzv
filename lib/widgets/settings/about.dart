@@ -101,15 +101,14 @@ Future<void> openAboutDialog(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
           content: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: 500,
+          maxWidth: 460,
           minWidth: 300,
         ),
         child: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
+          child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
@@ -138,11 +137,19 @@ Future<void> openAboutDialog(BuildContext context) async {
                 ListTile(
                   title: Text(L10n.of(context).appChangelog),
                   onTap: () async {
-                    final content =
+                    var content =
                         await rootBundle.loadString('assets/changelog.md');
+                    // Remove the first line (file title) because dialog shows its own title
+                    final lines = content.split('\n');
+                    if (lines.isNotEmpty) {
+                      // remove first line regardless of whether it's empty or not
+                      lines.removeAt(0);
+                      content = lines.join('\n');
+                    }
                     showDialog(
                       context: context,
                       builder: (BuildContext ctx) => AlertDialog(
+                        title: Text(L10n.of(ctx).appChangelog),
                         content: ConstrainedBox(
                           constraints: const BoxConstraints(
                             maxWidth: 700,
@@ -155,7 +162,7 @@ Future<void> openAboutDialog(BuildContext context) async {
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(ctx).pop(),
-                            child: Text(L10n.of(context).commonOk, style: TextStyle(color: Prefs().accentColor),),
+                            child: Text(L10n.of(ctx).commonOk, style: TextStyle(color: Prefs().accentColor),),
                           ),
                         ],
                       ),
@@ -273,7 +280,7 @@ Future<void> openAboutDialog(BuildContext context) async {
             ),
           ),
         ),
-      ));
+      );
     },
   );
 }
