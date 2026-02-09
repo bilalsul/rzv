@@ -1,6 +1,7 @@
 import 'package:rzv/l10n/generated/L10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:rzv/providers/shared_preferences_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void showDonateDialog(BuildContext context) {
@@ -16,7 +17,7 @@ void showDonateDialog(BuildContext context) {
               mode: LaunchMode.externalApplication,
             );
           },
-          child: Text(L10n.of(context).appDonate),
+          child: Text(L10n.of(context).appDonate, style: TextStyle(color: Prefs().accentColor)),
         ),
       ],
     ),
