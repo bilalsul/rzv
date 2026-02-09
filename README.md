@@ -70,6 +70,10 @@ No cloning. No internet after import. Privacy-focused.
 |------------------|--------------------|-----------------|
 | ![Code Editor](screens/export/code%20editor.png) | ![Advanced Editor Options](screens/export/advanced%20editor.png) | ![Customizable Theme](screens/export/theme.png) |
 
+| ZIP Manager |
+|------------------|
+| ![ZIP Manager](screens/export/zip%20manager.png) |
+
 ## How to Use
 
 1. Download any repository as `.zip` from GitHub, GitLab, etc.
