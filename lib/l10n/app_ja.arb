@@ -3,6 +3,7 @@
   "appAboutTitle": "Repo Zip Viewer について",
   "appAbout": ".zip 形式の git コードベースを展開し、Markdown および読み取り専用モードのコードエディタでファイルを表示します。",
   "appVersion": "バージョン",
+  "appChangelog": "変更履歴",
   "appLicense": "ライセンス",
   "appAuthor": "作者",
   "appDonate": "寄付する",

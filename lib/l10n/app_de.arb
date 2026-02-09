@@ -3,6 +3,7 @@
   "appAboutTitle": "Über Repo Zip Viewer",
   "appAbout": "Git-Codebases als .zip entpacken und Dateien als Markdown sowie im schreibgeschützten Code-Editor anzeigen.",
   "appVersion": "Version",
+  "appChangelog": "Änderungsprotokoll",
   "appLicense": "Lizenz",
   "appAuthor": "Autor",
   "appDonate": "Spenden",

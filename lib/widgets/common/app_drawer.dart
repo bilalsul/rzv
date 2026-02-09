@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rzv/utils/app_version.dart';
 import 'package:rzv/utils/toast/common.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rzv/widgets/settings/about.dart';
 
 // Providers
 import '../../providers/shared_preferences_provider.dart';
@@ -21,9 +22,8 @@ class AppDrawer extends ConsumerStatefulWidget {
 
 class _AppDrawerState extends ConsumerState<AppDrawer> {
   bool _expandedEditorPlugins = true;
-  // bool _expandedGitPlugins = true;
   bool _expandedUtilityPlugins = true;
-  bool _expandedExperimentalPlugins = false;
+  bool _expandedExperimentalPlugins = true;
 
   String appVersion = '';
 
@@ -32,8 +32,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     final theme = Theme.of(context);
     final prefs = ref.watch(prefsProvider);
     
-    // final currentScreen = ref.watch(currentScreenProvider);
-
     return Drawer(
       width: 320,
       child: Column(
@@ -41,12 +39,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           // Header Section
           _buildDrawerHeader(theme, prefs),
 
-          // Navigation Section
-          // _buildNavigationSection(currentScreen, theme),
-
           // Plugin Toggles Section
           Expanded(child: _buildPluginTogglesSection(prefs, theme)),
-          // Footer is rendered as the last sliver inside the scrollable plugin section
           ],
       ),
     );
@@ -66,10 +60,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     super.dispose();
   }
 
-  // =============================================
   // Drawer Header
-  // =============================================
-
   Widget _buildDrawerHeader(ThemeData theme, Prefs prefs) {
     return DrawerHeader(
       decoration: BoxDecoration(
@@ -202,14 +193,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  // Navigation UI has been migrated to use Prefs; AppShell builds the primary navigation.
-
-  // Navigation items removed from the drawer; main navigation is handled by AppShell.
-
-  // =============================================
   // Plugin Toggles Section
-  // =============================================
-
   Widget _buildPluginTogglesSection(Prefs prefs, ThemeData theme) {
     return CustomScrollView(
       slivers: [
@@ -247,22 +231,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           theme: theme,
         ),
 
-        // Git Plugins
-        // _buildPluginCategory(
-        //   title: L10n.of(context).drawerGitIntegration,
-        //   plugins: plugin_defs.gitPlugins,
-        //   isExpanded: _expandedGitPlugins,
-        //   onToggle: () => setState(() => _expandedGitPlugins = !_expandedGitPlugins),
-        //   theme: theme,
-        // ),
-
-        // _isNativeAdLoaded && _nativeAd != null
-        //       ? SizedBox(
-        //           height: 120,
-        //           child: AdWidget(ad: _nativeAd!),
-        //         )
-        //       : const SizedBox.shrink(),
-
         // Utility Plugins
         _buildPluginCategory(
           title: L10n.of(context).drawerUtilityPlugins,
@@ -284,33 +252,8 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           showExperimentalBadge: true,
         ),
 
-        // SliverToBoxAdapter(child:
-        // _isNativeAdLoaded && _nativeAd != null
-        //       ? SizedBox(
-        //           height: 250,
-        //           child: AdWidget(ad: _nativeAd!),
-        //         )
-        //       : const SizedBox.shrink(),
-        // // SizedBox(height: 16)
-        // ),
-        // _isNativeAdLoaded && _nativeAd != null
-        //       ? SizedBox(
-        //           height: 120,
-        //           child: AdWidget(ad: _nativeAd!),
-        //         )
-        //       : const SizedBox.shrink(),
-
-        // Insert ZIP drawer tiles (download/manage) if enabled
-        // SliverToBoxAdapter(child: buildZipDrawerSliver(context, prefs)),
-
-        // Footer placed as a sliver so it only becomes visible when the user scrolls to the end
         SliverToBoxAdapter(child: _buildDrawerFooter(theme)),
         SliverToBoxAdapter(child: SizedBox(height: 100)),
-        // SliverToBoxAdapter(
-        //   child: _isNativeAdLoaded && _nativeAd != null
-        //       ? SizedBox(height: 250, child: AdWidget(ad: _nativeAd!))
-        //       : const SizedBox.shrink(),
-        // ),
         SliverToBoxAdapter(child: SizedBox(height: 60)),
         SliverToBoxAdapter(
           child: Consumer(
@@ -449,26 +392,6 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
           trailing: Switch.adaptive(
             value: prefs.disabledByDefault(plugin.id) ? true : isEnabled,
             onChanged: (enabled) async {
-              // If enabling the file explorer, request storage permission first
-              // if (plugin.id == 'file_explorer' && enabled) {
-              //   final status = await Permission.storage.request();
-              //     // Ask user to open app settings so they can grant permission
-              //     // user have to grant permissions, No permissions requested
-              //     // so the file explorer is enabled after sending the user to settings
-              //     if (!status.isGranted) {
-              //         final opened = await openAppSettings();
-              //         if (!opened) {
-              //           ScaffoldMessenger.of(context).showSnackBar(
-              //             SnackBar(content: Text(L10n.of(context).connectionFailed)),
-              //           );
-              //           return;
-              //     }
-              //   }
-              //     if (!status.isGranted && enabled) {
-              //       Prefs().enabledPlugins.remove("file_explorer");
-              //       return;
-              //     }
-              // }
 
               await Prefs().setPluginEnabled(plugin.id, enabled);
               // Trigger a rebuild so changes are visible immediately
@@ -491,13 +414,9 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  // =============================================
   // Drawer Footer
-  // =============================================
-
   Widget _buildDrawerFooter(ThemeData theme) {
     final prefs = ref.watch(prefsProvider);
-    final appState = ref.watch(appStateProvider);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -507,15 +426,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
       ),
       child: Column(
         children: [
-          // _isNativeAdLoaded && _nativeAd != null
-          //     ? SizedBox(
-          //         height: 120,
-          //         width: double.infinity,
-          //         child: AdWidget(ad: _nativeAd!),
-          //       )
-          //     : const SizedBox.shrink(),
           const SizedBox(height: 60),
-
           // Quick Actions
           Row(
             children: [
@@ -539,7 +450,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
               const SizedBox(width: 8),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () => _showAboutDialogDonate(appState, prefs),
+                  onPressed: () => openAboutDialog(context),
                   icon: Icon(
                     Icons.info_outlined,
                     size: 16,
@@ -557,43 +468,12 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
             ],
           ),
           const SizedBox(height: 50),
-
-          // App Version and Info
-          // Consumer(
-          //   builder: (context, ref, child) {
-          //     final appState = ref.watch(appStateProvider);
-          //     return Column(
-          //       children: [
-          //         Text(
-          //           'v$appVersion',
-          //           style: theme.textTheme.labelSmall?.copyWith(
-          //             color: theme.colorScheme.onSurface.withOpacity(0.5),
-          //           ),
-          //         ),
-          //         const SizedBox(height: 4),
-          //         Text(
-          //           L10n.of(context).appName,
-          //           style: theme.textTheme.labelSmall?.copyWith(
-          //             color: theme.colorScheme.onSurface.withOpacity(0.4),
-          //           ),
-          //         ),
-          //       ],
-          //     );
-          //   },
-          // ),
         ],
       ),
     );
   }
 
-  // Plugin lists are now imported from `lib/data/plugin_definitions.dart`.
-  // Leaving these definitions removed to avoid duplication. Names and descriptions
-  // are rendered via `L10n` at runtime so they can be localized.
-
-  // =============================================
   // Helper Methods
-  // =============================================
-
   String _formatDate(DateTime date, BuildContext context) {
     final now = DateTime.now();
     final difference = now.difference(date);
@@ -703,90 +583,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
     );
   }
 
-  void _showAboutDialogDonate(AppState appState, Prefs prefs) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        // title: Text(L10n.of(context).appName),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              spacing: 10,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(40.0),
-                  child: Image.asset(
-                    'assets/icons/git-explorer-icon.png',
-                    height: 60,
-                    width: 60,
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        L10n.of(context).appName,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        'v$appVersion',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 25),
-            Text(L10n.of(context).appAbout, style: TextStyle(fontSize: 15)),
-            const SizedBox(height: 25),
-            Text(
-              L10n.of(context).appDonateTips,
-              style: TextStyle(fontSize: 12),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              L10n.of(context).commonClose,
-              style: TextStyle(color: prefs.accentColor),
-            ),
-          ),
-          FilledButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(prefs.accentColor),
-            ),
-            onPressed: () async {
-              // TODO: Implement donate submission
-              final Uri donateUrl = Uri.parse(
-                'https://www.patreon.com/cw/mafianextdoor/membership',
-              ); // Replace with your actual donation link
-              if (await canLaunchUrl(donateUrl)) {
-                await launchUrl(donateUrl);
-              } else {
-                // Handle the case where the URL cannot be launched (e.g., no browser installed)
-                // You might display a SnackBar or an AlertDialog to inform the user.
-                print('Could not launch $donateUrl');
 
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(content: Text(L10n.of(context).commonFailed)),
-                // );
-                RZVToast.show(L10n.of(context).commonFailed);
-
-              }
-              Navigator.of(context).pop();
-            },
-            child: Text(L10n.of(context).appDonate),
-          ),
-        ],
-      ),
-    );
-  }
 
   String _localizedPluginName(String id, BuildContext context) {
     final l = L10n.of(context);
