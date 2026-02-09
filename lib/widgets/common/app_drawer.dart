@@ -23,7 +23,7 @@ class AppDrawer extends ConsumerStatefulWidget {
 class _AppDrawerState extends ConsumerState<AppDrawer> {
   bool _expandedEditorPlugins = true;
   bool _expandedUtilityPlugins = true;
-  bool _expandedExperimentalPlugins = false;
+  bool _expandedExperimentalPlugins = true;
 
   String appVersion = '';
 
