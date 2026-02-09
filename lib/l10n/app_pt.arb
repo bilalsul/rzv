@@ -3,6 +3,7 @@
   "appAboutTitle": "Sobre o Repo Zip Viewer",
   "appAbout": "Extraia codebases git em formato .zip e visualize arquivos em markdown e no editor de código em modo somente leitura.",
   "appVersion": "Versão",
+  "appChangelog": "Registro de alterações",
   "appLicense": "Licença",
   "appAuthor": "Autor",
   "appDonate": "Doar",

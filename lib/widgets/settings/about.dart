@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:rzv/widgets/markdown/styled_markdown.dart';
 
 class About extends StatefulWidget {
   const About({
@@ -100,15 +101,14 @@ Future<void> openAboutDialog(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
           content: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: 500,
+          maxWidth: 460,
           minWidth: 300,
         ),
         child: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
+          child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
@@ -134,6 +134,41 @@ Future<void> openAboutDialog(BuildContext context) async {
                     // _handleDeveloperUnlockTap(context);
                   },
                 ),
+                ListTile(
+                  title: Text(L10n.of(context).appChangelog),
+                  onTap: () async {
+                    var content =
+                        await rootBundle.loadString('assets/changelog.md');
+                    // Remove the first line (file title) because dialog shows its own title
+                    final lines = content.split('\n');
+                    if (lines.isNotEmpty) {
+                      // remove first line regardless of whether it's empty or not
+                      lines.removeAt(0);
+                      content = lines.join('\n');
+                    }
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext ctx) => AlertDialog(
+                        title: Text(L10n.of(ctx).appChangelog),
+                        content: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxWidth: 700,
+                            minWidth: 300,
+                          ),
+                          child: SingleChildScrollView(
+                            child: StyledMarkdown(data: content),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(),
+                            child: Text(L10n.of(ctx).commonOk, style: TextStyle(color: Prefs().accentColor),),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
                 if (EnvVar.enableCheckUpdate)
                   ListTile(
                       title: Text(L10n.of(context).aboutCheckForUpdates),
@@ -145,16 +180,16 @@ Future<void> openAboutDialog(BuildContext context) async {
                       showDonateDialog(context);
                     },
                   ),
-                // ListTile(
-                //   title: Text(L10n.of(context).appLicense),
-                //   onTap: () {
-                //     showLicensePage(
-                //       context: context,
-                //       applicationName: L10n.of(context).appName,
-                //       applicationVersion: version,
-                //     );
-                //   },
-                // ),
+                ListTile(
+                  title: Text(L10n.of(context).appLicense),
+                  onTap: () {
+                    showLicensePage(
+                      context: context,
+                      applicationName: L10n.of(context).appName,
+                      applicationVersion: version,
+                    );
+                  },
+                ),
                 ListTile(
                   title: Text(L10n.of(context).appAuthor),
                   onTap: () {
@@ -245,7 +280,7 @@ Future<void> openAboutDialog(BuildContext context) async {
             ),
           ),
         ),
-      ));
+      );
     },
   );
 }

@@ -3,6 +3,7 @@
   "appAboutTitle": "關於 Repo Zip Viewer",
   "appAbout": "解壓 .zip 之 git 程式碼庫，以 Markdown 及唯讀編輯器觀覽檔案。",
   "appVersion": "版本",
+  "appChangelog": "更新日誌",
   "appLicense": "授權",
   "appAuthor": "作者",
   "appDonate": "施捨",
