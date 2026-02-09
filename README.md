@@ -14,7 +14,7 @@
   <a href="https://github.com/bilalsul/rzv/blob/main/LICENSE"><img src="https://img.shields.io/github/license/bilalsul/rzv" alt="License" ></a>
 </p>
 
-extract .zip Github/Gitlab/Bitbucket repositories and open files in code editor and markdown viewer in mobile, for students, code readers and quick access.
+Extract .zip Github/Gitlab/Bitbucket repositories and open files in code editor and markdown viewer on mobile — perfect for students, code readers and quick access.
 
 ![Repo Zip Viewer (RZV) Banner](screens/export/playstore.png)  
 
@@ -51,9 +51,9 @@ No cloning. No internet after import. Privacy-focused.
 ## Features
 
 - Import any git repository as a `.zip` file (GitHub "Download ZIP", GitLab export, etc.)
-- Download A Repository in Zip Manager, Extract it and start viewing & reading code.
+- Download a repository in Zip Manager, extract it and start viewing & reading code
 - Full folder/file tree browser
-- Syntax-highlighted read-only code editor ([VSCode Monaco Editor](https://github.com/omar-hanafy/flutter_monaco))
+- Syntax-highlighted read-only code editor [](https://github.com/omar-hanafy/flutter_monaco)
 - Instant Markdown preview for READMEs and `.md` files
 - Search across files and inside file contents
 - Customizable: font size, font family, zoom, light/dark theme
@@ -62,13 +62,21 @@ No cloning. No internet after import. Privacy-focused.
 - Multiple languages (English, Italian, French, German, Arabic, Spanish, Portuguese, Turkish, Chinese (Simplified & Traditional), Japanese, Korean, Russian)
 - No unnecessary permissions – only storage access to read local .zip files
 
-| Imported Projects |  Plugins Manager | Markdown Previewer |
-|--------------------------|-----------------|---------------------|
-| ![Home Screen](screens/export/projects%20dir.png) | ![Plugins Manager](screens/export/plugin%20manager.png) | ![Markdown Previewer](screens/export/markdown.png) |
+| Imported Projects          | Plugins Manager            |
+|----------------------------|----------------------------|
+| ![Home Screen](screens/export/projects%20dir.png) | ![Plugins Manager](screens/export/plugin%20manager.png) |
 
-| Code Editor | Advanced Options | Customizable Theme |
-|------------------|--------------------|-----------------|
-| ![Code Editor](screens/export/code%20editor.png) | ![Advanced Editor Options](screens/export/advanced%20editor.png) | ![Customizable Theme](screens/export/theme.png) |
+| Markdown Previewer         | Code Editor                |
+|----------------------------|----------------------------|
+| ![Markdown Previewer](screens/export/markdown.png) | ![Code Editor](screens/export/code%20editor.png) |
+
+| Advanced Options           | Customizable Theme         |
+|----------------------------|----------------------------|
+| ![Advanced Editor Options](screens/export/advanced%20editor.png) | ![Customizable Theme](screens/export/theme.png) |
+
+| ZIP Manager                |
+|----------------------------|
+| ![ZIP Manager](screens/export/zip%20manager.png) |
 
 ## How to Use
 
@@ -89,7 +97,7 @@ No cloning. No internet after import. Privacy-focused.
 
 **Repo Zip Viewer (RZV)** – View code anywhere, anytime.  
 
-📱 Available on [Google Play]() (or [get the latest APK release](https://github.com/bilalsul/rzv/releases/latest))
+📱 Available on [Google Play](https://play.google.com/store/apps/details?id=com.bilalworku.gzip) (or [get the latest APK release](https://github.com/bilalsul/rzv/releases/latest))
 
 ## License
 
