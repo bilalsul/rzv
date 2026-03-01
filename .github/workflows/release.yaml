@@ -194,7 +194,7 @@ jobs:
     # apk/aab
     # - name: Upload the artifacts — ${{ matrix.file }}-mapping.txt file
     #   if: matrix.file == 'apk' || matrix.file == 'aab'
-    #   uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+    #   uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
     #   with:
     #     name: ${{ matrix.file }}-mapping.txt
     #     path: ${{ matrix.file }}-mapping.txt
@@ -223,7 +223,7 @@ jobs:
       run: zip --recurse-paths ${{ github.workspace }}/code/${{ matrix.file }}-symbols.zip .
       working-directory: code/${{ env.FLUTTER_DEBUG_INFO_PATH }}
     - name: Upload the artifacts — ${{ matrix.file }}-symbols.zip file
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
       with:
         name: ${{ matrix.file }}-symbols.zip
         path: code/${{ matrix.file }}-symbols.zip
@@ -237,7 +237,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     # - name: Upload the artifacts — ${{ matrix.file }} file
-    #   uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+    #   uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
     #   with:
     #     name: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
     #     path: RZV-${{steps.parse-release-tag.outputs.version}}.${{ matrix.file }}
@@ -253,7 +253,7 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Upload the artifacts — armeabi-v7a Apk file
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
       with:
         name: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
         path: RZV-armeabi-v7a-v${{steps.parse-release-tag.outputs.version}}.apk
@@ -269,7 +269,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload the artifacts — arm64-v8a Apk file
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
       with:
         name: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
         path: RZV-arm64-v8a-v${{steps.parse-release-tag.outputs.version}}.apk
@@ -285,7 +285,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload the artifacts — x86_64 Apk file
-      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
       with:
         name: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
         path: RZV-x86_64-v${{steps.parse-release-tag.outputs.version}}.apk
