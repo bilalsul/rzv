@@ -40,7 +40,7 @@ jobs:
   #       path: code
   #   - name: Get Flutter version
   #     id: get-flutter-version
-  #     uses: zgosalvez/github-actions-get-flutter-version-env@34a86de9beede9d0771465c702d530c2aea2b1ee
+  #     uses: zgosalvez/github-actions-get-flutter-version-env@db80c000d15b0a11d86bfa4d5a9dc885f054f46d
   #     with:
   #       pubspec-file-path: code/pubspec.yaml
   #   - name: Cache Flutter
@@ -122,7 +122,7 @@ jobs:
         # Add other unrelated folders here if needed, e.g., rm -rf code/other_folder
     - name: Get Flutter version
       id: get-flutter-version
-      uses: zgosalvez/github-actions-get-flutter-version-env@34a86de9beede9d0771465c702d530c2aea2b1ee
+      uses: zgosalvez/github-actions-get-flutter-version-env@db80c000d15b0a11d86bfa4d5a9dc885f054f46d
       with:
         pubspec-file-path: code/pubspec.yaml
     - name: Cache Flutter
