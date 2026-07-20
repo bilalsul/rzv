@@ -26,9 +26,12 @@ Extract .zip Github/Gitlab/Bitbucket repositories and open files in code editor 
   <tr>
     <td>Android</td>
     <td>
-      <a href="https://github.com/bilalsul/rzv/releases/latest">
-          <img src="screens/github-badge.png" alt="Download from GitHub" height="45">
-        </a>
+    <a href="https://codeberg.org/bws/rzv/releases">
+    <img src="https://codeberg.org/Codeberg/GetItOnCodeberg/raw/branch/main/get-it-on-blue-on-white.png" alt="Get it on Codeberg" height="45">
+    <a href="https://github.com/bilalsul/rzv/releases/latest">
+    <img src="screens/github-badge.png" alt="Download from GitHub" height="45">
+    </a>
+  </a>
       <a href="https://play.google.com/store/apps/details?id=com.bilalworku.gzip">
           <img src="screens/googleplay.png" alt="Get it on Google Play" height="45">
         </a>
