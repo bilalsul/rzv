@@ -1,0 +1,39 @@
+name: Pull Request (Opened)
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  assign_author:
+    name: Assign Author to the Pull Request
+    runs-on: ubuntu-latest
+    steps:
+    - name: Assign Author to the Pull Request
+      run: |
+        curl -s -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{"assignees": ["${{ github.event.pull_request.user.login }}"]}' \
+          "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/assignees"
+
+  pr-labeler:
+    name: Label the PR based on the branch
+    runs-on: ubuntu-latest
+    steps:
+    - name: Label the Pull Request
+      run: |
+        BRANCH="${{ github.event.pull_request.head.ref }}"
+        if [[ "$BRANCH" == feature/* ]]; then
+          LABEL="enhancement"
+        elif [[ "$BRANCH" == hotfix/* ]]; then
+          LABEL="bug"
+        else
+          echo "No matching label for branch: $BRANCH"
+          exit 0
+        fi
+        curl -s -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d "{\"labels\": [\"$LABEL\"]}" \
+          "${{ github.server_url }}/api/v1/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels"
