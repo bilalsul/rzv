@@ -24,4 +24,4 @@ Features:
 Privacy and Permissions:
 - Only requires storage permission to read your .zip files
 - No tracking, no analytics
-- Open source under the MIT License
+- Free Software under the GNU 3.0 License
