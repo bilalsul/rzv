@@ -1,0 +1,27 @@
+Extract .zip Github/Gitlab/Bitbucket repositories and open files in a code editor and markdown viewer on mobile — perfect for students, code readers and quick access.
+
+Explore any Github, Gitlab or Bitbucket repository — just download it as a .zip and open it instantly in a beautiful, read-only code editor. No cloning. No internet after import. Privacy-focused.
+
+Perfect for:
+- Studying open-source projects on the go
+- Reviewing code during travel or commutes
+- Quickly checking repos shared as zip downloads
+- Learning from famous projects without setting up git
+
+Features:
+- Import any git repository as a .zip file (GitHub "Download ZIP", GitLab export, etc.)
+- Download a repository in Zip Manager, extract it and start viewing code
+- Full folder/file tree browser
+- Syntax-highlighted read-only code editor (Monaco Editor via WebView)
+- Instant Markdown preview for READMEs and .md files
+- Search across files and inside file contents
+- Customizable: font size, font family, zoom, light/dark theme
+- Toggleable File Explorer and advanced features via Plugins system
+- Supports huge projects (with progress indicator during extraction)
+- Multiple languages (English, Italian, French, German, Arabic, Spanish, Portuguese, Turkish, Chinese, Japanese, Korean, Russian)
+- No unnecessary permissions — only storage access to read local .zip files
+
+Privacy and Permissions:
+- Only requires storage permission to read your .zip files
+- No tracking, no analytics
+- Open source under the MIT License
