@@ -1,5 +1,7 @@
 name: Release
 
+# flutter-version: '3.35.6'
+
 on:
   release:
     types: [ published ]
