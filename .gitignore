@@ -55,3 +55,6 @@ lib/l10n/generated/*.dart
 
 # environment vars
 .env
+runner-token
+keystore_b64.txt
+rzv.jks
