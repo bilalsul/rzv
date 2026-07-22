@@ -26,9 +26,9 @@ Extract .zip Github/Gitlab/Bitbucket repositories and open files in code editor 
   <tr>
     <td>Android</td>
     <td>
-    <a href="https://codeberg.org/bws/rzv/releases">
+    <a href="https://f-droid.org/en/packages/rzv.bilsul.com">
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/%22Get_it_on_F-droid%22_Badge.png" alt="Get it on F-droid" height="45">
-    <a href="https://codeberg.org/bws/rzv/releases">
+    <a href="https://codeberg.org/bws/rzv/releases/latest">
     <img src="https://codeberg.org/Codeberg/GetItOnCodeberg/raw/branch/main/get-it-on-blue-on-white.png" alt="Get it on Codeberg" height="45">
     <a href="https://github.com/bilalsul/rzv/releases/latest">
     <img src="screens/github-badge.png" alt="Download from GitHub" height="45">
