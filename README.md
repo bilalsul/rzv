@@ -106,7 +106,7 @@ No cloning. No internet after import. Privacy-focused.
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
+This project is licensed under the [GNU 3.0 License](./LICENSE).
 
 ## Thanks
 
